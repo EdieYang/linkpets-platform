@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry
+		location="/Users/Fade/MyLove/apache-tomcat-7.0.77/webapps/health/WebRoot/WEB-INF/lib/mysql-connector-java-5.1.5.jar" />
+
+
+	<context id="context1">
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://116.62.60.203:3306/pokedata_test"
+			userId="root" password="PokePet123456!" />
+		<javaModelGenerator targetPackage="com.linkpets.core.model"
+			targetProject="src/main/java" />
+		<sqlMapGenerator targetPackage="mapper"
+			targetProject="src/main/resources" />
+		<javaClientGenerator targetPackage="com.linkpets.core.dao"
+			targetProject="src/main/java" type="XMLMAPPER" />
+
+
+
+
+		<!--<table schema="linkpets" tableName="sys_user"-->
+		<!--enableCountByExample="false" enableUpdateByExample="false"-->
+		<!--enableDeleteByExample="false" enableSelectByExample="false"-->
+		<!--selectByExampleQueryId="false"></table>-->
+
+
+		<table schema="linkpets" tableName="cms_adopt_agreement"
+			   enableCountByExample="false" enableUpdateByExample="false"
+			   enableDeleteByExample="false" enableSelectByExample="false"
+			   selectByExampleQueryId="false">
+
+			<columnOverride column="agreement" jdbcType="VARCHAR" />
+			
+		</table>
+
+
+		<!--<table schema="linkpets" tableName="cms_activity_assistance"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+		<!--<table schema="linkpets" tableName="cms_activity_draft"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+		<!--<table schema="linkpets" tableName="cms_activity_registry"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="sys_chain"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="sys_org"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+
+		<!--<table schema="linkpets" tableName="cms_banner"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="commodity"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="commodity_brand"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+
+		<!--<table schema="linkpets" tableName="commodity_type"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="mall_spu"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+
+		<!--<table schema="linkpets" tableName="pet_supply_concat"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+
+		<!--<table schema="linkpets" tableName="pet_like"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="pet_supply"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="pet_weapon_concat"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="pet_weapon"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="order_mall"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="pet_follow"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="message_queue"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="pet"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="pet_album"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="explore_point"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+
+		<!--<table schema="linkpets" tableName="record_collect"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="user_payment_log"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="user_pet"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="user_donate"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="user_explore_history"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="user_long_record"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="record_share"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="record_visit"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="user"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="user_follow"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="share_record"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="record_like"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+		<!--<table schema="linkpets" tableName="user_temp"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="user_shopping_address"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="user_record"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="user_walk_history"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+		<!--<table schema="linkpets" tableName="user_walk_location"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false"></table>-->
+
+
+
+
+
+
+
+
+	</context>
+</generatorConfiguration>

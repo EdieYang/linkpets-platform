@@ -3,12 +3,10 @@ package com.linkpets.cms.adopt.resource;
 import com.alibaba.fastjson.JSONObject;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.model.UserInfo;
-import com.linkpets.cms.adopt.service.IAgreementService;
-import com.linkpets.cms.adopt.service.IApplyService;
-import com.linkpets.cms.adopt.service.IPetService;
-import com.linkpets.cms.adopt.service.IUserService;
+import com.linkpets.cms.adopt.service.*;
 import com.linkpets.core.model.CmsAdoptAgreement;
 import com.linkpets.core.model.CmsAdoptApply;
+import com.linkpets.core.model.CmsAdoptCertification;
 import com.linkpets.core.model.CmsAdoptPet;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
@@ -16,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,10 +41,14 @@ public class AgreementResource {
     @Resource
     IUserService userService;
 
+    @Resource
+    ICertificationService certificationService;
+
 
     @ApiOperation("创建领养合同接口")
     @PostMapping(value = "info/{formId}")
     public PlatformResult crtAgreement(@PathVariable("formId")String formId ,@RequestBody CmsAdoptAgreement agreement) {
+
         String agreementId = agreementService.crtAgreement(agreement);
         String applyId=agreement.getApplyId();
         CmsAdoptApply adoptApply=new CmsAdoptApply();
@@ -63,6 +66,13 @@ public class AgreementResource {
             apply.setApplyId(agreement.getApplyId());
             apply.setApplyStatus("3");
             applyService.uptApply(apply);
+
+            //加入领养人签署协议信息
+            //获取领养人身份信息
+            String applyUserId=agreement.getApplyId();
+            CmsAdoptCertification certification=certificationService.getUserCertification(applyUserId);
+            agreement.setApplyIdcard(certification.getIdCard());
+
         }
 
         if("2".equals(agreement.getSignStatus())){
@@ -74,6 +84,12 @@ public class AgreementResource {
             pet.setPetId(agreement.getPetId());
             pet.setAdoptStatus("4");
             petService.uptAdopt(pet);
+
+            //加入送养人签署协议信息
+            String adoptUserId=agreement.getCreateBy();
+            CmsAdoptCertification certification=certificationService.getUserCertification(adoptUserId);
+            agreement.setApplyIdcard(certification.getIdCard());
+            agreement.setSignTime(new Date());
         }
         agreementService.uptAgreement(agreement);
         return PlatformResult.success();

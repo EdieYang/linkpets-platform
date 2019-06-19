@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
 	<classPathEntry
-		location="/Users/Fade/MyLove/apache-tomcat-7.0.77/webapps/health/WebRoot/WEB-INF/lib/mysql-connector-java-5.1.5.jar" />
+		location="C:\Users\Public\Music\backup\backup\yjserver-webservice\out\artifacts\yjserver_webservice_Web_exploded\WEB-INF\lib\mysql-connector-java-5.1.5.jar" />
 
 
 	<context id="context1">
@@ -25,12 +25,12 @@
 		<!--selectByExampleQueryId="false"></table>-->
 
 
-		<table schema="linkpets" tableName="cms_adopt_agreement"
+		<table schema="linkpets" tableName="cms_adopt_certification"
 			   enableCountByExample="false" enableUpdateByExample="false"
 			   enableDeleteByExample="false" enableSelectByExample="false"
 			   selectByExampleQueryId="false">
 
-			<columnOverride column="agreement" jdbcType="VARCHAR" />
+			<!--<columnOverride column="agreement" jdbcType="VARCHAR" />-->
 			
 		</table>
 

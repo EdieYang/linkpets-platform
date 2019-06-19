@@ -117,6 +117,7 @@ public class PetResource {
     @ApiOperation("修改领养宠物接口")
     @PutMapping(value = "info")
     public PlatformResult uptAdopt(@RequestBody CmsAdoptPet pet) {
+        pet.setAdoptStatus("0");
         petService.uptAdopt(pet);
         return PlatformResult.success();
     }

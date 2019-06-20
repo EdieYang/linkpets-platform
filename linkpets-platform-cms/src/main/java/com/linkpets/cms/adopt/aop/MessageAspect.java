@@ -354,8 +354,8 @@ public class MessageAspect {
                     msgService.crtMessage(msg);
 
                     msg.setMsgTitle(MessageTemplate.APPLY_PASS_FORTH_ADOPTER_MSG_TITLE);
-                    msgContent.put("portrait", applyUser.getPortrait());
-                    msgContent.put("nickName", applyUser.getNickName());
+                    msgContent.put("portrait", user.getPortrait());
+                    msgContent.put("nickName", user.getNickName());
                     msgContent.put("title", MessageTemplate.APPLY_PASS_FORTH_ADOPTER_MSG_CONTENT_TITLE);
                     msgContent.put("content", MessageTemplate.APPLY_PASS_FORTH_ADOPTER_MSG_CONTENT_LOG);
                     msgContent.put("status","4");

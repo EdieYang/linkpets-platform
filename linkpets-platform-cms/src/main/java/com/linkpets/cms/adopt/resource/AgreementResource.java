@@ -69,7 +69,9 @@ public class AgreementResource {
 
             //加入领养人签署协议信息
             //获取领养人身份信息
-            String applyUserId=agreement.getApplyId();
+            String agreementId=agreement.getAgreementId();
+            CmsAdoptAgreement cmsAdoptAgreement=agreementService.getAgreement(agreementId);
+            String applyUserId=cmsAdoptAgreement.getApplyBy();
             CmsAdoptCertification certification=certificationService.getUserCertification(applyUserId);
             agreement.setApplyIdcard(certification.getIdCard());
 
@@ -80,15 +82,20 @@ public class AgreementResource {
             apply.setApplyId(agreement.getApplyId());
             apply.setApplyStatus("4");
             applyService.uptApply(apply);
+
+            //加入送养人签署协议信息
+            String agreementId=agreement.getAgreementId();
+            CmsAdoptAgreement cmsAdoptAgreement=agreementService.getAgreement(agreementId);
+
             CmsAdoptPet pet=new CmsAdoptPet();
-            pet.setPetId(agreement.getPetId());
+            pet.setPetId(cmsAdoptAgreement.getPetId());
             pet.setAdoptStatus("4");
             petService.uptAdopt(pet);
 
-            //加入送养人签署协议信息
-            String adoptUserId=agreement.getCreateBy();
+
+            String adoptUserId=cmsAdoptAgreement.getCreateBy();
             CmsAdoptCertification certification=certificationService.getUserCertification(adoptUserId);
-            agreement.setApplyIdcard(certification.getIdCard());
+            agreement.setAdopterIdcard(certification.getIdCard());
             agreement.setSignTime(new Date());
         }
         agreementService.uptAgreement(agreement);

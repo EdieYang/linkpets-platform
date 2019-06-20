@@ -182,7 +182,7 @@
 
 
 
-  <select id="getUserCertification" parameterType="java.lang.String" resultType="com.linkpets.core.model.CmsAdoptCertification">
+  <select id="getUserCertification" parameterType="java.lang.String" resultMap="BaseResultMap">
 
     select
     <include refid="Base_Column_List" />

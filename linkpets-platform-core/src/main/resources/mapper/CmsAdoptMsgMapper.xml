@@ -244,7 +244,7 @@
 
     select
     msg_id, msg_title, msg_content, msg_type, sender, receiver, is_read, pet_id, is_valid,
-    create_time,(select count(1) cms_adopt_msg where receiver=#{userId}  and is_read = 0) as unreadNumber
+    create_time
     from cms_adopt_msg
     where receiver=#{userId}
     and msg_type = #{type}

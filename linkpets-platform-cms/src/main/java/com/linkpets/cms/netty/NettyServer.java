@@ -18,18 +18,19 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 @Service
 public class NettyServer {
-    public static void main(String[] args) {
-        new NettyServer().run();
-    }
+//    public static void main(String[] args) {
+//        new NettyServer().run();
+//    }
 
-    @PostConstruct
-    public void initNetty() {
-        new Thread() {
-            public void run() {
-                new NettyServer().run();
-            }
-        }.start();
-    }
+//    @PostConstruct
+//    public void initNetty() {
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                new NettyServer().run();
+//            }
+//        }.start();
+//    }
 
     public void run() {
         System.out.println("===========================Netty端口启动========");

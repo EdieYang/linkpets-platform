@@ -69,7 +69,7 @@ public class CmsAdoptMsgServiceImpl implements ICmsAdoptMsgService {
     @Override
     public List<ChatMessage> getChatReceiverMessageList(String userId) {
         List<ChatMessage> chatMessages=new ArrayList<>();
-        List<String> redisCacheReceiverList= stringRedisTemplate.opsForList().range("Chat:"+userId,0,-1);
+        List<String> redisCacheReceiverList= stringRedisTemplate.opsForList().range("Chat-Receive:"+userId,0,-1);
         redisCacheReceiverList.stream().forEach(item->{
             chatMessages.add(JSON.parseObject(item,ChatMessage.class));
         });

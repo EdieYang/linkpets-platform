@@ -92,4 +92,9 @@ public class CmsAdoptMsgServiceImpl implements ICmsAdoptMsgService {
     public void uptDetailListMsg(String userId, String type) {
         msgMapper.uptDetailListMsg(userId,type);
     }
+
+    @Override
+    public List<CmsAdoptMsg> getUnreadMessage(String userId) {
+        return msgMapper.getUnreadMessage(userId);
+    }
 }

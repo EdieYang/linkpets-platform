@@ -54,6 +54,15 @@ public class MessageResource {
         return PlatformResult.success(msgMap);
     }
 
+    @GetMapping(value = "unreadlist")
+    @ApiOperation(value = "未读消息列表", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "userId", value = "userId", required = true)})
+    PlatformResult getUserUnreadMessageList(@RequestParam("userId") String userId) {
+        List<CmsAdoptMsg> unreadMsg= msgService.getUnreadMessage(userId);
+        return PlatformResult.success(unreadMsg);
+    }
+
 
     @GetMapping(value = "detailList")
     @ApiOperation(value = "详情消息列表分类", notes = "")

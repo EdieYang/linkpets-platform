@@ -26,4 +26,6 @@ public interface ICmsAdoptMsgService {
 
     void uptDetailListMsg(String userId,String type);
 
+    List<CmsAdoptMsg> getUnreadMessage(String userId);
+
 }

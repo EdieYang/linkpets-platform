@@ -9,7 +9,7 @@ import java.util.Date;
 public class DateUtils {
 
     public static Date getFormatDateTime(String date) {
-        if(StringUtils.isEmpty(date)){
+        if (StringUtils.isEmpty(date)) {
             return null;
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -23,7 +23,7 @@ public class DateUtils {
     }
 
     public static Date getFormatDate(String date) {
-        if(StringUtils.isEmpty(date)){
+        if (StringUtils.isEmpty(date)) {
             return null;
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -43,16 +43,32 @@ public class DateUtils {
         return dateStr;
     }
 
+    public static boolean diffNow(String sendTime) {
+        boolean diff = false;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date sendDate = dateFormat.parse(sendTime);
+            long leftTime = System.currentTimeMillis() - sendDate.getTime();
+            if (leftTime / 1000 / 60 / 60 > 1) {
+                diff = true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-    public static String getDateBefore(Date date){
+        return diff;
+    }
+
+
+    public static String getDateBefore(Date date) {
         if (date == null) {
             return "";
         }
 
         long leftTime = System.currentTimeMillis() - date.getTime();
-        if(leftTime / 1000 <60){
-            return leftTime / 1000  + "秒前";
-        }else if (leftTime / 1000 / 60 < 60) {
+        if (leftTime / 1000 < 60) {
+            return leftTime / 1000 + "秒前";
+        } else if (leftTime / 1000 / 60 < 60) {
             return leftTime / 1000 / 60 + "分钟前";
         } else if (leftTime / 1000 / 60 / 60 < 24) {
             return leftTime / 1000 / 60 / 60 + "小时前";

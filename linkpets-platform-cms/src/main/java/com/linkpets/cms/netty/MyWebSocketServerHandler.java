@@ -3,6 +3,7 @@ package com.linkpets.cms.netty;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.linkpets.cms.netty.service.IMessageHandler;
+import com.linkpets.util.DateUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
@@ -17,6 +18,7 @@ import org.springframework.jca.context.SpringContextResourceAdapter;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -87,6 +89,7 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
             System.out.println("服务器：接收到你的TextWebSocketFrame消息，内容是 " + textFrame.text());
             //解析text数据
             JSONObject textObj = JSON.parseObject(textFrame.text());
+            textObj.put("sendTime", DateUtils.getFormatDateStr(new Date()));
             String uid = textObj.getString("targetUserId");
             try {
                 rwLock.readLock().lock();
@@ -96,11 +99,12 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
                     if (!userInfo.getUserId().equals(uid)) {
                         continue;
                     }
-                    ch.writeAndFlush(new TextWebSocketFrame(textFrame.text()));
+                    ch.writeAndFlush(new TextWebSocketFrame(textObj.toJSONString()));
 
                 }
 
-                messageHandler.storeInRedis(uid, textFrame.text());
+                messageHandler.storeInRedis(uid, textObj.toJSONString());
+                messageHandler.middleSwitch(uid, textObj.toJSONString());
             } catch (Exception e) {
                 e.printStackTrace();
                 log.error(e.getMessage());

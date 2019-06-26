@@ -32,20 +32,24 @@ import java.util.Map;
 @Slf4j
 public class WxTemplateMsgResource {
 
-    @Value("${templateId.apply.create}")
+    @Value("${templateId.applyCreate.formId}")
     private String applyCreateTemplateId;
 
-    @Value("${templateId.apply.process}")
+    @Value("${templateId.applyProcess.formId}")
     private String applyProcessTemplateId;
 
-    @Value("${templateId.apply.cancel}")
+    @Value("${templateId.applyCancel.formId}")
     private String applyCancelTemplateId;
 
-    @Value("${templateId.certificate.status}")
+    @Value("${templateId.certificateStatus.formId}")
     private String certificateTemplateId;
 
-    @Value("${templateId.adoption.check}")
+    @Value("${templateId.adoptionCheck.formId}")
     private String adoptionCheckTemplateId;
+
+    @Value("${templateId.chatMessage.formId}")
+    private String chatTemplateId;
+
 
     @Value("${linkPet.appId}")
     private String appId;
@@ -308,7 +312,46 @@ public class WxTemplateMsgResource {
         return PlatformResult.success(sendTemplateMsg);
     }
 
+    @PostMapping("chatUpt")
+    public PlatformResult sendChatMessageTemplate(@RequestBody String msgData) {
+        JSONObject chatMsg = JSONObject.parseObject(msgData);
+        String targetUserId=chatMsg.getString("targetUserId");
+        CmsUser targetUser = userService.getUserInfo(targetUserId);
+        String userId=chatMsg.getString("userId");
+        CmsUser user=userService.getUserInfo(userId);
 
+        String openId = targetUser.getOpenid();
+        String templateId = "";
+        JSONObject templateForm = new JSONObject();
+        JSONObject templateData = new JSONObject();
+        String sendTemplateMsg = "";
+        //获取accessToken
+        try {
+            String response = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appId + "&secret=" + appSecret, "");
+            JSONObject resJsonObj = JSON.parseObject(response);
+            String accessToken = resJsonObj.getString("access_token");
+            Map<String, String> map = new HashMap<>();
+            templateId = chatTemplateId;
+
+            map.put("value", user.getNickName()+"给你留了一条信息，点击查看详情");
+            templateData.put("keyword1", map);
+            map.put("value", DateUtils.getFormatDateStr(new Date()));
+            templateData.put("keyword2", map);
+            templateForm.put("touser", openId);
+            templateForm.put("template_id", templateId);
+            templateForm.put("page", "adoption/detail/detail?share=1&petId="+cmsAdoptMsg.getPetId());
+            templateForm.put("", cmsAdoptMsg.getFormId());
+            templateForm.put("data", templateData);
+            sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
+            log.info(sendTemplateMsg);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return PlatformResult.success(sendTemplateMsg);
+    }
 
 
 

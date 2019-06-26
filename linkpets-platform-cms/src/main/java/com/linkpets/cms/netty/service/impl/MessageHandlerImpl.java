@@ -2,12 +2,16 @@ package com.linkpets.cms.netty.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.linkpets.cms.adopt.model.ChatMessage;
 import com.linkpets.cms.netty.Global;
 import com.linkpets.cms.netty.UserChannel;
 import com.linkpets.cms.netty.service.IMessageHandler;
+import com.linkpets.util.DateUtils;
+import com.linkpets.util.HttpUtil;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,9 @@ public class MessageHandlerImpl implements IMessageHandler {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    @Value("${linkPet.lpWechat.templateMsg.chatUpt}")
+    private String chatUptUrl;
+
     @Override
     public void middleSwitch(String userId, String textFrame) {
 
@@ -37,13 +44,23 @@ public class MessageHandlerImpl implements IMessageHandler {
                     continue;
                 }
                 online = true;
-                ch.writeAndFlush(new TextWebSocketFrame(textFrame));
             }
 
             if (!online) {
-                log.info("将消息推送到redis中保存：" + textFrame);
-                //将消息推送到redis中保存
-                stringRedisTemplate.opsForList().leftPush(userId, textFrame);
+                //获取今日消息记录
+                String message=stringRedisTemplate.opsForList().leftPop("Chat-Receive:"+userId);
+                ChatMessage chatMessage=JSON.parseObject(message, ChatMessage.class);
+                String sendTime=chatMessage.getSendTime();
+                if(DateUtils.diffNow(sendTime)){
+                    //发送留言模板消息
+                    try {
+                        log.info(HttpUtil.doPost(chatUptUrl, JSON.toJSONString(chatMessage)));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
             }
 
         } finally {

@@ -15,4 +15,6 @@ public class ChatMessage {
 
     private String key;
 
+    private String sendTime;
+
 }

@@ -46,8 +46,8 @@ public class AgreementResource {
 
 
     @ApiOperation("创建领养合同接口")
-    @PostMapping(value = "info/{formId}")
-    public PlatformResult crtAgreement(@PathVariable("formId")String formId ,@RequestBody CmsAdoptAgreement agreement) {
+    @PostMapping(value = "info")
+    public PlatformResult crtAgreement(@RequestBody CmsAdoptAgreement agreement) {
 
         String agreementId = agreementService.crtAgreement(agreement);
         String applyId=agreement.getApplyId();
@@ -59,12 +59,13 @@ public class AgreementResource {
     }
 
     @ApiOperation("修改领养合同接口")
-    @PutMapping(value = "info/{formId}")
-    public PlatformResult uptAgreement(@PathVariable("formId")String formId ,@RequestBody CmsAdoptAgreement agreement) {
+    @PutMapping(value = "info")
+    public PlatformResult uptAgreement(@RequestBody CmsAdoptAgreement agreement) {
         if("1".equals(agreement.getSignStatus())){
             CmsAdoptApply apply=new CmsAdoptApply();
             apply.setApplyId(agreement.getApplyId());
             apply.setApplyStatus("3");
+            apply.setFormId(agreement.getFormId());
             applyService.uptApply(apply);
 
             //加入领养人签署协议信息
@@ -81,6 +82,7 @@ public class AgreementResource {
             CmsAdoptApply apply=new CmsAdoptApply();
             apply.setApplyId(agreement.getApplyId());
             apply.setApplyStatus("4");
+            apply.setFormId(agreement.getFormId());
             applyService.uptApply(apply);
 
             //加入送养人签署协议信息

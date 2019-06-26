@@ -139,12 +139,15 @@ public class WxMiniAdoptAuthorizeResource {
                 String unionId = jsonObject.getString("unionId");
                 String nickName = jsonObject.getString("nickName");
                 String avatarUrl = jsonObject.getString("avatarUrl");
+                String openId =userService.getOpenIdByUserId(userId);
+
                 //register authorized  user
                 CmsUser user = new CmsUser();
                 user.setUserId(userId);
                 user.setNickName(nickName);
                 user.setPortrait(avatarUrl);
                 user.setUnionId(unionId);
+                user.setOpenid(openId);
                 user.setCreateDate(new Date());
                 user.setIsValid(DefaultSettingCode.getCode("DEFAULT_FLAG"));
 
@@ -156,7 +159,6 @@ public class WxMiniAdoptAuthorizeResource {
                     int flag = userService.modifyUser(user);
                     if (flag > 0) {
                         CmsUser userInfo = userService.getUserInfo(userId);
-
                         map.put("userInfo", userInfo);
                         map.put("authorized", true);
                         return map;

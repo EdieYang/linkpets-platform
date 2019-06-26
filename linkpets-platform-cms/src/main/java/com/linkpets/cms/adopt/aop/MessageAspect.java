@@ -1,5 +1,6 @@
 package com.linkpets.cms.adopt.aop;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.linkpets.cms.adopt.model.UserInfo;
 import com.linkpets.cms.adopt.service.IApplyService;
@@ -10,12 +11,16 @@ import com.linkpets.core.model.CmsAdoptApply;
 import com.linkpets.core.model.CmsAdoptCertification;
 import com.linkpets.core.model.CmsAdoptMsg;
 import com.linkpets.core.model.CmsAdoptPet;
+import com.linkpets.util.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.HttpClientUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -42,6 +47,14 @@ public class MessageAspect {
 
     private static final String PASS = "2";
 
+    @Value("${linkPet.lpWechat.templateMsg.applyUpt}")
+    private String applyUptUrl;
+
+    @Value("${linkPet.lpWechat.templateMsg.certificateUpt}")
+    private String certificateUptUrl;
+
+    @Value("${linkPet.lpWechat.templateMsg.adoptionUpt}")
+    private String adoptionUptUrl;
 
     /**
      * 新建领养信息切点
@@ -76,7 +89,7 @@ public class MessageAspect {
      * 上传实名认证身份信息
      */
     @Pointcut("execution(public * com.linkpets.cms.adopt.service.ICertificationService.uploadCertification(..))")
-    public void uplaodCertificationPointCut() {
+    public void uploadCertificationPointCut() {
     }
 
 
@@ -88,16 +101,15 @@ public class MessageAspect {
     }
 
 
-
     @Around("crtAdoptPointCut()")
     public String aroundCrtPetPointCut(ProceedingJoinPoint pjp) {
         log.info("{MessageAspect} =>crt new petAdoption start.....");
-        String petId ="";
+        String petId = "";
         try {
             Object result = pjp.proceed();
             if (result != null) {
                 //推送系统消息
-                petId=(String) result;
+                petId = (String) result;
 
                 CmsAdoptPet pet = petService.getAdopt(petId);
                 String createBy = pet.getCreateBy();
@@ -110,6 +122,7 @@ public class MessageAspect {
                 msgContent.put("content", MessageTemplate.PET_MSG_CONTENT_LOG);
                 msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
                 msgContent.put("petName", pet.getPetName());
+                msgContent.put("status","0");
                 msg.setMsgContent(msgContent.toJSONString());
                 msg.setMsgType(0);
                 msg.setPetId(petId);
@@ -118,14 +131,15 @@ public class MessageAspect {
                 msg.setCreateTime(new Date());
                 msgService.crtMessage(msg);
 
-                //推websocket
+
 
                 //推微信模板消息
+                log.info(HttpUtil.doPost(adoptionUptUrl, JSON.toJSONString(msg)));
 
             }
         } catch (Throwable e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             return petId;
         }
     }
@@ -154,6 +168,7 @@ public class MessageAspect {
                     msgContent.put("content", MessageTemplate.PET_CHECK_UNPASS_MSG_CONTENT_LOG + uptCmsAdoptPet.getMemo());
                     msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
                     msgContent.put("petName", pet.getPetName());
+                    msgContent.put("status","1");
                     msg.setMsgContent(msgContent.toJSONString());
                     msg.setMsgType(0);
                     msg.setPetId(petId);
@@ -161,12 +176,13 @@ public class MessageAspect {
                     msg.setReceiver(createBy);
                     msg.setCreateTime(new Date());
                     msgService.crtMessage(msg);
-                    //推websocket
 
                     //推微信模板消息
+
+
                     break;
                 case PASS:
-                    //审核失败通知
+                    //审核通过上线通知
                     msg.setMsgTitle(MessageTemplate.PET_CHECK_PASS_MSG_TITLE);
                     msgContent.put("portrait", "");
                     msgContent.put("nickName", "");
@@ -174,6 +190,7 @@ public class MessageAspect {
                     msgContent.put("content", MessageTemplate.PET_CHECK_PASS_MSG_CONTENT_LOG);
                     msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
                     msgContent.put("petName", pet.getPetName());
+                    msgContent.put("status","2");
                     msg.setMsgContent(msgContent.toJSONString());
                     msg.setMsgType(0);
                     msg.setPetId(petId);
@@ -185,7 +202,7 @@ public class MessageAspect {
                 default:
                     break;
             }
-
+            log.info(HttpUtil.doPost(adoptionUptUrl, JSON.toJSONString(msg)));
 
         } catch (Throwable e) {
             e.printStackTrace();
@@ -199,10 +216,11 @@ public class MessageAspect {
         CmsAdoptApply newApply = (CmsAdoptApply) pjp.getArgs()[0];
 
         try {
-            Object result=pjp.proceed();
-            String applyId= (String) result;
+            Object result = pjp.proceed();
+            String applyId = (String) result;
             String applyUserId = newApply.getApplyBy();
             String petId = newApply.getPetId();
+            String formId = newApply.getFormId();
             if (StringUtils.isNotEmpty(applyUserId) && StringUtils.isNotEmpty(petId)) {
                 CmsAdoptPet pet = petService.getAdopt(petId);
                 String createBy = pet.getCreateBy();
@@ -216,19 +234,21 @@ public class MessageAspect {
                 msgContent.put("content", MessageTemplate.APPLY_MSG_CONTENT_LOG);
                 msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
                 msgContent.put("petName", pet.getPetName());
-                msgContent.put("applyId",applyId);
-                msgContent.put("status","0");
+                msgContent.put("applyId", applyId);
+                msgContent.put("status", "0");
                 msg.setMsgContent(msgContent.toJSONString());
                 msg.setMsgType(1);
                 msg.setPetId(petId);
                 msg.setSender(applyUserId);
                 msg.setReceiver(createBy);
                 msg.setCreateTime(new Date());
+                msg.setFormId(formId);
                 msgService.crtMessage(msg);
 
                 //推websocket
 
-                //推微信模板消息
+                //发送创建申请模板消息
+                log.info(HttpUtil.doPost(applyUptUrl, JSON.toJSONString(msg)));
 
             }
         } catch (Throwable e) {
@@ -262,8 +282,8 @@ public class MessageAspect {
                     msgContent.put("content", MessageTemplate.APPLY_REFUSE_MSG_CONTENT_LOG + uptApply.getApplyResp());
                     msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
                     msgContent.put("petName", pet.getPetName());
-                    msgContent.put("applyId",applyId);
-                    msgContent.put("status","5");
+                    msgContent.put("applyId", applyId);
+                    msgContent.put("status", "5");
                     msg.setMsgContent(msgContent.toJSONString());
                     msg.setMsgType(1);
                     msg.setPetId(apply.getPetId());
@@ -285,8 +305,8 @@ public class MessageAspect {
                     msgContent.put("content", MessageTemplate.APPLY_PASS_FIRST_MSG_CONTENT_LOG);
                     msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
                     msgContent.put("petName", pet.getPetName());
-                    msgContent.put("applyId",applyId);
-                    msgContent.put("status","1");
+                    msgContent.put("applyId", applyId);
+                    msgContent.put("status", "1");
 
                     msg.setMsgContent(msgContent.toJSONString());
                     msg.setMsgType(1);
@@ -304,8 +324,8 @@ public class MessageAspect {
                     msgContent.put("content", MessageTemplate.APPLY_PASS_SECOND_MSG_CONTENT_LOG);
                     msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
                     msgContent.put("petName", pet.getPetName());
-                    msgContent.put("applyId",applyId);
-                    msgContent.put("status","2");
+                    msgContent.put("applyId", applyId);
+                    msgContent.put("status", "2");
 
                     msg.setMsgContent(msgContent.toJSONString());
                     msg.setMsgType(2);
@@ -323,8 +343,8 @@ public class MessageAspect {
                     msgContent.put("content", MessageTemplate.APPLY_PASS_THIRD_MSG_CONTENT_LOG);
                     msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
                     msgContent.put("petName", pet.getPetName());
-                    msgContent.put("applyId",applyId);
-                    msgContent.put("status","3");
+                    msgContent.put("applyId", applyId);
+                    msgContent.put("status", "3");
 
                     msg.setMsgContent(msgContent.toJSONString());
                     msg.setMsgType(2);
@@ -335,6 +355,18 @@ public class MessageAspect {
                     msgService.crtMessage(msg);
                     break;
                 case "4":
+                    msg.setMsgTitle(MessageTemplate.APPLY_PASS_FORTH_ADOPTER_MSG_TITLE);
+                    msgContent.put("portrait", user.getPortrait());
+                    msgContent.put("nickName", user.getNickName());
+                    msgContent.put("title", MessageTemplate.APPLY_PASS_FORTH_ADOPTER_MSG_CONTENT_TITLE);
+                    msgContent.put("content", MessageTemplate.APPLY_PASS_FORTH_ADOPTER_MSG_CONTENT_LOG);
+                    msgContent.put("status", "4");
+
+                    msg.setMsgContent(msgContent.toJSONString());
+                    msg.setSender("SYS");
+                    msg.setReceiver(pet.getCreateBy());
+                    msgService.crtMessage(msg);
+
                     msg.setMsgTitle(MessageTemplate.APPLY_PASS_FORTH_MSG_TITLE);
                     msgContent.put("portrait", applyUser.getPortrait());
                     msgContent.put("nickName", applyUser.getNickName());
@@ -342,8 +374,8 @@ public class MessageAspect {
                     msgContent.put("content", MessageTemplate.APPLY_PASS_FORTH_MSG_CONTENT_LOG);
                     msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
                     msgContent.put("petName", pet.getPetName());
-                    msgContent.put("applyId",applyId);
-                    msgContent.put("status","4");
+                    msgContent.put("applyId", applyId);
+                    msgContent.put("status", "4");
 
                     msg.setMsgContent(msgContent.toJSONString());
                     msg.setMsgType(2);
@@ -353,38 +385,31 @@ public class MessageAspect {
                     msg.setCreateTime(new Date());
                     msgService.crtMessage(msg);
 
-                    msg.setMsgTitle(MessageTemplate.APPLY_PASS_FORTH_ADOPTER_MSG_TITLE);
-                    msgContent.put("portrait", user.getPortrait());
-                    msgContent.put("nickName", user.getNickName());
-                    msgContent.put("title", MessageTemplate.APPLY_PASS_FORTH_ADOPTER_MSG_CONTENT_TITLE);
-                    msgContent.put("content", MessageTemplate.APPLY_PASS_FORTH_ADOPTER_MSG_CONTENT_LOG);
-                    msgContent.put("status","4");
-
-                    msg.setMsgContent(msgContent.toJSONString());
-                    msg.setSender("SYS");
-                    msg.setReceiver(pet.getCreateBy());
-                    msgService.crtMessage(msg);
-
                     break;
                 default:
+
                     break;
 
             }
+
+            msg.setFormId(uptApply.getFormId());
+
+            //发送申请更新模板消息
+            log.info(HttpUtil.doPost(applyUptUrl, JSON.toJSONString(msg)));
+
         } catch (Throwable e) {
             e.printStackTrace();
         }
     }
 
 
-
-
-    @Around("uplaodCertificationPointCut()")
+    @Around("uploadCertificationPointCut()")
     public void aroundCrtCertificationPointCut(ProceedingJoinPoint pjp) {
         log.info("{MessageAspect} =>crt new certification start.....");
         CmsAdoptCertification certification = (CmsAdoptCertification) pjp.getArgs()[0];
         try {
             pjp.proceed();
-            String userId=certification.getUserId();
+            String userId = certification.getUserId();
             CmsAdoptMsg msg = new CmsAdoptMsg();
             msg.setMsgTitle(MessageTemplate.CER_MSG_TITLE);
             JSONObject msgContent = new JSONObject();
@@ -394,6 +419,7 @@ public class MessageAspect {
             msgContent.put("content", MessageTemplate.CER_MSG_CONTENT_LOG);
             msgContent.put("petPic", "");
             msgContent.put("petName", "");
+            msgContent.put("status", "0");
             msg.setMsgContent(msgContent.toJSONString());
             msg.setMsgType(0);
             msg.setPetId("");
@@ -402,9 +428,13 @@ public class MessageAspect {
             msg.setCreateTime(new Date());
             msgService.crtMessage(msg);
 
-            //推websocket
 
             //推微信模板消息
+            msg.setFormId(certification.getFormId());
+
+            //发送申请创建模板消息
+            log.info(HttpUtil.doPost(certificateUptUrl, JSON.toJSONString(msg)));
+
 
         } catch (Throwable e) {
             e.printStackTrace();
@@ -418,11 +448,11 @@ public class MessageAspect {
         CmsAdoptCertification certification = (CmsAdoptCertification) pjp.getArgs()[0];
         try {
             pjp.proceed();
-            String userId=certification.getUserId();
+            String userId = certification.getUserId();
             CmsAdoptMsg msg = new CmsAdoptMsg();
             JSONObject msgContent = new JSONObject();
 
-            switch (certification.getStatus()){
+            switch (certification.getStatus()) {
                 case "1":
                     msg.setMsgTitle(MessageTemplate.CER_PASS_MSG_TITLE);
                     msgContent.put("portrait", "");
@@ -431,6 +461,7 @@ public class MessageAspect {
                     msgContent.put("content", MessageTemplate.CER_PASS_MSG_CONTENT_LOG);
                     msgContent.put("petPic", "");
                     msgContent.put("petName", "");
+                    msgContent.put("status", "1");
                     msg.setMsgContent(msgContent.toJSONString());
                     msg.setMsgType(0);
                     msg.setPetId("");
@@ -444,9 +475,10 @@ public class MessageAspect {
                     msgContent.put("portrait", "");
                     msgContent.put("nickName", "");
                     msgContent.put("title", MessageTemplate.CER_REJECT_MSG_CONTENT_TITLE);
-                    msgContent.put("content", MessageTemplate.CER_REJECT_MSG_CONTENT_LOG+certification.getMemo());
+                    msgContent.put("content", MessageTemplate.CER_REJECT_MSG_CONTENT_LOG + certification.getMemo());
                     msgContent.put("petPic", "");
                     msgContent.put("petName", "");
+                    msgContent.put("status", "2");
                     msg.setMsgContent(msgContent.toJSONString());
                     msg.setMsgType(0);
                     msg.setPetId("");
@@ -460,9 +492,12 @@ public class MessageAspect {
             }
 
 
-            //推websocket
-
             //推微信模板消息
+            msg.setFormId(certification.getFormId());
+
+            //发送申请更新模板消息
+            log.info(HttpUtil.doPost(certificateUptUrl, JSON.toJSONString(msg)));
+
 
         } catch (Throwable e) {
             e.printStackTrace();

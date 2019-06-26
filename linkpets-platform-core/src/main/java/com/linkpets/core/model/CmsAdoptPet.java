@@ -129,6 +129,7 @@ public class CmsAdoptPet {
 
 	private boolean collected;
 
+	private String formId;
 
 
 }

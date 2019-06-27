@@ -339,8 +339,8 @@ public class WxTemplateMsgResource {
             templateData.put("keyword2", map);
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
-            templateForm.put("page", "adoption/detail/detail?share=1&petId="+cmsAdoptMsg.getPetId());
-            templateForm.put("", cmsAdoptMsg.getFormId());
+            templateForm.put("page", "msg/index/index");
+            templateForm.put("", chatMsg.getString("formId"));
             templateForm.put("data", templateData);
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
             log.info(sendTemplateMsg);

@@ -243,6 +243,7 @@ public class WxTemplateMsgResource {
 
     @PostMapping("adoptionUpt")
     public PlatformResult sendAdoptionTemplate(@RequestBody String msgData) {
+        log.info("adoptionUpt:"+msgData);
         CmsAdoptMsg cmsAdoptMsg = JSONObject.parseObject(msgData, CmsAdoptMsg.class);
         String msgContent = cmsAdoptMsg.getMsgContent();
         JSONObject msgJson = JSONObject.parseObject(msgContent);

@@ -45,7 +45,7 @@ public class MessageAspect {
 
     private static final String UNPASS = "1";
 
-    private static final String PASS = "2";
+    private static final String PASS = "3";
 
     @Value("${linkPet.lpWechat.templateMsg.applyUpt}")
     private String applyUptUrl;
@@ -122,7 +122,7 @@ public class MessageAspect {
                 msgContent.put("content", MessageTemplate.PET_MSG_CONTENT_LOG);
                 msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
                 msgContent.put("petName", pet.getPetName());
-                msgContent.put("status","0");
+                msgContent.put("status", "0");
                 msg.setMsgContent(msgContent.toJSONString());
                 msg.setMsgType(0);
                 msg.setPetId(petId);
@@ -130,7 +130,6 @@ public class MessageAspect {
                 msg.setReceiver(createBy);
                 msg.setCreateTime(new Date());
                 msgService.crtMessage(msg);
-
 
 
                 //推微信模板消息
@@ -152,9 +151,12 @@ public class MessageAspect {
         try {
             pjp.proceed();
             String petId = uptCmsAdoptPet.getPetId();
+            String formId = uptCmsAdoptPet.getFormId();
+            log.info("FORM_ID=>" + formId);
             CmsAdoptPet pet = petService.getAdopt(petId);
             String createBy = pet.getCreateBy();
             CmsAdoptMsg msg = new CmsAdoptMsg();
+            msg.setFormId(formId);
             JSONObject msgContent = new JSONObject();
 
             //推送系统消息
@@ -168,7 +170,7 @@ public class MessageAspect {
                     msgContent.put("content", MessageTemplate.PET_CHECK_UNPASS_MSG_CONTENT_LOG + uptCmsAdoptPet.getMemo());
                     msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
                     msgContent.put("petName", pet.getPetName());
-                    msgContent.put("status","1");
+                    msgContent.put("status", "1");
                     msg.setMsgContent(msgContent.toJSONString());
                     msg.setMsgType(0);
                     msg.setPetId(petId);
@@ -190,7 +192,7 @@ public class MessageAspect {
                     msgContent.put("content", MessageTemplate.PET_CHECK_PASS_MSG_CONTENT_LOG);
                     msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
                     msgContent.put("petName", pet.getPetName());
-                    msgContent.put("status","2");
+                    msgContent.put("status", "2");
                     msg.setMsgContent(msgContent.toJSONString());
                     msg.setMsgType(0);
                     msg.setPetId(petId);
@@ -202,6 +204,7 @@ public class MessageAspect {
                 default:
                     break;
             }
+            log.info("发送模板消息请求参数：=======================》"+JSON.toJSONString(msg));
             log.info(HttpUtil.doPost(adoptionUptUrl, JSON.toJSONString(msg)));
 
         } catch (Throwable e) {

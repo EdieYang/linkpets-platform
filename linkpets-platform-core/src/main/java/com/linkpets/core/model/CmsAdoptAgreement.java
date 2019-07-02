@@ -1,5 +1,8 @@
 package com.linkpets.core.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class CmsAdoptAgreement {
@@ -145,6 +148,7 @@ public class CmsAdoptAgreement {
      *
      * @mbggenerated Sun May 26 05:24:39 CST 2019
      */
+    @JsonFormat(pattern="yyyy年MM月dd日",timezone = "GMT+8")
     private Date signTime;
 
     /**

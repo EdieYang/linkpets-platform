@@ -117,7 +117,7 @@ public class WxMiniAuthorizeResource {
         Map<String, Object> map = new HashMap<>();
         //find authorized user by userId
         SysUser sysUser = sysUserService.getSysUserInfo(userId);
-        if (sysUser != null && StringUtil.isNotEmpty(sysUser.getUnionId())) {
+        if (sysUser != null && StringUtil.isNotEmpty(sysUser.getUnionId()) && sysUser.getIsActive()==1) {
             map.put("authorized", true);
             map.put("userInfo", sysUser);
         } else {

@@ -1,5 +1,7 @@
 package com.linkpets.cms.adopt.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.linkpets.cms.adopt.service.ICertificationService;
 import com.linkpets.core.dao.CmsAdoptCertificationMapper;
 import com.linkpets.core.dao.CmsUserMapper;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class CertificationServiceImpl implements ICertificationService {
@@ -44,6 +47,14 @@ public class CertificationServiceImpl implements ICertificationService {
     @Override
     public CmsAdoptCertification getUserCertification(String userId) {
         return cmsAdoptCertificationMapper.getUserCertification(userId);
+    }
+
+    @Override
+    public PageInfo<CmsAdoptCertification> getUserCertificationList(int pageNum, int pageSize, String status) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<CmsAdoptCertification> cmsAdoptCertificationList=cmsAdoptCertificationMapper.getUserCertificationList(status);
+        PageInfo<CmsAdoptCertification> pageInfo=new PageInfo<>(cmsAdoptCertificationList);
+        return pageInfo;
     }
 
 

@@ -62,4 +62,6 @@ public interface CmsUserMapper {
 	List<CmsUser> getUserListAttentBy(Map<String, Object> param);
 
     Map<String,Object> getUserAddition(String userId);
+
+    int getTotalUserCount();
 }

@@ -57,6 +57,11 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
+	public int getLoginCount(String syncDate) {
+		return cmsUserLoginMapper.getLoginCount(syncDate);
+	}
+
+	@Override
 	public JSONObject getUserListAttentTo(Map<String, Object> param, int pageNum, int pageSize, String orderBy) {
 		JSONObject result = new JSONObject();
         PageHelper.startPage(pageNum, pageSize, orderBy);
@@ -99,6 +104,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public Map<String, Object> getUserAddition(String userId) {
 		return cmsUserMapper.getUserAddition(userId);
+	}
+
+	@Override
+	public int getTotalUserCount() {
+		return cmsUserMapper.getTotalUserCount();
 	}
 
 

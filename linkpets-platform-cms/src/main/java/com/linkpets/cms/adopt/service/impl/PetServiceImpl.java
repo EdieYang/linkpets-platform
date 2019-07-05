@@ -151,4 +151,9 @@ public class PetServiceImpl implements IPetService {
         }
     }
 
+    @Override
+    public int getPetAdoptCount(String syncDate) {
+        return cmsAdoptPetMapper.getPetAdoptCount(syncDate);
+    }
+
 }

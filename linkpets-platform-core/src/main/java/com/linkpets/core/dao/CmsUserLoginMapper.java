@@ -52,4 +52,6 @@ public interface CmsUserLoginMapper {
     int updateByPrimaryKey(CmsUserLogin record);
 
     CmsUserLogin getLastLoginTime(String userId);
+
+    int getLoginCount(String syncDate);
 }

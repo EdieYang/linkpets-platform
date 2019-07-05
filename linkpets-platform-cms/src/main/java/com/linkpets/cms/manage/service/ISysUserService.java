@@ -27,9 +27,12 @@ public interface ISysUserService {
      */
     JSONObject loginSysUser(String userName, String password);
 
+    SysUser getSysUserByUserName(String userName);
 
     SysUser getSysUser(String userId);
 
     SysUser updateSysUser(String userId,String chainId);
+
+    void register(String userName, String password);
 
 }

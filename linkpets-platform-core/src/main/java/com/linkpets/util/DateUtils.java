@@ -42,6 +42,12 @@ public class DateUtils {
         String dateStr = dateFormat.format(date);
         return dateStr;
     }
+    public static String getFormatDateStr(Date date,String format) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        String dateStr = dateFormat.format(date);
+        return dateStr;
+    }
+
 
     public static boolean diffNow(String sendTime) {
         boolean diff = false;

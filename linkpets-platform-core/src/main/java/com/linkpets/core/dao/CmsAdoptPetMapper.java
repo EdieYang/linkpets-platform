@@ -50,4 +50,5 @@ public interface CmsAdoptPetMapper {
 
 	List<CmsAdoptPet> getFollowedPetList(Map<String, Object> param);
 
+    int getPetAdoptCount(String syncDate);
 }

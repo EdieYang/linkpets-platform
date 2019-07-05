@@ -55,4 +55,6 @@ public interface CmsAdoptApplyMapper {
     int updateByPrimaryKey(CmsAdoptApply record);
 
 	List<Map<String, Object>> getList(Map<String, Object> param);
+
+    int getApplyCount(String syncDate);
 }

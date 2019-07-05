@@ -15,6 +15,8 @@ public interface IUserService {
 
     String getLastLoginTime(String userId);
 
+    int getLoginCount(String syncDate);
+
 	JSONObject getUserListAttentTo(Map<String, Object> param, int pageNum, int pageSize, String string);
 
 	JSONObject getUserListAttentBy(Map<String, Object> param, int pageNum, int pageSize, String string);
@@ -26,4 +28,6 @@ public interface IUserService {
 	void delAttention(String userId, String attentBy);
 
 	Map<String,Object> getUserAddition(String userId);
+
+	int getTotalUserCount();
 }

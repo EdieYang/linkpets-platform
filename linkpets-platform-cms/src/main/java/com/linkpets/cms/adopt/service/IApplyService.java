@@ -36,6 +36,8 @@ public interface IApplyService {
 	 * @return
 	 */
 	public JSONObject getApplyListForPage(Map<String, Object> param, int pageNum, int pageSize, String orderBy);
+
+	int getApplyCount(String syncDate);
 	
 
 }

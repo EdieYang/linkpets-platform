@@ -10,9 +10,11 @@ import com.linkpets.core.dao.SysUserMapper;
 import com.linkpets.core.model.SysUser;
 import com.linkpets.util.ResponseCode;
 import com.linkpets.util.ResponseCodeFactory;
+import com.linkpets.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,21 +47,16 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public JSONObject loginSysUser(String userName, String password) {
         JSONObject result = new JSONObject();
-        SysUser sysUser = sysUserCustomMapper.getSysUserByUserName(userName);
-        if (sysUser == null) {
-            return new ResponseCodeFactory(ResponseCode.INVALID_ACCOUNT).getResponseCode();
-        }
+        SysUser sysUser = sysUserMapper.selectByUserName(userName);
 
-        if (sysUser.getIsActive() == 0) {
-            return new ResponseCodeFactory(ResponseCode.PASSIVE_ACCOUNT).getResponseCode();
-        }
-
-        if (!password.equals(sysUser.getPassword())) {
-            return new ResponseCodeFactory(ResponseCode.PASSWORD_WRONG).getResponseCode();
-        }
 
         result.put("data", sysUser);
         return result;
+    }
+
+    @Override
+    public SysUser getSysUserByUserName(String userName) {
+        return sysUserMapper.selectByUserName(userName);
     }
 
     @Override
@@ -73,5 +70,17 @@ public class SysUserServiceImpl implements ISysUserService {
         sysUser.setChainId(chainId);
         sysUserMapper.updateByPrimaryKeySelective(sysUser);
         return sysUser;
+    }
+
+    @Override
+    public void register(String userName, String password) {
+        SysUser user=new SysUser();
+        user.setUserId(UUIDUtils.getUUID());
+        user.setUserName(userName);
+        user.setPassword(password);
+        user.setRoleId("10001");
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
+        sysUserMapper.insertSelective(user);
     }
 }

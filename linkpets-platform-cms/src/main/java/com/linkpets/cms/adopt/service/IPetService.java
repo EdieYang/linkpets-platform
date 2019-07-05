@@ -60,4 +60,6 @@ public interface IPetService {
     void delCollect(String userId, String petId);
 
     boolean getIfCollectedPet(String userId, String petId);
+
+    int getPetAdoptCount(String syncDate);
 }

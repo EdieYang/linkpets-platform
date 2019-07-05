@@ -5,7 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.manage.service.ISysUserService;
 import com.linkpets.core.model.SysUser;
+import com.linkpets.enums.ResultCode;
 import com.linkpets.result.PlatformResult;
+import com.linkpets.util.ResponseCode;
+import com.linkpets.util.ResponseCodeFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -13,8 +16,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 @Api(tags = "系统账户", description = "用户的增、改、查")
 @ResponseResult
@@ -26,16 +27,40 @@ public class SysUserResource {
     @Qualifier("sysUserService")
     private ISysUserService sysUserService;
 
+    @PostMapping("/register")
+    @ApiOperation(value = "账号登录", notes = "根据userName 和 password 获取账号信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userName", value = "userName", paramType = "query", dataType = "String", required = true),
+            @ApiImplicitParam(name = "password", value = "password", paramType = "query", dataType = "String", required = true)
+    })
+    public PlatformResult sysUserRegister(@RequestParam String userName,
+                                   @RequestParam String password) {
+        SysUser sysUser=sysUserService.getSysUserByUserName(userName);
+        if(sysUser!=null){
+            return PlatformResult.failure(ResultCode.USER_HAS_EXISTED);
+        }
+        sysUserService.register(userName, password);
+        return PlatformResult.success();
+    }
+
     @PostMapping("/login")
     @ApiOperation(value = "账号登录", notes = "根据userName 和 password 获取账号信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "userName", paramType = "query", dataType = "String", required = true),
             @ApiImplicitParam(name = "password", value = "password", paramType = "query", dataType = "String", required = true)
     })
-    public JSONObject sysUserLogin(@RequestParam String userName,
+    public PlatformResult sysUserLogin(@RequestParam String userName,
                                    @RequestParam String password) {
-        return sysUserService.loginSysUser(userName, password);
-    }
+        SysUser sysUser=sysUserService.getSysUserByUserName(userName);
+        if (sysUser == null) {
+            return PlatformResult.failure(ResponseCode.INVALID_ACCOUNT.getResponseMsg());
+        }
+
+        if (!password.equals(sysUser.getPassword())) {
+            return PlatformResult.failure(ResponseCode.PASSWORD_WRONG.getResponseMsg());
+        }
+        return PlatformResult.success(sysUser);
+}
 
 
     @GetMapping("")

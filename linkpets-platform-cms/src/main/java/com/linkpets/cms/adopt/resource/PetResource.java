@@ -99,8 +99,7 @@ public class PetResource {
         adoptPet.setCollected(collected);
         Map<String, Object> userAddition = userService.getUserAddition(userId);
         userInfo.setAdoptingNum(Integer.parseInt(String.valueOf(userAddition.get("adoptingNum"))));
-        userInfo.setAdoptedNum(Integer.parseInt(String.valueOf(userAddition.get("adoptingNum"))));
-        userInfo.setChatResp(userAddition.get("chatResp") + "%");
+        userInfo.setAdoptedNum(Integer.parseInt(String.valueOf(userAddition.get("adoptedNum"))));
         Map<String, Object> map = new HashMap<>();
         map.put("userInfo", userInfo);
         map.put("petInfo", adoptPet);

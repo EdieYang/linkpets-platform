@@ -27,15 +27,17 @@ public class CertificationResource {
     @PostMapping("")
     public PlatformResult uploadCertification(@RequestParam("imageFront") String imageFront,
                                               @RequestParam("imageBack") String imageBack,
-                                              @RequestParam("userId") String userId) {
+                                              @RequestParam("userId") String userId,
+                                              @RequestParam("realName") String realName,
+                                              @RequestParam("idCard") String idCard) {
         CmsAdoptCertification certification = new CmsAdoptCertification();
         certification.setId(UUIDUtils.getUUID());
         certification.setImageFront(imageFront);
         certification.setImageBack(imageBack);
+        certification.setRealName(realName);
+        certification.setIdCard(idCard);
         certification.setUserId(userId);
-        certification.setStatus("0");
         certification.setCreateDate(new Date());
-        certification.setIsValid(1);
         certificationService.uploadCertification(certification);
         return PlatformResult.success();
     }

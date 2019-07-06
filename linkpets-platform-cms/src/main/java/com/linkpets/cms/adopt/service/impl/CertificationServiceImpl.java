@@ -34,7 +34,8 @@ public class CertificationServiceImpl implements ICertificationService {
     @Override
     public void modifyCertification(CmsAdoptCertification certification) {
         String status=certification.getStatus();
-        String userId=certification.getUserId();
+        CmsAdoptCertification cmsAdoptCertification=cmsAdoptCertificationMapper.selectByPrimaryKey(certification.getId());
+        String userId=cmsAdoptCertification.getUserId();
         cmsAdoptCertificationMapper.updateByPrimaryKeySelective(certification);
         if(PASSED_STATUS.equals(status)){
             CmsUser cmsUser=new CmsUser();

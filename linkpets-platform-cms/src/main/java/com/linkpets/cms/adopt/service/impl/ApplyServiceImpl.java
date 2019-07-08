@@ -39,6 +39,7 @@ public class ApplyServiceImpl implements IApplyService {
 
     @Override
     public void uptApply(CmsAdoptApply apply) {
+        apply.setCheckTime(new Date());
         cmsAdoptApplyMapper.updateByPrimaryKeySelective(apply);
     }
 

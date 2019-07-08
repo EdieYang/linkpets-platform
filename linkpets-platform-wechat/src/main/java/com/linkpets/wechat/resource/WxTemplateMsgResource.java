@@ -7,6 +7,7 @@ import com.linkpets.core.model.CmsUser;
 import com.linkpets.result.PlatformResult;
 import com.linkpets.util.DateUtils;
 import com.linkpets.util.HttpUtil;
+import com.linkpets.wechat.model.KeyWordValue;
 import com.linkpets.wechat.service.IUserService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -226,7 +227,7 @@ public class WxTemplateMsgResource {
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
             templateForm.put("page", "mine/identify/identify?share=1");
-            templateForm.put("", cmsAdoptMsg.getFormId());
+            templateForm.put("form_id", cmsAdoptMsg.getFormId());
             templateForm.put("data", templateData);
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
             log.info(sendTemplateMsg);
@@ -260,48 +261,37 @@ public class WxTemplateMsgResource {
             String response = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appId + "&secret=" + appSecret, "");
             JSONObject resJsonObj = JSON.parseObject(response);
             String accessToken = resJsonObj.getString("access_token");
-            Map<String, String> map = new HashMap<>();
             switch (status) {
                 //申请领养通知
                 case "0":
                     templateId = adoptionCheckTemplateId;
 
-                    map.put("value", msgJson.getString("petName")+"的送养申请已创建，待审核");
-                    templateData.put("keyword1", map);
-                    map.put("value", "平台将在1-3个工作日内对送养申请进行审核,请耐心等待");
-                    templateData.put("keyword2", map);
-                    map.put("value", "-");
-                    templateData.put("keyword3", map);
+                    templateData.put("keyword1", new KeyWordValue(msgJson.getString("petName")+"的送养申请已创建，待审核").toJson());
+                    templateData.put("keyword2", new KeyWordValue("平台将在1-3个工作日内对送养申请进行审核,请耐心等待").toJson());
+                    templateData.put("keyword3", new KeyWordValue("-").toJson());
                     break;
                 case "1":
                     templateId = adoptionCheckTemplateId;
-                    map.put("value", "很抱歉，"+msgJson.getString("petName")+"的送养申请未通过");
-                    templateData.put("keyword1", map);
-                    map.put("value", "点击此处查看未通过原因");
-                    templateData.put("keyword2", map);
-                    map.put("value", DateUtils.getFormatDateStr(new Date()));
-                    templateData.put("keyword3", map);
-
+                    templateData.put("keyword1", new KeyWordValue("很抱歉，"+msgJson.getString("petName")+"的送养申请未通过").toJson());
+                    templateData.put("keyword2", new KeyWordValue("点击此处查看未通过原因").toJson());
+                    templateData.put("keyword3", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
                     break;
                 case "2":
                     templateId = adoptionCheckTemplateId;
-                    map.put("value", "恭喜您！"+msgJson.getString("petName")+"的送养申请已通过上线");
-                    templateData.put("keyword1", map);
-                    map.put("value", "点击查看送养详情");
-                    templateData.put("keyword2", map);
-                    map.put("value", DateUtils.getFormatDateStr(new Date()));
-                    templateData.put("keyword3", map);
-
+                    templateData.put("keyword1", new KeyWordValue( "恭喜您！"+msgJson.getString("petName")+"的送养申请已通过上线").toJson());
+                    templateData.put("keyword2", new KeyWordValue("点击查看送养详情").toJson());
+                    templateData.put("keyword3", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
                     break;
                 default:
                     break;
             }
-
+            log.info("formId=>>>>"+cmsAdoptMsg.getFormId());
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
             templateForm.put("page", "adoption/detail/detail?share=1&petId="+cmsAdoptMsg.getPetId());
-            templateForm.put("", cmsAdoptMsg.getFormId());
+            templateForm.put("form_id", cmsAdoptMsg.getFormId());
             templateForm.put("data", templateData);
+            log.info("发送模板消息请求报文："+templateForm.toJSONString());
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
             log.info(sendTemplateMsg);
 
@@ -341,7 +331,7 @@ public class WxTemplateMsgResource {
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
             templateForm.put("page", "msg/index/index");
-            templateForm.put("", chatMsg.getString("formId"));
+            templateForm.put("form_id", chatMsg.getString("formId"));
             templateForm.put("data", templateData);
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
             log.info(sendTemplateMsg);

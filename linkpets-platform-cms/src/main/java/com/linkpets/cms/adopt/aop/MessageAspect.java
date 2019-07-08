@@ -3,10 +3,7 @@ package com.linkpets.cms.adopt.aop;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.linkpets.cms.adopt.model.UserInfo;
-import com.linkpets.cms.adopt.service.IApplyService;
-import com.linkpets.cms.adopt.service.ICmsAdoptMsgService;
-import com.linkpets.cms.adopt.service.IPetService;
-import com.linkpets.cms.adopt.service.IUserService;
+import com.linkpets.cms.adopt.service.*;
 import com.linkpets.core.model.CmsAdoptApply;
 import com.linkpets.core.model.CmsAdoptCertification;
 import com.linkpets.core.model.CmsAdoptMsg;
@@ -42,6 +39,9 @@ public class MessageAspect {
 
     @Resource
     private IApplyService applyService;
+
+    @Resource
+    private IFormIdGeneratorService formIdGeneratorService;
 
     private static final String UNPASS = "1";
 
@@ -104,6 +104,7 @@ public class MessageAspect {
     @Around("crtAdoptPointCut()")
     public String aroundCrtPetPointCut(ProceedingJoinPoint pjp) {
         log.info("{MessageAspect} =>crt new petAdoption start.....");
+        CmsAdoptPet uptCmsAdoptPet = (CmsAdoptPet) pjp.getArgs()[0];
         String petId = "";
         try {
             Object result = pjp.proceed();
@@ -112,7 +113,16 @@ public class MessageAspect {
                 petId = (String) result;
 
                 CmsAdoptPet pet = petService.getAdopt(petId);
+
                 String createBy = pet.getCreateBy();
+                formIdGeneratorService.addFormId(uptCmsAdoptPet.getFormId(),createBy);
+
+                //获取有效formId
+                String formId=formIdGeneratorService.getValidFormId(createBy);
+                if(StringUtils.isEmpty(formId)){
+
+                    formId=uptCmsAdoptPet.getFormId();
+                }
                 CmsAdoptMsg msg = new CmsAdoptMsg();
                 msg.setMsgTitle(MessageTemplate.PET_MSG_TITLE);
                 JSONObject msgContent = new JSONObject();
@@ -129,6 +139,7 @@ public class MessageAspect {
                 msg.setSender("SYS");
                 msg.setReceiver(createBy);
                 msg.setCreateTime(new Date());
+                msg.setFormId(formId);
                 msgService.crtMessage(msg);
 
 
@@ -151,14 +162,16 @@ public class MessageAspect {
         try {
             pjp.proceed();
             String petId = uptCmsAdoptPet.getPetId();
-            String formId = uptCmsAdoptPet.getFormId();
-            log.info("FORM_ID=>" + formId);
             CmsAdoptPet pet = petService.getAdopt(petId);
             String createBy = pet.getCreateBy();
             CmsAdoptMsg msg = new CmsAdoptMsg();
-            msg.setFormId(formId);
             JSONObject msgContent = new JSONObject();
-
+            //获取有效formId
+            String formId=formIdGeneratorService.getValidFormId(createBy);
+            if(StringUtils.isEmpty(formId)){
+                formId=uptCmsAdoptPet.getFormId();
+            }
+            msg.setFormId(formId);
             //推送系统消息
             switch (uptCmsAdoptPet.getAdoptStatus()) {
                 case UNPASS:
@@ -223,11 +236,16 @@ public class MessageAspect {
             String applyId = (String) result;
             String applyUserId = newApply.getApplyBy();
             String petId = newApply.getPetId();
-            String formId = newApply.getFormId();
+
             if (StringUtils.isNotEmpty(applyUserId) && StringUtils.isNotEmpty(petId)) {
                 CmsAdoptPet pet = petService.getAdopt(petId);
                 String createBy = pet.getCreateBy();
-                UserInfo user = userService.getUserInfoByUserId(createBy);
+                //获取有效formId
+                String formId=formIdGeneratorService.getValidFormId(createBy);
+                if(StringUtils.isEmpty(formId)){
+                    formId=newApply.getFormId();
+                }
+                UserInfo user = userService.getUserInfoByUserId(applyUserId);
                 CmsAdoptMsg msg = new CmsAdoptMsg();
                 msg.setMsgTitle(MessageTemplate.APPLY_MSG_TITLE.replace("#", user.getNickName()));
                 JSONObject msgContent = new JSONObject();
@@ -293,6 +311,7 @@ public class MessageAspect {
                     msg.setSender(pet.getCreateBy());
                     msg.setReceiver(apply.getApplyBy());
                     msg.setCreateTime(new Date());
+                    msg.setFormId(uptApply.getFormId());
                     msgService.crtMessage(msg);
 
                     msg.setSender(apply.getApplyBy());
@@ -395,7 +414,6 @@ public class MessageAspect {
 
             }
 
-            msg.setFormId(uptApply.getFormId());
 
             //发送申请更新模板消息
             log.info(HttpUtil.doPost(applyUptUrl, JSON.toJSONString(msg)));

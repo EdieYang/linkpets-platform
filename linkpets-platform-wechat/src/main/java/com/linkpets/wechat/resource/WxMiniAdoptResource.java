@@ -29,7 +29,12 @@ public class WxMiniAdoptResource {
     @Value("${linkPet.appSecret}")
     private String appSecret;
 
-
+    /**
+     * 生成小程序分享码
+     * @param scene
+     * @param path
+     * @return
+     */
     @RequestMapping(value = "/generateWxACode", method = RequestMethod.GET)
     public PlatformResult generateWxACode(@RequestParam(value = "scene",required = false) String scene, @RequestParam("path") String path) {
         Map<String, Object> map = new HashMap<>();

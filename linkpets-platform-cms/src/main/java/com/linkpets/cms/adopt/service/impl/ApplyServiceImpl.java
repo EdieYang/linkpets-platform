@@ -65,5 +65,10 @@ public class ApplyServiceImpl implements IApplyService {
         return cmsAdoptApplyMapper.getApplyCount(syncDate);
     }
 
+    @Override
+    public List<CmsAdoptApply> getExpiredAdoptApplyList() {
+        return cmsAdoptApplyMapper.getExpiredAdoptApplyList();
+    }
+
 
 }

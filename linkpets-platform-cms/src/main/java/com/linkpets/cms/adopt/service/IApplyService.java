@@ -1,5 +1,6 @@
 package com.linkpets.cms.adopt.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
@@ -38,6 +39,8 @@ public interface IApplyService {
 	public JSONObject getApplyListForPage(Map<String, Object> param, int pageNum, int pageSize, String orderBy);
 
 	int getApplyCount(String syncDate);
+
+	List<CmsAdoptApply> getExpiredAdoptApplyList();
 	
 
 }

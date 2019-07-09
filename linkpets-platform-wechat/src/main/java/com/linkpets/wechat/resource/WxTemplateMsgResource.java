@@ -151,7 +151,7 @@ public class WxTemplateMsgResource {
 
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
-            templateForm.put("page", "mine/applyreceivedetail/applyreceivedetail?share=1&applyId=" + applyId);
+            templateForm.put("page", "pages/mine/applyreceivedetail/applyreceivedetail?share=1&applyId=" + applyId);
             templateForm.put("", cmsAdoptMsg.getFormId());
             templateForm.put("data", templateData);
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
@@ -226,7 +226,7 @@ public class WxTemplateMsgResource {
 
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
-            templateForm.put("page", "mine/identify/identify?share=1");
+            templateForm.put("page", "pages/mine/identify/identify?share=1");
             templateForm.put("form_id", cmsAdoptMsg.getFormId());
             templateForm.put("data", templateData);
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
@@ -266,7 +266,7 @@ public class WxTemplateMsgResource {
                 case "0":
                     templateId = adoptionCheckTemplateId;
 
-                    templateData.put("keyword1", new KeyWordValue(msgJson.getString("petName")+"的送养申请已创建，待审核").toJson());
+                    templateData.put("keyword1", new KeyWordValue(msgJson.getString("petName")+"的送养申请已创建，等待审核中").toJson());
                     templateData.put("keyword2", new KeyWordValue("平台将在1-3个工作日内对送养申请进行审核,请耐心等待").toJson());
                     templateData.put("keyword3", new KeyWordValue("-").toJson());
                     break;
@@ -288,7 +288,7 @@ public class WxTemplateMsgResource {
             log.info("formId=>>>>"+cmsAdoptMsg.getFormId());
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
-            templateForm.put("page", "adoption/detail/detail?share=1&petId="+cmsAdoptMsg.getPetId());
+            templateForm.put("page", "pages/adoption/detail/detail?scene="+cmsAdoptMsg.getPetId());
             templateForm.put("form_id", cmsAdoptMsg.getFormId());
             templateForm.put("data", templateData);
             log.info("发送模板消息请求报文："+templateForm.toJSONString());
@@ -330,7 +330,7 @@ public class WxTemplateMsgResource {
             templateData.put("keyword2", map);
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
-            templateForm.put("page", "msg/index/index");
+            templateForm.put("page", "pages/msg/index/index");
             templateForm.put("form_id", chatMsg.getString("formId"));
             templateForm.put("data", templateData);
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -100,6 +101,14 @@ public class PetResource {
         Map<String, Object> userAddition = userService.getUserAddition(userId);
         userInfo.setAdoptingNum(Integer.parseInt(String.valueOf(userAddition.get("adoptingNum"))));
         userInfo.setAdoptedNum(Integer.parseInt(String.valueOf(userAddition.get("adoptedNum"))));
+        int applyNum = Integer.parseInt(String.valueOf(userAddition.get("applyNum")));
+        int applyHandle =  Integer.parseInt(String.valueOf(userAddition.get("applyHandle")));
+        if(applyNum==0){
+            userInfo.setApplyHandle("0%");
+        }else{
+            userInfo.setApplyHandle(Math.round(applyHandle/(applyNum*1.00)*100)+"%");
+        }
+
         Map<String, Object> map = new HashMap<>();
         map.put("userInfo", userInfo);
         map.put("petInfo", adoptPet);

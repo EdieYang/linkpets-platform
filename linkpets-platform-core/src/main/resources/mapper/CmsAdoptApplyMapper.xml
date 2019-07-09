@@ -326,4 +326,11 @@
         from cms_adopt_apply
         where date_format(apply_time,'%y-%m-%d') = #{syncDate}
     </select>
+    <select id="getExpiredAdoptApplyList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from cms_adopt_apply
+        where apply_status=0 and TIMESTAMPDIFF(HOUR,apply_time,NOW())>=24*7
+        or apply_status!=0 and TIMESTAMPDIFF(HOUR,check_time,NOW())>=24*7
+        and is_valid ='1'
+    </select>
 </mapper>

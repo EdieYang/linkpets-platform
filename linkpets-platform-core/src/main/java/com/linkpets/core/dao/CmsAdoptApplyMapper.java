@@ -57,4 +57,6 @@ public interface CmsAdoptApplyMapper {
 	List<Map<String, Object>> getList(Map<String, Object> param);
 
     int getApplyCount(String syncDate);
+
+    List<CmsAdoptApply> getExpiredAdoptApplyList();
 }

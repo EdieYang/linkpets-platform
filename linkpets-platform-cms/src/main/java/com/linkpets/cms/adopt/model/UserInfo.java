@@ -72,4 +72,9 @@ public class UserInfo {
      */
     private int adoptedNum;
 
+    /**
+     * 申请领养处理率
+     */
+    private String applyHandle;
+
 }

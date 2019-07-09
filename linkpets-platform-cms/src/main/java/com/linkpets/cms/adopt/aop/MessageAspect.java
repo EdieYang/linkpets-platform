@@ -115,13 +115,13 @@ public class MessageAspect {
                 CmsAdoptPet pet = petService.getAdopt(petId);
 
                 String createBy = pet.getCreateBy();
-                formIdGeneratorService.addFormId(uptCmsAdoptPet.getFormId(),createBy);
+                formIdGeneratorService.addFormId(uptCmsAdoptPet.getFormId(), createBy);
 
                 //获取有效formId
-                String formId=formIdGeneratorService.getValidFormId(createBy);
-                if(StringUtils.isEmpty(formId)){
+                String formId = formIdGeneratorService.getValidFormId(createBy);
+                if (StringUtils.isEmpty(formId)) {
 
-                    formId=uptCmsAdoptPet.getFormId();
+                    formId = uptCmsAdoptPet.getFormId();
                 }
                 CmsAdoptMsg msg = new CmsAdoptMsg();
                 msg.setMsgTitle(MessageTemplate.PET_MSG_TITLE);
@@ -159,6 +159,8 @@ public class MessageAspect {
     public void aroundUptPetPointCut(ProceedingJoinPoint pjp) {
         log.info("{MessageAspect} =>check new petAdoption start.....");
         CmsAdoptPet uptCmsAdoptPet = (CmsAdoptPet) pjp.getArgs()[0];
+        String receiverFormId = "";
+        formIdGeneratorService.addFormId(uptCmsAdoptPet.getFormId(), uptCmsAdoptPet.getCreateBy());
         try {
             pjp.proceed();
             String petId = uptCmsAdoptPet.getPetId();
@@ -166,12 +168,7 @@ public class MessageAspect {
             String createBy = pet.getCreateBy();
             CmsAdoptMsg msg = new CmsAdoptMsg();
             JSONObject msgContent = new JSONObject();
-            //获取有效formId
-            String formId=formIdGeneratorService.getValidFormId(createBy);
-            if(StringUtils.isEmpty(formId)){
-                formId=uptCmsAdoptPet.getFormId();
-            }
-            msg.setFormId(formId);
+
             //推送系统消息
             switch (uptCmsAdoptPet.getAdoptStatus()) {
                 case UNPASS:
@@ -191,10 +188,6 @@ public class MessageAspect {
                     msg.setReceiver(createBy);
                     msg.setCreateTime(new Date());
                     msgService.crtMessage(msg);
-
-                    //推微信模板消息
-
-
                     break;
                 case PASS:
                     //审核通过上线通知
@@ -217,7 +210,10 @@ public class MessageAspect {
                 default:
                     break;
             }
-            log.info("发送模板消息请求参数：=======================》"+JSON.toJSONString(msg));
+
+            receiverFormId = formIdGeneratorService.getValidFormId(createBy);
+            msg.setFormId(receiverFormId);
+            log.info("发送模板消息请求参数：=======================》" + JSON.toJSONString(msg));
             log.info(HttpUtil.doPost(adoptionUptUrl, JSON.toJSONString(msg)));
 
         } catch (Throwable e) {
@@ -230,6 +226,7 @@ public class MessageAspect {
     public void aroundCrtApplyPointCut(ProceedingJoinPoint pjp) {
         log.info("{MessageAspect} =>create new Apply start.....");
         CmsAdoptApply newApply = (CmsAdoptApply) pjp.getArgs()[0];
+        formIdGeneratorService.addFormId(newApply.getFormId(),newApply.getApplyBy());
 
         try {
             Object result = pjp.proceed();
@@ -241,10 +238,7 @@ public class MessageAspect {
                 CmsAdoptPet pet = petService.getAdopt(petId);
                 String createBy = pet.getCreateBy();
                 //获取有效formId
-                String formId=formIdGeneratorService.getValidFormId(createBy);
-                if(StringUtils.isEmpty(formId)){
-                    formId=newApply.getFormId();
-                }
+                String formId = formIdGeneratorService.getValidFormId(createBy);
                 UserInfo user = userService.getUserInfoByUserId(applyUserId);
                 CmsAdoptMsg msg = new CmsAdoptMsg();
                 msg.setMsgTitle(MessageTemplate.APPLY_MSG_TITLE.replace("#", user.getNickName()));
@@ -266,7 +260,7 @@ public class MessageAspect {
                 msg.setFormId(formId);
                 msgService.crtMessage(msg);
 
-                //推websocket
+                log.info("发送模板消息请求参数：=======================》" + JSON.toJSONString(msg));
 
                 //发送创建申请模板消息
                 log.info(HttpUtil.doPost(applyUptUrl, JSON.toJSONString(msg)));
@@ -291,8 +285,11 @@ public class MessageAspect {
             String createBy = pet.getCreateBy();
             UserInfo user = userService.getUserInfoByUserId(createBy);
             UserInfo applyUser = userService.getUserInfoByUserId(apply.getApplyBy());
+            formIdGeneratorService.addFormId(uptApply.getFormId(), apply.getApplyBy());
             CmsAdoptMsg msg = new CmsAdoptMsg();
             JSONObject msgContent = new JSONObject();
+            String receiverFormId = "";
+            String senderFormId = "";
 
             switch (uptApply.getApplyStatus()) {
                 case "5":
@@ -311,11 +308,14 @@ public class MessageAspect {
                     msg.setSender(pet.getCreateBy());
                     msg.setReceiver(apply.getApplyBy());
                     msg.setCreateTime(new Date());
-                    msg.setFormId(uptApply.getFormId());
+                    senderFormId = formIdGeneratorService.getValidFormId(apply.getApplyBy());
+                    msg.setFormId(senderFormId);
                     msgService.crtMessage(msg);
 
                     msg.setSender(apply.getApplyBy());
                     msg.setReceiver(pet.getCreateBy());
+                    receiverFormId = formIdGeneratorService.getValidFormId(pet.getCreateBy());
+                    msg.setFormId(receiverFormId);
                     msgService.crtMessage(msg);
 
                     break;
@@ -335,6 +335,8 @@ public class MessageAspect {
                     msg.setPetId(apply.getPetId());
                     msg.setSender(pet.getCreateBy());
                     msg.setReceiver(apply.getApplyBy());
+                    receiverFormId = formIdGeneratorService.getValidFormId(apply.getApplyBy());
+                    msg.setFormId(receiverFormId);
                     msg.setCreateTime(new Date());
                     msgService.crtMessage(msg);
                     break;
@@ -355,6 +357,8 @@ public class MessageAspect {
                     msg.setSender(pet.getCreateBy());
                     msg.setReceiver(apply.getApplyBy());
                     msg.setCreateTime(new Date());
+                    receiverFormId = formIdGeneratorService.getValidFormId(apply.getApplyBy());
+                    msg.setFormId(receiverFormId);
                     msgService.crtMessage(msg);
                     break;
                 case "3":
@@ -374,6 +378,8 @@ public class MessageAspect {
                     msg.setSender(apply.getApplyBy());
                     msg.setReceiver(pet.getCreateBy());
                     msg.setCreateTime(new Date());
+                    receiverFormId = formIdGeneratorService.getValidFormId(pet.getCreateBy());
+                    msg.setFormId(receiverFormId);
                     msgService.crtMessage(msg);
                     break;
                 case "4":
@@ -404,16 +410,17 @@ public class MessageAspect {
                     msg.setPetId(apply.getPetId());
                     msg.setSender("SYS");
                     msg.setReceiver(apply.getApplyBy());
+                    receiverFormId = formIdGeneratorService.getValidFormId(apply.getApplyBy());
+                    msg.setFormId(receiverFormId);
                     msg.setCreateTime(new Date());
                     msgService.crtMessage(msg);
 
                     break;
                 default:
-
                     break;
-
             }
 
+            log.info("发送模板消息请求参数：=======================》" + JSON.toJSONString(msg));
 
             //发送申请更新模板消息
             log.info(HttpUtil.doPost(applyUptUrl, JSON.toJSONString(msg)));
@@ -428,6 +435,8 @@ public class MessageAspect {
     public void aroundCrtCertificationPointCut(ProceedingJoinPoint pjp) {
         log.info("{MessageAspect} =>crt new certification start.....");
         CmsAdoptCertification certification = (CmsAdoptCertification) pjp.getArgs()[0];
+        String receiverFormId = "";
+        formIdGeneratorService.addFormId(certification.getFormId(), certification.getUserId());
         try {
             pjp.proceed();
             String userId = certification.getUserId();
@@ -446,12 +455,13 @@ public class MessageAspect {
             msg.setPetId("");
             msg.setSender("SYS");
             msg.setReceiver(userId);
+
+            receiverFormId = formIdGeneratorService.getValidFormId(userId);
+            msg.setFormId(receiverFormId);
+
             msg.setCreateTime(new Date());
             msgService.crtMessage(msg);
 
-
-            //推微信模板消息
-            msg.setFormId(certification.getFormId());
 
             //发送申请创建模板消息
             log.info(HttpUtil.doPost(certificateUptUrl, JSON.toJSONString(msg)));
@@ -467,6 +477,8 @@ public class MessageAspect {
     public void aroundUptCertificationPointCut(ProceedingJoinPoint pjp) {
         log.info("{MessageAspect} =>check certification start.....");
         CmsAdoptCertification certification = (CmsAdoptCertification) pjp.getArgs()[0];
+        String receiverFormId = "";
+        formIdGeneratorService.addFormId(certification.getFormId(), certification.getUserId());
         try {
             pjp.proceed();
             String userId = certification.getUserId();
@@ -512,9 +524,9 @@ public class MessageAspect {
                     break;
             }
 
+            receiverFormId = formIdGeneratorService.getValidFormId(userId);
+            msg.setFormId(receiverFormId);
 
-            //推微信模板消息
-            msg.setFormId(certification.getFormId());
 
             //发送申请更新模板消息
             log.info(HttpUtil.doPost(certificateUptUrl, JSON.toJSONString(msg)));

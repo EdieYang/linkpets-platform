@@ -30,11 +30,17 @@ public class ApplyServiceImpl implements IApplyService {
 
     @Override
     public String crtApply(CmsAdoptApply apply) {
-        String applyId = UUIDUtils.getUUID();
-        apply.setApplyId(applyId);
-        apply.setApplyTime(new Date());
-        cmsAdoptApplyMapper.insertSelective(apply);
-        return applyId;
+        CmsAdoptApply existApply=cmsAdoptApplyMapper.getApply(apply.getApplyBy(),apply.getPetId());
+        if(existApply==null){
+            String applyId = UUIDUtils.getUUID();
+            apply.setApplyId(applyId);
+            apply.setApplyTime(new Date());
+            cmsAdoptApplyMapper.insertSelective(apply);
+            return applyId;
+        }else{
+            return "";
+        }
+
     }
 
     @Override

@@ -48,7 +48,9 @@ public class AgreementResource {
     @ApiOperation("创建领养合同接口")
     @PostMapping(value = "info")
     public PlatformResult crtAgreement(@RequestBody CmsAdoptAgreement agreement) {
-
+        String adopterUserId=agreement.getAdopterId();
+        CmsAdoptCertification certification=certificationService.getUserCertification(adopterUserId);
+        agreement.setAdopterIdcard(certification.getIdCard());
         String agreementId = agreementService.crtAgreement(agreement);
         String applyId=agreement.getApplyId();
         CmsAdoptApply adoptApply=new CmsAdoptApply();
@@ -66,6 +68,7 @@ public class AgreementResource {
             apply.setApplyId(agreement.getApplyId());
             apply.setApplyStatus("3");
             apply.setFormId(agreement.getFormId());
+            apply.setOperateUserId(agreement.getOperateUserId());
             applyService.uptApply(apply);
 
             //加入领养人签署协议信息
@@ -83,6 +86,7 @@ public class AgreementResource {
             apply.setApplyId(agreement.getApplyId());
             apply.setApplyStatus("4");
             apply.setFormId(agreement.getFormId());
+            apply.setOperateUserId(agreement.getOperateUserId());
             applyService.uptApply(apply);
 
             //加入送养人签署协议信息

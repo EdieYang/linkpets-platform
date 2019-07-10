@@ -333,4 +333,12 @@
         or apply_status!=0 and TIMESTAMPDIFF(HOUR,check_time,NOW())>=24*7
         and is_valid ='1'
     </select>
+    <select id="getApply"  resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from cms_adopt_apply
+        where apply_status!=5
+        and is_valid ='1'
+        and apply_by = #{applyBy,jdbcType=VARCHAR}
+        and pet_id =#{petId}
+    </select>
 </mapper>

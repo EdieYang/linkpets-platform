@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.linkpets.core.model.CmsAdoptApply;
+import org.apache.ibatis.annotations.Param;
 
 public interface CmsAdoptApplyMapper {
     /**
@@ -59,4 +60,6 @@ public interface CmsAdoptApplyMapper {
     int getApplyCount(String syncDate);
 
     List<CmsAdoptApply> getExpiredAdoptApplyList();
+
+    CmsAdoptApply getApply(@Param("applyBy") String applyBy, @Param("petId") String petId);
 }

@@ -229,51 +229,54 @@ public class MessageAspect {
      * @param pjp
      */
     @Around("crtApplyPointCut()")
-    public void aroundCrtApplyPointCut(ProceedingJoinPoint pjp) {
+    public String aroundCrtApplyPointCut(ProceedingJoinPoint pjp) {
         log.info("{MessageAspect} =>create new Apply start.....");
         CmsAdoptApply newApply = (CmsAdoptApply) pjp.getArgs()[0];
         formIdGeneratorService.addFormId(newApply.getFormId(), newApply.getApplyBy());
-
+        String applyId="";
         try {
             Object result = pjp.proceed();
-            String applyId = (String) result;
-            String applyUserId = newApply.getApplyBy();
-            String petId = newApply.getPetId();
+            applyId = (String) result;
+            if(StringUtils.isNotEmpty(applyId)){
+                String applyUserId = newApply.getApplyBy();
+                String petId = newApply.getPetId();
 
-            if (StringUtils.isNotEmpty(applyUserId) && StringUtils.isNotEmpty(petId)) {
-                CmsAdoptPet pet = petService.getAdopt(petId);
-                String createBy = pet.getCreateBy();
-                //获取有效formId
-                CmsAdoptFormid formId = formIdGeneratorService.getValidFormId(createBy);
-                UserInfo user = userService.getUserInfoByUserId(applyUserId);
-                CmsAdoptMsg msg = new CmsAdoptMsg();
-                msg.setMsgTitle(MessageTemplate.APPLY_MSG_TITLE.replace("#", user.getNickName()));
-                JSONObject msgContent = new JSONObject();
-                msgContent.put("portrait", user.getPortrait());
-                msgContent.put("nickName", user.getNickName());
-                msgContent.put("title", MessageTemplate.APPLY_MSG_CONTENT_TITLE);
-                msgContent.put("content", MessageTemplate.APPLY_MSG_CONTENT_LOG);
-                msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
-                msgContent.put("petName", pet.getPetName());
-                msgContent.put("applyId", applyId);
-                msgContent.put("status", "0");
-                msg.setMsgContent(msgContent.toJSONString());
-                msg.setMsgType(1);
-                msg.setPetId(petId);
-                msg.setSender(applyUserId);
-                msg.setReceiver(createBy);
-                msg.setCreateTime(new Date());
+                if (StringUtils.isNotEmpty(applyUserId) && StringUtils.isNotEmpty(petId)) {
+                    CmsAdoptPet pet = petService.getAdopt(petId);
+                    String createBy = pet.getCreateBy();
+                    //获取有效formId
+                    CmsAdoptFormid formId = formIdGeneratorService.getValidFormId(createBy);
+                    UserInfo user = userService.getUserInfoByUserId(applyUserId);
+                    CmsAdoptMsg msg = new CmsAdoptMsg();
+                    msg.setMsgTitle(MessageTemplate.APPLY_MSG_TITLE.replace("#", user.getNickName()));
+                    JSONObject msgContent = new JSONObject();
+                    msgContent.put("portrait", user.getPortrait());
+                    msgContent.put("nickName", user.getNickName());
+                    msgContent.put("title", MessageTemplate.APPLY_MSG_CONTENT_TITLE);
+                    msgContent.put("content", MessageTemplate.APPLY_MSG_CONTENT_LOG);
+                    msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
+                    msgContent.put("petName", pet.getPetName());
+                    msgContent.put("applyId", applyId);
+                    msgContent.put("status", "0");
+                    msg.setMsgContent(msgContent.toJSONString());
+                    msg.setMsgType(1);
+                    msg.setPetId(petId);
+                    msg.setSender(applyUserId);
+                    msg.setReceiver(createBy);
+                    msg.setCreateTime(new Date());
 
-                msgService.crtMessage(msg);
+                    msgService.crtMessage(msg);
 
-                log.info("发送模板消息请求参数：=======================》" + JSON.toJSONString(msg));
+                    log.info("发送模板消息请求参数：=======================》" + JSON.toJSONString(msg));
 
-                //发送创建申请模板消息
-                this.sendTemplateMsg(applyUptUrl, formId, msg);
+                    //发送创建申请模板消息
+                    this.sendTemplateMsg(applyUptUrl, formId, msg);
+                }
             }
         } catch (Throwable e) {
             e.printStackTrace();
         }
+        return applyId;
     }
 
 

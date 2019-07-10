@@ -41,4 +41,6 @@ public interface IUserService {
 
 	String getOpenIdByUserId(String userId);
 
+	void recordUserLastLogin(String userId);
+
 }

@@ -6,6 +6,7 @@ import com.github.pagehelper.util.StringUtil;
 import com.linkpets.core.model.CmsUser;
 import com.linkpets.core.model.UserTemp;
 import com.linkpets.enums.DefaultSettingCode;
+import com.linkpets.result.PlatformResult;
 import com.linkpets.util.HttpClientUtils;
 import com.linkpets.util.UUIDUtils;
 import com.linkpets.util.wxutil.WXCore;
@@ -19,6 +20,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,10 +42,10 @@ public class WxMiniAdoptAuthorizeResource {
     @Value("${linkPet.appSecret}")
     private String appSecret;
 
-    @Autowired
+    @Resource
     private IUserService userService;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate stringRedisTemplate;
 
 
@@ -179,6 +181,13 @@ public class WxMiniAdoptAuthorizeResource {
             return map;
         }
 
+    }
+
+
+    @PostMapping("lastLogin")
+    public PlatformResult recordUserLastLoginTime(@RequestParam("userId") String userId){
+        userService.recordUserLastLogin(userId);
+        return PlatformResult.success();
     }
 
 

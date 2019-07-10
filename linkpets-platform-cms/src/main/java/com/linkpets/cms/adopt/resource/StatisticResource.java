@@ -32,7 +32,7 @@ public class StatisticResource {
 
     @GetMapping(value = "list")
     public PlatformResult getStatisticList() {
-        String syncDate = DateUtils.getFormatDateStr(new Date(), "yyyy-mm-dd");
+        String syncDate = DateUtils.getFormatDateStr(new Date(), "yyyy-MM-dd");
         int applyTodayCount = applyService.getApplyCount(syncDate);
         int petAdoptTodayCount = petService.getPetAdoptCount(syncDate);
         int loginTodayCount=userService.getLoginCount(syncDate);

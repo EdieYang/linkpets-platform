@@ -1,8 +1,12 @@
 package com.linkpets.cms.adopt.service;
 
+import com.linkpets.core.model.CmsAdoptFormid;
+
 public interface IFormIdGeneratorService {
 
-    String getValidFormId(String userId);
+    CmsAdoptFormid getValidFormId(String userId);
 
     void addFormId(String formId,String userId);
+
+    void inactiveFormId(String id);
 }

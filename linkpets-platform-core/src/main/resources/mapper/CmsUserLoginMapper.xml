@@ -46,7 +46,7 @@
       select
       count(1)
       from cms_user_login
-      where date_format(login_date,'%y-%m-%d') = #{syncDate}
+      where left(login_date,10)  = #{syncDate}
 
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

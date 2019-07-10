@@ -471,7 +471,7 @@
     <select id="getPetAdoptCount" resultType="java.lang.Integer">
       SELECT  count(1)
       from cms_adopt_pet
-      where date_format(create_date,'%y-%m-%d') = #{syncDate}
+      where left(create_date,10) = #{syncDate}
 
     </select>
 

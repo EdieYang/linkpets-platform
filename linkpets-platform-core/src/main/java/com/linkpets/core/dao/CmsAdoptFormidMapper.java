@@ -1,6 +1,7 @@
 package com.linkpets.core.dao;
 
 import com.linkpets.core.model.CmsAdoptFormid;
+import org.apache.ibatis.annotations.Param;
 
 public interface CmsAdoptFormidMapper {
     /**
@@ -51,5 +52,5 @@ public interface CmsAdoptFormidMapper {
      */
     int updateByPrimaryKey(CmsAdoptFormid record);
 
-    String getValidFormId(String userId);
+    CmsAdoptFormid getValidFormId(String userId);
 }

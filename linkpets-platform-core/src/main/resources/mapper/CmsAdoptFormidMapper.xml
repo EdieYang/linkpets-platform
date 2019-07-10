@@ -33,8 +33,8 @@
     from cms_adopt_formid
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="getValidFormId" resultType="java.lang.String">
-    select form_id
+  <select id="getValidFormId" resultMap="BaseResultMap" >
+    select <include refid="Base_Column_List" />
     from cms_adopt_formid
     where user_id=#{userId} and is_valid=1  <![CDATA[ and NOW() < expire_time]]>
     limit 1
@@ -149,4 +149,5 @@
       expire_time = #{expireTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
 </mapper>

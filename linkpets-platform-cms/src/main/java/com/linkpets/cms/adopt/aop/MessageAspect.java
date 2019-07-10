@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.linkpets.cms.adopt.model.UserInfo;
 import com.linkpets.cms.adopt.service.*;
-import com.linkpets.core.model.CmsAdoptApply;
-import com.linkpets.core.model.CmsAdoptCertification;
-import com.linkpets.core.model.CmsAdoptMsg;
-import com.linkpets.core.model.CmsAdoptPet;
+import com.linkpets.core.model.*;
 import com.linkpets.util.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -106,6 +103,7 @@ public class MessageAspect {
         log.info("{MessageAspect} =>crt new petAdoption start.....");
         CmsAdoptPet uptCmsAdoptPet = (CmsAdoptPet) pjp.getArgs()[0];
         String petId = "";
+        String receiverFormId="";
         try {
             Object result = pjp.proceed();
             if (result != null) {
@@ -118,11 +116,8 @@ public class MessageAspect {
                 formIdGeneratorService.addFormId(uptCmsAdoptPet.getFormId(), createBy);
 
                 //获取有效formId
-                String formId = formIdGeneratorService.getValidFormId(createBy);
-                if (StringUtils.isEmpty(formId)) {
-
-                    formId = uptCmsAdoptPet.getFormId();
-                }
+                CmsAdoptFormid formId = formIdGeneratorService.getValidFormId(createBy);
+                receiverFormId=formId.getFormId();
                 CmsAdoptMsg msg = new CmsAdoptMsg();
                 msg.setMsgTitle(MessageTemplate.PET_MSG_TITLE);
                 JSONObject msgContent = new JSONObject();
@@ -139,12 +134,12 @@ public class MessageAspect {
                 msg.setSender("SYS");
                 msg.setReceiver(createBy);
                 msg.setCreateTime(new Date());
-                msg.setFormId(formId);
+                msg.setFormId(receiverFormId);
                 msgService.crtMessage(msg);
 
 
                 //推微信模板消息
-                log.info(HttpUtil.doPost(adoptionUptUrl, JSON.toJSONString(msg)));
+                this.sendTemplateMsg(adoptionUptUrl,formId,msg);
 
             }
         } catch (Throwable e) {
@@ -160,7 +155,6 @@ public class MessageAspect {
         log.info("{MessageAspect} =>check new petAdoption start.....");
         CmsAdoptPet uptCmsAdoptPet = (CmsAdoptPet) pjp.getArgs()[0];
         String receiverFormId = "";
-        formIdGeneratorService.addFormId(uptCmsAdoptPet.getFormId(), uptCmsAdoptPet.getCreateBy());
         try {
             pjp.proceed();
             String petId = uptCmsAdoptPet.getPetId();
@@ -211,11 +205,11 @@ public class MessageAspect {
                     break;
             }
 
-            receiverFormId = formIdGeneratorService.getValidFormId(createBy);
+            CmsAdoptFormid formId = formIdGeneratorService.getValidFormId(createBy);
+            receiverFormId=formId.getFormId();
             msg.setFormId(receiverFormId);
             log.info("发送模板消息请求参数：=======================》" + JSON.toJSONString(msg));
-            log.info(HttpUtil.doPost(adoptionUptUrl, JSON.toJSONString(msg)));
-
+            this.sendTemplateMsg(adoptionUptUrl,formId,msg);
         } catch (Throwable e) {
             e.printStackTrace();
         }
@@ -238,7 +232,7 @@ public class MessageAspect {
                 CmsAdoptPet pet = petService.getAdopt(petId);
                 String createBy = pet.getCreateBy();
                 //获取有效formId
-                String formId = formIdGeneratorService.getValidFormId(createBy);
+                CmsAdoptFormid formId = formIdGeneratorService.getValidFormId(createBy);
                 UserInfo user = userService.getUserInfoByUserId(applyUserId);
                 CmsAdoptMsg msg = new CmsAdoptMsg();
                 msg.setMsgTitle(MessageTemplate.APPLY_MSG_TITLE.replace("#", user.getNickName()));
@@ -257,14 +251,13 @@ public class MessageAspect {
                 msg.setSender(applyUserId);
                 msg.setReceiver(createBy);
                 msg.setCreateTime(new Date());
-                msg.setFormId(formId);
+
                 msgService.crtMessage(msg);
 
                 log.info("发送模板消息请求参数：=======================》" + JSON.toJSONString(msg));
 
                 //发送创建申请模板消息
-                log.info(HttpUtil.doPost(applyUptUrl, JSON.toJSONString(msg)));
-
+                this.sendTemplateMsg(applyUptUrl,formId,msg);
             }
         } catch (Throwable e) {
             e.printStackTrace();
@@ -290,7 +283,7 @@ public class MessageAspect {
             JSONObject msgContent = new JSONObject();
             String receiverFormId = "";
             String senderFormId = "";
-
+            CmsAdoptFormid formid=null;
             switch (uptApply.getApplyStatus()) {
                 case "5":
                     msg.setMsgTitle(MessageTemplate.APPLY_REFUSE_MSG_TITLE.replace("#", pet.getPetName()));
@@ -308,13 +301,12 @@ public class MessageAspect {
                     msg.setSender(pet.getCreateBy());
                     msg.setReceiver(apply.getApplyBy());
                     msg.setCreateTime(new Date());
-                    senderFormId = formIdGeneratorService.getValidFormId(apply.getApplyBy());
-                    msg.setFormId(senderFormId);
                     msgService.crtMessage(msg);
 
                     msg.setSender(apply.getApplyBy());
                     msg.setReceiver(pet.getCreateBy());
-                    receiverFormId = formIdGeneratorService.getValidFormId(pet.getCreateBy());
+                    formid= formIdGeneratorService.getValidFormId(pet.getCreateBy());
+                    receiverFormId =formid.getFormId();
                     msg.setFormId(receiverFormId);
                     msgService.crtMessage(msg);
 
@@ -335,7 +327,8 @@ public class MessageAspect {
                     msg.setPetId(apply.getPetId());
                     msg.setSender(pet.getCreateBy());
                     msg.setReceiver(apply.getApplyBy());
-                    receiverFormId = formIdGeneratorService.getValidFormId(apply.getApplyBy());
+                    formid = formIdGeneratorService.getValidFormId(apply.getApplyBy());
+                    receiverFormId=formid.getFormId();
                     msg.setFormId(receiverFormId);
                     msg.setCreateTime(new Date());
                     msgService.crtMessage(msg);
@@ -357,7 +350,8 @@ public class MessageAspect {
                     msg.setSender(pet.getCreateBy());
                     msg.setReceiver(apply.getApplyBy());
                     msg.setCreateTime(new Date());
-                    receiverFormId = formIdGeneratorService.getValidFormId(apply.getApplyBy());
+                    formid = formIdGeneratorService.getValidFormId(apply.getApplyBy());
+                    receiverFormId=formid.getFormId();
                     msg.setFormId(receiverFormId);
                     msgService.crtMessage(msg);
                     break;
@@ -378,7 +372,8 @@ public class MessageAspect {
                     msg.setSender(apply.getApplyBy());
                     msg.setReceiver(pet.getCreateBy());
                     msg.setCreateTime(new Date());
-                    receiverFormId = formIdGeneratorService.getValidFormId(pet.getCreateBy());
+                    formid = formIdGeneratorService.getValidFormId(pet.getCreateBy());
+                    receiverFormId=formid.getFormId();
                     msg.setFormId(receiverFormId);
                     msgService.crtMessage(msg);
                     break;
@@ -410,7 +405,8 @@ public class MessageAspect {
                     msg.setPetId(apply.getPetId());
                     msg.setSender("SYS");
                     msg.setReceiver(apply.getApplyBy());
-                    receiverFormId = formIdGeneratorService.getValidFormId(apply.getApplyBy());
+                    formid = formIdGeneratorService.getValidFormId(apply.getApplyBy());
+                    receiverFormId=formid.getFormId();
                     msg.setFormId(receiverFormId);
                     msg.setCreateTime(new Date());
                     msgService.crtMessage(msg);
@@ -421,9 +417,7 @@ public class MessageAspect {
             }
 
             log.info("发送模板消息请求参数：=======================》" + JSON.toJSONString(msg));
-
-            //发送申请更新模板消息
-            log.info(HttpUtil.doPost(applyUptUrl, JSON.toJSONString(msg)));
+            this.sendTemplateMsg(applyUptUrl,formid,msg);
 
         } catch (Throwable e) {
             e.printStackTrace();
@@ -456,7 +450,8 @@ public class MessageAspect {
             msg.setSender("SYS");
             msg.setReceiver(userId);
 
-            receiverFormId = formIdGeneratorService.getValidFormId(userId);
+            CmsAdoptFormid formid = formIdGeneratorService.getValidFormId(userId);
+            receiverFormId=formid.getFormId();
             msg.setFormId(receiverFormId);
 
             msg.setCreateTime(new Date());
@@ -464,8 +459,7 @@ public class MessageAspect {
 
 
             //发送申请创建模板消息
-            log.info(HttpUtil.doPost(certificateUptUrl, JSON.toJSONString(msg)));
-
+            this.sendTemplateMsg(certificateUptUrl,formid,msg);
 
         } catch (Throwable e) {
             e.printStackTrace();
@@ -524,16 +518,29 @@ public class MessageAspect {
                     break;
             }
 
-            receiverFormId = formIdGeneratorService.getValidFormId(userId);
+            CmsAdoptFormid formid = formIdGeneratorService.getValidFormId(userId);
+            receiverFormId=formid.getFormId();
             msg.setFormId(receiverFormId);
 
 
             //发送申请更新模板消息
-            log.info(HttpUtil.doPost(certificateUptUrl, JSON.toJSONString(msg)));
-
+            this.sendTemplateMsg(certificateUptUrl,formid,msg);
 
         } catch (Throwable e) {
             e.printStackTrace();
+        }
+    }
+
+
+    private void sendTemplateMsg(String sendUrl,CmsAdoptFormid formId,CmsAdoptMsg msg){
+        if(formId!=null){
+            msg.setFormId(formId.getFormId());
+            try {
+                log.info(HttpUtil.doPost(sendUrl, JSON.toJSONString(msg)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            formIdGeneratorService.inactiveFormId(formId.getId());
         }
     }
 

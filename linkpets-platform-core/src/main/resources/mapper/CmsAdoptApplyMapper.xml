@@ -324,7 +324,7 @@
     <select id="getApplyCount" resultType="java.lang.Integer">
         select count(1)
         from cms_adopt_apply
-        where date_format(apply_time,'%y-%m-%d') = #{syncDate}
+        where left(apply_time,10) = #{syncDate}
     </select>
     <select id="getExpiredAdoptApplyList" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" />

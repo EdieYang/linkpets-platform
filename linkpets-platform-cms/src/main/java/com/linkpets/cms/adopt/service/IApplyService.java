@@ -13,20 +13,20 @@ public interface IApplyService {
 	 * 创建申请领养信息
 	 * @param apply
 	 */
-	public String crtApply(CmsAdoptApply apply);
+	String crtApply(CmsAdoptApply apply);
 	
 	/**
 	 * 更新申请领养信息
 	 * @param apply
 	 */
-	public void uptApply(CmsAdoptApply apply);
+	void uptApply(CmsAdoptApply apply);
 	
 	/**
 	 * 获取申请领养信息
 	 * @param applyId
 	 * @return
 	 */
-	public CmsAdoptApply getApply(String applyId);
+	CmsAdoptApply getApply(String applyId);
 	
 	/**
 	 * 获取申请领养列表（分页）
@@ -36,7 +36,7 @@ public interface IApplyService {
 	 * @param orderBy
 	 * @return
 	 */
-	public JSONObject getApplyListForPage(Map<String, Object> param, int pageNum, int pageSize, String orderBy);
+	JSONObject getApplyListForPage(Map<String, Object> param, int pageNum, int pageSize, String orderBy);
 
 	int getApplyCount(String syncDate);
 

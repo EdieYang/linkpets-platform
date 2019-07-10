@@ -22,7 +22,7 @@ public class MessageTemplate {
 
     public static final String PET_CHECK_PASS_MSG_CONTENT_TITLE = " 宠物领养信息审核已通过";
 
-    public static final String PET_CHECK_PASS_MSG_CONTENT_LOG = "点击下方宠物详情进行上线操作";
+    public static final String PET_CHECK_PASS_MSG_CONTENT_LOG = "点击下方查看宠物详情";
 
 
 

@@ -18,7 +18,7 @@ public class FormIdGeneratorServiceImpl implements IFormIdGeneratorService {
     private CmsAdoptFormidMapper cmsAdoptFormidMapper;
 
     @Override
-    public String getValidFormId(String userId) {
+    public CmsAdoptFormid getValidFormId(String userId) {
         return cmsAdoptFormidMapper.getValidFormId(userId);
     }
 
@@ -32,5 +32,13 @@ public class FormIdGeneratorServiceImpl implements IFormIdGeneratorService {
         cmsAdoptFormid.setCreateTime(createDate);
         cmsAdoptFormid.setExpireTime(DateUtils.addDays(createDate,7));
         cmsAdoptFormidMapper.insertSelective(cmsAdoptFormid);
+    }
+
+    @Override
+    public void inactiveFormId(String id) {
+        CmsAdoptFormid formid=new CmsAdoptFormid();
+        formid.setIsValid(0);
+        formid.setId(id);
+        cmsAdoptFormidMapper.updateByPrimaryKeySelective(formid);
     }
 }

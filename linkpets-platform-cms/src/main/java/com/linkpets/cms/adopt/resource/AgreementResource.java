@@ -56,6 +56,8 @@ public class AgreementResource {
         CmsAdoptApply adoptApply=new CmsAdoptApply();
         adoptApply.setApplyId(applyId);
         adoptApply.setApplyStatus("2");
+        adoptApply.setOperateUserId(agreement.getOperateUserId());
+        adoptApply.setFormId(agreement.getFormId());
         applyService.uptApply(adoptApply);
         return PlatformResult.success(agreementId);
     }

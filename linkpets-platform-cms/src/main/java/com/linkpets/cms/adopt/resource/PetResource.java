@@ -98,7 +98,7 @@ public class PetResource {
         userInfo.setLastLoginTime(lastLoginTime);
         boolean collected = petService.getIfCollectedPet(userId, petId);
         adoptPet.setCollected(collected);
-        Map<String, Object> userAddition = userService.getUserAddition(userId);
+        Map<String, Object> userAddition = userService.getUserAddition(adoptPet.getCreateBy());
         userInfo.setAdoptingNum(Integer.parseInt(String.valueOf(userAddition.get("adoptingNum"))));
         userInfo.setAdoptedNum(Integer.parseInt(String.valueOf(userAddition.get("adoptedNum"))));
         int applyNum = Integer.parseInt(String.valueOf(userAddition.get("applyNum")));

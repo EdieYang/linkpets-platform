@@ -255,10 +255,10 @@
 
     </select>
     <select id="getUserAddition" parameterType="java.lang.String" resultType="java.util.Map">
-    select (select count(1) from cms_adopt_pet where create_by=#{userId}  and adopt_status=3 and is_valid=1) as adoptingNum,
-           (select count(1) from cms_adopt_pet where create_by=#{userId}  and adopt_status=4 and is_valid=1) as adoptedNum,
+    select (select count(1) from cms_adopt_pet where create_by=#{userId}  and adopt_status='3' and is_valid=1) as adoptingNum,
+           (select count(1) from cms_adopt_pet where create_by=#{userId}  and adopt_status='4' and is_valid=1) as adoptedNum,
            (select count(1) from cms_adopt_apply caa , cms_adopt_pet cap where caa.pet_id = cap.pet_id and cap.create_by=#{userId}) as applyNum,
-           (select count(1) from cms_adopt_apply caa , cms_adopt_pet cap where caa.pet_id = cap.pet_id and cap.create_by=#{userId} and caa.apply_status !=0) as applyHandle
+           (select count(1) from cms_adopt_apply caa , cms_adopt_pet cap where caa.pet_id = cap.pet_id and cap.create_by=#{userId} and caa.apply_status !='0') as applyHandle
 
   </select>
     <select id="getTotalUserCount" resultType="java.lang.Integer">

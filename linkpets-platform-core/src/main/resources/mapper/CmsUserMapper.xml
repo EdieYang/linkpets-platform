@@ -244,7 +244,7 @@
   	left join cms_user u
   	on a.attent_by = u.user_id
   	where a.is_valid = '1' and u.is_valid = '1' and a.user_id = #{targetUserId,jdbcType=VARCHAR}
-  </select>
+    </select>
     <select id="getAttentionStatus" parameterType="java.lang.String" resultType="java.lang.Integer">
 
       select count(1)
@@ -260,11 +260,10 @@
            (select count(1) from cms_adopt_apply caa , cms_adopt_pet cap where caa.pet_id = cap.pet_id and cap.create_by=#{userId}) as applyNum,
            (select count(1) from cms_adopt_apply caa , cms_adopt_pet cap where caa.pet_id = cap.pet_id and cap.create_by=#{userId} and caa.apply_status !='0') as applyHandle
 
-  </select>
+    </select>
     <select id="getTotalUserCount" resultType="java.lang.Integer">
       select count(1)
       from cms_user
       where is_valid = 1
-
     </select>
 </mapper>

@@ -3,6 +3,7 @@ package com.linkpets.configuration;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -20,12 +21,22 @@ public class WechatMyBatisConfiguration {
 
     private static final Logger log= LoggerFactory.getLogger(WechatMyBatisConfiguration.class);
 
+    @Value("${linkpets.jdbc.url}")
+    private String jdbcUrl;
+
+    @Value("${linkpets.jdbc.username}")
+    private String jdbcUsername;
+
+    @Value("${linkpets.jdbc.password}")
+    private String jdbcPassword;
+
+
     @Bean(value = "wechatDatasource")
     public DataSource dataSource(){
         HikariDataSource hikariDataSource=new HikariDataSource();
-        hikariDataSource.setJdbcUrl("jdbc:mysql://116.62.60.203:3306/pokedata_test?useUnicode=true&autoReconnect=true");
-        hikariDataSource.setUsername("root");
-        hikariDataSource.setPassword("PokePet123456!");
+        hikariDataSource.setJdbcUrl(jdbcUrl);
+        hikariDataSource.setUsername(jdbcUsername);
+        hikariDataSource.setPassword(jdbcPassword);
         hikariDataSource.setReadOnly(false);
         hikariDataSource.setConnectionTimeout(30000);
         hikariDataSource.setIdleTimeout(30000);

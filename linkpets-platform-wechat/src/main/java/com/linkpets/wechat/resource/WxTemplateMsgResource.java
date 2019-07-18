@@ -152,7 +152,7 @@ public class WxTemplateMsgResource {
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
             templateForm.put("page", "pages/mine/applyreceivedetail/applyreceivedetail?share=1&applyId=" + applyId);
-            templateForm.put("", cmsAdoptMsg.getFormId());
+            templateForm.put("form_id", cmsAdoptMsg.getFormId());
             templateForm.put("data", templateData);
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
             log.info(sendTemplateMsg);

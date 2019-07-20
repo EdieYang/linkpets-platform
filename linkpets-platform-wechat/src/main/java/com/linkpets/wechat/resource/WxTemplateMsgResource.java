@@ -89,61 +89,41 @@ public class WxTemplateMsgResource {
                 case "0":
                     templateId = applyCreateTemplateId;
 
-                    map.put("value", msgJson.getString("nickName") + "发来领养申请");
-                    templateData.put("keyword1", map);
-                    map.put("value", "点击此处查看领养申请详情");
-                    templateData.put("keyword2", map);
+                    templateData.put("keyword1", new KeyWordValue( msgJson.getString("nickName") + "发来领养申请").toJson());
+                    templateData.put("keyword2", new KeyWordValue("点击此处查看领养申请详情").toJson());
                     break;
                 case "1":
                     templateId = applyProcessTemplateId;
-                    map.put("value", "恭喜您！初审已通过");
-                    templateData.put("keyword1", map);
-                    map.put("value", "您发出对" + petName + "的领养申请已经初步通过。");
-                    templateData.put("keyword2", map);
-                    map.put("value", DateUtils.getFormatDateStr(new Date()));
-                    templateData.put("keyword3", map);
-                    map.put("value", "请耐心等待送养人的终审，终审通过后您会收到领养协议。");
-                    templateData.put("keyword4", map);
+                    templateData.put("keyword1", new KeyWordValue("恭喜您！初审已通过").toJson());
+                    templateData.put("keyword2", new KeyWordValue("您发出对" + petName + "的领养申请已经初步通过。").toJson());
+                    templateData.put("keyword3", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
+                    templateData.put("keyword4", new KeyWordValue( "请耐心等待送养人的终审，终审通过后您会收到领养协议。").toJson());
                     break;
                 case "2":
                     templateId = applyProcessTemplateId;
-                    map.put("value", "恭喜您！终审已通过");
-                    templateData.put("keyword1", map);
-                    map.put("value", "送养人" + "给您发了份领养协议，请及时填写");
-                    templateData.put("keyword2", map);
-                    map.put("value", DateUtils.getFormatDateStr(new Date()));
-                    templateData.put("keyword3", map);
-                    map.put("value", "请确认协议条款，签上自己的名字，并发送给送养人进行签字");
-                    templateData.put("keyword4", map);
+                    templateData.put("keyword1", new KeyWordValue("恭喜您！终审已通过").toJson());
+                    templateData.put("keyword2", new KeyWordValue("送养人" + "给您发了份领养协议，请及时填写").toJson());
+                    templateData.put("keyword3", new KeyWordValue( DateUtils.getFormatDateStr(new Date())).toJson());
+                    templateData.put("keyword4", new KeyWordValue("请确认协议条款，签上自己的名字，并发送给送养人进行签字").toJson());
                     break;
                 case "3":
                     templateId = applyProcessTemplateId;
-                    map.put("value", "您有一份领养协议待签署");
-                    templateData.put("keyword1", map);
-                    map.put("value", "领养人" + msgJson.getString("nickName") + "已在领养协议中签字");
-                    templateData.put("keyword2", map);
-                    map.put("value", DateUtils.getFormatDateStr(new Date()));
-                    templateData.put("keyword3", map);
-                    map.put("value", "请确认领养人信息正确性，并签上自己的名字，使协议最终生效");
-                    templateData.put("keyword4", map);
+                    templateData.put("keyword1", new KeyWordValue("您有一份领养协议待签署").toJson());
+                    templateData.put("keyword2", new KeyWordValue("领养人" + msgJson.getString("nickName") + "已在领养协议中签字").toJson());
+                    templateData.put("keyword3", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
+                    templateData.put("keyword4", new KeyWordValue("请确认领养人信息正确性，并签上自己的名字，使协议最终生效").toJson());
                     break;
                 case "4":
                     templateId = applyProcessTemplateId;
-                    map.put("value", "恭喜您！" + petName + "的领养协议已生效!");
-                    templateData.put("keyword1", map);
-                    map.put("value", "恭喜您成功领养,快去线下接回你的新主子吧!");
-                    templateData.put("keyword2", map);
-                    map.put("value", DateUtils.getFormatDateStr(new Date()));
-                    templateData.put("keyword3", map);
-                    map.put("value", "协议内容已具备法律效应,身份信息已经备案,请双方遵守协议内容,以免承担相应的法律责任");
-                    templateData.put("keyword4", map);
+                    templateData.put("keyword1", new KeyWordValue("恭喜您！" + petName + "的领养协议已生效!").toJson());
+                    templateData.put("keyword2", new KeyWordValue("恭喜您成功领养,快去线下接回你的新主子吧!").toJson());
+                    templateData.put("keyword3", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
+                    templateData.put("keyword4", new KeyWordValue("协议内容已具备法律效应,身份信息已经备案,请双方遵守协议内容,以免承担相应的法律责任").toJson());
                     break;
                 case "5":
                     templateId = applyCancelTemplateId;
-                    map.put("value", "领养人取消了对" + petName + "的领养申请，点击查看原因");
-                    templateData.put("keyword1", map);
-                    map.put("value", DateUtils.getFormatDateStr(new Date()));
-                    templateData.put("keyword2", map);
+                    templateData.put("keyword1", new KeyWordValue("领养人取消了对" + petName + "的领养申请，点击查看原因").toJson());
+                    templateData.put("keyword2", new KeyWordValue( DateUtils.getFormatDateStr(new Date())).toJson());
                     break;
                 default:
                     break;
@@ -151,7 +131,7 @@ public class WxTemplateMsgResource {
 
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
-            templateForm.put("page", "pages/mine/applyreceivedetail/applyreceivedetail?share=1&applyId=" + applyId);
+            templateForm.put("page", "pages/mine/receiveapplydetail/receiveapplydetail?scene=" + applyId);
             templateForm.put("form_id", cmsAdoptMsg.getFormId());
             templateForm.put("data", templateData);
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
@@ -164,9 +144,6 @@ public class WxTemplateMsgResource {
 
         return PlatformResult.success(sendTemplateMsg);
     }
-
-
-
 
 
     @PostMapping("certificateUpt")
@@ -187,38 +164,26 @@ public class WxTemplateMsgResource {
             String response = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appId + "&secret=" + appSecret, "");
             JSONObject resJsonObj = JSON.parseObject(response);
             String accessToken = resJsonObj.getString("access_token");
-            Map<String, String> map = new HashMap<>();
             switch (status) {
                 //申请领养通知
                 case "0":
                     templateId = certificateTemplateId;
 
-                    map.put("value", "平台将在1-3个工作日内审核您的实名认证信息");
-                    templateData.put("keyword1", map);
-                    map.put("value", DateUtils.getFormatDateStr(new Date()));
-                    templateData.put("keyword2", map);
-                    map.put("value", "认证中");
-                    templateData.put("keyword3", map);
+                    templateData.put("keyword1", new KeyWordValue("平台将在1-3个工作日内审核您的实名认证信息").toJson());
+                    templateData.put("keyword2", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
+                    templateData.put("keyword3", new KeyWordValue("认证中"));
                     break;
                 case "1":
                     templateId = certificateTemplateId;
-                    map.put("value", "恭喜您！实名认证信息已通过");
-                    templateData.put("keyword1", map);
-                    map.put("value", DateUtils.getFormatDateStr(new Date()));
-                    templateData.put("keyword2", map);
-                    map.put("value", "认证成功");
-                    templateData.put("keyword3", map);
-
+                    templateData.put("keyword1", new KeyWordValue("恭喜您！实名认证信息已通过").toJson());
+                    templateData.put("keyword2", new KeyWordValue( DateUtils.getFormatDateStr(new Date())).toJson());
+                    templateData.put("keyword3", new KeyWordValue("认证成功").toJson());
                     break;
                 case "2":
                     templateId = certificateTemplateId;
-                    map.put("value", "很抱歉！您的实名认证信息未通过审核。");
-                    templateData.put("keyword1", map);
-                    map.put("value", DateUtils.getFormatDateStr(new Date()));
-                    templateData.put("keyword2", map);
-                    map.put("value", "认证失败");
-                    templateData.put("keyword3", map);
-
+                    templateData.put("keyword1", new KeyWordValue("很抱歉！您的实名认证信息未通过审核。").toJson());
+                    templateData.put("keyword2", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
+                    templateData.put("keyword3", new KeyWordValue("认证失败").toJson());
                     break;
                 default:
                     break;
@@ -226,7 +191,7 @@ public class WxTemplateMsgResource {
 
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
-            templateForm.put("page", "pages/mine/identify/identify?share=1");
+            templateForm.put("page", "pages/mine/identify/identify?scene=1");
             templateForm.put("form_id", cmsAdoptMsg.getFormId());
             templateForm.put("data", templateData);
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
@@ -241,10 +206,9 @@ public class WxTemplateMsgResource {
     }
 
 
-
     @PostMapping("adoptionUpt")
     public PlatformResult sendAdoptionTemplate(@RequestBody String msgData) {
-        log.info("adoptionUpt:"+msgData);
+        log.info("adoptionUpt:" + msgData);
         CmsAdoptMsg cmsAdoptMsg = JSONObject.parseObject(msgData, CmsAdoptMsg.class);
         String msgContent = cmsAdoptMsg.getMsgContent();
         JSONObject msgJson = JSONObject.parseObject(msgContent);
@@ -266,32 +230,32 @@ public class WxTemplateMsgResource {
                 case "0":
                     templateId = adoptionCheckTemplateId;
 
-                    templateData.put("keyword1", new KeyWordValue(msgJson.getString("petName")+"的送养申请已创建，等待审核中").toJson());
+                    templateData.put("keyword1", new KeyWordValue(msgJson.getString("petName") + "的送养申请已创建，等待审核中").toJson());
                     templateData.put("keyword2", new KeyWordValue("平台将在1-3个工作日内对送养申请进行审核,请耐心等待").toJson());
                     templateData.put("keyword3", new KeyWordValue("-").toJson());
                     break;
                 case "1":
                     templateId = adoptionCheckTemplateId;
-                    templateData.put("keyword1", new KeyWordValue("很抱歉，"+msgJson.getString("petName")+"的送养申请未通过").toJson());
+                    templateData.put("keyword1", new KeyWordValue("很抱歉，" + msgJson.getString("petName") + "的送养申请未通过").toJson());
                     templateData.put("keyword2", new KeyWordValue("点击此处查看未通过原因").toJson());
                     templateData.put("keyword3", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
                     break;
                 case "2":
                     templateId = adoptionCheckTemplateId;
-                    templateData.put("keyword1", new KeyWordValue( "恭喜您！"+msgJson.getString("petName")+"的送养申请已通过上线").toJson());
+                    templateData.put("keyword1", new KeyWordValue("恭喜您！" + msgJson.getString("petName") + "的送养申请已通过上线").toJson());
                     templateData.put("keyword2", new KeyWordValue("点击查看送养详情").toJson());
                     templateData.put("keyword3", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
                     break;
                 default:
                     break;
             }
-            log.info("formId=>>>>"+cmsAdoptMsg.getFormId());
+            log.info("formId=>>>>" + cmsAdoptMsg.getFormId());
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
-            templateForm.put("page", "pages/adoption/detail/detail?scene="+cmsAdoptMsg.getPetId());
+            templateForm.put("page", "pages/adoption/detail/detail?scene=" + cmsAdoptMsg.getPetId());
             templateForm.put("form_id", cmsAdoptMsg.getFormId());
             templateForm.put("data", templateData);
-            log.info("发送模板消息请求报文："+templateForm.toJSONString());
+            log.info("发送模板消息请求报文：" + templateForm.toJSONString());
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
             log.info(sendTemplateMsg);
 
@@ -306,10 +270,10 @@ public class WxTemplateMsgResource {
     @PostMapping("chatUpt")
     public PlatformResult sendChatMessageTemplate(@RequestBody String msgData) {
         JSONObject chatMsg = JSONObject.parseObject(msgData);
-        String targetUserId=chatMsg.getString("targetUserId");
+        String targetUserId = chatMsg.getString("targetUserId");
         CmsUser targetUser = userService.getUserInfo(targetUserId);
-        String userId=chatMsg.getString("userId");
-        CmsUser user=userService.getUserInfo(userId);
+        String userId = chatMsg.getString("userId");
+        CmsUser user = userService.getUserInfo(userId);
 
         String openId = targetUser.getOpenid();
         String templateId = "";
@@ -324,7 +288,7 @@ public class WxTemplateMsgResource {
             Map<String, String> map = new HashMap<>();
             templateId = chatTemplateId;
 
-            map.put("value", user.getNickName()+"给你留了一条信息，点击查看详情");
+            map.put("value", user.getNickName() + "给你留了一条信息，点击查看详情");
             templateData.put("keyword1", map);
             map.put("value", DateUtils.getFormatDateStr(new Date()));
             templateData.put("keyword2", map);
@@ -343,9 +307,6 @@ public class WxTemplateMsgResource {
 
         return PlatformResult.success(sendTemplateMsg);
     }
-
-
-
 
 
 }

@@ -390,6 +390,7 @@
         FROM
         cms_adopt_pet p
         where p.is_valid = '1'
+        and p.adopt_status='3'
         <if test="null != createBy">
             AND create_by = #{createBy,jdbcType=VARCHAR}
         </if>

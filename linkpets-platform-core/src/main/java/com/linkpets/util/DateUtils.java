@@ -42,7 +42,8 @@ public class DateUtils {
         String dateStr = dateFormat.format(date);
         return dateStr;
     }
-    public static String getFormatDateStr(Date date,String format) {
+
+    public static String getFormatDateStr(Date date, String format) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         String dateStr = dateFormat.format(date);
         return dateStr;
@@ -55,7 +56,7 @@ public class DateUtils {
         try {
             Date sendDate = dateFormat.parse(sendTime);
             long leftTime = System.currentTimeMillis() - sendDate.getTime();
-            if (leftTime / 1000 / 60 / 60 > 1) {
+            if (leftTime / 1000 > 10) {
                 diff = true;
             }
         } catch (ParseException e) {

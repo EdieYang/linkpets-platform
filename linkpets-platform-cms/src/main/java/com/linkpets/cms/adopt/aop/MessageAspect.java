@@ -409,7 +409,10 @@ public class MessageAspect {
 
                     msg.setMsgContent(msgContent.toJSONString());
                     msg.setSender("SYS");
+                    msg.setMsgType(2);
+                    msg.setPetId(apply.getPetId());
                     msg.setReceiver(pet.getCreateBy());
+                    msg.setCreateTime(new Date());
                     msgService.crtMessage(msg);
 
                     msg.setMsgTitle(MessageTemplate.APPLY_PASS_FORTH_MSG_TITLE);
@@ -427,6 +430,7 @@ public class MessageAspect {
                     msg.setPetId(apply.getPetId());
                     msg.setSender("SYS");
                     msg.setReceiver(apply.getApplyBy());
+                    msg.setCreateTime(new Date());
                     formid = formIdGeneratorService.getValidFormId(apply.getApplyBy());
                     msg.setCreateTime(new Date());
                     msgService.crtMessage(msg);

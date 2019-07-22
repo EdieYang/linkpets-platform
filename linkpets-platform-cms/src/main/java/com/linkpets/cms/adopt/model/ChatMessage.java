@@ -17,4 +17,6 @@ public class ChatMessage {
 
     private String sendTime;
 
+    private String formId;
+
 }

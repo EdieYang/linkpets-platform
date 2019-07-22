@@ -102,9 +102,8 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
                     ch.writeAndFlush(new TextWebSocketFrame(textObj.toJSONString()));
 
                 }
-
-                messageHandler.storeInRedis(uid, textObj.toJSONString());
                 messageHandler.middleSwitch(uid, textObj.toJSONString());
+                messageHandler.storeInRedis(uid, textObj.toJSONString());
             } catch (Exception e) {
                 e.printStackTrace();
                 log.error(e.getMessage());

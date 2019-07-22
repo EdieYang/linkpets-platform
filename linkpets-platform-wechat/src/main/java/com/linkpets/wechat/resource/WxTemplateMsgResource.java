@@ -2,6 +2,8 @@ package com.linkpets.wechat.resource;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.linkpets.core.dao.CmsAdoptFormidMapper;
+import com.linkpets.core.model.CmsAdoptFormid;
 import com.linkpets.core.model.CmsAdoptMsg;
 import com.linkpets.core.model.CmsUser;
 import com.linkpets.result.PlatformResult;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,6 +64,9 @@ public class WxTemplateMsgResource {
 
     @Autowired
     private IUserService userService;
+
+    @Resource
+    private CmsAdoptFormidMapper cmsAdoptFormidMapper;
 
     @PostMapping("applyUpt")
     public PlatformResult sendApplyTemplate(@RequestBody String msgData) {
@@ -287,7 +293,7 @@ public class WxTemplateMsgResource {
             String accessToken = resJsonObj.getString("access_token");
             Map<String, String> map = new HashMap<>();
             templateId = chatTemplateId;
-
+            CmsAdoptFormid cmsAdoptFormid =cmsAdoptFormidMapper.getValidFormId(targetUserId);
             map.put("value", user.getNickName() + "给你留了一条信息，点击查看详情");
             templateData.put("keyword1", map);
             map.put("value", DateUtils.getFormatDateStr(new Date()));
@@ -295,7 +301,7 @@ public class WxTemplateMsgResource {
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
             templateForm.put("page", "pages/msg/index/index");
-            templateForm.put("form_id", chatMsg.getString("formId"));
+            templateForm.put("form_id", cmsAdoptFormid.getFormId());
             templateForm.put("data", templateData);
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
             log.info(sendTemplateMsg);

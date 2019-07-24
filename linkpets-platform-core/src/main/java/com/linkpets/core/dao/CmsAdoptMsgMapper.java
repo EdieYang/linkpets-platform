@@ -63,7 +63,7 @@ public interface CmsAdoptMsgMapper {
 
     List<CmsAdoptMsg> getDetailMsgList(Map<String,Object> param);
 
-    void uptDetailListMsg(@Param("userId")String userId, @Param("type") String type);
+    void uptDetailListMsg(@Param("userId")String userId, @Param("type")int type);
 
     List<CmsAdoptMsg> getUnreadMessage(String userId);
 

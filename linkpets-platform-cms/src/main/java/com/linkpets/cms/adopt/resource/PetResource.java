@@ -185,16 +185,20 @@ public class PetResource {
             @ApiImplicitParam(paramType = "query", dataType = "Long", name = "pageSize", value = "页面记录条数", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "withOutPet", value = "不包含的宠物id", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "sortCol", value = "排序字段", required = false),
-            @ApiImplicitParam(paramType = "query", dataType = "String", name = "sort", value = "排序规则", required = false)})
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "sort", value = "排序规则", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "adoptStatus", value = "领养状态", required = false)})
     @GetMapping(value = "shanghai/list")
     PlatformResult getPetListInCity(@RequestParam("pageNum") int pageNum,
                                     @RequestParam("pageSize") int pageSize,
                                     @RequestParam(value = "withOutPet", required = false) String withOutPet,
                                     @RequestParam(value = "sortCol", required = false, defaultValue = "create_date") String sortCol,
-                                    @RequestParam(value = "sort", required = false, defaultValue = "desc") String sort) {
+                                    @RequestParam(value = "sort", required = false, defaultValue = "desc") String sort,
+                                    @RequestParam(value = "adoptStatus", required = false) String adoptStatus) {
 
         Map<String, Object> param = new HashMap<String, Object>();
-//        param.put("city", city);
+        if (null != adoptStatus && !"".equals(adoptStatus)) {
+            param.put("adoptStatus", Arrays.asList(adoptStatus.split(",")));
+        }
         param.put("withOutPet", withOutPet);
         PageInfo<CmsAdoptPet> petPageInfo = petService.getAdoptListForPage(param, pageNum, pageSize, sortCol + " " + sort);
         return PlatformResult.success(petPageInfo);

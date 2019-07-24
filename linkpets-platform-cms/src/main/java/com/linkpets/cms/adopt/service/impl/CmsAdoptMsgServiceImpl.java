@@ -90,7 +90,7 @@ public class CmsAdoptMsgServiceImpl implements ICmsAdoptMsgService {
 
     @Override
     public void uptDetailListMsg(String userId, String type) {
-        msgMapper.uptDetailListMsg(userId,type);
+        msgMapper.uptDetailListMsg(userId, Integer.parseInt(type));
     }
 
     @Override

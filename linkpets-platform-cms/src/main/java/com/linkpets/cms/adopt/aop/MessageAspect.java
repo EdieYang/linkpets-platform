@@ -405,6 +405,9 @@ public class MessageAspect {
                     msgContent.put("nickName", user.getNickName());
                     msgContent.put("title", MessageTemplate.APPLY_PASS_FORTH_ADOPTER_MSG_CONTENT_TITLE);
                     msgContent.put("content", MessageTemplate.APPLY_PASS_FORTH_ADOPTER_MSG_CONTENT_LOG);
+                    msgContent.put("petPic", pet.getMediaList().get(0).getMediaPath());
+                    msgContent.put("petName", pet.getPetName());
+                    msgContent.put("applyId", applyId);
                     msgContent.put("status", "4");
 
                     msg.setMsgContent(msgContent.toJSONString());
@@ -431,6 +434,7 @@ public class MessageAspect {
                     msg.setSender("SYS");
                     msg.setReceiver(apply.getApplyBy());
                     msg.setCreateTime(new Date());
+                    //送养成功 ，给领养人发送模板消息
                     formid = formIdGeneratorService.getValidFormId(apply.getApplyBy());
                     msg.setCreateTime(new Date());
                     msgService.crtMessage(msg);

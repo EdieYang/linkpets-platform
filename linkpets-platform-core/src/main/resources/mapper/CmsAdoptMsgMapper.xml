@@ -194,61 +194,61 @@
     </update>
 
     <update id="uptDetailListMsg">
-    update cms_adopt_msg
-    set is_read = '1'
-    where receiver=#{userId}
-    and msg_type=#{type}
+        update cms_adopt_msg
+        set is_read = '1'
+        where receiver=#{userId}
+        and msg_type=#{type}
 
   </update>
 
 
     <select id="getSystemLatestMsg" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select
-    msg_id, msg_title, msg_content, msg_type, sender, receiver, is_read, pet_id, is_valid,
-    create_time,(select count(1) from cms_adopt_msg where receiver=#{userId}  and is_read = 0) as unreadNumber
-    from cms_adopt_msg
-    where receiver=#{userId}
-    and msg_type = 0
-    and is_valid = 1
-    order by create_time desc
-    limit 1
+        select
+        msg_id, msg_title, msg_content, msg_type, sender, receiver, is_read, pet_id, is_valid,
+        create_time,(select count(1) from cms_adopt_msg where receiver=#{userId}  and is_read = 0) as unreadNumber
+        from cms_adopt_msg
+        where receiver=#{userId}
+        and msg_type = 0
+        and is_valid = 1
+        order by create_time desc
+        limit 1
   </select>
 
 
     <select id="getApplyLatestMsg" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select
-    msg_id, msg_title, msg_content, msg_type, sender, receiver, is_read, pet_id, is_valid,
-    create_time,(select count(1) cms_adopt_msg where receiver=#{userId}  and is_read = 0) as unreadNumber
-    from cms_adopt_msg
-    where receiver=#{userId}
-    and msg_type = 1
-    and is_valid = 1
-    order by create_time desc
-    limit 1
+        select
+        msg_id, msg_title, msg_content, msg_type, sender, receiver, is_read, pet_id, is_valid,
+        create_time,(select count(1) cms_adopt_msg where receiver=#{userId}  and is_read = 0) as unreadNumber
+        from cms_adopt_msg
+        where receiver=#{userId}
+        and msg_type = 1
+        and is_valid = 1
+        order by create_time desc
+        limit 1
   </select>
 
 
     <select id="getAgreementLatestMsg" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select
-    msg_id, msg_title, msg_content, msg_type, sender, receiver, is_read, pet_id, is_valid,
-    create_time,(select count(1) cms_adopt_msg where receiver=#{userId}  and is_read = 0) as unreadNumber
-    from cms_adopt_msg
-    where receiver=#{userId}
-    and msg_type = 2
-    and is_valid = 1
-    order by create_time desc
-    limit 1
+        select
+        msg_id, msg_title, msg_content, msg_type, sender, receiver, is_read, pet_id, is_valid,
+        create_time,(select count(1) cms_adopt_msg where receiver=#{userId}  and is_read = 0) as unreadNumber
+        from cms_adopt_msg
+        where receiver=#{userId}
+        and msg_type = 2
+        and is_valid = 1
+        order by create_time desc
+        limit 1
   </select>
     <select id="getDetailMsgList" resultMap="BaseResultMap" parameterType="java.util.Map">
 
-    select
-    msg_id, msg_title, msg_content, msg_type, sender, receiver, is_read, pet_id, is_valid,
-    create_time
-    from cms_adopt_msg
-    where receiver=#{userId}
-    and msg_type = #{type}
-    and is_valid = 1
-    order by create_time desc
+        select
+        msg_id, msg_title, msg_content, msg_type, sender, receiver, is_read, pet_id, is_valid,
+        create_time
+        from cms_adopt_msg
+        where receiver=#{userId}
+        and msg_type = #{type}
+        and is_valid = 1
+        order by create_time desc
 
   </select>
 

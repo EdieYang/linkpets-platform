@@ -70,7 +70,7 @@ public class UserAnalyseUtil {
 
         long leftTime = System.currentTimeMillis() - lastLoginDate.getTime();
         if (leftTime / 1000 / 60 < 60) {
-            return leftTime / 1000 / 60 + "分钟前来过";
+            return leftTime / 1000 / 60 == 0 ? "刚刚来过" : leftTime / 1000 / 60 + "分钟前来过";
         } else if (leftTime / 1000 / 60 / 60 < 24) {
             return leftTime / 1000 / 60 / 60 + "小时前来过";
         } else if (leftTime / 1000 / 60 / 60 / 24 < 30) {

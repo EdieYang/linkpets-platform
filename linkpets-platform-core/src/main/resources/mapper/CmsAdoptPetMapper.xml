@@ -461,12 +461,12 @@
     FROM
       cms_adopt_attention ct
       LEFT JOIN cms_adopt_pet p
-        ON ct.attent_by = p.create_by
+        ON ct.user_id = p.create_by
     WHERE ct.is_valid = '1'
       and p.adopt_status = '3'
-      AND ct.user_id = #{userId}
+      AND ct.attent_by = #{userId}
 
-  </select>
+    </select>
 
     <select id="getPetAdoptCount" resultType="java.lang.Integer">
       SELECT  count(1)

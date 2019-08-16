@@ -8,8 +8,6 @@ import com.linkpets.core.model.*;
 import com.linkpets.util.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.HttpClientUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -39,6 +37,8 @@ public class MessageAspect {
 
     @Resource
     private IFormIdGeneratorService formIdGeneratorService;
+
+    private static final String UPT = "0";
 
     private static final String UNPASS = "1";
 
@@ -214,10 +214,14 @@ public class MessageAspect {
                     break;
             }
 
-            CmsAdoptFormid formId = formIdGeneratorService.getValidFormId(createBy);
+            if (!uptCmsAdoptPet.getAdoptStatus().equals(UPT)) {
 
-            log.info("发送模板消息请求参数：=======================》" + JSON.toJSONString(msg));
-            this.sendTemplateMsg(adoptionUptUrl, formId, msg);
+                CmsAdoptFormid formId = formIdGeneratorService.getValidFormId(createBy);
+
+                log.info("发送模板消息请求参数：=======================》" + JSON.toJSONString(msg));
+                this.sendTemplateMsg(adoptionUptUrl, formId, msg);
+            }
+
         } catch (Throwable e) {
             e.printStackTrace();
         }
@@ -233,11 +237,11 @@ public class MessageAspect {
         log.info("{MessageAspect} =>create new Apply start.....");
         CmsAdoptApply newApply = (CmsAdoptApply) pjp.getArgs()[0];
         formIdGeneratorService.addFormId(newApply.getFormId(), newApply.getApplyBy());
-        String applyId="";
+        String applyId = "";
         try {
             Object result = pjp.proceed();
             applyId = (String) result;
-            if(StringUtils.isNotEmpty(applyId)){
+            if (StringUtils.isNotEmpty(applyId)) {
                 String applyUserId = newApply.getApplyBy();
                 String petId = newApply.getPetId();
 
@@ -327,13 +331,13 @@ public class MessageAspect {
                     msg.setReceiver(pet.getCreateBy());
                     msgService.crtMessage(msg);
 
-
-                    if (operateUserId.equals(uptApply.getApplyBy())) {
+                    log.info("正在进行取消申请操作：" + operateUserId);
+                    if (operateUserId.equals(apply.getApplyBy())) {
                         formid = formIdGeneratorService.getValidFormId(pet.getCreateBy());
                         msg.setSender(apply.getApplyBy());
                         msg.setReceiver(pet.getCreateBy());
                     } else {
-                        formid = formIdGeneratorService.getValidFormId(uptApply.getApplyBy());
+                        formid = formIdGeneratorService.getValidFormId(apply.getApplyBy());
                         msg.setSender(pet.getCreateBy());
                         msg.setReceiver(apply.getApplyBy());
                     }
@@ -444,7 +448,7 @@ public class MessageAspect {
                     break;
             }
 
-            log.info("发送模板消息请求参数：=======================》" + JSON.toJSONString(msg));
+            log.info("发送模板消息请求参数（formId{" + formid + "}）：=======================》" + JSON.toJSONString(msg));
             this.sendTemplateMsg(applyUptUrl, formid, msg);
 
         } catch (Throwable e) {

@@ -36,7 +36,7 @@
   <select id="getValidFormId" resultMap="BaseResultMap" >
     select <include refid="Base_Column_List" />
     from cms_adopt_formid
-    where user_id=#{userId} and is_valid=1  <![CDATA[ and NOW() < expire_time]]>
+    where user_id=#{userId} and is_valid=1 and form_id is not null  <![CDATA[ and NOW() < expire_time]]>
     limit 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

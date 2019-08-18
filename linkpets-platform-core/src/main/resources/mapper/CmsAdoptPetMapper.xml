@@ -429,6 +429,71 @@
     </select>
 
 
+    <select id="getOrgPetsList" resultMap="BaseListResultMap">
+        SELECT
+        p.pet_id,
+        pet_name,
+        pet_age ,
+        pet_type,
+        pet_sex ,
+        pet_sterilization ,
+        pet_vaccine ,
+        pet_parasite,
+        pet_from ,
+        pet_somatotype,
+        pet_hair,
+        pet_characteristic,
+        adopt_requirements,
+        story ,
+        address,
+        wx_id,
+        mobile_phone ,
+        adopt_status ,
+        create_by ,
+        p.create_date ,
+        p.is_valid
+        FROM
+        cms_adopt_pet p , cms_adopt_pet_org_rel r
+        where p.pet_id = r.pet_id and p.is_valid = '1' and r.is_valid = 1 and r.org_id = #{orgId}
+        <if test="null != createBy">
+            AND create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="null != petType and ''!=petType">
+            AND pet_type = #{petType,jdbcType=VARCHAR}
+        </if>
+        <if test="null != adoptStatus">
+            <foreach close=")" collection="adoptStatus" item="item" open=" AND adopt_status in (" separator=",">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="null != ageArr">
+            <foreach close=")" collection="ageArr" item="item" open=" AND pet_age in (" separator=",">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="null != sexArr">
+            <foreach close=")" collection="sexArr" item="item" open=" AND pet_sex in (" separator=",">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="null != sterilization and ''!=sterilization">
+            AND pet_sterilization = #{sterilization,jdbcType=VARCHAR}
+        </if>
+        <if test="null != vaccine and ''!=vaccine">
+            AND pet_vaccine = #{vaccine,jdbcType=VARCHAR}
+        </if>
+        <if test="null != parasite and ''!=parasite">
+            AND pet_parasite = #{parasite,jdbcType=VARCHAR}
+        </if>
+        <if test="null != city and ''!= city">
+            AND address = #{city,jdbcType=VARCHAR}
+        </if>
+        <if test="null != withOutPet and ''!= withOutPet">
+            AND p.pet_id != #{withOutPet,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+
     <select id="selectAdoptionImage" resultMap="imageResultMap">
     select media_path
     from  cms_adopt_pet_media

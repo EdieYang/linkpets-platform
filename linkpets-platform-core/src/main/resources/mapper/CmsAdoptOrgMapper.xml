@@ -170,4 +170,31 @@
       is_valid = #{isValid,jdbcType=INTEGER}
     where org_id = #{orgId,jdbcType=VARCHAR}
   </update>
+
+  <select id="getAdoptOrgStatistic" parameterType="java.lang.String" resultType="com.linkpets.core.model.AdoptOrgStatistic">
+    select
+    (select count(1) from cms_adopt_org_follow where org_id = #{orgId} and is_valid = 1 ) as fans,
+    (select count(1) from cms_adopt_pet p,cms_adopt_pet_org_rel r
+    where p.pet_id = r.pet_id and p.adopt_status='4' and  r.org_id = #{orgId} and r.is_valid = 1 ) as adoptSuccessNum,
+    (select count(1) from cms_adopt_pet_org_rel where org_id = #{orgId} and is_valid = 1 ) as adoptPets,
+    (select count(1) from cms_adopt_org_gallery where org_id = #{orgId} and is_valid = 1 ) as galleryNum,
+    (select count(1) from cms_adopt_org_activity where org_id = #{orgId} and is_valid = 1) as activityNum
+  </select>
+
+  <select id="getAdoptGalleryList" resultType="cmsAdoptOrgGallery">
+    select id ,org_id as orgId,image,is_valid,create_date
+    from cms_adopt_org_gallery
+    where org_id = #{orgId}
+    and is_valid = 1
+    order by create_date desc
+  </select>
+  <select id="getAdoptActivityList" resultType="cmsAdoptOrgActivity">
+    select id,org_id as orgId,title,activity_path as activityPath,activity_cover as activityCover,sort
+    from cms_adopt_org_activity
+    where org_id = #{orgId}
+    and is_valid = 1
+    order by sort
+  </select>
+
+
 </mapper>

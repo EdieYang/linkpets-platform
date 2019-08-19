@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="linkpets-platform-cms:war">
-    <output-path>$PROJECT_DIR$/linkpets-platform-cms/target</output-path>
-    <root id="archive" name="linkpets-platform-cms-0.0.1-SNAPSHOT.war">
-      <element id="artifact" artifact-name="linkpets-platform-cms:war exploded" />
-    </root>
-  </artifact>
-</component>

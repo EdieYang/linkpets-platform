@@ -1,9 +1,7 @@
 package com.linkpets.core.dao;
 
-import com.linkpets.core.model.AdoptOrgStatistic;
-import com.linkpets.core.model.CmsAdoptOrg;
-import com.linkpets.core.model.CmsAdoptOrgActivity;
-import com.linkpets.core.model.CmsAdoptOrgGallery;
+import com.linkpets.core.model.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -59,9 +57,16 @@ public interface CmsAdoptOrgMapper {
 
     List<CmsAdoptOrg> getAdoptOrgList();
 
-    AdoptOrgStatistic getAdoptOrgStatistic(String orgId);
+    AdoptOrgStatistic getAdoptOrgStatistic(String orgId,String userId);
 
     List<CmsAdoptOrgGallery> getAdoptGalleryList(String orgId);
 
     List<CmsAdoptOrgActivity> getAdoptActivityList(String orgId);
+
+    CmsAdoptPetOrgRel getAdoptPetOrgInfoByPetId(String petId);
+
+    void crtAdoptOrgPetRel(@Param("id") String id, @Param("orgId") String orgId, @Param("petId") String petId);
+
+    void uptAdoptOrgPetRel(@Param("id") String id);
+
 }

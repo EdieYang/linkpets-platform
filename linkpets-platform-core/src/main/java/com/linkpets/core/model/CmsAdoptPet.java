@@ -131,5 +131,8 @@ public class CmsAdoptPet {
 
 	private String formId;
 
+	private String orgId;
+
+	private String orgName;
 
 }

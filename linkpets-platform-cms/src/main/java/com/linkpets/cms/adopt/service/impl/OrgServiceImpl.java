@@ -2,14 +2,16 @@ package com.linkpets.cms.adopt.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.linkpets.core.dao.CmsAdoptPetMapper;
-import com.linkpets.core.model.*;
 import com.linkpets.cms.adopt.service.IOrgService;
 import com.linkpets.core.dao.CmsAdoptOrgFollowMapper;
 import com.linkpets.core.dao.CmsAdoptOrgMapper;
+import com.linkpets.core.dao.CmsAdoptPetMapper;
+import com.linkpets.core.model.*;
+import com.linkpets.util.UUIDUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -47,8 +49,35 @@ public class OrgServiceImpl implements IOrgService {
     }
 
     @Override
-    public AdoptOrgStatistic getAdoptOrgStatistic(String orgId) {
-        return orgMapper.getAdoptOrgStatistic(orgId);
+    public void crtAdoptOrgFollow(String orgId, String userId) {
+        CmsAdoptOrgFollow orgFollow = orgFollowMapper.getOrgUserFollowByOrgId(orgId, userId);
+        if (orgFollow == null) {
+            orgFollow = new CmsAdoptOrgFollow();
+            orgFollow.setId(UUIDUtils.getUUID());
+            orgFollow.setOrgId(orgId);
+            orgFollow.setUserId(userId);
+            orgFollow.setCreateDate(new Date());
+            orgFollow.setIsValid(1);
+            orgFollowMapper.insertOrgFollow(orgFollow);
+        } else {
+            orgFollow.setIsValid(1);
+            orgFollowMapper.uptOrgFollow(orgFollow);
+        }
+
+    }
+
+    @Override
+    public void uptAdoptOrgFollow(String orgId, String userId) {
+        CmsAdoptOrgFollow orgFollow = orgFollowMapper.getOrgUserFollowByOrgId(orgId, userId);
+        if (orgFollow != null) {
+            orgFollow.setIsValid(0);
+            orgFollowMapper.uptOrgFollow(orgFollow);
+        }
+    }
+
+    @Override
+    public AdoptOrgStatistic getAdoptOrgStatistic(String orgId,String userId) {
+        return orgMapper.getAdoptOrgStatistic(orgId,userId);
     }
 
     @Override
@@ -73,5 +102,21 @@ public class OrgServiceImpl implements IOrgService {
         List<CmsAdoptOrgActivity> list = orgMapper.getAdoptActivityList(orgId);
         PageInfo<CmsAdoptOrgActivity> page = new PageInfo<>(list);
         return page;
+    }
+
+    @Override
+    public CmsAdoptPetOrgRel getAdoptPetOrgInfoByPetId(String petId) {
+        return orgMapper.getAdoptPetOrgInfoByPetId(petId);
+    }
+
+
+    @Override
+    public void crtAdoptOrgPet(String orgId, String petId) {
+        orgMapper.crtAdoptOrgPetRel(UUIDUtils.getUUID(),orgId,petId);
+    }
+
+    @Override
+    public void uptAdoptOrgPet(String id) {
+        orgMapper.uptAdoptOrgPetRel(id);
     }
 }

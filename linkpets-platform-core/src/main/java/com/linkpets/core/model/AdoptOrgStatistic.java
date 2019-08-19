@@ -37,4 +37,7 @@ public class AdoptOrgStatistic {
     private int activityNum;
 
 
+    private int isFollowed;
+
+
 }

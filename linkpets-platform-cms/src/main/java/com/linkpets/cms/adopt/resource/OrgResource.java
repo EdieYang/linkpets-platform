@@ -36,14 +36,14 @@ public class OrgResource {
     @ApiOperation("获取公益组织列表")
     @GetMapping(value = "/list")
     public PlatformResult getAdoptOrgList() {
-        List<CmsAdoptOrg> adoptOrgList=orgService.getAdoptOrgList();
+        List<CmsAdoptOrg> adoptOrgList = orgService.getAdoptOrgList();
         return PlatformResult.success(adoptOrgList);
     }
 
     @ApiOperation("获取公益组织详情")
     @GetMapping(value = "/info")
-    public PlatformResult getAdoptOrgInfo(@RequestParam("orgId")String orgId) {
-        CmsAdoptOrg adoptOrg=orgService.getAdoptOrgDetail(orgId);
+    public PlatformResult getAdoptOrgInfo(@RequestParam("orgId") String orgId) {
+        CmsAdoptOrg adoptOrg = orgService.getAdoptOrgDetail(orgId);
         return PlatformResult.success(adoptOrg);
     }
 
@@ -65,19 +65,19 @@ public class OrgResource {
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "sort", value = "排序规则", required = false)})
     @GetMapping(value = "/pets")
     PlatformResult getPetList(
-                              @RequestParam("pageNum") int orgId,
-                              @RequestParam("pageNum") int pageNum,
-                              @RequestParam("pageSize") int pageSize,
-                              @RequestParam(value = "createBy", required = false) String createBy,
-                              @RequestParam(value = "adoptStatus", required = false) String adoptStatus,
-                              @RequestParam(value = "petType", required = false) String petType,
-                              @RequestParam(value = "ageArr", required = false) String ageArr,
-                              @RequestParam(value = "sexArr", required = false) String sexArr,
-                              @RequestParam(value = "sterilization", required = false) String sterilization,
-                              @RequestParam(value = "vaccine", required = false) String vaccine,
-                              @RequestParam(value = "parasite", required = false) String parasite,
-                              @RequestParam(value = "sortCol", required = false, defaultValue = "create_date") String sortCol,
-                              @RequestParam(value = "sort", required = false, defaultValue = "desc") String sort) {
+            @RequestParam("orgId") String orgId,
+            @RequestParam("pageNum") int pageNum,
+            @RequestParam("pageSize") int pageSize,
+            @RequestParam(value = "createBy", required = false) String createBy,
+            @RequestParam(value = "adoptStatus", required = false) String adoptStatus,
+            @RequestParam(value = "petType", required = false) String petType,
+            @RequestParam(value = "ageArr", required = false) String ageArr,
+            @RequestParam(value = "sexArr", required = false) String sexArr,
+            @RequestParam(value = "sterilization", required = false) String sterilization,
+            @RequestParam(value = "vaccine", required = false) String vaccine,
+            @RequestParam(value = "parasite", required = false) String parasite,
+            @RequestParam(value = "sortCol", required = false, defaultValue = "create_date") String sortCol,
+            @RequestParam(value = "sort", required = false, defaultValue = "desc") String sort) {
 
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("createBy", createBy);
@@ -90,7 +90,7 @@ public class OrgResource {
         if (null != sexArr && !"".equals(sexArr)) {
             param.put("sexArr", Arrays.asList(sexArr.split(",")));
         }
-        param.put("orgId",orgId);
+        param.put("orgId", orgId);
         param.put("petType", petType);
         param.put("sterilization", sterilization);
         param.put("vaccine", vaccine);
@@ -101,38 +101,55 @@ public class OrgResource {
 
     @ApiOperation("获取公益组织相册列表")
     @GetMapping(value = "/gallery")
-    public PlatformResult getAdoptOrgGallery(@RequestParam("orgId")String orgId,
+    public PlatformResult getAdoptOrgGallery(@RequestParam("orgId") String orgId,
                                              @RequestParam("pageNum") int pageNum,
                                              @RequestParam("pageSize") int pageSize) {
-        PageInfo<CmsAdoptOrgGallery> petPageInfo=orgService.getAdoptGalleryList(pageNum,pageSize,orgId);
+        PageInfo<CmsAdoptOrgGallery> petPageInfo = orgService.getAdoptGalleryList(pageNum, pageSize, orgId);
         return PlatformResult.success(petPageInfo);
     }
 
     @ApiOperation("获取公益组织活动列表")
     @GetMapping(value = "/activity")
-    public PlatformResult getAdoptOrgActivity(@RequestParam("orgId")String orgId,
-                                             @RequestParam("pageNum") int pageNum,
-                                             @RequestParam("pageSize") int pageSize) {
-        PageInfo<CmsAdoptOrgActivity> petPageInfo=orgService.getAdoptActivityList(pageNum,pageSize,orgId);
+    public PlatformResult getAdoptOrgActivity(@RequestParam("orgId") String orgId,
+                                              @RequestParam("pageNum") int pageNum,
+                                              @RequestParam("pageSize") int pageSize) {
+        PageInfo<CmsAdoptOrgActivity> petPageInfo = orgService.getAdoptActivityList(pageNum, pageSize, orgId);
         return PlatformResult.success(petPageInfo);
     }
 
 
     @ApiOperation("获取公益组织粉丝列表")
     @GetMapping(value = "/follow")
-    public PlatformResult getAdoptOrgFollows(@RequestParam("orgId")String orgId) {
-        List<CmsAdoptOrgFollow> adoptOrgFollows=orgService.getAdoptOrgFollows(orgId);
+    public PlatformResult getAdoptOrgFollows(@RequestParam("orgId") String orgId) {
+        List<CmsAdoptOrgFollow> adoptOrgFollows = orgService.getAdoptOrgFollows(orgId);
         return PlatformResult.success(adoptOrgFollows);
     }
 
-    @ApiOperation("获取公益组织基础数据")
-    @GetMapping(value = "/statistic")
-    public PlatformResult getAdoptOrgStatistics(@RequestParam("orgId")String orgId) {
-        AdoptOrgStatistic adoptOrgStatistic=orgService.getAdoptOrgStatistic(orgId);
-        return PlatformResult.success(adoptOrgStatistic);
+
+    @ApiOperation("关注公益组织")
+    @PostMapping(value = "/follow")
+    public PlatformResult postAdoptOrgFollow(@RequestParam("orgId") String orgId,
+                                             @RequestParam("userId") String userId) {
+        orgService.crtAdoptOrgFollow(orgId, userId);
+        return PlatformResult.success();
+    }
+
+    @ApiOperation("取消关注公益组织")
+    @DeleteMapping(value = "/follow")
+    public PlatformResult deleteAdoptOrgFollow(@RequestParam("orgId") String orgId,
+                                               @RequestParam("userId") String userId) {
+        orgService.uptAdoptOrgFollow(orgId, userId);
+        return PlatformResult.success();
     }
 
 
+    @ApiOperation("获取公益组织基础数据")
+    @GetMapping(value = "/statistic")
+    public PlatformResult getAdoptOrgStatistics(@RequestParam("orgId") String orgId,
+                                                @RequestParam("userId") String userId) {
+        AdoptOrgStatistic adoptOrgStatistic = orgService.getAdoptOrgStatistic(orgId,userId);
+        return PlatformResult.success(adoptOrgStatistic);
+    }
 
 
 }

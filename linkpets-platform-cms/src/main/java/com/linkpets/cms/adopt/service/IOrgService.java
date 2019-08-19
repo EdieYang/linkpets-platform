@@ -16,7 +16,11 @@ public interface IOrgService {
 
     int getAdoptOrgFollowNums(String orgId);
 
-    AdoptOrgStatistic getAdoptOrgStatistic(String orgId);
+    void crtAdoptOrgFollow(String orgId,String userId);
+
+    void uptAdoptOrgFollow(String orgId,String userId);
+
+    AdoptOrgStatistic getAdoptOrgStatistic(String orgId,String userId);
 
     PageInfo<CmsAdoptPet> getAdoptListForPage(Map<String, Object> param, int pageNum, int pageSize, String orderBy);
 
@@ -24,4 +28,9 @@ public interface IOrgService {
 
     PageInfo<CmsAdoptOrgActivity> getAdoptActivityList(int pageNum, int pageSize, String orgId);
 
+    CmsAdoptPetOrgRel getAdoptPetOrgInfoByPetId(String petId);
+
+    void crtAdoptOrgPet(String orgId,String petId);
+
+    void uptAdoptOrgPet(String id);
 }

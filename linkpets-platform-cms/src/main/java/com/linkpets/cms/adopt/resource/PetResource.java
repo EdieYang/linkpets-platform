@@ -4,18 +4,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.model.UserInfo;
+import com.linkpets.cms.adopt.service.IOrgService;
 import com.linkpets.cms.adopt.service.IPetService;
 import com.linkpets.cms.adopt.service.IUserService;
-import com.linkpets.core.model.CmsAdoptAttention;
-import com.linkpets.core.model.CmsAdoptPet;
-import com.linkpets.core.model.CmsAdoptPetCollect;
-import com.linkpets.core.model.CmsUserLogin;
+import com.linkpets.core.model.*;
 import com.linkpets.result.PlatformResult;
 import com.linkpets.util.UserAnalyseUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -36,6 +35,9 @@ public class PetResource {
 
     @Resource
     IUserService userService;
+
+    @Resource
+    IOrgService orgService;
 
 
     @ApiOperation(value = "宠物列表", notes = "分页获取宠物列表（支持模糊查询）")
@@ -119,6 +121,10 @@ public class PetResource {
     @PostMapping(value = "info")
     public PlatformResult crtAdopt(@RequestBody CmsAdoptPet pet) {
         String petId = petService.crtAdopt(pet);
+        if(StringUtils.isNotEmpty(pet.getOrgId()) && pet.getPetFrom().equals("2")){
+            //绑定公益机构
+            orgService.crtAdoptOrgPet(pet.getOrgId(),pet.getPetId());
+        }
         return PlatformResult.success(petId);
     }
 
@@ -126,6 +132,20 @@ public class PetResource {
     @PutMapping(value = "info")
     public PlatformResult uptAdopt(@RequestBody CmsAdoptPet pet) {
         petService.uptAdopt(pet);
+        //查看公益组织绑定
+        CmsAdoptPetOrgRel orgPet=orgService.getAdoptPetOrgInfoByPetId(pet.getPetId());
+        if(orgPet!=null && StringUtils.isNotEmpty(pet.getOrgId())){
+            orgService.crtAdoptOrgPet(pet.getOrgId(),pet.getPetId());
+        }
+
+        if(orgPet!=null && !orgPet.getOrgId().equals(pet.getOrgId())){
+            orgService.uptAdoptOrgPet(orgPet.getId());
+            orgService.crtAdoptOrgPet(pet.getOrgId(),pet.getPetId());
+        }
+
+        if(orgPet==null && StringUtils.isNotEmpty(pet.getOrgId())){
+            orgService.crtAdoptOrgPet(pet.getOrgId(),pet.getPetId());
+        }
         return PlatformResult.success();
     }
 

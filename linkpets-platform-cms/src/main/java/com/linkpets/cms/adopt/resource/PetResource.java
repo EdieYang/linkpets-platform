@@ -138,7 +138,7 @@ public class PetResource {
             orgService.crtAdoptOrgPet(pet.getOrgId(),pet.getPetId());
         }
 
-        if(orgPet!=null && !orgPet.getOrgId().equals(pet.getOrgId())){
+        if(orgPet!=null && !orgPet.getOrgId().equals(pet.getOrgId()) && StringUtils.isNotEmpty(pet.getPetFrom())){
             orgService.uptAdoptOrgPet(orgPet.getId());
             orgService.crtAdoptOrgPet(pet.getOrgId(),pet.getPetId());
         }

@@ -148,6 +148,7 @@ public class OrgResource {
     public PlatformResult getAdoptOrgStatistics(@RequestParam("orgId") String orgId,
                                                 @RequestParam("userId") String userId) {
         AdoptOrgStatistic adoptOrgStatistic = orgService.getAdoptOrgStatistic(orgId,userId);
+        adoptOrgStatistic.setPublishNum(adoptOrgStatistic.getActivityNum()+adoptOrgStatistic.getAdoptPets()+adoptOrgStatistic.getGalleryNum());
         return PlatformResult.success(adoptOrgStatistic);
     }
 

@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="linkpets-platform-wechat:war">
+    <output-path>$PROJECT_DIR$/linkpets-platform-wechat/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>linkpets-platform-wechat</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="lpWechat.war">
+      <element id="artifact" artifact-name="linkpets-platform-wechat:war exploded" />
+    </root>
+  </artifact>
+</component>

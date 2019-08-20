@@ -1,24 +1,23 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="linkpets-platform-cms:war exploded">
-    <output-path>$PROJECT_DIR$/linkpets-platform-cms/target/lpCms</output-path>
+  <artifact type="exploded-war" name="linkpets-platform-wechat:war exploded">
+    <output-path>$PROJECT_DIR$/linkpets-platform-wechat/target/lpWechat</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>
-        <module>linkpets-platform-cms</module>
+        <module>linkpets-platform-wechat</module>
         <packaging>war</packaging>
       </options>
     </properties>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="linkpets-platform-cms" />
+          <element id="module-output" name="linkpets-platform-wechat" />
         </element>
         <element id="directory" name="lib">
           <element id="archive" name="linkpets-core-service-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="linkpets-core-service" />
           </element>
           <element id="library" level="project" name="Maven: com.google.zxing:core:3.3.3" />
-          <element id="library" level="project" name="Maven: io.netty:netty-all:4.1.36.Final" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-web:2.1.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter:2.1.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot:2.1.3.RELEASE" />
@@ -126,9 +125,9 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/linkpets-platform-cms/target/lpCms/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/linkpets-platform-wechat/target/lpWechat/META-INF/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="linkpets-platform-cms/web/Web" />
+      <element id="javaee-facet-resources" facet="linkpets-platform-wechat/web/Web" />
     </root>
   </artifact>
 </component>

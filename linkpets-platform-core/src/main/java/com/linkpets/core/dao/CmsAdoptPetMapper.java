@@ -43,6 +43,8 @@ public interface CmsAdoptPetMapper {
 	int updateByPrimaryKey(CmsAdoptPet record);
 
 	List<CmsAdoptPet> getList(Map<String, Object> param);
+
+	List<CmsAdoptPet> getOrgPetsList(Map<String, Object> param);
 	
 	List<String> getAdoptPetIdsByUserId(String userId);
 	

@@ -50,4 +50,7 @@ public interface SdArticleMapper {
      * @mbggenerated Wed Aug 21 23:23:28 CST 2019
      */
     int updateByPrimaryKey(SdArticle record);
+
+
+    SdArticle selectByCatalogId(String catalogId);
 }

@@ -13,4 +13,12 @@ public interface IWikiService {
     SdArticle getArticleDetail(String catalogId);
 
     List<SdCatalogList> searchArticle(String search);
+
+    void addArticleReadNum(SdCatalogList catalogList);
+
+    void addArticleLikeNum(SdCatalogList catalogList);
+
+    SdCatalogList getCatalogList(String id);
+
+    void uptArticle(SdArticle sdArticle);
 }

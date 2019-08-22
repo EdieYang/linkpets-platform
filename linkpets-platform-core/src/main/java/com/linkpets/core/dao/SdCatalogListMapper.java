@@ -54,4 +54,5 @@ public interface SdCatalogListMapper {
     int updateByPrimaryKey(SdCatalogList record);
 
     List<SdCatalogList> searchArticle(String search);
+
 }

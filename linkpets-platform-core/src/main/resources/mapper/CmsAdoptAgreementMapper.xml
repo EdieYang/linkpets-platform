@@ -380,10 +380,9 @@
     -->
     select
     <include refid="Base_Column_List" />,image_front ,image_back
-    from cms_adopt_agreement caa,cms_adopt_certification cac
+    from cms_adopt_agreement caa left join cms_adopt_certification cac
+    on cac.user_id = caa.apply_by
     where caa.apply_id = #{applyId,jdbcType=VARCHAR}
     and caa.is_valid = 1
-    and cac.user_id = caa.apply_by
-    and cac.status = '1'
   </select>
 </mapper>

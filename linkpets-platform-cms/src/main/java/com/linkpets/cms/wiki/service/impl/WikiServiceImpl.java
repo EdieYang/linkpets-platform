@@ -31,11 +31,31 @@ public class WikiServiceImpl implements IWikiService {
 
     @Override
     public SdArticle getArticleDetail(String catalogId) {
-        return sdArticleMapper.selectByPrimaryKey(catalogId);
+        return sdArticleMapper.selectByCatalogId(catalogId);
     }
 
     @Override
     public List<SdCatalogList> searchArticle(String search) {
         return sdCatalogListMapper.searchArticle(search);
+    }
+
+    @Override
+    public void addArticleReadNum(SdCatalogList catalogList) {
+        sdCatalogListMapper.updateByPrimaryKeySelective(catalogList);
+    }
+
+    @Override
+    public void addArticleLikeNum(SdCatalogList catalogList) {
+        sdCatalogListMapper.updateByPrimaryKeySelective(catalogList);
+    }
+
+    @Override
+    public SdCatalogList getCatalogList(String id) {
+        return sdCatalogListMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void uptArticle(SdArticle sdArticle) {
+        sdArticleMapper.updateByPrimaryKeySelective(sdArticle);
     }
 }

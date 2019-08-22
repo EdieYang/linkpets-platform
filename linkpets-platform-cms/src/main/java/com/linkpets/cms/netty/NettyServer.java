@@ -49,7 +49,7 @@ public class NettyServer {
             // ChildChannelHandler 对出入的数据进行的业务操作,其继承ChannelInitializer
             b.childHandler(new ChildChannelHandler());
             System.out.println("服务端开启等待客户端连接 ... ...");
-            Channel ch = b.bind(8098).sync().channel();
+            Channel ch = b.bind(8099).sync().channel();
             ch.closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();

@@ -64,8 +64,10 @@ public class WikiResource {
     @ApiImplicitParams({
             @ApiImplicitParam(value = "父目录Id", name = "catalogId", required = true, dataType = "String", paramType = "query")
     })
-    public PlatformResult getArticleDetail(@RequestParam("catalogId")String catalogId){
-        SdArticle articleDetail=wikiService.getArticleDetail(catalogId);
+    public PlatformResult getArticleDetail(@RequestParam(value = "catalogListId")String catalogListId,
+                                           @RequestParam(value = "catalogId",required = false)String catalogId,
+                                           @RequestParam("type")String type){
+        SdArticle articleDetail=wikiService.getArticleDetail(catalogListId,catalogId,type);
         return PlatformResult.success(articleDetail);
     }
 
@@ -74,20 +76,20 @@ public class WikiResource {
     @ApiImplicitParams({
             @ApiImplicitParam(value = "search", name = "search", required = true, dataType = "String", paramType = "query")
     })
-    public PlatformResult searchArticle(@RequestParam("search")String search){
-        List<SdCatalogList> catalogLists=wikiService.searchArticle(search);
+    public PlatformResult searchArticle(@RequestParam("search")String search,
+                                        @RequestParam("type")String type){
+        List<SdCatalogList> catalogLists=wikiService.searchArticle(search,type);
         return PlatformResult.success(catalogLists);
     }
 
 
     @GetMapping("/articleReadNum")
     @ApiOperation(value = "增加文章阅读量")
-    @ApiImplicitParams({
-            @ApiImplicitParam(value = "id", name = "id", required = true, dataType = "String", paramType = "query")
-    })
-    public PlatformResult addArticleReadNum(@RequestParam("id")String id){
+    public PlatformResult addArticleReadNum(@RequestParam("catalogListId")String catalogListId,
+                                            @RequestParam("type")String type,
+                                            @RequestParam("catalogId")String catalogId){
 
-        SdCatalogList catalogList=wikiService.getCatalogList(id);
+        SdCatalogList catalogList=wikiService.getCatalogList(catalogListId,catalogId,type);
         int readNum=catalogList.getReadNum();
         catalogList.setReadNum(++readNum);
         wikiService.addArticleReadNum(catalogList);
@@ -96,11 +98,10 @@ public class WikiResource {
 
     @GetMapping("/articleLikeNum")
     @ApiOperation(value = "增加文章点赞数")
-    @ApiImplicitParams({
-            @ApiImplicitParam(value = "id", name = "id", required = true, dataType = "String", paramType = "query")
-    })
-    public PlatformResult addArticleLikeNum(@RequestParam("id")String id){
-        SdCatalogList catalogList=wikiService.getCatalogList(id);
+    public PlatformResult addArticleLikeNum(@RequestParam("catalogListId")String catalogListId,
+                                            @RequestParam("type")String type,
+                                            @RequestParam("catalogId")String catalogId){
+        SdCatalogList catalogList=wikiService.getCatalogList(catalogListId,catalogId,type);
         int likeNum=catalogList.getLikeNum();
         catalogList.setLikeNum(++likeNum);
         wikiService.addArticleLikeNum(catalogList);

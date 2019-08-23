@@ -52,5 +52,5 @@ public interface SdArticleMapper {
     int updateByPrimaryKey(SdArticle record);
 
 
-    SdArticle selectByCatalogId(String catalogId);
+    SdArticle selectByCatalogId(String catalogListId,String catalogId,String type);
 }

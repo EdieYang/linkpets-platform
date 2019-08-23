@@ -20,6 +20,7 @@
     <resultMap id="CatalogListResultMap" type="com.linkpets.core.model.SdCatalogList">
         <id column="lId" jdbcType="VARCHAR" property="id"/>
         <result column="catalogId" jdbcType="VARCHAR" property="catalogId"/>
+        <result column="catalogListId" jdbcType="VARCHAR" property="catalogListId"/>
         <result column="smallName" jdbcType="VARCHAR" property="smallName"/>
         <result column="image" jdbcType="VARCHAR" property="image"/>
         <result column="lSort" jdbcType="INTEGER" property="sort"/>
@@ -58,7 +59,7 @@
     <select id="getCatalogs" parameterType="java.lang.String" resultMap="CatalogResultMap">
       select
       c.id as id, c.catalog_name as catalogName, c.sort as cSort, c.create_date as cCreateDate, c.sid as cSid, c.type as type ,
-      l.id as lId,l.catalog_id as catalogId,l.small_name as smallName,l.image as image,l.sort as lSort,l.create_date as lCreateDate,
+      l.id as lId,l.catalog_id as catalogId,l.catalog_list_id as catalogListId,l.small_name as smallName,l.image as image,l.sort as lSort,l.create_date as lCreateDate,
       l.read_num as readNum,l.like_num as likeNum
       from sd_catalog c left join sd_catalog_list l on c.sid = l.catalog_id
       where c.type = #{type}

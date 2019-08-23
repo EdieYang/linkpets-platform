@@ -10,15 +10,15 @@ public interface IWikiService {
 
     List<SdCatalog> getCatalogs(String type);
 
-    SdArticle getArticleDetail(String catalogId);
+    SdArticle getArticleDetail(String catalogListId,String catalogId,String type);
 
-    List<SdCatalogList> searchArticle(String search);
+    List<SdCatalogList> searchArticle(String search,String type);
 
     void addArticleReadNum(SdCatalogList catalogList);
 
     void addArticleLikeNum(SdCatalogList catalogList);
 
-    SdCatalogList getCatalogList(String id);
+    SdCatalogList getCatalogList(String catalogListId,String catalogId,String type);
 
     void uptArticle(SdArticle sdArticle);
 }

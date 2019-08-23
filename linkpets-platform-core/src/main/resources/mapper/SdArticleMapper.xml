@@ -37,7 +37,10 @@
       select
       a.id, a.catalog_id as catalogId, a.title, a.content, a.create_date as createDate,l.read_num as readNum,l.like_num as likeNum
       from sd_article a,sd_catalog_list l
-      where a.catalog_id = l.id and a.catalog_id = #{catalogId,jdbcType=VARCHAR}
+      where a.catalog_id = l.catalog_list_id and a.catalog_id = #{catalogListId,jdbcType=VARCHAR} and a.type=#{type}
+      <if test="catalogId!=null and catalogId!=''">
+          and l.catalog_id=#{catalogId}
+      </if>
 
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

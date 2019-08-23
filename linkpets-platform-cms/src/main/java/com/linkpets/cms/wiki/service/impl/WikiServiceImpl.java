@@ -30,13 +30,13 @@ public class WikiServiceImpl implements IWikiService {
     }
 
     @Override
-    public SdArticle getArticleDetail(String catalogId) {
-        return sdArticleMapper.selectByCatalogId(catalogId);
+    public SdArticle getArticleDetail(String catalogListId,String catalogId,String type) {
+        return sdArticleMapper.selectByCatalogId(catalogListId,catalogId,type);
     }
 
     @Override
-    public List<SdCatalogList> searchArticle(String search) {
-        return sdCatalogListMapper.searchArticle(search);
+    public List<SdCatalogList> searchArticle(String search,String type) {
+        return sdCatalogListMapper.searchArticle(search,type);
     }
 
     @Override
@@ -50,8 +50,8 @@ public class WikiServiceImpl implements IWikiService {
     }
 
     @Override
-    public SdCatalogList getCatalogList(String id) {
-        return sdCatalogListMapper.selectByPrimaryKey(id);
+    public SdCatalogList getCatalogList(String catalogListId,String catalogId,String type) {
+        return sdCatalogListMapper.selectByCatalogListIdAndType(catalogListId,catalogId,type);
     }
 
     @Override

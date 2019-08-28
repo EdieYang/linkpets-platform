@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class CertificationServiceImpl implements ICertificationService {
 
-    private static final String PASSED_STATUS="1";
+    private static final String PASSED_STATUS = "1";
 
 
     @Resource
@@ -33,12 +33,12 @@ public class CertificationServiceImpl implements ICertificationService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void modifyCertification(CmsAdoptCertification certification) {
-        String status=certification.getStatus();
-        CmsAdoptCertification cmsAdoptCertification=cmsAdoptCertificationMapper.selectByPrimaryKey(certification.getId());
-        String userId=cmsAdoptCertification.getUserId();
+        String status = certification.getStatus();
+        CmsAdoptCertification cmsAdoptCertification = cmsAdoptCertificationMapper.selectByPrimaryKey(certification.getId());
+        String userId = cmsAdoptCertification.getUserId();
         cmsAdoptCertificationMapper.updateByPrimaryKeySelective(certification);
-        if(PASSED_STATUS.equals(status)){
-            CmsUser cmsUser=new CmsUser();
+        if (PASSED_STATUS.equals(status)) {
+            CmsUser cmsUser = new CmsUser();
             cmsUser.setUserId(userId);
             cmsUser.setAuthenticated(1);
             cmsUserMapper.updateByPrimaryKeySelective(cmsUser);
@@ -52,9 +52,9 @@ public class CertificationServiceImpl implements ICertificationService {
 
     @Override
     public PageInfo<CmsAdoptCertification> getUserCertificationList(int pageNum, int pageSize, String status) {
-        PageHelper.startPage(pageNum,pageSize);
-        List<CmsAdoptCertification> cmsAdoptCertificationList=cmsAdoptCertificationMapper.getUserCertificationList(status);
-        PageInfo<CmsAdoptCertification> pageInfo=new PageInfo<>(cmsAdoptCertificationList);
+        PageHelper.startPage(pageNum, pageSize);
+        List<CmsAdoptCertification> cmsAdoptCertificationList = cmsAdoptCertificationMapper.getUserCertificationList(status);
+        PageInfo<CmsAdoptCertification> pageInfo = new PageInfo<>(cmsAdoptCertificationList);
         return pageInfo;
     }
 

@@ -3,8 +3,11 @@ package com.linkpets.core.model;
 
 import lombok.Data;
 
+/**
+ * 公益组织统计数据
+ */
 @Data
-public class AdoptOrgStatistic {
+public class CmsAdoptOrgStatistic {
 
     /**
      * 粉丝数
@@ -36,8 +39,9 @@ public class AdoptOrgStatistic {
      */
     private int activityNum;
 
-
+    /**
+     * 用户是否关注
+     */
     private int isFollowed;
-
 
 }

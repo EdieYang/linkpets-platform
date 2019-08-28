@@ -1,22 +1,5 @@
 package com.linkpets.cms.adopt.service.impl;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.annotation.Resource;
-
-import com.linkpets.cms.adopt.dao.CmsUserCustomMapper;
-import com.linkpets.cms.adopt.model.UserInfo;
-import com.linkpets.core.dao.CmsUserLoginMapper;
-import com.linkpets.core.model.CmsUser;
-import com.linkpets.core.model.CmsUserLogin;
-import com.linkpets.util.UUIDUtils;
-import com.linkpets.util.UserAnalyseUtil;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -27,6 +10,14 @@ import com.linkpets.core.dao.CmsAdoptPetMediaMapper;
 import com.linkpets.core.model.CmsAdoptPet;
 import com.linkpets.core.model.CmsAdoptPetCollect;
 import com.linkpets.core.model.CmsAdoptPetMedia;
+import com.linkpets.util.UUIDUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class PetServiceImpl implements IPetService {
@@ -37,13 +28,6 @@ public class PetServiceImpl implements IPetService {
     @Resource
     CmsAdoptPetMediaMapper cmsAdoptPetMediaMapper;
 
-
-    @Resource
-    CmsUserCustomMapper cmsUserCustomMapper;
-
-    @Resource
-    CmsUserLoginMapper cmsUserLoginMapper;
-    
     @Resource
     CmsAdoptPetCollectMapper cmsAdoptPetCollectMapper;
 
@@ -71,7 +55,7 @@ public class PetServiceImpl implements IPetService {
     public void uptAdopt(CmsAdoptPet pet) {
         String petId = pet.getPetId();
         cmsAdoptPetMapper.updateByPrimaryKeySelective(pet);
-        if( pet.getMediaList() !=null){
+        if (pet.getMediaList() != null) {
             List<CmsAdoptPetMedia> mediaList = pet.getMediaList();
             for (int i = 0; i < mediaList.size(); i++) {
                 CmsAdoptPetMedia media = mediaList.get(i);
@@ -110,9 +94,9 @@ public class PetServiceImpl implements IPetService {
         return cmsAdoptPetMapper.getAdoptPetIdsByUserId(userId);
     }
 
-	@Override
-	public JSONObject getCollectPetList(Map<String, Object> param, int pageNum, int pageSize, String orderBy) {
-		JSONObject result = new JSONObject();
+    @Override
+    public JSONObject getCollectPetList(Map<String, Object> param, int pageNum, int pageSize, String orderBy) {
+        JSONObject result = new JSONObject();
         PageHelper.startPage(pageNum, pageSize, orderBy);
         List<CmsAdoptPet> list = cmsAdoptPetMapper.getCollectPetList(param);
         PageInfo<CmsAdoptPet> page = new PageInfo<>(list);
@@ -120,7 +104,7 @@ public class PetServiceImpl implements IPetService {
         result.put("total", page.getTotal());
         result.put("rows", list);
         return result;
-	}
+    }
 
     @Override
     public PageInfo<CmsAdoptPet> getFollowedPetList(Map<String, Object> param, int pageNum, int pageSize, String orderBy) {
@@ -131,22 +115,22 @@ public class PetServiceImpl implements IPetService {
     }
 
     @Override
-	public void crtCollect(CmsAdoptPetCollect record) {
-		record.setCollectTime(new Date());
-		cmsAdoptPetCollectMapper.insertSelective(record);
-	}
+    public void crtCollect(CmsAdoptPetCollect record) {
+        record.setCollectTime(new Date());
+        cmsAdoptPetCollectMapper.insertSelective(record);
+    }
 
-	@Override
-	public void delCollect(String userId, String petId) {
-		cmsAdoptPetCollectMapper.delCollect(userId, petId);
-	}
+    @Override
+    public void delCollect(String userId, String petId) {
+        cmsAdoptPetCollectMapper.delCollect(userId, petId);
+    }
 
     @Override
     public boolean getIfCollectedPet(String userId, String petId) {
-        List<CmsAdoptPetCollect> cmsAdoptPetCollect= cmsAdoptPetCollectMapper.getCollectionRel(userId,petId);
-        if(cmsAdoptPetCollect!=null && cmsAdoptPetCollect.size()>0){
+        List<CmsAdoptPetCollect> cmsAdoptPetCollect = cmsAdoptPetCollectMapper.getCollectionRel(userId, petId);
+        if (cmsAdoptPetCollect != null && cmsAdoptPetCollect.size() > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

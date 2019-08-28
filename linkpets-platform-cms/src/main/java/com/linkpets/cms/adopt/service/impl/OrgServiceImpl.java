@@ -3,9 +3,7 @@ package com.linkpets.cms.adopt.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.cms.adopt.service.IOrgService;
-import com.linkpets.core.dao.CmsAdoptOrgFollowMapper;
-import com.linkpets.core.dao.CmsAdoptOrgMapper;
-import com.linkpets.core.dao.CmsAdoptPetMapper;
+import com.linkpets.core.dao.*;
 import com.linkpets.core.model.*;
 import com.linkpets.util.UUIDUtils;
 import org.springframework.stereotype.Service;
@@ -28,6 +26,12 @@ public class OrgServiceImpl implements IOrgService {
     @Resource
     private CmsAdoptPetMapper cmsAdoptPetMapper;
 
+    @Resource
+    private CmsAdoptOrgActivityMapper cmsAdoptOrgActivityMapper;
+
+    @Resource
+    private CmsAdoptOrgGalleryMapper cmsAdoptOrgGalleryMapper;
+
     @Override
     public List<CmsAdoptOrg> getAdoptOrgList() {
         return orgMapper.getAdoptOrgList();
@@ -36,6 +40,20 @@ public class OrgServiceImpl implements IOrgService {
     @Override
     public CmsAdoptOrg getAdoptOrgDetail(String orgId) {
         return orgMapper.selectByPrimaryKey(orgId);
+    }
+
+    @Override
+    public String insertOrg(CmsAdoptOrg org) {
+        String orgId = UUIDUtils.getUUID();
+        org.setOrgId(orgId);
+        org.setCreateDate(new Date());
+        orgMapper.insertSelective(org);
+        return orgId;
+    }
+
+    @Override
+    public void uptOrg(CmsAdoptOrg org) {
+        orgMapper.updateByPrimaryKeySelective(org);
     }
 
     @Override
@@ -76,8 +94,8 @@ public class OrgServiceImpl implements IOrgService {
     }
 
     @Override
-    public AdoptOrgStatistic getAdoptOrgStatistic(String orgId,String userId) {
-        return orgMapper.getAdoptOrgStatistic(orgId,userId);
+    public CmsAdoptOrgStatistic getAdoptOrgStatistic(String orgId, String userId) {
+        return orgMapper.getAdoptOrgStatistic(orgId, userId);
     }
 
     @Override
@@ -91,7 +109,7 @@ public class OrgServiceImpl implements IOrgService {
     @Override
     public PageInfo<CmsAdoptOrgGallery> getAdoptGalleryList(int pageNum, int pageSize, String orgId) {
         PageHelper.startPage(pageNum, pageSize);
-        List<CmsAdoptOrgGallery> list = orgMapper.getAdoptGalleryList(orgId);
+        List<CmsAdoptOrgGallery> list = cmsAdoptOrgGalleryMapper.getAdoptGalleryList(orgId);
         PageInfo<CmsAdoptOrgGallery> page = new PageInfo<>(list);
         return page;
     }
@@ -99,7 +117,7 @@ public class OrgServiceImpl implements IOrgService {
     @Override
     public PageInfo<CmsAdoptOrgActivity> getAdoptActivityList(int pageNum, int pageSize, String orgId) {
         PageHelper.startPage(pageNum, pageSize);
-        List<CmsAdoptOrgActivity> list = orgMapper.getAdoptActivityList(orgId);
+        List<CmsAdoptOrgActivity> list = cmsAdoptOrgActivityMapper.getAdoptActivityList(orgId);
         PageInfo<CmsAdoptOrgActivity> page = new PageInfo<>(list);
         return page;
     }
@@ -112,11 +130,35 @@ public class OrgServiceImpl implements IOrgService {
 
     @Override
     public void crtAdoptOrgPet(String orgId, String petId) {
-        orgMapper.crtAdoptOrgPetRel(UUIDUtils.getUUID(),orgId,petId);
+        orgMapper.crtAdoptOrgPetRel(UUIDUtils.getUUID(), orgId, petId);
     }
 
     @Override
     public void uptAdoptOrgPet(String id) {
         orgMapper.uptAdoptOrgPetRel(id);
+    }
+
+    @Override
+    public String insertActivity(CmsAdoptOrgActivity activity) {
+        String activityId = UUIDUtils.getUUID();
+        activity.setId(activityId);
+        activity.setCreateDate(new Date());
+        cmsAdoptOrgActivityMapper.insertSelective(activity);
+        return activityId;
+    }
+
+    @Override
+    public void uptActivity(CmsAdoptOrgActivity activity) {
+        cmsAdoptOrgActivityMapper.updateByPrimaryKeySelective(activity);
+    }
+
+    @Override
+    public void insertGallery(CmsAdoptOrgGallery gallery) {
+        cmsAdoptOrgGalleryMapper.insertSelective(gallery);
+    }
+
+    @Override
+    public void delGallery(CmsAdoptOrgGallery gallery) {
+        cmsAdoptOrgGalleryMapper.updateByPrimaryKeySelective(gallery);
     }
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
 	<classPathEntry
-		location="C:\Users\Public\Music\backup\backup\yjserver-webservice\out\artifacts\yjserver_webservice_Web_exploded\WEB-INF\lib\mysql-connector-java-5.1.5.jar" />
+		location="/Users/edie/.m2/repository/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar" />
 
 
 	<context id="context1">
@@ -25,7 +25,7 @@
 		<!--selectByExampleQueryId="false"></table>-->
 
 
-		<table schema="linkpets" tableName="cms_adopt_pet_org_rel"
+		<table schema="linkpets" tableName="cms_adopt_org_activity"
 			   enableCountByExample="false" enableUpdateByExample="false"
 			   enableDeleteByExample="false" enableSelectByExample="false"
 			   selectByExampleQueryId="false">
@@ -34,7 +34,14 @@
 			
 		</table>
 
+		<table schema="linkpets" tableName="cms_adopt_org_gallery"
+			   enableCountByExample="false" enableUpdateByExample="false"
+			   enableDeleteByExample="false" enableSelectByExample="false"
+			   selectByExampleQueryId="false">
 
+			<!--<columnOverride column="agreement" jdbcType="VARCHAR" />-->
+
+		</table>
 		<!--<table schema="linkpets" tableName="cms_activity_assistance"-->
 			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
 			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->

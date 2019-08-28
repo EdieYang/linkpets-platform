@@ -53,8 +53,19 @@ public interface CmsAdoptCertificationMapper {
      */
     int updateByPrimaryKey(CmsAdoptCertification record);
 
-
+    /**
+     * 获取用户实名认证详情
+     *
+     * @param userId
+     * @return
+     */
     CmsAdoptCertification getUserCertification(String userId);
 
+    /**
+     * 根据认证状态获取实名认证列表
+     *
+     * @param status
+     * @return
+     */
     List<CmsAdoptCertification> getUserCertificationList(String status);
 }

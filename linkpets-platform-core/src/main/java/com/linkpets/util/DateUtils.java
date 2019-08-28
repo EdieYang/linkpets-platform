@@ -38,6 +38,9 @@ public class DateUtils {
 
 
     public static String getFormatDateStr(Date date) {
+        if (date == null) {
+            return "";
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateStr = dateFormat.format(date);
         return dateStr;

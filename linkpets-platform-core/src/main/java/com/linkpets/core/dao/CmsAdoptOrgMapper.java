@@ -54,19 +54,44 @@ public interface CmsAdoptOrgMapper {
      */
     int updateByPrimaryKey(CmsAdoptOrg record);
 
-
+    /**
+     * 获取公益机构列表
+     *
+     * @return
+     */
     List<CmsAdoptOrg> getAdoptOrgList();
 
-    AdoptOrgStatistic getAdoptOrgStatistic(String orgId,String userId);
+    /**
+     * 获取公益机构统计数据
+     *
+     * @param orgId
+     * @param userId
+     * @return
+     */
+    CmsAdoptOrgStatistic getAdoptOrgStatistic(String orgId, String userId);
 
-    List<CmsAdoptOrgGallery> getAdoptGalleryList(String orgId);
-
-    List<CmsAdoptOrgActivity> getAdoptActivityList(String orgId);
-
+    /**
+     * 获取宠物绑定的公益组织信息
+     *
+     * @param petId
+     * @return
+     */
     CmsAdoptPetOrgRel getAdoptPetOrgInfoByPetId(String petId);
 
+    /**
+     * 绑定公益组织、宠物
+     *
+     * @param id
+     * @param orgId
+     * @param petId
+     */
     void crtAdoptOrgPetRel(@Param("id") String id, @Param("orgId") String orgId, @Param("petId") String petId);
 
+    /**
+     * 更新公益组织宠物绑定关系
+     *
+     * @param id
+     */
     void uptAdoptOrgPetRel(@Param("id") String id);
 
 }

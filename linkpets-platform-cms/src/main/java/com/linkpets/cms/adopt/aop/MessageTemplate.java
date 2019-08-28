@@ -9,7 +9,6 @@ public class MessageTemplate {
     public static final String PET_MSG_CONTENT_LOG = "恭喜，你已成功创建一条宠物领养信息，需等待系统审核通过，才可以上线";
 
 
-
     public static final String PET_CHECK_UNPASS_MSG_TITLE = "很抱歉，你创建的宠物领养信息审核未通过";
 
     public static final String PET_CHECK_UNPASS_MSG_CONTENT_TITLE = " 宠物领养信息审核未通过";
@@ -17,13 +16,11 @@ public class MessageTemplate {
     public static final String PET_CHECK_UNPASS_MSG_CONTENT_LOG = "原因：";
 
 
-
     public static final String PET_CHECK_PASS_MSG_TITLE = "你创建的宠物领养信息审核已通过";
 
     public static final String PET_CHECK_PASS_MSG_CONTENT_TITLE = " 宠物领养信息审核已通过";
 
     public static final String PET_CHECK_PASS_MSG_CONTENT_LOG = "点击下方查看宠物详情";
-
 
 
     public static final String APPLY_MSG_TITLE = "收到一个来自 # 的领养申请";
@@ -40,13 +37,11 @@ public class MessageTemplate {
     public static final String APPLY_PASS_FIRST_MSG_CONTENT_LOG = "送养方终审时会发出领养协议邀请，在此之前多多沟通会增加领养资格的可能";
 
 
+    public static final String APPLY_PASS_SECOND_MSG_TITLE = "您有一份 # 的领养协议需要签署";
 
+    public static final String APPLY_PASS_SECOND__MSG_CONTENT_TITLE = " 发来一份领养协议";
 
-    public static final String APPLY_PASS_SECOND_MSG_TITLE =  "您有一份 # 的领养协议需要签署";
-
-    public static final String APPLY_PASS_SECOND__MSG_CONTENT_TITLE= " 发来一份领养协议";
-
-    public static final String APPLY_PASS_SECOND_MSG_CONTENT_LOG =  "请确认协议条款并签字,最后发给送养人,请到【我发出的领养申请】待终审中签署协议";
+    public static final String APPLY_PASS_SECOND_MSG_CONTENT_LOG = "请确认协议条款并签字,最后发给送养人,请到【我发出的领养申请】待终审中签署协议";
 
 
     public static final String APPLY_PASS_THIRD_MSG_TITLE = "您收到一份来自 # 的领养协议";
@@ -54,7 +49,6 @@ public class MessageTemplate {
     public static final String APPLY_PASS_THIRD_MSG_CONTENT_TITLE = " 已签署协议";
 
     public static final String APPLY_PASS_THIRD_MSG_CONTENT_LOG = "请到【我收到的领养申请】查看详情,请仔细核对信息";
-
 
 
     public static final String APPLY_PASS_FORTH_MSG_TITLE = "恭喜您,领养协议已生效!";
@@ -69,8 +63,6 @@ public class MessageTemplate {
     public static final String APPLY_PASS_FORTH_ADOPTER_MSG_CONTENT_TITLE = "请时刻记住它在你的生命中出现过,有时间看看它";
 
     public static final String APPLY_PASS_FORTH_ADOPTER_MSG_CONTENT_LOG = "协议内容已具备法律效应,身份信息已经备案,请双方遵守协议内容,以免承担相应的法律责任";
-
-
 
 
     public static final String APPLY_REFUSE_MSG_TITLE = "# 的领养申请已取消";
@@ -95,8 +87,6 @@ public class MessageTemplate {
     public static final String CER_PASS_MSG_CONTENT_TITLE = "实名认证及身份信息审核通过";
 
     public static final String CER_PASS_MSG_CONTENT_LOG = "已开启实名认证用户，领养享受绿色通道。";
-
-
 
 
     public static final String CER_REJECT_MSG_TITLE = "很抱歉，实名认证没有通过审核";

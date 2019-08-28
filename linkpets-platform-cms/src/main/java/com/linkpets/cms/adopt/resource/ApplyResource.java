@@ -1,35 +1,34 @@
 package com.linkpets.cms.adopt.resource;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.util.StringUtil;
 import com.linkpets.annotation.ResponseResult;
-import com.linkpets.cms.adopt.model.UserInfo;
 import com.linkpets.cms.adopt.service.IApplyService;
 import com.linkpets.cms.adopt.service.IPetService;
 import com.linkpets.cms.adopt.service.IUserService;
-import com.linkpets.core.model.CmsAdoptAgreement;
 import com.linkpets.core.model.CmsAdoptApply;
 import com.linkpets.core.model.CmsAdoptPet;
+import com.linkpets.core.model.CmsUser;
 import com.linkpets.result.PlatformResult;
+import com.linkpets.util.DateUtils;
 import com.linkpets.util.UserAnalyseUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import java.util.*;
-
-@Api(value = "领养平台领养申请接口", tags = "领养申请接口")
+@Api(value = "领养平台领养申请接口",tags = "领养平台-领养申请接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/apply")
 public class ApplyResource {
-
 
 
     @Resource
@@ -68,10 +67,10 @@ public class ApplyResource {
             List<String> petIdList = petService.getAdoptPetIdsByUserId(adopterId);
             param.put("petId", petIdList);
 
-        } else if(StringUtils.isNotEmpty(adopterId)){
+        } else if (StringUtils.isNotEmpty(adopterId)) {
             param.put("petId", Arrays.asList(petId.split(",")));
         }
-        if (StringUtils.isNotEmpty(applyStatus)){
+        if (StringUtils.isNotEmpty(applyStatus)) {
             param.put("applyStatus", Arrays.asList(applyStatus.split(",")));
         }
 
@@ -85,23 +84,22 @@ public class ApplyResource {
     @GetMapping(value = "{applyId}")
     public PlatformResult getAdoptPet(@PathVariable("applyId") String applyId) {
         CmsAdoptApply adoptApply = applyService.getApply(applyId);
-        UserInfo userInfo=userService.getUserInfoByUserId(adoptApply.getApplyBy());
-        CmsAdoptPet petInfo=petService.getAdopt(adoptApply.getPetId());
-        UserInfo adopterInfo=userService.getUserInfoByUserId(petInfo.getCreateBy());
-        String birthday = adopterInfo.getBirthday();
+        CmsUser userInfo = userService.getUserInfoByUserId(adoptApply.getApplyBy());
+        CmsAdoptPet petInfo = petService.getAdopt(adoptApply.getPetId());
+        CmsUser adopterInfo = userService.getUserInfoByUserId(petInfo.getCreateBy());
+        String birthday = DateUtils.getFormatDateStr(adopterInfo.getBirthday());
         String starSign = UserAnalyseUtil.getStarSignName(birthday);
         adopterInfo.setStarSign(starSign);
         adopterInfo.setAgeFrom(UserAnalyseUtil.getAgeFrom(birthday));
         String lastLoginTime = userService.getLastLoginTime(petInfo.getCreateBy());
         adopterInfo.setLastLoginTime(lastLoginTime);
-        JSONObject result=new JSONObject();
-        result.put("applyInfo",adoptApply);
-        result.put("userInfo",userInfo);
-        result.put("petInfo",petInfo);
-        result.put("adopterInfo",adopterInfo);
+        JSONObject result = new JSONObject();
+        result.put("applyInfo", adoptApply);
+        result.put("userInfo", userInfo);
+        result.put("petInfo", petInfo);
+        result.put("adopterInfo", adopterInfo);
         return PlatformResult.success(result);
     }
-
 
 
     @ApiOperation("创建领养申请接口")
@@ -117,8 +115,6 @@ public class ApplyResource {
         applyService.uptApply(apply);
         return PlatformResult.success();
     }
-
-
 
 
 }

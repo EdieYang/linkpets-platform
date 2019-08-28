@@ -55,11 +55,35 @@ public interface CmsAdoptApplyMapper {
      */
     int updateByPrimaryKey(CmsAdoptApply record);
 
-	List<Map<String, Object>> getList(Map<String, Object> param);
+    /**
+     * 获取领养申请详情列表
+     *
+     * @param param
+     * @return
+     */
+    List<Map<String, Object>> getList(Map<String, Object> param);
 
+    /**
+     * 获取当天领养申请数
+     *
+     * @param syncDate
+     * @return
+     */
     int getApplyCount(String syncDate);
 
+    /**
+     * 获取已过期领养申请列表
+     *
+     * @return
+     */
     List<CmsAdoptApply> getExpiredAdoptApplyList();
 
+    /**
+     * 根据申请人UserId、petId获取申请协议详情
+     *
+     * @param applyBy
+     * @param petId
+     * @return
+     */
     CmsAdoptApply getApply(@Param("applyBy") String applyBy, @Param("petId") String petId);
 }

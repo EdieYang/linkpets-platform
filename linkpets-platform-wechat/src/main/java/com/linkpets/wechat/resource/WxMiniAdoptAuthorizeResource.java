@@ -26,9 +26,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(value = "领养小程序授权接口",tags = "linkpets-adoption")
+@Api(value = "领养小程序授权接口")
 @RestController
-@RequestMapping("/miniSystem")
+@RequestMapping("/wxmini/user")
 @Slf4j
 public class WxMiniAdoptAuthorizeResource {
 
@@ -81,7 +81,7 @@ public class WxMiniAdoptAuthorizeResource {
                 newUser.setUserTempId(userTempId);
                 newUser.setOpenId(openId);
                 newUser.setCreateTime(new Date());
-                newUser.setDelFlag("1");
+                newUser.setIsValid(1);
                 userService.insertUserTemp(newUser);
                 map.put("userId", userTempId);
 

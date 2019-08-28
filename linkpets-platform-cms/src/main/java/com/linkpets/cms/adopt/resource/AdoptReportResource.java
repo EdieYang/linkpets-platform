@@ -19,7 +19,7 @@ import java.util.Date;
  * @date 2019/5/19
  */
 
-@Api(value = "领养平台宠物接口", tags = "举报接口")
+@Api(value = "领养平台举报接口",tags = "领养平台-举报接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/reports")
@@ -32,8 +32,8 @@ public class AdoptReportResource {
     @PostMapping
     public PlatformResult crtReport(@RequestParam("reportType") String reportType,
                                     @RequestParam("petId") String petId,
-                                    @RequestParam("userId") String userId){
-        CmsAdoptReport report=new CmsAdoptReport();
+                                    @RequestParam("userId") String userId) {
+        CmsAdoptReport report = new CmsAdoptReport();
         report.setReportId(UUIDUtils.getUUID());
         report.setPetId(petId);
         report.setReportType(reportType);

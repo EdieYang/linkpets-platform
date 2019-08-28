@@ -13,7 +13,7 @@ public class CmsAdoptOrgGallery {
 
     private String image;
 
-    private int isValid;
+    private Integer isValid;
 
     private Date createDate;
 

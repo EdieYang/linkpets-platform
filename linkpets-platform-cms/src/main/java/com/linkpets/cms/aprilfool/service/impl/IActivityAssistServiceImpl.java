@@ -7,14 +7,12 @@ import com.linkpets.core.dao.CmsActivityAssistanceMapper;
 import com.linkpets.core.dao.CmsActivityDraftMapper;
 import com.linkpets.core.model.CmsActivityAssistance;
 import com.linkpets.core.model.CmsActivityDraft;
-import com.linkpets.core.model.User;
 import com.linkpets.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.List;
 
 
 @Service
@@ -71,10 +69,10 @@ public class IActivityAssistServiceImpl implements IActivityAssistService {
         return activityAssistanceCustomMapper.getActivityAssistanceByUserId(activityId, userId);
     }
 
-    @Override
-    public List<User> getActivityAssistFollowersByAssistUserId(String activityId, String assistUserId) {
-        return activityAssistanceCustomMapper.getActivityAssistFollowersByAssistUserId(activityId,assistUserId);
-    }
+//    @Override
+//    public List<ActivityUser> getActivityAssistFollowersByAssistUserId(String activityId, String assistUserId) {
+//        return activityAssistanceCustomMapper.getActivityAssistFollowersByAssistUserId(activityId,assistUserId);
+//    }
 
     @Override
     public int getActivityAssistNo(String activityId) {

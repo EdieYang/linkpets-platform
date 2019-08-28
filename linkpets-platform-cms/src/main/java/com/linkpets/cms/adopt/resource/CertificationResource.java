@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.Date;
 
-@Api(value = "领养平台领养申请接口", tags = "领养申请接口")
+@Api(value = "领养平台实名认证接口",tags = "领养平台-实名认证接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/certification")

@@ -27,9 +27,6 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
-    private Authorization authorization = new Authorization();
-
-
     /**
      * 创建API应用
      * apiInfo() 增加API相关信息
@@ -47,8 +44,6 @@ public class SwaggerConfiguration {
                 .apis(RequestHandlerSelectors.basePackage("com.linkpets.cms"))
                 .paths(PathSelectors.any())
                 .build()
-                .securitySchemes(Collections.singletonList(securitySchema()))
-                .securityContexts(Collections.singletonList(securityContext()))
                 .pathMapping("/");
     }
 
@@ -65,70 +60,9 @@ public class SwaggerConfiguration {
                 .license("")
                 .licenseUrl("")
                 .termsOfServiceUrl("")
-                .contact(new Contact("SteveYang", "", "haojie_look@163.com"))
+                .contact(new Contact("EdieYang", "", "haojie_look@163.com"))
                 .version("1.0.0")
                 .build();
     }
-    /**
-     * 配置默认的全局鉴权策略的开关，通过正则表达式进行匹配；默认匹配所有URL
-     *
-     * @return
-     */
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.regex(authorization.getAuthRegex()))
-                .build();
-    }
 
-    @Data
-    public static class Authorization {
-
-        /**
-         * 鉴权策略ID，需要和SecurityReferences ID保持一致
-         */
-        private String name = "";
-
-        /**
-         * 需要开启鉴权URL的正则
-         */
-        private String authRegex = "^.*$";
-
-        /**
-         * 鉴权作用域列表
-         */
-        private List<AuthorizationScope> authorizationScopeList = new ArrayList<>();
-
-        private List<String> tokenUrlList = new ArrayList<>();
-
-        public Authorization() {
-            AuthorizationScope authorizationScope = new AuthorizationScope("server", "server");
-            this.authorizationScopeList.add(authorizationScope);
-            this.tokenUrlList.add("http://localhost:8031/oauth/token");
-        }
-    }
-
-    /**
-     * 默认的全局鉴权策略
-     *
-     * @return
-     */
-    private List<SecurityReference> defaultAuth() {
-        ArrayList<AuthorizationScope> authorizationScopeList = new ArrayList<>();
-        authorization.getAuthorizationScopeList().forEach(authorizationScope -> authorizationScopeList.add(new AuthorizationScope(authorizationScope.getScope(), authorizationScope.getDescription())));
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[authorizationScopeList.size()];
-        return Collections.singletonList(SecurityReference.builder()
-                .reference(authorization.getName())
-                .scopes(authorizationScopeList.toArray(authorizationScopes))
-                .build());
-    }
-
-
-    private OAuth securitySchema() {
-        ArrayList<AuthorizationScope> authorizationScopeList = new ArrayList<>();
-        authorization.getAuthorizationScopeList().forEach(authorizationScope -> authorizationScopeList.add(new AuthorizationScope(authorizationScope.getScope(), authorizationScope.getDescription())));
-        ArrayList<GrantType> grantTypes = new ArrayList<>();
-        authorization.getTokenUrlList().forEach(tokenUrl -> grantTypes.add(new ResourceOwnerPasswordCredentialsGrant(tokenUrl)));
-        return new OAuth(authorization.getName(), authorizationScopeList, grantTypes);
-    }
 }

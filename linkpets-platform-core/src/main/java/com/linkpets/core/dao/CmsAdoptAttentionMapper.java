@@ -53,5 +53,10 @@ public interface CmsAdoptAttentionMapper {
      */
     int updateByPrimaryKey(CmsAdoptAttention record);
 
+    /**
+     * 取消关注
+     * @param userId
+     * @param attentBy
+     */
 	void delAttention(@Param("userId") String userId, @Param("attentBy") String attentBy);
 }

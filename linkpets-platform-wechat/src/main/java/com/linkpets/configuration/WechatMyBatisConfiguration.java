@@ -11,15 +11,12 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 /**
- * Created by Fade on 2016/12/22.
+ * Created by Edie on 2016/12/22.
  */
-
-
-
 @Configuration
 public class WechatMyBatisConfiguration {
 
-    private static final Logger log= LoggerFactory.getLogger(WechatMyBatisConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(WechatMyBatisConfiguration.class);
 
     @Value("${linkpets.jdbc.url}")
     private String jdbcUrl;
@@ -32,8 +29,8 @@ public class WechatMyBatisConfiguration {
 
 
     @Bean(value = "wechatDatasource")
-    public DataSource dataSource(){
-        HikariDataSource hikariDataSource=new HikariDataSource();
+    public DataSource dataSource() {
+        HikariDataSource hikariDataSource = new HikariDataSource();
         hikariDataSource.setJdbcUrl(jdbcUrl);
         hikariDataSource.setUsername(jdbcUsername);
         hikariDataSource.setPassword(jdbcPassword);
@@ -52,11 +49,9 @@ public class WechatMyBatisConfiguration {
     }
 
 
-
-
     @Bean
-    public DataSourceTransactionManager dataSourceTransactionManager(){
-        DataSourceTransactionManager dataSourceTransactionManager=new DataSourceTransactionManager();
+    public DataSourceTransactionManager dataSourceTransactionManager() {
+        DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager();
         dataSourceTransactionManager.setDataSource(this.dataSource());
         return dataSourceTransactionManager;
     }

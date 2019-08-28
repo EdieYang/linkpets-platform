@@ -51,7 +51,19 @@ public interface CmsUserLoginMapper {
      */
     int updateByPrimaryKey(CmsUserLogin record);
 
+    /**
+     * 获取用户登录信息
+     *
+     * @param userId
+     * @return
+     */
     CmsUserLogin getLastLoginTime(String userId);
 
+    /**
+     * 获取当天用户登录数
+     *
+     * @param syncDate
+     * @return
+     */
     int getLoginCount(String syncDate);
 }

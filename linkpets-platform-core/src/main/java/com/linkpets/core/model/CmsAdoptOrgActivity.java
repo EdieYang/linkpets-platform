@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Data
 public class CmsAdoptOrgActivity {
+
     private String id;
 
     private String orgId;
@@ -16,7 +17,9 @@ public class CmsAdoptOrgActivity {
 
     private String activityCover;
 
-    private int sort;
+    private Integer sort;
 
     private Date createDate;
+
+    private Integer isValid;
 }

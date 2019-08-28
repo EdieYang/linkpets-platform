@@ -53,7 +53,22 @@ public interface SdCatalogListMapper {
      */
     int updateByPrimaryKey(SdCatalogList record);
 
-    List<SdCatalogList> searchArticle(String search,String type);
+    /**
+     * 获取搜索结果列表
+     *
+     * @param search
+     * @param type
+     * @return
+     */
+    List<SdCatalogList> searchArticle(String search, String type);
 
-    SdCatalogList selectByCatalogListIdAndType(String catalogListId,String catalogId,String type);
+    /**
+     * 获取目录列表
+     *
+     * @param catalogListId
+     * @param catalogId
+     * @param type
+     * @return
+     */
+    SdCatalogList selectByCatalogListIdAndType(String catalogListId, String catalogId, String type);
 }

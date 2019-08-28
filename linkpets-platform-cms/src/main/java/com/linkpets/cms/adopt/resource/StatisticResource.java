@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.Date;
 
-@Api(value = "领养平台领养申请接口", tags = "领养申请接口")
+@Api(value = "领养平台统计接口",tags = "领养平台-统计接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/statistic")
@@ -35,9 +35,9 @@ public class StatisticResource {
         String syncDate = DateUtils.getFormatDateStr(new Date(), "yyyy-MM-dd");
         int applyTodayCount = applyService.getApplyCount(syncDate);
         int petAdoptTodayCount = petService.getPetAdoptCount(syncDate);
-        int loginTodayCount=userService.getLoginCount(syncDate);
-        int totalUserCount=userService.getTotalUserCount();
-        AdoptionStatistic adoptionStatistic=new AdoptionStatistic(applyTodayCount,petAdoptTodayCount,loginTodayCount,totalUserCount);
+        int loginTodayCount = userService.getLoginCount(syncDate);
+        int totalUserCount = userService.getTotalUserCount();
+        AdoptionStatistic adoptionStatistic = new AdoptionStatistic(applyTodayCount, petAdoptTodayCount, loginTodayCount, totalUserCount);
         return PlatformResult.success(adoptionStatistic);
     }
 

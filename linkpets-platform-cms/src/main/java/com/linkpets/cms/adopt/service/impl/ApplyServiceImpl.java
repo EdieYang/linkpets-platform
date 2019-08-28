@@ -1,43 +1,36 @@
 package com.linkpets.cms.adopt.service.impl;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.cms.adopt.service.IApplyService;
-import com.linkpets.core.dao.CmsAdoptAgreementMapper;
 import com.linkpets.core.dao.CmsAdoptApplyMapper;
-import com.linkpets.core.model.CmsAdoptAgreement;
 import com.linkpets.core.model.CmsAdoptApply;
 import com.linkpets.util.UUIDUtils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ApplyServiceImpl implements IApplyService {
 
-    private static final String PASS_FIRST_STATUS = "1";
-
     @Resource
     CmsAdoptApplyMapper cmsAdoptApplyMapper;
-    
 
 
     @Override
     public String crtApply(CmsAdoptApply apply) {
-        CmsAdoptApply existApply=cmsAdoptApplyMapper.getApply(apply.getApplyBy(),apply.getPetId());
-        if(existApply==null){
+        CmsAdoptApply existApply = cmsAdoptApplyMapper.getApply(apply.getApplyBy(), apply.getPetId());
+        if (existApply == null) {
             String applyId = UUIDUtils.getUUID();
             apply.setApplyId(applyId);
             apply.setApplyTime(new Date());
             cmsAdoptApplyMapper.insertSelective(apply);
             return applyId;
-        }else{
+        } else {
             return "";
         }
 

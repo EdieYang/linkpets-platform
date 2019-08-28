@@ -51,6 +51,13 @@ public interface SdArticleMapper {
      */
     int updateByPrimaryKey(SdArticle record);
 
-
-    SdArticle selectByCatalogId(String catalogListId,String catalogId,String type);
+    /**
+     * 获取百科文章详情
+     *
+     * @param catalogListId
+     * @param catalogId
+     * @param type
+     * @return
+     */
+    SdArticle selectByCatalogId(String catalogListId, String catalogId, String type);
 }

@@ -53,5 +53,10 @@ public interface CmsAdoptPetMediaMapper {
      */
     int updateByPrimaryKey(CmsAdoptPetMedia record);
 
+    /**
+     * 获取宠物相册
+     * @param petId
+     * @return
+     */
     List<CmsAdoptPetMedia> selectByPetId(String petId);
 }

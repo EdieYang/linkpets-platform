@@ -19,13 +19,10 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 /**
  * Created by Fade on 2016/12/22.
  */
-
-
-
 @Configuration
-public class CmsMyBatisConfiguration{
+public class CmsMyBatisConfiguration {
 
-    private static final Logger log= LoggerFactory.getLogger(CmsMyBatisConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(CmsMyBatisConfiguration.class);
 
     @Value("${linkpets.jdbc.url}")
     private String jdbcUrl;
@@ -38,8 +35,8 @@ public class CmsMyBatisConfiguration{
 
 
     @Bean(value = "cmsDatasource")
-    public DataSource dataSource(){
-        HikariDataSource hikariDataSource=new HikariDataSource();
+    public DataSource dataSource() {
+        HikariDataSource hikariDataSource = new HikariDataSource();
         hikariDataSource.setJdbcUrl(jdbcUrl);
         hikariDataSource.setUsername(jdbcUsername);
         hikariDataSource.setPassword(jdbcPassword);
@@ -49,7 +46,6 @@ public class CmsMyBatisConfiguration{
         hikariDataSource.setDriverClassName("com.mysql.jdbc.Driver");
         hikariDataSource.setMinimumIdle(5);
         hikariDataSource.setAutoCommit(true);
-
         hikariDataSource.setConnectionTestQuery("SELECT 1");
         hikariDataSource.setMaximumPoolSize(15);
         hikariDataSource.setMaxLifetime(1800000);
@@ -58,11 +54,9 @@ public class CmsMyBatisConfiguration{
     }
 
 
-
-
     @Bean
-    public DataSourceTransactionManager dataSourceTransactionManager(){
-        DataSourceTransactionManager dataSourceTransactionManager=new DataSourceTransactionManager();
+    public DataSourceTransactionManager dataSourceTransactionManager() {
+        DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager();
         dataSourceTransactionManager.setDataSource(this.dataSource());
         return dataSourceTransactionManager;
     }

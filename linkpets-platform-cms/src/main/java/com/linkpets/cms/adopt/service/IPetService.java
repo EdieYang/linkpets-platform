@@ -51,15 +51,57 @@ public interface IPetService {
      */
     List<String> getAdoptPetIdsByUserId(String userId);
 
+    /**
+     * 分页获取收藏宠物列表
+     *
+     * @param param
+     * @param pageNum
+     * @param pageSize
+     * @param orderBy
+     * @return
+     */
     JSONObject getCollectPetList(Map<String, Object> param, int pageNum, int pageSize, String orderBy);
 
+    /**
+     * 分页获取关注宠物列表
+     *
+     * @param param
+     * @param pageNum
+     * @param pageSize
+     * @param orderBy
+     * @return
+     */
     PageInfo<CmsAdoptPet> getFollowedPetList(Map<String, Object> param, int pageNum, int pageSize, String orderBy);
 
+    /**
+     * 收藏宠物
+     *
+     * @param record
+     */
     void crtCollect(CmsAdoptPetCollect record);
 
+    /**
+     * 取消收藏
+     *
+     * @param userId
+     * @param petId
+     */
     void delCollect(String userId, String petId);
 
+    /**
+     * 宠物是否收藏
+     *
+     * @param userId
+     * @param petId
+     * @return
+     */
     boolean getIfCollectedPet(String userId, String petId);
 
+    /**
+     * 获取当天宠物创建数
+     *
+     * @param syncDate
+     * @return
+     */
     int getPetAdoptCount(String syncDate);
 }

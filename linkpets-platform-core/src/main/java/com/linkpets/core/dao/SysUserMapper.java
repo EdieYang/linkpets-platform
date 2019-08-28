@@ -52,7 +52,12 @@ public interface SysUserMapper {
     int updateByPrimaryKey(SysUser record);
 
 
-
+    /**
+     * 根据账号获取系统用户
+     *
+     * @param userName
+     * @return
+     */
     SysUser selectByUserName(String userName);
 
 

@@ -1,9 +1,6 @@
 package com.linkpets.cms.aprilfool.service;
 
 import com.linkpets.core.model.CmsActivityAssistance;
-import com.linkpets.core.model.User;
-
-import java.util.List;
 
 public interface IActivityAssistService {
 
@@ -11,7 +8,7 @@ public interface IActivityAssistService {
 
     CmsActivityAssistance getActivityAssistRecordByUserId(String activityId,String userId);
 
-    List<User> getActivityAssistFollowersByAssistUserId(String activityId,String assistUserId);
+//    List<ActivityUser> getActivityAssistFollowersByAssistUserId(String activityId, String assistUserId);
 
     int getActivityAssistNo(String activityId);
 }

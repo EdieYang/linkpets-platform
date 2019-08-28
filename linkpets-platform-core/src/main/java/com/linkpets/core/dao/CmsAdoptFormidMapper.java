@@ -52,5 +52,10 @@ public interface CmsAdoptFormidMapper {
      */
     int updateByPrimaryKey(CmsAdoptFormid record);
 
+    /**
+     * 获取用户有效formId
+     * @param userId
+     * @return
+     */
     CmsAdoptFormid getValidFormId(String userId);
 }

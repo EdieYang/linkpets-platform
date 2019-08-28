@@ -3,12 +3,15 @@ package com.linkpets.cms.adopt.resource;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
-import com.linkpets.cms.adopt.model.UserInfo;
 import com.linkpets.cms.adopt.service.IOrgService;
 import com.linkpets.cms.adopt.service.IPetService;
 import com.linkpets.cms.adopt.service.IUserService;
-import com.linkpets.core.model.*;
+import com.linkpets.core.model.CmsAdoptPet;
+import com.linkpets.core.model.CmsAdoptPetCollect;
+import com.linkpets.core.model.CmsAdoptPetOrgRel;
+import com.linkpets.core.model.CmsUser;
 import com.linkpets.result.PlatformResult;
+import com.linkpets.util.DateUtils;
 import com.linkpets.util.UserAnalyseUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -18,13 +21,11 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-
-import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(value = "领养平台宠物接口", tags = "宠物接口")
+@Api(value = "领养平台宠物接口",tags = "领养平台-宠物接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/pets")
@@ -91,8 +92,8 @@ public class PetResource {
     public PlatformResult getAdoptPet(@PathVariable("petId") String petId,
                                       @RequestParam("userId") String userId) {
         CmsAdoptPet adoptPet = petService.getAdopt(petId);
-        UserInfo userInfo = userService.getUserInfoByUserId(adoptPet.getCreateBy());
-        String birthday = userInfo.getBirthday();
+        CmsUser userInfo = userService.getUserInfoByUserId(adoptPet.getCreateBy());
+        String birthday = DateUtils.getFormatDateStr(userInfo.getBirthday());
         String starSign = UserAnalyseUtil.getStarSignName(birthday);
         userInfo.setStarSign(starSign);
         userInfo.setAgeFrom(UserAnalyseUtil.getAgeFrom(birthday));
@@ -104,11 +105,11 @@ public class PetResource {
         userInfo.setAdoptingNum(Integer.parseInt(String.valueOf(userAddition.get("adoptingNum"))));
         userInfo.setAdoptedNum(Integer.parseInt(String.valueOf(userAddition.get("adoptedNum"))));
         int applyNum = Integer.parseInt(String.valueOf(userAddition.get("applyNum")));
-        int applyHandle =  Integer.parseInt(String.valueOf(userAddition.get("applyHandle")));
-        if(applyNum==0){
+        int applyHandle = Integer.parseInt(String.valueOf(userAddition.get("applyHandle")));
+        if (applyNum == 0) {
             userInfo.setApplyHandle("0%");
-        }else{
-            userInfo.setApplyHandle(Math.round(applyHandle/(applyNum*1.00)*100)+"%");
+        } else {
+            userInfo.setApplyHandle(Math.round(applyHandle / (applyNum * 1.00) * 100) + "%");
         }
 
         Map<String, Object> map = new HashMap<>();
@@ -121,9 +122,9 @@ public class PetResource {
     @PostMapping(value = "info")
     public PlatformResult crtAdopt(@RequestBody CmsAdoptPet pet) {
         String petId = petService.crtAdopt(pet);
-        if(StringUtils.isNotEmpty(pet.getOrgId()) && pet.getPetFrom().equals("2")){
+        if (StringUtils.isNotEmpty(pet.getOrgId()) && pet.getPetFrom().equals("2")) {
             //绑定公益机构
-            orgService.crtAdoptOrgPet(pet.getOrgId(),pet.getPetId());
+            orgService.crtAdoptOrgPet(pet.getOrgId(), pet.getPetId());
         }
         return PlatformResult.success(petId);
     }
@@ -133,18 +134,18 @@ public class PetResource {
     public PlatformResult uptAdopt(@RequestBody CmsAdoptPet pet) {
         petService.uptAdopt(pet);
         //查看公益组织绑定
-        CmsAdoptPetOrgRel orgPet=orgService.getAdoptPetOrgInfoByPetId(pet.getPetId());
-        if(orgPet!=null && StringUtils.isNotEmpty(pet.getOrgId())){
-            orgService.crtAdoptOrgPet(pet.getOrgId(),pet.getPetId());
+        CmsAdoptPetOrgRel orgPet = orgService.getAdoptPetOrgInfoByPetId(pet.getPetId());
+        if (orgPet != null && StringUtils.isNotEmpty(pet.getOrgId())) {
+            orgService.crtAdoptOrgPet(pet.getOrgId(), pet.getPetId());
         }
 
-        if(orgPet!=null && !orgPet.getOrgId().equals(pet.getOrgId()) && StringUtils.isNotEmpty(pet.getPetFrom())){
+        if (orgPet != null && !orgPet.getOrgId().equals(pet.getOrgId()) && StringUtils.isNotEmpty(pet.getPetFrom())) {
             orgService.uptAdoptOrgPet(orgPet.getId());
-            orgService.crtAdoptOrgPet(pet.getOrgId(),pet.getPetId());
+            orgService.crtAdoptOrgPet(pet.getOrgId(), pet.getPetId());
         }
 
-        if(orgPet==null && StringUtils.isNotEmpty(pet.getOrgId())){
-            orgService.crtAdoptOrgPet(pet.getOrgId(),pet.getPetId());
+        if (orgPet == null && StringUtils.isNotEmpty(pet.getOrgId())) {
+            orgService.crtAdoptOrgPet(pet.getOrgId(), pet.getPetId());
         }
         return PlatformResult.success();
     }

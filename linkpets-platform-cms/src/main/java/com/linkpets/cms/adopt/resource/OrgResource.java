@@ -3,14 +3,15 @@ package com.linkpets.cms.adopt.resource;
 
 import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
-import com.linkpets.core.model.*;
 import com.linkpets.cms.adopt.service.IOrgService;
 import com.linkpets.cms.adopt.service.IPetService;
+import com.linkpets.core.model.*;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(value = "领养平台宠物接口", tags = "公益组织接口")
+@Api(value = "领养平台公益机构接口", tags = "领养平台-公益机构接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/orgs")
@@ -47,6 +48,19 @@ public class OrgResource {
         return PlatformResult.success(adoptOrg);
     }
 
+    @ApiOperation("新增公益组织")
+    @PostMapping(value = "/org")
+    public PlatformResult insertAdoptOrgInfo(@RequestBody CmsAdoptOrg adoptOrg) {
+        String orgId = orgService.insertOrg(adoptOrg);
+        return PlatformResult.success(orgId);
+    }
+
+    @ApiOperation("更新公益组织")
+    @PutMapping(value = "/org")
+    public PlatformResult uptAdoptOrgInfo(@RequestBody CmsAdoptOrg adoptOrg) {
+        orgService.uptOrg(adoptOrg);
+        return PlatformResult.success();
+    }
 
     @ApiOperation("获取公益组织宠物列表")
     @ApiImplicitParams({
@@ -108,6 +122,21 @@ public class OrgResource {
         return PlatformResult.success(petPageInfo);
     }
 
+    @ApiOperation("新增公益机构相册")
+    @PostMapping(value = "/gallery")
+    public PlatformResult addAdoptOrgGallery(@RequestBody CmsAdoptOrgGallery gallery) {
+        orgService.insertGallery(gallery);
+        return PlatformResult.success();
+    }
+
+    @ApiOperation("删除公益机构相册")
+    @DeleteMapping(value = "/gallery")
+    public PlatformResult delAdoptOrgGallery(@RequestBody CmsAdoptOrgGallery gallery) {
+        orgService.delGallery(gallery);
+        return PlatformResult.success();
+    }
+
+
     @ApiOperation("获取公益组织活动列表")
     @GetMapping(value = "/activity")
     public PlatformResult getAdoptOrgActivity(@RequestParam("orgId") String orgId,
@@ -115,6 +144,20 @@ public class OrgResource {
                                               @RequestParam("pageSize") int pageSize) {
         PageInfo<CmsAdoptOrgActivity> petPageInfo = orgService.getAdoptActivityList(pageNum, pageSize, orgId);
         return PlatformResult.success(petPageInfo);
+    }
+
+    @ApiOperation("新增公益机构活动")
+    @PostMapping(value = "/activity")
+    public PlatformResult addAdoptOrgActivity(@RequestBody CmsAdoptOrgActivity activity) {
+        String activityId = orgService.insertActivity(activity);
+        return PlatformResult.success(activityId);
+    }
+
+    @ApiOperation("更新公益机构活动")
+    @PutMapping(value = "/activity")
+    public PlatformResult uptAdoptOrgActivity(@RequestBody CmsAdoptOrgActivity activity) {
+        orgService.uptActivity(activity);
+        return PlatformResult.success();
     }
 
 
@@ -147,8 +190,8 @@ public class OrgResource {
     @GetMapping(value = "/statistic")
     public PlatformResult getAdoptOrgStatistics(@RequestParam("orgId") String orgId,
                                                 @RequestParam("userId") String userId) {
-        AdoptOrgStatistic adoptOrgStatistic = orgService.getAdoptOrgStatistic(orgId,userId);
-        adoptOrgStatistic.setPublishNum(adoptOrgStatistic.getActivityNum()+adoptOrgStatistic.getAdoptPets()+adoptOrgStatistic.getGalleryNum());
+        CmsAdoptOrgStatistic adoptOrgStatistic = orgService.getAdoptOrgStatistic(orgId, userId);
+        adoptOrgStatistic.setPublishNum(adoptOrgStatistic.getActivityNum() + adoptOrgStatistic.getAdoptPets() + adoptOrgStatistic.getGalleryNum());
         return PlatformResult.success(adoptOrgStatistic);
     }
 

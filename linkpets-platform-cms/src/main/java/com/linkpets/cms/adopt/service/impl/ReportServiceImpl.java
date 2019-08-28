@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * @date 2019/5/19
  */
 @Service
-public class ReportServiceImpl  implements IReportService{
+public class ReportServiceImpl implements IReportService {
 
     @Resource
     private CmsAdoptReportMapper reportMapper;
@@ -21,7 +21,5 @@ public class ReportServiceImpl  implements IReportService{
     public void crtReport(CmsAdoptReport report) {
         reportMapper.insertSelective(report);
     }
-
-
 
 }

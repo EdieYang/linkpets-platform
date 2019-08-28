@@ -55,7 +55,20 @@ public interface CmsAdoptPetCollectMapper {
      */
     int updateByPrimaryKey(CmsAdoptPetCollect record);
 
-	void delCollect(@Param("userId") String userId, @Param("petId") String petId);
+    /**
+     * 取消收藏
+     *
+     * @param userId
+     * @param petId
+     */
+    void delCollect(@Param("userId") String userId, @Param("petId") String petId);
 
-	List<CmsAdoptPetCollect> getCollectionRel(@Param("userId") String userId, @Param("petId") String petId);
+    /**
+     * 获取收藏宠物列表
+     *
+     * @param userId
+     * @param petId
+     * @return
+     */
+    List<CmsAdoptPetCollect> getCollectionRel(@Param("userId") String userId, @Param("petId") String petId);
 }

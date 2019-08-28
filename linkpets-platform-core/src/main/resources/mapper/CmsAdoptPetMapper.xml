@@ -493,51 +493,47 @@
         </if>
     </select>
 
-
     <select id="selectAdoptionImage" resultMap="imageResultMap">
-    select media_path
-    from  cms_adopt_pet_media
-    where pet_id=#{pet_id}
-    and is_valid = '1'
-  </select>
+        select media_path
+        from cms_adopt_pet_media
+        where pet_id = #{pet_id}
+          and is_valid = '1'
+    </select>
 
     <select id="getAdoptPetIdsByUserId" resultType="java.lang.String">
-    select pet_id as petId
-    from cms_adopt_pet
-    where create_by=#{userId}
-  </select>
+        select pet_id as petId
+        from cms_adopt_pet
+        where create_by = #{userId}
+    </select>
 
     <select id="getCollectPetList" resultMap="BaseListResultMap">
-  	SELECT 
-	  p.*
-	FROM
-	  cms_adopt_pet_collect c
-	  left join cms_adopt_pet  p
-	  on c.pet_id = p.pet_id
-	  where p.is_valid = '1' and c.is_valid= '1' and p.adopt_status = '3'
-	  AND c.user_id = #{userId,jdbcType=VARCHAR}
-  </select>
+        SELECT p.*
+        FROM cms_adopt_pet_collect c
+                 left join cms_adopt_pet p
+                           on c.pet_id = p.pet_id
+        where p.is_valid = '1'
+          and c.is_valid = '1'
+          and p.adopt_status = '3'
+          AND c.user_id = #{userId,jdbcType=VARCHAR}
+    </select>
 
 
     <select id="getFollowedPetList" resultMap="BaseListResultMap">
 
-    SELECT
-      p.*
-    FROM
-      cms_adopt_attention ct
-      LEFT JOIN cms_adopt_pet p
-        ON ct.user_id = p.create_by
-    WHERE ct.is_valid = '1'
-      and p.adopt_status = '3'
-      AND ct.attent_by = #{userId}
+        SELECT p.*
+        FROM cms_adopt_attention ct
+                 LEFT JOIN cms_adopt_pet p
+                           ON ct.user_id = p.create_by
+        WHERE ct.is_valid = '1'
+          and p.adopt_status = '3'
+          AND ct.attent_by = #{userId}
 
     </select>
 
     <select id="getPetAdoptCount" resultType="java.lang.Integer">
-      SELECT  count(1)
-      from cms_adopt_pet
-      where left(create_date,10) = #{syncDate}
-
+        SELECT count(1)
+        from cms_adopt_pet
+        where left(create_date, 10) = #{syncDate}
     </select>
 
 </mapper>

@@ -30,7 +30,7 @@ import java.util.Map;
  * @date 2019/5/25
  */
 
-@Api(value = "微信模板消息推送", tags = "微信模板消息")
+@Api(value = "微信小程序模板消息推送")
 @RestController
 @RequestMapping("/templateMsg")
 @Slf4j
@@ -77,8 +77,7 @@ public class WxTemplateMsgResource {
         String applyId = msgJson.getString("applyId");
         String petName = msgJson.getString("petName");
 
-        String receiver = cmsAdoptMsg.getReceiver();
-        CmsUser user = userService.getUserInfo(receiver);
+        CmsUser user = userService.getUserInfo(cmsAdoptMsg.getReceiver());
         String openId = user.getOpenid();
         String templateId = "";
         JSONObject templateForm = new JSONObject();
@@ -95,7 +94,7 @@ public class WxTemplateMsgResource {
                 case "0":
                     templateId = applyCreateTemplateId;
 
-                    templateData.put("keyword1", new KeyWordValue( msgJson.getString("nickName") + "发来领养申请").toJson());
+                    templateData.put("keyword1", new KeyWordValue(msgJson.getString("nickName") + "发来领养申请").toJson());
                     templateData.put("keyword2", new KeyWordValue("点击此处查看领养申请详情").toJson());
                     break;
                 case "1":
@@ -103,13 +102,13 @@ public class WxTemplateMsgResource {
                     templateData.put("keyword1", new KeyWordValue("恭喜您！初审已通过").toJson());
                     templateData.put("keyword2", new KeyWordValue("您发出对" + petName + "的领养申请已经初步通过。").toJson());
                     templateData.put("keyword3", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
-                    templateData.put("keyword4", new KeyWordValue( "请耐心等待送养人的终审，终审通过后您会收到领养协议。").toJson());
+                    templateData.put("keyword4", new KeyWordValue("请耐心等待送养人的终审，终审通过后您会收到领养协议。").toJson());
                     break;
                 case "2":
                     templateId = applyProcessTemplateId;
                     templateData.put("keyword1", new KeyWordValue("恭喜您！终审已通过").toJson());
                     templateData.put("keyword2", new KeyWordValue("送养人" + "给您发了份领养协议，请及时填写").toJson());
-                    templateData.put("keyword3", new KeyWordValue( DateUtils.getFormatDateStr(new Date())).toJson());
+                    templateData.put("keyword3", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
                     templateData.put("keyword4", new KeyWordValue("请确认协议条款，签上自己的名字，并发送给送养人进行签字").toJson());
                     break;
                 case "3":
@@ -129,7 +128,7 @@ public class WxTemplateMsgResource {
                 case "5":
                     templateId = applyCancelTemplateId;
                     templateData.put("keyword1", new KeyWordValue("领养人取消了对" + petName + "的领养申请，点击查看原因").toJson());
-                    templateData.put("keyword2", new KeyWordValue( DateUtils.getFormatDateStr(new Date())).toJson());
+                    templateData.put("keyword2", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
                     break;
                 default:
                     break;
@@ -182,7 +181,7 @@ public class WxTemplateMsgResource {
                 case "1":
                     templateId = certificateTemplateId;
                     templateData.put("keyword1", new KeyWordValue("恭喜您！实名认证信息已通过").toJson());
-                    templateData.put("keyword2", new KeyWordValue( DateUtils.getFormatDateStr(new Date())).toJson());
+                    templateData.put("keyword2", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
                     templateData.put("keyword3", new KeyWordValue("认证成功").toJson());
                     break;
                 case "2":
@@ -293,7 +292,7 @@ public class WxTemplateMsgResource {
             String accessToken = resJsonObj.getString("access_token");
             Map<String, String> map = new HashMap<>();
             templateId = chatTemplateId;
-            CmsAdoptFormid cmsAdoptFormid =cmsAdoptFormidMapper.getValidFormId(targetUserId);
+            CmsAdoptFormid cmsAdoptFormid = cmsAdoptFormidMapper.getValidFormId(targetUserId);
             map.put("value", user.getNickName() + "给你留了一条信息，点击查看详情");
             templateData.put("keyword1", map);
             map.put("value", DateUtils.getFormatDateStr(new Date()));

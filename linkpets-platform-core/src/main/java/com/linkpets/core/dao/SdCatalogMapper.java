@@ -53,5 +53,11 @@ public interface SdCatalogMapper {
      */
     int updateByPrimaryKey(SdCatalog record);
 
+    /**
+     * 获取目录列表
+     *
+     * @param type
+     * @return
+     */
     List<SdCatalog> getCatalogs(String type);
 }

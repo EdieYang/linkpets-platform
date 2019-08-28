@@ -2,12 +2,8 @@ package com.linkpets.cms.adopt.resource;
 
 import com.alibaba.fastjson.JSONObject;
 import com.linkpets.annotation.ResponseResult;
-import com.linkpets.cms.adopt.model.UserInfo;
 import com.linkpets.cms.adopt.service.*;
-import com.linkpets.core.model.CmsAdoptAgreement;
-import com.linkpets.core.model.CmsAdoptApply;
-import com.linkpets.core.model.CmsAdoptCertification;
-import com.linkpets.core.model.CmsAdoptPet;
+import com.linkpets.core.model.*;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,7 +19,7 @@ import java.util.Map;
  * @date 2019/5/26
  */
 
-@Api(value = "领养平台领养协议接口", tags = "领养协议接口")
+@Api(value = "领养平台领养协议接口",tags = "领养平台-领养协议接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/agreement")
@@ -48,12 +44,12 @@ public class AgreementResource {
     @ApiOperation("创建领养合同接口")
     @PostMapping(value = "info")
     public PlatformResult crtAgreement(@RequestBody CmsAdoptAgreement agreement) {
-        String adopterUserId=agreement.getAdopterId();
-        CmsAdoptCertification certification=certificationService.getUserCertification(adopterUserId);
+        String adopterUserId = agreement.getAdopterId();
+        CmsAdoptCertification certification = certificationService.getUserCertification(adopterUserId);
         agreement.setAdopterIdcard(certification.getIdCard());
         String agreementId = agreementService.crtAgreement(agreement);
-        String applyId=agreement.getApplyId();
-        CmsAdoptApply adoptApply=new CmsAdoptApply();
+        String applyId = agreement.getApplyId();
+        CmsAdoptApply adoptApply = new CmsAdoptApply();
         adoptApply.setApplyId(applyId);
         adoptApply.setApplyStatus("2");
         adoptApply.setOperateUserId(agreement.getOperateUserId());
@@ -65,8 +61,8 @@ public class AgreementResource {
     @ApiOperation("修改领养合同接口")
     @PutMapping(value = "info")
     public PlatformResult uptAgreement(@RequestBody CmsAdoptAgreement agreement) {
-        if("1".equals(agreement.getSignStatus())){
-            CmsAdoptApply apply=new CmsAdoptApply();
+        if ("1".equals(agreement.getSignStatus())) {
+            CmsAdoptApply apply = new CmsAdoptApply();
             apply.setApplyId(agreement.getApplyId());
             apply.setApplyStatus("3");
             apply.setFormId(agreement.getFormId());
@@ -75,16 +71,16 @@ public class AgreementResource {
 
             //加入领养人签署协议信息
             //获取领养人身份信息
-            String agreementId=agreement.getAgreementId();
-            CmsAdoptAgreement cmsAdoptAgreement=agreementService.getAgreement(agreementId);
-            String applyUserId=cmsAdoptAgreement.getApplyBy();
-            CmsAdoptCertification certification=certificationService.getUserCertification(applyUserId);
+            String agreementId = agreement.getAgreementId();
+            CmsAdoptAgreement cmsAdoptAgreement = agreementService.getAgreement(agreementId);
+            String applyUserId = cmsAdoptAgreement.getApplyBy();
+            CmsAdoptCertification certification = certificationService.getUserCertification(applyUserId);
             agreement.setApplyIdcard(certification.getIdCard());
 
         }
 
-        if("2".equals(agreement.getSignStatus())){
-            CmsAdoptApply apply=new CmsAdoptApply();
+        if ("2".equals(agreement.getSignStatus())) {
+            CmsAdoptApply apply = new CmsAdoptApply();
             apply.setApplyId(agreement.getApplyId());
             apply.setApplyStatus("4");
             apply.setFormId(agreement.getFormId());
@@ -92,17 +88,17 @@ public class AgreementResource {
             applyService.uptApply(apply);
 
             //加入送养人签署协议信息
-            String agreementId=agreement.getAgreementId();
-            CmsAdoptAgreement cmsAdoptAgreement=agreementService.getAgreement(agreementId);
+            String agreementId = agreement.getAgreementId();
+            CmsAdoptAgreement cmsAdoptAgreement = agreementService.getAgreement(agreementId);
 
-            CmsAdoptPet pet=new CmsAdoptPet();
+            CmsAdoptPet pet = new CmsAdoptPet();
             pet.setPetId(cmsAdoptAgreement.getPetId());
             pet.setAdoptStatus("4");
             petService.uptAdopt(pet);
 
 
-            String adoptUserId=cmsAdoptAgreement.getCreateBy();
-            CmsAdoptCertification certification=certificationService.getUserCertification(adoptUserId);
+            String adoptUserId = cmsAdoptAgreement.getCreateBy();
+            CmsAdoptCertification certification = certificationService.getUserCertification(adoptUserId);
             agreement.setAdopterIdcard(certification.getIdCard());
             agreement.setSignTime(new Date());
         }
@@ -114,11 +110,11 @@ public class AgreementResource {
     @ApiOperation("获取领养合同详情接口")
     @GetMapping(value = "{agreementId}")
     public PlatformResult getAdoptAgreement(@PathVariable("agreementId") String agreementId) {
-        CmsAdoptAgreement agreement=agreementService.getAgreement(agreementId);
-        CmsAdoptPet petInfo=petService.getAdopt(agreement.getPetId());
-        JSONObject result=new JSONObject();
-        result.put("contractInfo",agreement);
-        result.put("petInfo",petInfo);
+        CmsAdoptAgreement agreement = agreementService.getAgreement(agreementId);
+        CmsAdoptPet petInfo = petService.getAdopt(agreement.getPetId());
+        JSONObject result = new JSONObject();
+        result.put("contractInfo", agreement);
+        result.put("petInfo", petInfo);
         return PlatformResult.success(result);
     }
 
@@ -126,17 +122,17 @@ public class AgreementResource {
     @ApiOperation("根据applyId获取领养合同详情接口")
     @GetMapping(value = "info")
     public PlatformResult getAdoptAgreementByApplyId(@RequestParam("applyId") String applyId) {
-        CmsAdoptAgreement agreement=agreementService.getAgreementByApplyId(applyId);
+        CmsAdoptAgreement agreement = agreementService.getAgreementByApplyId(applyId);
         CmsAdoptApply adoptApply = applyService.getApply(applyId);
-        CmsAdoptPet petInfo=petService.getAdopt(adoptApply.getPetId());
-        UserInfo applyUser=userService.getUserInfoByUserId(adoptApply.getApplyBy());
-        UserInfo adopterUser=userService.getUserInfoByUserId(petInfo.getCreateBy());
-        JSONObject result=new JSONObject();
-        result.put("contractInfo",agreement);
-        result.put("applyInfo",adoptApply);
-        result.put("petInfo",petInfo);
-        result.put("applyUser",applyUser);
-        result.put("adopterUser",adopterUser);
+        CmsAdoptPet petInfo = petService.getAdopt(adoptApply.getPetId());
+        CmsUser applyUser = userService.getUserInfoByUserId(adoptApply.getApplyBy());
+        CmsUser adopterUser = userService.getUserInfoByUserId(petInfo.getCreateBy());
+        JSONObject result = new JSONObject();
+        result.put("contractInfo", agreement);
+        result.put("applyInfo", adoptApply);
+        result.put("petInfo", petInfo);
+        result.put("applyUser", applyUser);
+        result.put("adopterUser", adopterUser);
 
         return PlatformResult.success(result);
     }

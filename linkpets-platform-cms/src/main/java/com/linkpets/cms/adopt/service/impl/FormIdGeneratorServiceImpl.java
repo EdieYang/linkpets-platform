@@ -24,19 +24,19 @@ public class FormIdGeneratorServiceImpl implements IFormIdGeneratorService {
 
     @Override
     public void addFormId(String formId, String userId) {
-        CmsAdoptFormid cmsAdoptFormid=new CmsAdoptFormid();
+        CmsAdoptFormid cmsAdoptFormid = new CmsAdoptFormid();
         cmsAdoptFormid.setId(UUIDUtils.getUUID());
         cmsAdoptFormid.setFormId(formId);
         cmsAdoptFormid.setUserId(userId);
-        Date createDate=new Date();
+        Date createDate = new Date();
         cmsAdoptFormid.setCreateTime(createDate);
-        cmsAdoptFormid.setExpireTime(DateUtils.addDays(createDate,7));
+        cmsAdoptFormid.setExpireTime(DateUtils.addDays(createDate, 7));
         cmsAdoptFormidMapper.insertSelective(cmsAdoptFormid);
     }
 
     @Override
     public void inactiveFormId(String id) {
-        CmsAdoptFormid formid=new CmsAdoptFormid();
+        CmsAdoptFormid formid = new CmsAdoptFormid();
         formid.setIsValid(0);
         formid.setId(id);
         cmsAdoptFormidMapper.updateByPrimaryKeySelective(formid);

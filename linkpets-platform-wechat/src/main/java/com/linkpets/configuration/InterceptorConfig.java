@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 @Configuration
-public class InterceptorConfig implements WebMvcConfigurer{
+public class InterceptorConfig implements WebMvcConfigurer {
 
     public static final String RESPONSE_RESULT = "RESPONSE-RESULT";
 

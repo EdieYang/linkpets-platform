@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(value = "微信小程序环境配置", tags = "微信环境集成接口")
+@Api(value = "微信小程序系统用户环境配置", tags = "微信环境集成接口")
 @ResponseResult
 @RestController
 @RequestMapping("/wxmini/sysUser")
@@ -88,7 +88,7 @@ public class WxMiniAuthorizeResource {
                 newUser.setUserTempId(userTempId);
                 newUser.setOpenId(openId);
                 newUser.setCreateTime(new Date());
-                newUser.setDelFlag("1");
+                newUser.setIsValid(1);
                 userTempService.insertUserTemp(newUser);
                 map.put("userId", userTempId);
 

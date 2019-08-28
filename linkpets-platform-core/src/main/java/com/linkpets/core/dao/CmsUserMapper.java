@@ -55,13 +55,65 @@ public interface CmsUserMapper {
      */
     int updateByPrimaryKey(CmsUser record);
 
-    int getAttentionStatus(@Param("userId") String userId,@Param("targetUserId") String targetUserId);
+    /**
+     * 获取用户是否关注
+     *
+     * @param userId
+     * @param targetUserId
+     * @return
+     */
+    int getAttentionStatus(@Param("userId") String userId, @Param("targetUserId") String targetUserId);
 
-	List<CmsUser> getUserListAttentTo(Map<String, Object> param);
+    /**
+     * 获取用户关注列表
+     *
+     * @param param
+     * @return
+     */
+    List<CmsUser> getUserListAttentTo(Map<String, Object> param);
 
-	List<CmsUser> getUserListAttentBy(Map<String, Object> param);
+    /**
+     * 获取用户被关注列表
+     *
+     * @param param
+     * @return
+     */
+    List<CmsUser> getUserListAttentBy(Map<String, Object> param);
 
-    Map<String,Object> getUserAddition(String userId);
+    /**
+     * 获取用户领养统计数据
+     *
+     * @param userId
+     * @return
+     */
+    Map<String, Object> getUserAddition(String userId);
 
+    /**
+     * 获取所有用户数
+     *
+     * @return
+     */
     int getTotalUserCount();
+
+    /**
+     * 根据UserId获取用户详情
+     *
+     * @param userId
+     * @return
+     */
+    CmsUser getUserInfoByUserId(String userId);
+
+    /**
+     * 根据unionId获取用户详情
+     * @param unionId
+     * @return
+     */
+    CmsUser getUserByUnionId(String unionId);
+
+
+    String getMaxUserNo(@Param("userIdStart") String userIdStart, @Param("year") String year);
+
+    List<Map<String, Object>> selectUserList(Map<String, Object> map);
+
+    List<Map<String, String>> getUserInfoByUserId(List<String> userIds);
 }

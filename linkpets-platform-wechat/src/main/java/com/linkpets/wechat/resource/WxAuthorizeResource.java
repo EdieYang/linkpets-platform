@@ -3,20 +3,17 @@ package com.linkpets.wechat.resource;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.linkpets.annotation.ResponseResult;
-import com.linkpets.core.dao.UserMapper;
+import com.linkpets.core.dao.CmsUserMapper;
 import com.linkpets.core.model.CmsUser;
-import com.linkpets.core.model.User;
 import com.linkpets.util.HttpClientUtils;
 import com.linkpets.util.HttpUtil;
 import com.linkpets.util.wxConfig.SHA1;
 import com.linkpets.util.wxConfig.Token;
 import com.linkpets.util.wxpay.RandomStringGenerator;
-import com.linkpets.wechat.dao.CmsUserCustomMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,16 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
-/**
- * Created by Fade on 2018/11/6.
- */
 
-@Api(value = "微信环境配置", tags = "微信环境集成接口")
+@Api(value = "微信网页环境配置")
 @ResponseResult
 @RestController
 @RequestMapping("/wxAuth")
@@ -62,10 +54,7 @@ public class WxAuthorizeResource {
 
 
     @Resource
-    private CmsUserCustomMapper userCustomMapper;
-
-    @Resource
-    private UserMapper userMapper;
+    private CmsUserMapper userMapper;
 
 
     @ApiOperation(value = "获取code回调地址", notes = "此接口默认选择snsapi_userinfo的应用授权域")
@@ -140,21 +129,21 @@ public class WxAuthorizeResource {
 
 
         //查询用户是否存在
-        CmsUser user = userCustomMapper.getUserByUnionId(unionId);
+        CmsUser user = userMapper.getUserByUnionId(unionId);
         if (user == null) {
             //创建新用户
-            String nickName = resUnion.getString("nickname");
-            String portrait = resUnion.getString("headimgurl");
-
-            User newUser = new User();
-            String userId = UUID.randomUUID().toString();
-            newUser.setCreateDatetime(new Date());
-            newUser.setUserId(userId);
-            newUser.setNickName(nickName);
-            newUser.setPhotoPath(portrait);
-            newUser.setUnionId(unionId);
-            userMapper.insertSelective(newUser);
-            result.put("data", userId);
+//            String nickName = resUnion.getString("nickname");
+//            String portrait = resUnion.getString("headimgurl");
+//
+//            CmsUser newUser = new CmsUser();
+//            String userId = UUID.randomUUID().toString();
+//            newUser.setCreateDatetime(new Date());
+//            newUser.setUserId(userId);
+//            newUser.setNickName(nickName);
+//            newUser.setPhotoPath(portrait);
+//            newUser.setUnionId(unionId);
+//            userMapper.insertSelective(newUser);
+//            result.put("data", userId);
         } else if (user != null) {
             result.put("data", user.getUserId());
         }

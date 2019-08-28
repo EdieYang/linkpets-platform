@@ -10,14 +10,10 @@ import com.linkpets.core.model.CmsUser;
 import com.linkpets.core.model.CmsUserLogin;
 import com.linkpets.core.model.UserTemp;
 import com.linkpets.util.UUIDUtils;
-import com.linkpets.wechat.dao.CmsUserCustomMapper;
-import com.linkpets.wechat.dao.UserTempCustomMapper;
 import com.linkpets.wechat.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -32,32 +28,12 @@ public class UserServiceImpl implements IUserService {
     private final static String USER_ID_TEMP = "hu-03+区号+年份（后两位）+00001";
 
     @Autowired
-    private CmsUserCustomMapper userCustomMapper;
-    @Autowired
     private CmsUserMapper userMapper;
     @Autowired
     private UserTempMapper userTempMapper;
     @Autowired
-    private UserTempCustomMapper userTempCustomMapper;
-    @Autowired
     private CmsUserLoginMapper userLoginMapper;
 
-    @Override
-    public String createUserId(String areaId) {
-        Calendar cal = Calendar.getInstance();
-
-        if (cal.get(Calendar.YEAR) != year) {
-            year = cal.get(Calendar.YEAR);
-            String maxId = userCustomMapper.getMaxUserNo(USER_ID_TEMP.substring(0, 3), (year + "").substring(2));
-            userIdGrenc = null == maxId ? 1 : Integer.parseInt(maxId) + 1;
-            return createUserId(areaId);
-        } else {
-            String userIdEnd = "000000" + userIdGrenc++;
-            return USER_ID_TEMP.substring(0, 3) + areaId + ("" + year).substring(2, 4)
-                    + userIdEnd.substring(userIdEnd.length() - 6, userIdEnd.length());
-        }
-
-    }
 
     @Override
     public int modifyUser(CmsUser user) {
@@ -70,20 +46,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public JSONObject getUserList(Map<String, Object> param, int pageNum, int pageSize) {
-        JSONObject result = new JSONObject();
-        PageHelper.startPage(pageNum, pageSize);
-        List<Map<String, Object>> list = userCustomMapper.selectUserList(param);
-        PageInfo<Map<String, Object>> page = new PageInfo<Map<String, Object>>(list);
-        result.put("page", page.getPageNum());
-        result.put("records", page.getTotal());
-        result.put("rows", list);
-        return result;
-    }
-
-    @Override
     public UserTemp getTempUserByOpenId(String openId) {
-        return userTempCustomMapper.getTempUserByOpenId(openId);
+        return userTempMapper.getTempUserByOpenId(openId);
     }
 
     @Override
@@ -98,7 +62,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public CmsUser getUserByUnionId(String unionId) {
-        return userCustomMapper.getUserByUnionId(unionId);
+        return userMapper.getUserByUnionId(unionId);
     }
 
     @Override

@@ -31,7 +31,6 @@ public class SwaggerConfiguration {
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("www.memorychilli.com")
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.linkpets."))
@@ -46,12 +45,12 @@ public class SwaggerConfiguration {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("邻宠CMS服务Api文档")
+                .title("邻宠Wechat服务Api文档")
                 .description("")
                 .license("")
                 .licenseUrl("")
                 .termsOfServiceUrl("")
-                .contact(new Contact("SteveYang", "", "haojie_look@163.com"))
+                .contact(new Contact("EdieYang", "", "haojie_look@163.com"))
                 .version("1.0.0")
                 .build();
     }

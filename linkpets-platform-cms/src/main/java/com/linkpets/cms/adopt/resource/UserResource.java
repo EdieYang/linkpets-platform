@@ -3,7 +3,6 @@ package com.linkpets.cms.adopt.resource;
 
 import com.alibaba.fastjson.JSONObject;
 import com.linkpets.annotation.ResponseResult;
-import com.linkpets.cms.adopt.model.UserInfo;
 import com.linkpets.cms.adopt.service.IUserService;
 import com.linkpets.core.model.CmsAdoptAttention;
 import com.linkpets.core.model.CmsUser;
@@ -16,12 +15,11 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
-@Api(value = "领养平台用户接口", tags = "用户接口")
+@Api(value = "领养平台用户接口",tags = "领养平台-用户接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/users")
@@ -33,7 +31,7 @@ public class UserResource {
     @ApiOperation("获取用户详情接口")
     @GetMapping("/user")
     public PlatformResult getUserInfo(@RequestParam("userId") String userId) {
-        UserInfo userInfo = userService.getUserInfoByUserId(userId);
+        CmsUser userInfo = userService.getUserInfoByUserId(userId);
         return PlatformResult.success(userInfo);
     }
 
@@ -61,8 +59,8 @@ public class UserResource {
     @ApiOperation("获取领养发布用户信息接口")
     @GetMapping("/adoptUser")
     public PlatformResult getAdoptUserInfo(@RequestParam("userId") String userId) {
-        UserInfo userInfo = userService.getUserInfoByUserId(userId);
-        String birthday = userInfo.getBirthday();
+        CmsUser userInfo = userService.getUserInfoByUserId(userId);
+        String birthday = DateUtils.getFormatDateStr(userInfo.getBirthday());
         String starSign = UserAnalyseUtil.getStarSignName(birthday);
         userInfo.setStarSign(starSign);
         userInfo.setAgeFrom(UserAnalyseUtil.getAgeFrom(birthday));
@@ -86,7 +84,7 @@ public class UserResource {
 
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("userId", userId);
-        param.put("targetUserId",targetUserId);
+        param.put("targetUserId", targetUserId);
         JSONObject data = userService.getUserListAttentTo(param, pageNum, pageSize, sortCol + " " + sort);
         return PlatformResult.success(data);
     }
@@ -131,10 +129,10 @@ public class UserResource {
     @GetMapping("attention")
     PlatformResult getAttention(@RequestParam("userId") String userId,
                                 @RequestParam("targetUserId") String targetUserId) {
-       int followed=userService.getAttentionStatus(userId,targetUserId);
-       if(followed>0){
-           return PlatformResult.success(true);
-       }
+        int followed = userService.getAttentionStatus(userId, targetUserId);
+        if (followed > 0) {
+            return PlatformResult.success(true);
+        }
         return PlatformResult.success(false);
     }
 

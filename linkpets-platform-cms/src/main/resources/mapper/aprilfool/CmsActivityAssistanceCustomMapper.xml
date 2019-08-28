@@ -36,17 +36,17 @@
         limit 1
     </select>
 
-    <select id="getActivityAssistFollowersByAssistUserId" parameterType="java.lang.String"
-            resultType="com.linkpets.core.model.User">
-        select ca.user_id as userId , u.nick_name as nickName , u.photo_path as photoPath
-        from cms_activity_assistance ca
-        left join user u
-        on ca.user_id = u.user_id
-        where ca.activity_id = #{activityId}
-        and ca.assist_user_id = #{assistUserId}
-        and ca.assist_type = 1
-        and ca.is_valid = 1
-    </select>
+<!--    <select id="getActivityAssistFollowersByAssistUserId" parameterType="java.lang.String"-->
+<!--            resultType="com.linkpets.core.model.ActivityUser">-->
+<!--        select ca.user_id as userId , u.nick_name as nickName , u.photo_path as photoPath-->
+<!--        from cms_activity_assistance ca-->
+<!--        left join user u-->
+<!--        on ca.user_id = u.user_id-->
+<!--        where ca.activity_id = #{activityId}-->
+<!--        and ca.assist_user_id = #{assistUserId}-->
+<!--        and ca.assist_type = 1-->
+<!--        and ca.is_valid = 1-->
+<!--    </select>-->
 
     <select id="getActivityAssistNo" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT

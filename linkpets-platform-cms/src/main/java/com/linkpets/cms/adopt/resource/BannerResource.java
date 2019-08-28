@@ -6,7 +6,6 @@ import com.linkpets.cms.adopt.service.IBannerService;
 import com.linkpets.core.model.CmsBanner;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
-import org.springframework.boot.Banner;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Api(value = "banner接口", tags = "banner接口")
+@Api(value = "H5裂变banner接口",tags = "H5裂变banner接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/banner")
@@ -26,8 +25,8 @@ public class BannerResource {
 
 
     @GetMapping("/list")
-    public PlatformResult getBannerList(){
-        List<CmsBanner> bannerList=bannerService.getBannerList("ADOP");
+    public PlatformResult getBannerList() {
+        List<CmsBanner> bannerList = bannerService.getBannerList("ADOP");
         return PlatformResult.success(bannerList);
     }
 

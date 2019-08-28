@@ -1,14 +1,13 @@
 package com.linkpets.cms.adopt.resource;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.model.ChatMessage;
 import com.linkpets.cms.adopt.model.ChatMessageList;
-import com.linkpets.cms.adopt.model.UserInfo;
 import com.linkpets.cms.adopt.service.ICmsAdoptMsgService;
 import com.linkpets.cms.adopt.service.IUserService;
 import com.linkpets.core.model.CmsAdoptMsg;
+import com.linkpets.core.model.CmsUser;
 import com.linkpets.result.PlatformResult;
 import com.linkpets.util.DateUtils;
 import io.swagger.annotations.Api;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.*;
 
-@Api(value = "领养平台消息接口", tags = "消息接口")
+@Api(value = "领养平台消息接口", tags = "领养平台-消息接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/messages")
@@ -59,7 +58,7 @@ public class MessageResource {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "userId", value = "userId", required = true)})
     PlatformResult getUserUnreadMessageList(@RequestParam("userId") String userId) {
-        List<CmsAdoptMsg> unreadMsg= msgService.getUnreadMessage(userId);
+        List<CmsAdoptMsg> unreadMsg = msgService.getUnreadMessage(userId);
         return PlatformResult.success(unreadMsg);
     }
 
@@ -88,13 +87,10 @@ public class MessageResource {
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "type", value = "type", required = true)
     })
     public PlatformResult uptDetailListMsg(@RequestParam("userId") String userId,
-                                                 @RequestParam(value = "type",required = true) String type) {
-        msgService.uptDetailListMsg(userId,type);
+                                           @RequestParam(value = "type", required = true) String type) {
+        msgService.uptAdoptMsg(userId, type);
         return PlatformResult.success();
     }
-
-
-
 
 
     @GetMapping(value = "chatList")
@@ -125,7 +121,7 @@ public class MessageResource {
         for (Map.Entry entry : chatMap.entrySet()) {
             ChatMessageList chatMessageListItem = new ChatMessageList();
             String entryUserId = String.valueOf(entry.getKey());
-            UserInfo userInfo = userService.getUserInfoByUserId(entryUserId);
+            CmsUser userInfo = userService.getUserInfoByUserId(entryUserId);
             chatMessageListItem.setUserId(entryUserId);
             chatMessageListItem.setNickName(userInfo.getNickName());
             chatMessageListItem.setPortrait(userInfo.getPortrait());
@@ -142,20 +138,20 @@ public class MessageResource {
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "userId", value = "userId", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "targetUserId", value = "targetUserId", required = true)})
     public PlatformResult getUserChatMessageList(@RequestParam("userId") String userId,
-                                                 @RequestParam(value = "targetUserId",required = true) String targetUserId) {
+                                                 @RequestParam(value = "targetUserId", required = true) String targetUserId) {
         //获取私聊列表通知
         ChatMessageList chatMessageList = new ChatMessageList();
         List<ChatMessage> chatReceiverMessageListItems = msgService.getChatReceiverMessageList(userId);
-       List<ChatMessage> chatSenderMessageListItems=msgService.getChatSenderMessageList(userId,targetUserId);
-       List<ChatMessage> resultMessageList=new ArrayList<>();
-        chatReceiverMessageListItems.stream().forEach(item->{
+        List<ChatMessage> chatSenderMessageListItems = msgService.getChatSenderMessageList(userId, targetUserId);
+        List<ChatMessage> resultMessageList = new ArrayList<>();
+        chatReceiverMessageListItems.stream().forEach(item -> {
             String chatUserId = item.getUserId();
-            if(chatUserId.equals(targetUserId)){
+            if (chatUserId.equals(targetUserId)) {
                 resultMessageList.add(item);
             }
         });
 
-        chatSenderMessageListItems.stream().forEach(item->{
+        chatSenderMessageListItems.stream().forEach(item -> {
             resultMessageList.add(item);
         });
 
@@ -163,8 +159,6 @@ public class MessageResource {
         chatMessageList.setMessageList(resultMessageList);
         return PlatformResult.success(resultMessageList);
     }
-
-
 
 
     /**
@@ -177,9 +171,9 @@ public class MessageResource {
             long leftTime = DateUtils.getFormatDateTime(o1.getKey()).getTime() - DateUtils.getFormatDateTime(o2.getKey()).getTime();
             if (leftTime > 0) {
                 return 1;
-            } else if(leftTime==0) {
+            } else if (leftTime == 0) {
                 return 0;
-            }else{
+            } else {
                 return -1;
             }
         });

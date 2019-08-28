@@ -272,6 +272,7 @@
         where apply_id = #{applyId,jdbcType=VARCHAR}
     </update>
 
+    <!--suppress SqlResolve -->
     <select id="getList" resultType="java.util.Map">
         SELECT
         apply_id AS applyId,
@@ -324,17 +325,21 @@
     <select id="getApplyCount" resultType="java.lang.Integer">
         select count(1)
         from cms_adopt_apply
-        where left(apply_time,10) = #{syncDate}
+        where left(apply_time, 10) = #{syncDate}
     </select>
     <select id="getExpiredAdoptApplyList" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" />
+        select
+        <include refid="Base_Column_List"/>
         from cms_adopt_apply
-        where apply_status=0 and TIMESTAMPDIFF(HOUR,apply_time,NOW())>=24*7
-        or apply_status!=0 and TIMESTAMPDIFF(HOUR,check_time,NOW())>=24*7
+        where apply_status=0
+        and TIMESTAMPDIFF(HOUR,apply_time,NOW())>=24*7
+        or apply_status!=0
+        and TIMESTAMPDIFF(HOUR,check_time,NOW())>=24*7
         and is_valid ='1'
     </select>
-    <select id="getApply"  resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" />
+    <select id="getApply" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
         from cms_adopt_apply
         where apply_status!=5
         and is_valid ='1'

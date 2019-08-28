@@ -2,7 +2,6 @@ package com.linkpets.cms.adopt.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.linkpets.cms.adopt.model.UserInfo;
 import com.linkpets.cms.adopt.service.*;
 import com.linkpets.core.model.*;
 import com.linkpets.util.HttpUtil;
@@ -38,10 +37,19 @@ public class MessageAspect {
     @Resource
     private IFormIdGeneratorService formIdGeneratorService;
 
+    /**
+     * 更新状态
+     */
     private static final String UPT = "0";
 
-    private static final String UNPASS = "1";
+    /**
+     * 审核未通过状态
+     */
+    private static final String UN_PASS = "1";
 
+    /**
+     * 审核通过状态
+     */
     private static final String PASS = "3";
 
     @Value("${linkPet.lpWechat.templateMsg.applyUpt}")
@@ -174,7 +182,7 @@ public class MessageAspect {
 
             //推送系统消息
             switch (uptCmsAdoptPet.getAdoptStatus()) {
-                case UNPASS:
+                case UN_PASS:
                     //审核失败通知
                     msg.setMsgTitle(MessageTemplate.PET_CHECK_UNPASS_MSG_TITLE);
                     msgContent.put("portrait", "");
@@ -250,7 +258,7 @@ public class MessageAspect {
                     String createBy = pet.getCreateBy();
                     //获取有效formId
                     CmsAdoptFormid formId = formIdGeneratorService.getValidFormId(createBy);
-                    UserInfo user = userService.getUserInfoByUserId(applyUserId);
+                    CmsUser user = userService.getUserInfoByUserId(applyUserId);
                     CmsAdoptMsg msg = new CmsAdoptMsg();
                     msg.setMsgTitle(MessageTemplate.APPLY_MSG_TITLE.replace("#", user.getNickName()));
                     JSONObject msgContent = new JSONObject();
@@ -300,8 +308,8 @@ public class MessageAspect {
             CmsAdoptApply apply = applyService.getApply(applyId);
             CmsAdoptPet pet = petService.getAdopt(apply.getPetId());
             String createBy = pet.getCreateBy();
-            UserInfo user = userService.getUserInfoByUserId(createBy);
-            UserInfo applyUser = userService.getUserInfoByUserId(apply.getApplyBy());
+            CmsUser user = userService.getUserInfoByUserId(createBy);
+            CmsUser applyUser = userService.getUserInfoByUserId(apply.getApplyBy());
             formIdGeneratorService.addFormId(uptApply.getFormId(), operateUserId);
             CmsAdoptMsg msg = new CmsAdoptMsg();
             JSONObject msgContent = new JSONObject();

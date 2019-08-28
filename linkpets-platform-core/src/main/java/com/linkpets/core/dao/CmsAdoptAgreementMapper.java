@@ -55,7 +55,19 @@ public interface CmsAdoptAgreementMapper {
      */
     int updateByPrimaryKey(CmsAdoptAgreement record);
 
-	List<Map<String, Object>> getList(Map<String, Object> param);
+    /**
+     * 获取领养协议详情列表
+     *
+     * @param param
+     * @return
+     */
+    List<Map<String, Object>> getList(Map<String, Object> param);
 
+    /**
+     * 通过领养申请Id获取领养协议详情
+     *
+     * @param applyId
+     * @return
+     */
     CmsAdoptAgreement getAgreementByApplyId(String applyId);
 }

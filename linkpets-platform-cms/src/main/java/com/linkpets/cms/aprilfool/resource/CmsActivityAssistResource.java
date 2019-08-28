@@ -5,7 +5,6 @@ import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.aprilfool.service.IActivityAssistService;
 import com.linkpets.cms.aprilfool.service.IActivityDraftService;
 import com.linkpets.core.model.CmsActivityAssistance;
-import com.linkpets.core.model.User;
 import com.linkpets.enums.ResultCode;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
@@ -70,17 +69,17 @@ public class CmsActivityAssistResource {
         return PlatformResult.success(result);
     }
 
-    @GetMapping("/followers")
-    @ApiOperation(value = "查询特殊用户被助力列表", notes = "")
-    @ApiImplicitParams({
-            @ApiImplicitParam(value = "活动id", name = "activityId", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(value = "特殊用户userId", name = "assistUserId", required = true, dataType = "String", paramType = "query")
-    })
-    public PlatformResult getAssistanceFollowers(@RequestParam String activityId,
-                                                 @RequestParam String assistUserId) {
-
-       List<User> followers=activityAssistService.getActivityAssistFollowersByAssistUserId(activityId,assistUserId);
-       return PlatformResult.success(followers);
-    }
+//    @GetMapping("/followers")
+//    @ApiOperation(value = "查询特殊用户被助力列表", notes = "")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(value = "活动id", name = "activityId", required = true, dataType = "String", paramType = "query"),
+//            @ApiImplicitParam(value = "特殊用户userId", name = "assistUserId", required = true, dataType = "String", paramType = "query")
+//    })
+//    public PlatformResult getAssistanceFollowers(@RequestParam String activityId,
+//                                                 @RequestParam String assistUserId) {
+//
+//       List<User> followers=activityAssistService.getActivityAssistFollowersByAssistUserId(activityId,assistUserId);
+//       return PlatformResult.success(followers);
+//    }
 
 }

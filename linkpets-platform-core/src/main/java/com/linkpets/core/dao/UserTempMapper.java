@@ -50,4 +50,12 @@ public interface UserTempMapper {
      * @mbggenerated Fri Mar 15 18:40:44 CST 2019
      */
     int updateByPrimaryKey(UserTemp record);
+
+    /**
+     * 获取用户临时信息
+     *
+     * @param openId
+     * @return
+     */
+    UserTemp getTempUserByOpenId(String openId);
 }

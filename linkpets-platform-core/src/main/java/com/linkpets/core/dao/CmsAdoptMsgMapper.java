@@ -55,16 +55,46 @@ public interface CmsAdoptMsgMapper {
      */
     int updateByPrimaryKey(CmsAdoptMsg record);
 
+    /**
+     * 获取系统最新推送消息
+     * @param userId
+     * @return
+     */
     CmsAdoptMsg getSystemLatestMsg(String userId);
 
+    /**
+     * 获取领养申请最新推送消息
+     * @param userId
+     * @return
+     */
     CmsAdoptMsg getApplyLatestMsg(String userId);
 
+    /**
+     * 获取领养协议最新推送消息
+     * @param userId
+     * @return
+     */
     CmsAdoptMsg getAgreementLatestMsg(String userId);
 
+    /**
+     * 获取推送消息详情列表
+     * @param param
+     * @return
+     */
     List<CmsAdoptMsg> getDetailMsgList(Map<String,Object> param);
 
-    void uptDetailListMsg(@Param("userId")String userId, @Param("type")int type);
+    /**
+     * 设置消息为已读状态
+     * @param userId
+     * @param type
+     */
+    void uptAdoptMsg(@Param("userId")String userId, @Param("type")int type);
 
+    /**
+     *获取未读推送消息列表
+     * @param userId
+     * @return
+     */
     List<CmsAdoptMsg> getUnreadMessage(String userId);
 
 }

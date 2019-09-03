@@ -130,4 +130,12 @@
         is_valid = #{isValid,jdbcType=INTEGER}
         where activity_id = #{activityId,jdbcType=VARCHAR}
     </update>
+
+    <select id="selectAssistNoByActivityId" resultType="java.lang.Integer" parameterType="String">
+        select
+        IFNULL (MAX(assist_no), 0)
+        from cms_activity_config
+        where activity_id = #{activityId,jdbcType=INTEGER}
+        and is_active = 1
+    </select>
 </mapper>

@@ -1,7 +1,6 @@
 package com.linkpets.cms.aprilfool.resource;
 
 import com.linkpets.annotation.ResponseResult;
-import com.linkpets.cms.aprilfool.model.CmsActivityCustomDraft;
 import com.linkpets.cms.aprilfool.service.IActivityDraftService;
 import com.linkpets.core.model.CmsActivityDraft;
 import com.linkpets.enums.ResultCode;
@@ -39,7 +38,7 @@ public class CmsActivityDraftResource {
     })
     public PlatformResult getActivityDraftList(@RequestParam String activityId,
                                                @RequestParam String userId) {
-        List<CmsActivityCustomDraft> activityCustomDraftList = activityDraftService.getActivityDraftListByUserId(activityId, userId);
+        List<CmsActivityDraft> activityCustomDraftList = activityDraftService.getActivityDraftListByUserId(activityId, userId);
         return PlatformResult.success(activityCustomDraftList);
     }
 
@@ -70,7 +69,7 @@ public class CmsActivityDraftResource {
             return PlatformResult.failure(ResultCode.DRAFT_COUNT_NOT_EXIST, ResultCode.DRAFT_COUNT_NOT_EXIST.message());
         }
 
-        CmsActivityCustomDraft draft = activityDraftService.doActivityDraftProcess(activityId, userId);
+        CmsActivityDraft draft = activityDraftService.doActivityDraftProcess(activityId, userId);
 
         return PlatformResult.success(draft);
     }
@@ -83,8 +82,8 @@ public class CmsActivityDraftResource {
             @ApiImplicitParam(value = "userId", name = "userId", required = true, dataType = "String", paramType = "query")
     })
     public PlatformResult AddActivityDraft(@RequestParam String activityId,
-                                          @RequestParam String userId) {
-        int  draftCount= activityDraftService.getActivityDraftCount(activityId, userId);
+                                           @RequestParam String userId) {
+        int draftCount = activityDraftService.getActivityDraftCount(activityId, userId);
         if (draftCount == 2) {
             return PlatformResult.failure(ResultCode.DRAFT_COUNT_NO_MORE, ResultCode.DRAFT_COUNT_NO_MORE.message());
         }
@@ -93,7 +92,6 @@ public class CmsActivityDraftResource {
 
         return PlatformResult.success(draft);
     }
-
 
 
 }

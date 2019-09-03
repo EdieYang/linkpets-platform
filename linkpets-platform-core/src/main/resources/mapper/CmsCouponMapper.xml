@@ -179,4 +179,12 @@
         is_valid = #{isValid,jdbcType=INTEGER}
         where coupon_id = #{couponId,jdbcType=VARCHAR}
     </update>
+
+    <select id="getCouponList" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_coupon
+        where org_id = #{orgId,jdbcType=VARCHAR}
+    </select>
+
 </mapper>

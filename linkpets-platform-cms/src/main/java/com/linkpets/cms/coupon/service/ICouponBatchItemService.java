@@ -1,7 +1,6 @@
 package com.linkpets.cms.coupon.service;
 
-import com.linkpets.cms.coupon.model.CmsCouponBatchCustomItem;
-import com.linkpets.core.model.CmsCouponBatch;
+import com.linkpets.core.model.CmsCouponBatchItem;
 
 import java.util.List;
 
@@ -11,12 +10,12 @@ import java.util.List;
  */
 public interface ICouponBatchItemService {
 
-    List<CmsCouponBatchCustomItem> getCouponBatchItemListByUserId(String userId,int status);
+    List<CmsCouponBatchItem> getCouponBatchItemListByUserId(String userId, int status);
 
-    CmsCouponBatchCustomItem getCouponBatchItemByCouponItemId(String couponItemId);
+    CmsCouponBatchItem getCouponBatchItemByCouponItemId(String couponItemId);
 
-    CmsCouponBatchCustomItem updateCouponBatchItemByCouponItemId(String couponItemId,String certifyChainId);
+    CmsCouponBatchItem updateCouponBatchItemByCouponItemId(String couponItemId, String certifyChainId);
 
-    List<CmsCouponBatchCustomItem> getCouponBatchItemListByChainId(String certifyChainId);
+    List<CmsCouponBatchItem> getCouponBatchItemListByChainId(String certifyChainId);
 
 }

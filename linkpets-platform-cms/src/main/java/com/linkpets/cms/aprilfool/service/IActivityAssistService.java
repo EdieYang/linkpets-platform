@@ -8,7 +8,5 @@ public interface IActivityAssistService {
 
     CmsActivityAssistance getActivityAssistRecordByUserId(String activityId,String userId);
 
-//    List<ActivityUser> getActivityAssistFollowersByAssistUserId(String activityId, String assistUserId);
-
     int getActivityAssistNo(String activityId);
 }

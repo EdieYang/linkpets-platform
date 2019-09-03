@@ -1,9 +1,6 @@
 package com.linkpets.cms.aprilfool.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.linkpets.cms.aprilfool.dao.CmsActivityRegistryCustomMapper;
-import com.linkpets.cms.aprilfool.dao.CmsActivityRegistryInfoCustomMapper;
-import com.linkpets.cms.aprilfool.model.CmsActivityCustomRegistry;
 import com.linkpets.cms.aprilfool.service.IActivityRegisterService;
 import com.linkpets.core.dao.CmsActivityRegistryInfoMapper;
 import com.linkpets.core.dao.CmsActivityRegistryMapper;
@@ -13,6 +10,7 @@ import com.linkpets.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -20,17 +18,11 @@ import java.util.List;
 @Service
 public class ActivityRegisterImpl implements IActivityRegisterService {
 
-    @Autowired
+    @Resource
     private CmsActivityRegistryMapper activityRegistryMapper;
 
-    @Autowired
-    private CmsActivityRegistryCustomMapper activityRegistryCustomMapper;
-
-    @Autowired
+    @Resource
     private CmsActivityRegistryInfoMapper activityRegistryInfoMapper;
-
-    @Autowired
-    private CmsActivityRegistryInfoCustomMapper activityRegistryInfoCustomMapper;
 
     private static final int CHECK_STATUS = 0;
 
@@ -48,22 +40,22 @@ public class ActivityRegisterImpl implements IActivityRegisterService {
     }
 
     @Override
-    public CmsActivityCustomRegistry getRegistryInfo(String registryId) {
+    public CmsActivityRegistry getRegistryInfo(String registryId) {
 
-        CmsActivityCustomRegistry activityCustomRegistry = activityRegistryCustomMapper.getRegistryInfo(registryId);
+        CmsActivityRegistry activityCustomRegistry = activityRegistryMapper.getRegistryInfo(registryId);
         return activityCustomRegistry;
     }
 
     @Override
-    public List<CmsActivityCustomRegistry> getRegistryInfoByUserId(String activityId, String userId) {
-        List<CmsActivityCustomRegistry> activityCustomRegistry = activityRegistryCustomMapper.getRegistryInfoByUserId(activityId, userId);
+    public List<CmsActivityRegistry> getRegistryInfoByUserId(String activityId, String userId) {
+        List<CmsActivityRegistry> activityCustomRegistry = activityRegistryMapper.getRegistryInfoByUserId(activityId, userId);
         return activityCustomRegistry;
     }
 
     @Override
-    public List<CmsActivityCustomRegistry> getRegistryInfoList(String activityId) {
+    public List<CmsActivityRegistry> getRegistryInfoList(String activityId) {
 
-        List<CmsActivityCustomRegistry> activityCustomRegistryList = activityRegistryCustomMapper.getRegistryInfoList(activityId);
+        List<CmsActivityRegistry> activityCustomRegistryList = activityRegistryMapper.getRegistryInfoList(activityId);
         return activityCustomRegistryList;
     }
 
@@ -74,7 +66,7 @@ public class ActivityRegisterImpl implements IActivityRegisterService {
             return result;
         }
         //查询报名问卷是否存在
-        CmsActivityRegistryInfo activityRegistryInfo = activityRegistryInfoCustomMapper.selectRegistryInfoByUserIdAndActivityId(userId, activityId);
+        CmsActivityRegistryInfo activityRegistryInfo = activityRegistryInfoMapper.selectRegistryInfoByUserIdAndActivityId(userId, activityId);
         if (activityRegistryInfo != null) {
             result.put("data", activityRegistryInfo);
             return result;
@@ -112,7 +104,7 @@ public class ActivityRegisterImpl implements IActivityRegisterService {
 
     @Override
     public CmsActivityRegistryInfo getRegisterQuestionInfo(String activityId, String userId) {
-        CmsActivityRegistryInfo cmsActivityRegistryInfo = activityRegistryInfoCustomMapper.selectRegistryInfoByUserIdAndActivityId(userId, activityId);
+        CmsActivityRegistryInfo cmsActivityRegistryInfo = activityRegistryInfoMapper.selectRegistryInfoByUserIdAndActivityId(userId, activityId);
         return cmsActivityRegistryInfo;
     }
 

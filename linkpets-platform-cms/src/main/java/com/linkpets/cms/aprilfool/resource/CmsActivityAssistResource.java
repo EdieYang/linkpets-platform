@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Api(value = "活动助力接口", tags = "活动助力接口")
@@ -68,18 +67,5 @@ public class CmsActivityAssistResource {
         result.put("draftExistNo", draftExistNo);
         return PlatformResult.success(result);
     }
-
-//    @GetMapping("/followers")
-//    @ApiOperation(value = "查询特殊用户被助力列表", notes = "")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(value = "活动id", name = "activityId", required = true, dataType = "String", paramType = "query"),
-//            @ApiImplicitParam(value = "特殊用户userId", name = "assistUserId", required = true, dataType = "String", paramType = "query")
-//    })
-//    public PlatformResult getAssistanceFollowers(@RequestParam String activityId,
-//                                                 @RequestParam String assistUserId) {
-//
-//       List<User> followers=activityAssistService.getActivityAssistFollowersByAssistUserId(activityId,assistUserId);
-//       return PlatformResult.success(followers);
-//    }
 
 }

@@ -2,14 +2,13 @@ package com.linkpets.cms.coupon.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.linkpets.cms.coupon.dao.CmsCouponCustomMapper;
 import com.linkpets.cms.coupon.service.ICmsCouponService;
 import com.linkpets.core.dao.CmsCouponMapper;
 import com.linkpets.core.model.CmsCoupon;
 import com.linkpets.util.UUIDUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,11 +22,9 @@ import java.util.Map;
 public class CmsCouponServiceImpl implements ICmsCouponService {
 
 
-    @Autowired
+    @Resource
     private CmsCouponMapper couponMapper;
 
-    @Autowired
-    private CmsCouponCustomMapper couponCustomMapper;
 
     @Override
     public String createCoupon(String couponName, String couponEnName, int couponType, String couponRule, String couponRemind, String orgId) {
@@ -54,7 +51,7 @@ public class CmsCouponServiceImpl implements ICmsCouponService {
         Map<String, Object> result = new HashMap<>();
         PageHelper.startPage(pageNo, pageSize);
 
-        List<CmsCoupon> coupons = couponCustomMapper.getCouponList(orgId);
+        List<CmsCoupon> coupons = couponMapper.getCouponList(orgId);
         PageInfo<CmsCoupon> page = new PageInfo<>(coupons);
         result.put("page", page.getPageNum());
         result.put("records", page.getTotal());

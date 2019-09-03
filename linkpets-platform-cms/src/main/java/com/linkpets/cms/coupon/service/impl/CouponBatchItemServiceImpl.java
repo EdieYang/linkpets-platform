@@ -1,11 +1,11 @@
 package com.linkpets.cms.coupon.service.impl;
 
-import com.linkpets.cms.coupon.dao.CmsCouponBatchItemCustomMapper;
-import com.linkpets.cms.coupon.model.CmsCouponBatchCustomItem;
 import com.linkpets.cms.coupon.service.ICouponBatchItemService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.linkpets.core.dao.CmsCouponBatchItemMapper;
+import com.linkpets.core.model.CmsCouponBatchItem;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -14,32 +14,32 @@ import java.util.List;
  */
 
 @Service
-public class CouponBatchItemServiceImpl  implements ICouponBatchItemService{
+public class CouponBatchItemServiceImpl implements ICouponBatchItemService {
 
-    @Autowired
-    private CmsCouponBatchItemCustomMapper couponBatchItemCustomMapper;
+    @Resource
+    private CmsCouponBatchItemMapper couponBatchItemMapper;
 
     @Override
-    public List<CmsCouponBatchCustomItem> getCouponBatchItemListByUserId(String userId, int status) {
-        return couponBatchItemCustomMapper.getCouponBatchItemListByUserId(userId,status);
+    public List<CmsCouponBatchItem> getCouponBatchItemListByUserId(String userId, int status) {
+        return couponBatchItemMapper.getCouponBatchItemListByUserId(userId, status);
     }
 
     @Override
-    public CmsCouponBatchCustomItem getCouponBatchItemByCouponItemId(String couponItemId) {
-        return couponBatchItemCustomMapper.getCouponBatchItemByCouponItemId(couponItemId);
+    public CmsCouponBatchItem getCouponBatchItemByCouponItemId(String couponItemId) {
+        return couponBatchItemMapper.getCouponBatchItemByCouponItemId(couponItemId);
     }
 
     @Override
-    public CmsCouponBatchCustomItem updateCouponBatchItemByCouponItemId(String couponItemId,String certifyChainId) {
-        int result= couponBatchItemCustomMapper.updateCouponBatchItemByCouponItemId(couponItemId,certifyChainId);
-        if(result>0){
-           return  couponBatchItemCustomMapper.getCouponBatchItemByCouponItemId(couponItemId);
+    public CmsCouponBatchItem updateCouponBatchItemByCouponItemId(String couponItemId, String certifyChainId) {
+        int result = couponBatchItemMapper.updateCouponBatchItemByCouponItemId(couponItemId, certifyChainId);
+        if (result > 0) {
+            return couponBatchItemMapper.getCouponBatchItemByCouponItemId(couponItemId);
         }
         return null;
     }
 
     @Override
-    public List<CmsCouponBatchCustomItem> getCouponBatchItemListByChainId(String certifyChainId) {
-        return couponBatchItemCustomMapper.getCouponBatchItemListByChainId( certifyChainId);
+    public List<CmsCouponBatchItem> getCouponBatchItemListByChainId(String certifyChainId) {
+        return couponBatchItemMapper.getCouponBatchItemListByChainId(certifyChainId);
     }
 }

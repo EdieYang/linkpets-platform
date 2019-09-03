@@ -1,6 +1,9 @@
 package com.linkpets.core.dao;
 
 import com.linkpets.core.model.CmsActivityRegistry;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CmsActivityRegistryMapper {
     /**
@@ -50,4 +53,29 @@ public interface CmsActivityRegistryMapper {
      * @mbggenerated Sat Mar 23 02:03:01 CST 2019
      */
     int updateByPrimaryKey(CmsActivityRegistry record);
+
+    /**
+     * 根据报名id获取用户报名信息
+     *
+     * @param registryId
+     * @return
+     */
+    CmsActivityRegistry getRegistryInfo(String registryId);
+
+    /**
+     * 获取用户报名详情
+     *
+     * @param activityId
+     * @param userId
+     * @return
+     */
+    List<CmsActivityRegistry> getRegistryInfoByUserId(@Param("activityId") String activityId, @Param("userId") String userId);
+
+    /**
+     * 获取活动报名列表
+     *
+     * @param activityId
+     * @return
+     */
+    List<CmsActivityRegistry> getRegistryInfoList(String activityId);
 }

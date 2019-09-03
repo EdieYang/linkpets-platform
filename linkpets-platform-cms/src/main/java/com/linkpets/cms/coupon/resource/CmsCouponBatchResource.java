@@ -19,7 +19,7 @@ import java.util.Map;
  * @date 2019/3/27
  */
 
-@Api(value = "优惠券模板生产批次接口", tags = "优惠券接口")
+@Api(value = "优惠券模板生产批次接口", tags = "活动优惠券接口")
 @RestController
 @ResponseResult
 @RequestMapping("/couponBatch")

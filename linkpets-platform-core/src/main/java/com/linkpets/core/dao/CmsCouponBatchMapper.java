@@ -1,6 +1,10 @@
 package com.linkpets.core.dao;
 
 import com.linkpets.core.model.CmsCouponBatch;
+import com.linkpets.core.model.CmsCouponBatchItem;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CmsCouponBatchMapper {
     /**
@@ -50,4 +54,23 @@ public interface CmsCouponBatchMapper {
      * @mbggenerated Wed Mar 27 10:23:44 CST 2019
      */
     int updateByPrimaryKey(CmsCouponBatch record);
+
+    /**
+     * 获取优惠券列表
+     *
+     * @param couponId
+     * @param activityId
+     * @param effectiveStart
+     * @param effectiveEnd
+     * @return
+     */
+    List<CmsCouponBatch> getCmsCouponBatchList(@Param("couponId") String couponId, @Param("activityId") String activityId, @Param("effectiveStart") String effectiveStart, @Param("effectiveEnd") String effectiveEnd);
+
+    /**
+     * 生成优惠券
+     *
+     * @param items
+     * @return
+     */
+    int insertBatchCouponItem(List<CmsCouponBatchItem> items);
 }

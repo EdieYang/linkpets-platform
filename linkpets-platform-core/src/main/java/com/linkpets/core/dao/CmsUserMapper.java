@@ -105,15 +105,10 @@ public interface CmsUserMapper {
 
     /**
      * 根据unionId获取用户详情
+     *
      * @param unionId
      * @return
      */
     CmsUser getUserByUnionId(String unionId);
 
-
-    String getMaxUserNo(@Param("userIdStart") String userIdStart, @Param("year") String year);
-
-    List<Map<String, Object>> selectUserList(Map<String, Object> map);
-
-    List<Map<String, String>> getUserInfoByUserId(List<String> userIds);
 }

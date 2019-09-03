@@ -1,21 +1,18 @@
 package com.linkpets.cms.aprilfool.service.impl;
 
-import com.linkpets.cms.aprilfool.dao.CmsActivityDraftCustomMapper;
-import com.linkpets.cms.aprilfool.model.CmsActivityCustomDraft;
 import com.linkpets.cms.aprilfool.service.IActivityDraftService;
-import com.linkpets.cms.coupon.dao.CmsCouponBatchItemCustomMapper;
-import com.linkpets.cms.coupon.dao.CmsCouponCustomMapper;
-import com.linkpets.core.dao.CmsActivityConfigMapper;
-import com.linkpets.core.dao.CmsActivityDraftMapper;
-import com.linkpets.core.dao.CmsActivityMapper;
+import com.linkpets.core.dao.*;
 import com.linkpets.core.model.*;
 import com.linkpets.enums.PresentType;
 import com.linkpets.util.UUIDUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 /**
  * @author SteveYang
@@ -29,38 +26,35 @@ public class ActivityDraftServiceImpl implements IActivityDraftService {
     private static final int UNDRAFTED = 0;
 
 
-    @Autowired
-    private CmsActivityDraftCustomMapper activityDraftCustomMapper;
-
-    @Autowired
+    @Resource
     private CmsActivityDraftMapper activityDrafMapper;
 
-    @Autowired
+    @Resource
     private CmsActivityConfigMapper activityConfigMapper;
 
-    @Autowired
-    private CmsCouponBatchItemCustomMapper batchItemCustomMapper;
+    @Resource
+    private CmsCouponBatchItemMapper batchItemMapper;
 
-    @Autowired
-    private CmsCouponCustomMapper couponCustomMapper;
+    @Resource
+    private CmsCouponMapper couponMapper;
 
-    @Autowired
+    @Resource
     private CmsActivityMapper activityMapper;
 
     @Override
     public int getActivityDraftExistNoByUserId(String activityId, String userId) {
-        return activityDraftCustomMapper.getActivityDraftExistNoByUserId(activityId, userId);
+        return activityDrafMapper.getActivityDraftExistNoByUserId(activityId, userId);
     }
 
     @Override
-    public List<CmsActivityCustomDraft> getActivityDraftListByUserId(String activityId, String userId) {
-        List<CmsActivityCustomDraft> customDrafts = new ArrayList<>();
-        List<CmsActivityDraft> ActivityDraftList = activityDraftCustomMapper.getActivityDraftListByUserId(activityId, userId);
+    public List<CmsActivityDraft> getActivityDraftListByUserId(String activityId, String userId) {
+        List<CmsActivityDraft> customDrafts = new ArrayList<>();
+        List<CmsActivityDraft> ActivityDraftList = activityDrafMapper.getActivityDraftListByUserId(activityId, userId);
         for (CmsActivityDraft cmsActivityDraft : ActivityDraftList) {
 
             switch (cmsActivityDraft.getPresentType()) {
                 case PresentType.COUPON:
-                    customDrafts.addAll(activityDraftCustomMapper.getActivityCouponDraftListByUserId(activityId, userId, PresentType.COUPON));
+                    customDrafts.addAll(activityDrafMapper.getActivityCouponDraftListByUserId(activityId, userId, PresentType.COUPON));
                     break;
                 default:
                     break;
@@ -72,11 +66,11 @@ public class ActivityDraftServiceImpl implements IActivityDraftService {
 
     @Override
     public int getActivityDraftCount(String activityId, String userId) {
-        return activityDraftCustomMapper.getActivityDraftCount(activityId, userId);
+        return activityDrafMapper.getActivityDraftCount(activityId, userId);
     }
 
     @Override
-    public CmsActivityCustomDraft doActivityDraftProcess(String activityId, String userId) {
+    public CmsActivityDraft doActivityDraftProcess(String activityId, String userId) {
         //抽奖业务逻辑
 
         boolean trickOrTreat = true;
@@ -90,13 +84,13 @@ public class ActivityDraftServiceImpl implements IActivityDraftService {
                 case PresentType.COUPON:
                     //查询活动举办机构
                     CmsActivity activity = activityMapper.selectByPrimaryKey(activityId);
-                    List<CmsCoupon> coupons = couponCustomMapper.getCouponList(activity.getOrgId());
+                    List<CmsCoupon> coupons = couponMapper.getCouponList(activity.getOrgId());
                     //查询各优惠券库存
                     int initStockNo = 0;
                     String maxStockCouponId = "";
                     for (CmsCoupon item : coupons) {
 
-                        int stockNo = batchItemCustomMapper.getCouponBatchItemStockByCouponId(item.getCouponId());
+                        int stockNo = batchItemMapper.getCouponBatchItemStockByCouponId(item.getCouponId());
                         if (stockNo >= initStockNo) {
                             initStockNo = stockNo;
                             maxStockCouponId = item.getCouponId();
@@ -106,19 +100,19 @@ public class ActivityDraftServiceImpl implements IActivityDraftService {
                     if (StringUtils.isEmpty(maxStockCouponId)) {
                         return null;
                     }
-                    CmsCouponBatchItem couponItem = batchItemCustomMapper.selectNotArrangedCouponItemByCouponId(maxStockCouponId);
+                    CmsCouponBatchItem couponItem = batchItemMapper.selectNotArrangedCouponItemByCouponId(maxStockCouponId);
                     //如果优惠券不存在
                     if (couponItem.equals(null)) {
                         return null;
                     }
                     //乐观锁version字段
-                    int resultRow = batchItemCustomMapper.giveCouponToUser(userId, couponItem.getCouponItemId(), couponItem.getVersion());
+                    int resultRow = batchItemMapper.giveCouponToUser(userId, couponItem.getCouponItemId(), couponItem.getVersion());
                     if (resultRow > 0) {
                         //查询用户抽奖记录
-                        CmsActivityDraft unDraftedRecord = activityDraftCustomMapper.getActivityUnDraftedRecordByUserId(activityId, userId);
+                        CmsActivityDraft unDraftedRecord = activityDrafMapper.getActivityUnDraftedRecordByUserId(activityId, userId);
 
                         //更新奖品信息
-                        if (unDraftedRecord != null ) {
+                        if (unDraftedRecord != null) {
                             CmsActivityDraft activityDraft = new CmsActivityDraft();
                             activityDraft.setDraftId(unDraftedRecord.getDraftId());
                             activityDraft.setDraftStatus(DRAFTED);
@@ -127,7 +121,7 @@ public class ActivityDraftServiceImpl implements IActivityDraftService {
                             activityDraft.setPresentId(couponItem.getCouponItemId());
                             activityDraft.setPresentType(PresentType.COUPON);
                             activityDrafMapper.updateByPrimaryKeySelective(activityDraft);
-                            CmsActivityCustomDraft activityCustomDraft = activityDraftCustomMapper.getActivityCouponDraftByDraftId(unDraftedRecord.getDraftId());
+                            CmsActivityDraft activityCustomDraft = activityDrafMapper.getActivityCouponDraftByDraftId(unDraftedRecord.getDraftId());
                             return activityCustomDraft;
                         }
                     }
@@ -146,7 +140,7 @@ public class ActivityDraftServiceImpl implements IActivityDraftService {
 
     @Override
     public CmsActivityDraft addActivityDraft(String activityId, String userId) {
-        CmsActivityDraft draft =new CmsActivityDraft();
+        CmsActivityDraft draft = new CmsActivityDraft();
         draft.setDraftId(UUIDUtils.getUUID());
         draft.setActivityId(activityId);
         draft.setUserId(userId);

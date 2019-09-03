@@ -225,4 +225,13 @@
         create_time = #{createTime,jdbcType=TIMESTAMP}
         where info_id = #{infoId,jdbcType=VARCHAR}
     </update>
+
+    <select id="selectRegistryInfoByUserIdAndActivityId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_activity_registry_info
+        where user_id = #{userId,jdbcType=VARCHAR}
+        and activity_id = #{activityId}
+        and is_valid = 1
+    </select>
 </mapper>

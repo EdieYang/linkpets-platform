@@ -3,7 +3,6 @@ package com.linkpets.cms.aprilfool.resource;
 
 import com.alibaba.fastjson.JSONObject;
 import com.linkpets.annotation.ResponseResult;
-import com.linkpets.cms.aprilfool.model.CmsActivityCustomRegistry;
 import com.linkpets.cms.aprilfool.service.IActivityRegisterService;
 import com.linkpets.core.model.CmsActivityRegistry;
 import com.linkpets.core.model.CmsActivityRegistryInfo;
@@ -45,7 +44,7 @@ public class CmsActivityRegisterResource {
             @ApiImplicitParam(name = "registryId", value = "活动报名Id", required = true, dataType = "String", paramType = "query"),
     })
     public PlatformResult getActivityRegistry(@RequestParam String registryId) {
-        CmsActivityCustomRegistry cmsActivityRegistry = activityRegisterService.getRegistryInfo(registryId);
+        CmsActivityRegistry cmsActivityRegistry = activityRegisterService.getRegistryInfo(registryId);
         return PlatformResult.success(cmsActivityRegistry);
     }
 
@@ -57,7 +56,7 @@ public class CmsActivityRegisterResource {
 
     })
     public PlatformResult getActivityRegistries(@PathVariable String activityId, @RequestParam String userId) {
-        List<CmsActivityCustomRegistry> activityCustomRegistryList = activityRegisterService.getRegistryInfoByUserId(activityId, userId);
+        List<CmsActivityRegistry> activityCustomRegistryList = activityRegisterService.getRegistryInfoByUserId(activityId, userId);
         return PlatformResult.success(activityCustomRegistryList);
     }
 
@@ -67,7 +66,7 @@ public class CmsActivityRegisterResource {
             @ApiImplicitParam(name = "activityId", value = "活动Id", required = true, dataType = "String", paramType = "path"),
     })
     public PlatformResult getActivityRegistries(@PathVariable String activityId) {
-        List<CmsActivityCustomRegistry> activityCustomRegistries = activityRegisterService.getRegistryInfoList(activityId);
+        List<CmsActivityRegistry> activityCustomRegistries = activityRegisterService.getRegistryInfoList(activityId);
         return PlatformResult.success(activityCustomRegistries);
     }
 

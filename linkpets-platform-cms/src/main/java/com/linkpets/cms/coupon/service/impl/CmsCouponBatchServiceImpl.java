@@ -2,17 +2,16 @@ package com.linkpets.cms.coupon.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.linkpets.cms.coupon.dao.CmsCouponBatchCustomMapper;
-import com.linkpets.cms.coupon.dao.CmsCouponBatchItemCustomMapper;
 import com.linkpets.cms.coupon.service.ICmsCouponBatchService;
+import com.linkpets.core.dao.CmsCouponBatchItemMapper;
 import com.linkpets.core.dao.CmsCouponBatchMapper;
 import com.linkpets.core.model.CmsCouponBatch;
 import com.linkpets.core.model.CmsCouponBatchItem;
 import com.linkpets.util.DateUtils;
 import com.linkpets.util.UUIDUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -23,14 +22,11 @@ import java.util.*;
 @Service
 public class CmsCouponBatchServiceImpl implements ICmsCouponBatchService {
 
-    @Autowired
+    @Resource
     private CmsCouponBatchMapper couponBatchMapper;
 
-    @Autowired
-    private CmsCouponBatchCustomMapper couponBatchCustomMapper;
-
-    @Autowired
-    private CmsCouponBatchItemCustomMapper couponBatchItemCustomMapper;
+    @Resource
+    private CmsCouponBatchItemMapper couponBatchItemMapper;
 
     private static final int COUPON_STATUS_UNUSED = 0;
 
@@ -44,7 +40,7 @@ public class CmsCouponBatchServiceImpl implements ICmsCouponBatchService {
         Map<String, Object> result = new HashMap<>();
 
         PageHelper.startPage(pageNo, pageSize);
-        List<CmsCouponBatch> couponBatches = couponBatchCustomMapper.getCmsCouponBatchList(couponId, activityId, effectiveStart, effectiveEnd);
+        List<CmsCouponBatch> couponBatches = couponBatchMapper.getCmsCouponBatchList(couponId, activityId, effectiveStart, effectiveEnd);
         PageInfo<CmsCouponBatch> page = new PageInfo<>(couponBatches);
         result.put("page", page.getPageNum());
         result.put("records", page.getTotal());
@@ -79,7 +75,7 @@ public class CmsCouponBatchServiceImpl implements ICmsCouponBatchService {
             items.add(cmsCouponBatchItem);
         }
 
-        int insertAmount = couponBatchCustomMapper.insertBatchCouponItem(items);
+        int insertAmount = couponBatchMapper.insertBatchCouponItem(items);
 
 
         return insertAmount;
@@ -90,7 +86,7 @@ public class CmsCouponBatchServiceImpl implements ICmsCouponBatchService {
         Map<String, Object> result = new HashMap<>();
 
         PageHelper.startPage(pageNo, pageSize);
-        List<CmsCouponBatchItem> couponBatchItems = couponBatchItemCustomMapper.getCmsCouponBatchItemList(batchNo, status);
+        List<CmsCouponBatchItem> couponBatchItems = couponBatchItemMapper.getCmsCouponBatchItemList(batchNo, status);
         PageInfo<CmsCouponBatchItem> page = new PageInfo<>(couponBatchItems);
         result.put("page", page.getPageNum());
         result.put("records", page.getTotal());

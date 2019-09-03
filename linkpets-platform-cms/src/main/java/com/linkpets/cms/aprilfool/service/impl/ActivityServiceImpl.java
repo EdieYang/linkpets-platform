@@ -1,16 +1,14 @@
 package com.linkpets.cms.aprilfool.service.impl;
 
 
-import com.alibaba.fastjson.JSONObject;
-import com.linkpets.cms.aprilfool.dao.CmsActivityCustomMapper;
 import com.linkpets.cms.aprilfool.service.IActivityService;
 import com.linkpets.core.dao.CmsActivityMapper;
 import com.linkpets.core.model.CmsActivity;
 import com.linkpets.util.UUIDUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -19,11 +17,8 @@ import static com.linkpets.util.DateUtils.getFormatDateTime;
 @Service
 public class ActivityServiceImpl implements IActivityService {
 
-    @Autowired
+    @Resource
     private CmsActivityMapper cmsActivityMapper;
-
-    @Autowired
-    private CmsActivityCustomMapper cmsActivityCustomMapper;
 
 
     @Override
@@ -82,7 +77,7 @@ public class ActivityServiceImpl implements IActivityService {
 
     @Override
     public List<CmsActivity> getActivitiesList(String orgId, String startTime, String endTime, int isActive) {
-        List<CmsActivity> cmsActivity = cmsActivityCustomMapper.getActivitiesList(orgId, startTime, endTime, isActive);
+        List<CmsActivity> cmsActivity = cmsActivityMapper.getActivitiesList(orgId, startTime, endTime, isActive);
         return cmsActivity;
     }
 }

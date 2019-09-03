@@ -20,7 +20,7 @@ import java.util.Map;
  */
 
 
-@Api(value = "优惠券模板配置接口", tags = "优惠券接口")
+@Api(value = "优惠券模板配置接口", tags = "活动优惠券接口")
 @RestController
 @ResponseResult
 @RequestMapping("/coupons")

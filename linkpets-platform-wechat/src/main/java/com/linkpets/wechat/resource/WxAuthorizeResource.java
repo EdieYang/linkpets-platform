@@ -7,6 +7,7 @@ import com.linkpets.core.dao.CmsUserMapper;
 import com.linkpets.core.model.CmsUser;
 import com.linkpets.util.HttpClientUtils;
 import com.linkpets.util.HttpUtil;
+import com.linkpets.util.UUIDUtils;
 import com.linkpets.util.wxConfig.SHA1;
 import com.linkpets.util.wxConfig.Token;
 import com.linkpets.util.wxpay.RandomStringGenerator;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -132,19 +134,19 @@ public class WxAuthorizeResource {
         CmsUser user = userMapper.getUserByUnionId(unionId);
         if (user == null) {
             //创建新用户
-//            String nickName = resUnion.getString("nickname");
-//            String portrait = resUnion.getString("headimgurl");
-//
-//            CmsUser newUser = new CmsUser();
-//            String userId = UUID.randomUUID().toString();
-//            newUser.setCreateDatetime(new Date());
-//            newUser.setUserId(userId);
-//            newUser.setNickName(nickName);
-//            newUser.setPhotoPath(portrait);
-//            newUser.setUnionId(unionId);
-//            userMapper.insertSelective(newUser);
-//            result.put("data", userId);
-        } else if (user != null) {
+            String nickName = resUnion.getString("nickname");
+            String portrait = resUnion.getString("headimgurl");
+
+            CmsUser newUser = new CmsUser();
+            String userId = UUIDUtils.randomUUID();
+            newUser.setCreateDate(new Date());
+            newUser.setUserId(userId);
+            newUser.setNickName(nickName);
+            newUser.setPortrait(portrait);
+            newUser.setUnionId(unionId);
+            userMapper.insertSelective(newUser);
+            result.put("data", userId);
+        } else {
             result.put("data", user.getUserId());
         }
 

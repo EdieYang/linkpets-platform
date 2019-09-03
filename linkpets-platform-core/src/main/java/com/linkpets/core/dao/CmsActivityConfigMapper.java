@@ -50,4 +50,13 @@ public interface CmsActivityConfigMapper {
      * @mbggenerated Wed Mar 27 23:00:04 CST 2019
      */
     int updateByPrimaryKey(CmsActivityConfig record);
+
+    /**
+     * 获取活动助力数配置
+     *
+     * @param activityId
+     * @return
+     */
+    int selectAssistNoByActivityId(String activityId);
+
 }

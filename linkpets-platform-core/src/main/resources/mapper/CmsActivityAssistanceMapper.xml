@@ -166,4 +166,36 @@
         assist_order = #{assistOrder,jdbcType=INTEGER}
         where assist_id = #{assistId,jdbcType=VARCHAR}
     </update>
+
+    <select id="getActivityAssistanceByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_activity_assistance
+        where user_id = #{userId,jdbcType=VARCHAR}
+        and activity_id = #{activityId}
+    </select>
+
+    <select id="getMaxOrderOfActivityAssistanceByActivityId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_activity_assistance
+        where activity_id = #{activityId}
+        ORDER BY assist_order DESC
+        limit 1
+    </select>
+
+    <select id="getActivityAssistNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+          IFNULL((SELECT
+            COUNT(assist_id)
+          FROM
+            cms_activity_assistance
+          WHERE activity_id = #{activityId}) +
+          (SELECT
+            assist_no
+          FROM
+            cms_activity_config
+          WHERE activity_id = #{activityId}
+          AND is_active = 1),0) AS assistNo
+    </select>
 </mapper>

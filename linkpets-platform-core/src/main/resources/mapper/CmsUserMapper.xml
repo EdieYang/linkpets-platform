@@ -313,4 +313,18 @@
         from cms_user
         where user_id = #{userId}
     </select>
+    <select id="getUserByUnionId" parameterType="String" resultMap="BaseResultMap">
+        select user_id,
+               nick_name,
+               mobile_phone,
+               portrait,
+               union_id,
+               birthday,
+               gender,
+               location,
+               intro,
+               authenticated
+        from cms_user
+        where union_id = #{unionId}
+    </select>
 </mapper>

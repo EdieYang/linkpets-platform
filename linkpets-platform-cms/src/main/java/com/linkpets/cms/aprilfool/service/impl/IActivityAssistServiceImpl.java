@@ -1,33 +1,29 @@
 package com.linkpets.cms.aprilfool.service.impl;
 
-import com.linkpets.cms.aprilfool.dao.CmsActivityAssistanceCustomMapper;
-import com.linkpets.cms.aprilfool.dao.CmsActivityConfigCustomMapper;
 import com.linkpets.cms.aprilfool.service.IActivityAssistService;
 import com.linkpets.core.dao.CmsActivityAssistanceMapper;
+import com.linkpets.core.dao.CmsActivityConfigMapper;
 import com.linkpets.core.dao.CmsActivityDraftMapper;
 import com.linkpets.core.model.CmsActivityAssistance;
 import com.linkpets.core.model.CmsActivityDraft;
 import com.linkpets.util.UUIDUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 
 @Service
 public class IActivityAssistServiceImpl implements IActivityAssistService {
 
-    @Autowired
+    @Resource
     private CmsActivityAssistanceMapper activityAssistanceMapper;
 
-    @Autowired
-    private CmsActivityAssistanceCustomMapper activityAssistanceCustomMapper;
+    @Resource
+    private CmsActivityConfigMapper activityConfigMapper;
 
-    @Autowired
-    private CmsActivityConfigCustomMapper activityConfigCustomMapper;
-
-    @Autowired
+    @Resource
     private CmsActivityDraftMapper activityDraftMapper;
 
 
@@ -37,7 +33,7 @@ public class IActivityAssistServiceImpl implements IActivityAssistService {
     @Transactional(rollbackFor = Exception.class)
     public String createActivityAssistRecord(String activityId, String userId, int assistType, String assistUserId) {
 
-        CmsActivityAssistance record = activityAssistanceCustomMapper.getActivityAssistanceByUserId(activityId, userId);
+        CmsActivityAssistance record = activityAssistanceMapper.getActivityAssistanceByUserId(activityId, userId);
         if (record != null) {
             return record.getAssistId();
         }
@@ -66,26 +62,22 @@ public class IActivityAssistServiceImpl implements IActivityAssistService {
 
     @Override
     public CmsActivityAssistance getActivityAssistRecordByUserId(String activityId, String userId) {
-        return activityAssistanceCustomMapper.getActivityAssistanceByUserId(activityId, userId);
+        return activityAssistanceMapper.getActivityAssistanceByUserId(activityId, userId);
     }
 
-//    @Override
-//    public List<ActivityUser> getActivityAssistFollowersByAssistUserId(String activityId, String assistUserId) {
-//        return activityAssistanceCustomMapper.getActivityAssistFollowersByAssistUserId(activityId,assistUserId);
-//    }
 
     @Override
     public int getActivityAssistNo(String activityId) {
-        return activityAssistanceCustomMapper.getActivityAssistNo(activityId);
+        return activityAssistanceMapper.getActivityAssistNo(activityId);
     }
 
 
     public int generateAssistOrder(String activityId) {
         int assistOrderNO = 0;
-        CmsActivityAssistance maxRecord = activityAssistanceCustomMapper.getMaxOrderOfActivityAssistanceByActivityId(activityId);
-        int assistOrderBase = activityConfigCustomMapper.selectAssistNoByActivityId(activityId);
+        CmsActivityAssistance maxRecord = activityAssistanceMapper.getMaxOrderOfActivityAssistanceByActivityId(activityId);
+        int assistOrderBase = activityConfigMapper.selectAssistNoByActivityId(activityId);
 
-        if (maxRecord !=null && maxRecord.getAssistOrder() > assistOrderBase) {
+        if (maxRecord != null && maxRecord.getAssistOrder() > assistOrderBase) {
             assistOrderNO = maxRecord.getAssistOrder() + 1;
         } else {
             assistOrderNO = assistOrderBase + 1;

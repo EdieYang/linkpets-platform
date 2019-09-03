@@ -13,7 +13,6 @@ public interface IActivityService {
 
     String createActivity(String activityName, String introduction, String startTime, String endTime, String orgId);
 
-
     CmsActivity modifyActivity(String activityId, String activityName, String introduction, String startTime, String endTime, String orgId, int isActive);
 
     void deleteActivity(String activityId);

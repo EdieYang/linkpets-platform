@@ -1,6 +1,9 @@
 package com.linkpets.core.dao;
 
 import com.linkpets.core.model.CmsCouponBatchItem;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CmsCouponBatchItemMapper {
     /**
@@ -50,4 +53,74 @@ public interface CmsCouponBatchItemMapper {
      * @mbggenerated Thu Mar 28 01:28:07 CST 2019
      */
     int updateByPrimaryKey(CmsCouponBatchItem record);
+
+    /**
+     * 根据批次号获取优惠券列表
+     *
+     * @param batchNo
+     * @param status
+     * @return
+     */
+    List<CmsCouponBatchItem> getCmsCouponBatchItemList(@Param("batchNo") String batchNo, @Param("status") int status);
+
+    /**
+     * 获取用户优惠券列表
+     *
+     * @param userId
+     * @param status
+     * @return
+     */
+    List<CmsCouponBatchItem> getCouponBatchItemListByUserId(@Param("userId") String userId, @Param("status") int status);
+
+    /**
+     * 获取优惠券详情
+     *
+     * @param couponItemId
+     * @return
+     */
+    CmsCouponBatchItem getCouponBatchItemByCouponItemId(String couponItemId);
+
+    /**
+     * 更新优惠券状态
+     *
+     * @param couponItemId
+     * @param certifyChainId
+     * @return
+     */
+    int updateCouponBatchItemByCouponItemId(@Param("couponItemId") String couponItemId, @Param("certifyChainId") String certifyChainId);
+
+    /**
+     * 获取优惠券库存
+     *
+     * @param couponId
+     * @return
+     */
+    int getCouponBatchItemStockByCouponId(String couponId);
+
+    /**
+     * 获取未分配的优惠券
+     *
+     * @param couponId
+     * @return
+     */
+    CmsCouponBatchItem selectNotArrangedCouponItemByCouponId(String couponId);
+
+    /**
+     * 发送优惠券至用户账户
+     *
+     * @param userId
+     * @param couponItemId
+     * @param version
+     * @return
+     */
+    int giveCouponToUser(String userId, String couponItemId, int version);
+
+    /**
+     * 根据连锁获取优惠券列表
+     *
+     * @param certifyChainId
+     * @return
+     */
+    List<CmsCouponBatchItem> getCouponBatchItemListByChainId(String certifyChainId);
+
 }

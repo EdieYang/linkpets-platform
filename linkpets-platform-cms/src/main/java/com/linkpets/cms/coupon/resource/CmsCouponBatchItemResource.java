@@ -1,8 +1,8 @@
 package com.linkpets.cms.coupon.resource;
 
 import com.linkpets.annotation.ResponseResult;
-import com.linkpets.cms.coupon.model.CmsCouponBatchCustomItem;
 import com.linkpets.cms.coupon.service.ICouponBatchItemService;
+import com.linkpets.core.model.CmsCouponBatchItem;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2019/3/27
  */
 
-@Api(value = "优惠券操作接口", tags = "优惠券接口")
+@Api(value = "优惠券操作接口", tags = "活动优惠券接口")
 @ResponseResult
 @RestController
 @RequestMapping("/couponItems")
@@ -35,7 +35,7 @@ public class CmsCouponBatchItemResource {
     })
     public PlatformResult getCouponBatchItemListByUserId(@RequestParam String userId,
                                                          @RequestParam(required = false, defaultValue = "-1") int status) {
-        List<CmsCouponBatchCustomItem> cmsCouponBatchCustomItems = couponBatchItemService.getCouponBatchItemListByUserId(userId, status);
+        List<CmsCouponBatchItem> cmsCouponBatchCustomItems = couponBatchItemService.getCouponBatchItemListByUserId(userId, status);
         return PlatformResult.success(cmsCouponBatchCustomItems);
     }
 
@@ -46,7 +46,7 @@ public class CmsCouponBatchItemResource {
             @ApiImplicitParam(value = "优惠券id", name = "couponItemId", required = true, dataType = "String", paramType = "query")
     })
     public PlatformResult getCouponBatchItemByCouponItemId(@RequestParam String couponItemId) {
-        CmsCouponBatchCustomItem cmsCouponBatchCustomItem = couponBatchItemService.getCouponBatchItemByCouponItemId(couponItemId);
+        CmsCouponBatchItem cmsCouponBatchCustomItem = couponBatchItemService.getCouponBatchItemByCouponItemId(couponItemId);
         return PlatformResult.success(cmsCouponBatchCustomItem);
     }
 
@@ -60,7 +60,7 @@ public class CmsCouponBatchItemResource {
     })
     public PlatformResult updateCouponBatchItemByCouponItemId(@RequestParam String couponItemId,
                                                               @RequestParam String certifyChainId) {
-        CmsCouponBatchCustomItem cmsCouponBatchCustomItem = couponBatchItemService.updateCouponBatchItemByCouponItemId(couponItemId,certifyChainId);
+        CmsCouponBatchItem cmsCouponBatchCustomItem = couponBatchItemService.updateCouponBatchItemByCouponItemId(couponItemId,certifyChainId);
         return PlatformResult.success(cmsCouponBatchCustomItem);
     }
 
@@ -72,7 +72,7 @@ public class CmsCouponBatchItemResource {
 
     })
     public PlatformResult getCouponBatchItemListByChainId(@RequestParam String certifyChainId) {
-        List<CmsCouponBatchCustomItem> cmsCouponBatchCustomItem = couponBatchItemService.getCouponBatchItemListByChainId(certifyChainId);
+        List<CmsCouponBatchItem> cmsCouponBatchCustomItem = couponBatchItemService.getCouponBatchItemListByChainId(certifyChainId);
         return PlatformResult.success(cmsCouponBatchCustomItem);
     }
 

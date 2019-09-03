@@ -27,4 +27,10 @@ public class CmsActivityDraft {
 
     private Integer isValid;
 
+    private String presentName;
+
+    private String publishOrgName;
+
+    private int couponType;
+
 }

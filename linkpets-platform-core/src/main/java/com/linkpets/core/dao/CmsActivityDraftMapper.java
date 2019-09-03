@@ -1,6 +1,9 @@
 package com.linkpets.core.dao;
 
 import com.linkpets.core.model.CmsActivityDraft;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CmsActivityDraftMapper {
     /**
@@ -50,4 +53,58 @@ public interface CmsActivityDraftMapper {
      * @mbggenerated Wed Mar 27 21:59:05 CST 2019
      */
     int updateByPrimaryKey(CmsActivityDraft record);
+
+    /**
+     * 根据UserId判断用户是否抽奖
+     *
+     * @param activityId
+     * @param userId
+     * @return
+     */
+    int getActivityDraftExistNoByUserId(@Param("activityId") String activityId, @Param("userId") String userId);
+
+    /**
+     * 获取用户剩余抽奖次数
+     *
+     * @param activityId
+     * @param userId
+     * @return
+     */
+    int getActivityDraftCount(@Param("activityId") String activityId, @Param("userId") String userId);
+
+    /**
+     * 获取用户抽奖奖品列表
+     *
+     * @param activityId
+     * @param userId
+     * @param presentType
+     * @return
+     */
+    List<CmsActivityDraft> getActivityCouponDraftListByUserId(@Param("activityId") String activityId, @Param("userId") String userId, @Param("presentType") String presentType);
+
+    /**
+     * 获取抽奖机会列表
+     *
+     * @param activityId
+     * @param userId
+     * @return
+     */
+    List<CmsActivityDraft> getActivityDraftListByUserId(@Param("activityId") String activityId, @Param("userId") String userId);
+
+    /**
+     * 获取已抽奖机会
+     *
+     * @param draftId
+     * @return
+     */
+    CmsActivityDraft getActivityCouponDraftByDraftId(@Param("draftId") String draftId);
+
+    /**
+     * 获取未抽奖机会
+     *
+     * @param activityId
+     * @param userId
+     * @return
+     */
+    CmsActivityDraft getActivityUnDraftedRecordByUserId(@Param("activityId") String activityId, @Param("userId") String userId);
 }

@@ -26,7 +26,6 @@
     <modules>
         <module>linkpets-platform-cms</module>
         <module>linkpets-platform-core</module>
-        <module>linkpets-platform-auth</module>
         <module>linkpets-platform-wechat</module>
     </modules>
 

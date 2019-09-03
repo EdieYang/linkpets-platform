@@ -182,4 +182,23 @@
         is_valid = #{isValid,jdbcType=INTEGER}
         where activity_id = #{activityId,jdbcType=VARCHAR}
     </update>
+    <select id="getActivitiesList" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_activity
+        where 1=1
+        <if test="startTime != null">
+            <![CDATA[and start_time >= STR_TO_DATE(#{startTime},'%Y-%m-%d %H:%i:%s')]]>
+        </if>
+        <if test="endTime != null">
+            <![CDATA[ and end_time <= STR_TO_DATE(#{endTime},'%Y-%m-%d %H:%i:%s')]]>
+        </if>
+        <if test="orgId != null">
+            and org_id=#{orgId}
+        </if>
+        <if test="isActive != -1">
+            and is_active=#{isActive}
+        </if>
+        order by create_time desc
+    </select>
 </mapper>

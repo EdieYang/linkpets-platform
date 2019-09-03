@@ -1,6 +1,9 @@
 package com.linkpets.core.dao;
 
 import com.linkpets.core.model.CmsActivity;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CmsActivityMapper {
     /**
@@ -50,4 +53,16 @@ public interface CmsActivityMapper {
      * @mbggenerated Sat Mar 23 02:03:01 CST 2019
      */
     int updateByPrimaryKey(CmsActivity record);
+
+    /**
+     * 根据组织id、活动时间段获取活动列表
+     *
+     * @param orgId
+     * @param startTime
+     * @param endTime
+     * @param isActive
+     * @return
+     */
+    List<CmsActivity> getActivitiesList(@Param("orgId") String orgId, @Param("startTime") String startTime,
+                                        @Param("endTime") String endTime, @Param("isActive") int isActive);
 }

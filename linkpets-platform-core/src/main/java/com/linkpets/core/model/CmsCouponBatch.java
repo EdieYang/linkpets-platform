@@ -25,4 +25,14 @@ public class CmsCouponBatch {
 
     private Integer isValid;
 
+    private String couponName;
+
+    private String couponEnName;
+
+    private String couponType;
+
+    private String couponRule;
+
+    private String couponRemind;
+
 }

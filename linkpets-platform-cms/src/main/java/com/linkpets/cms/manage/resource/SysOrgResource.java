@@ -9,7 +9,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "系统机构", description = "机构的增、改、查")
 @ResponseResult
@@ -37,8 +40,8 @@ public class SysOrgResource {
 
     })
     public PlatformResult getSysChains(@RequestParam String orgId,
-                                       @RequestParam(required = false) String chainName){
-        return PlatformResult.success(sysOrgService.getSysChains(orgId,chainName));
+                                       @RequestParam(required = false) String chainName) {
+        return PlatformResult.success(sysOrgService.getSysChains(orgId, chainName));
     }
 
     @GetMapping("/chains/chain")
@@ -46,7 +49,7 @@ public class SysOrgResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "chainId", value = "chainId", paramType = "query", dataType = "String", required = true)
     })
-    public PlatformResult getSysChains(@RequestParam String chainId){
+    public PlatformResult getSysChains(@RequestParam String chainId) {
         return PlatformResult.success(sysOrgService.getSysChainByChainId(chainId));
     }
 

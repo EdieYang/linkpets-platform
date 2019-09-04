@@ -27,4 +27,12 @@ public class SysUser {
 
     private Integer isValid;
 
+    private String roleType;
+
+    private String orgId;
+
+    private String orgName;
+
+    private String chainName;
+
 }

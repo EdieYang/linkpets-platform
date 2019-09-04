@@ -1,6 +1,10 @@
 package com.linkpets.core.dao;
 
+import com.linkpets.core.model.SysChain;
 import com.linkpets.core.model.SysUser;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysUserMapper {
     /**
@@ -51,7 +55,6 @@ public interface SysUserMapper {
      */
     int updateByPrimaryKey(SysUser record);
 
-
     /**
      * 根据账号获取系统用户
      *
@@ -59,6 +62,23 @@ public interface SysUserMapper {
      * @return
      */
     SysUser selectByUserName(String userName);
+
+    /**
+     * 获取系统账号列表
+     *
+     * @param orgId
+     * @param chainId
+     * @return
+     */
+    List<SysUser> listSysUser(@Param("orgId") String orgId, @Param("chainId") String chainId);
+
+    /**
+     * 根据用户名获取账号信息
+     *
+     * @param userName
+     * @return
+     */
+    SysUser getSysUserByUserName(@Param("userName") String userName);
 
 
 }

@@ -1,7 +1,6 @@
-package com.linkpets.cms.oss.resource;
+package com.linkpets.cms.oss;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;

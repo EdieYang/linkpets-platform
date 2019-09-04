@@ -1,6 +1,9 @@
 package com.linkpets.core.dao;
 
 import com.linkpets.core.model.SysChain;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysChainMapper {
     /**
@@ -50,4 +53,14 @@ public interface SysChainMapper {
      * @mbggenerated Fri Apr 05 15:52:16 CST 2019
      */
     int updateByPrimaryKey(SysChain record);
+
+    /**
+     * 获取连锁列表
+     *
+     * @param orgId
+     * @param chainName
+     * @return
+     */
+    List<SysChain> getSysChains(@Param("orgId") String orgId, @Param("chainName") String chainName);
+
 }

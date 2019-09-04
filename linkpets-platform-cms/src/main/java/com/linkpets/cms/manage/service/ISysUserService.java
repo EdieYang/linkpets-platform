@@ -17,7 +17,7 @@ public interface ISysUserService {
      * @param pageSize
      * @return
      */
-    JSONObject listSysUserCustom(String orgId, String chainId, int pageNo, int pageSize);
+    JSONObject listSysUser(String orgId, String chainId, int pageNo, int pageSize);
 
     /**
      * 系统用户账号登录

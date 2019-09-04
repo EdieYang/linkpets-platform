@@ -3,17 +3,13 @@ package com.linkpets.cms.manage.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.linkpets.cms.manage.dao.SysUserCustomMapper;
-import com.linkpets.cms.manage.model.SysUserCustom;
 import com.linkpets.cms.manage.service.ISysUserService;
 import com.linkpets.core.dao.SysUserMapper;
 import com.linkpets.core.model.SysUser;
-import com.linkpets.util.ResponseCode;
-import com.linkpets.util.ResponseCodeFactory;
 import com.linkpets.util.UUIDUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -25,19 +21,15 @@ import java.util.List;
 @Service("sysUserService")
 public class SysUserServiceImpl implements ISysUserService {
 
-    @Autowired
-    private SysUserCustomMapper sysUserCustomMapper;
-
-
-    @Autowired
+    @Resource
     private SysUserMapper sysUserMapper;
 
     @Override
-    public JSONObject listSysUserCustom(String orgId, String chainId, int pageNo, int pageSize) {
+    public JSONObject listSysUser(String orgId, String chainId, int pageNo, int pageSize) {
         JSONObject result = new JSONObject();
         PageHelper.startPage(pageNo, pageSize);
-        List<SysUserCustom> sysUserCustomList = sysUserCustomMapper.listSysUserCustom(orgId, chainId);
-        PageInfo<SysUserCustom> page = new PageInfo<>(sysUserCustomList);
+        List<SysUser> sysUserCustomList = sysUserMapper.listSysUser(orgId, chainId);
+        PageInfo<SysUser> page = new PageInfo<>(sysUserCustomList);
         result.put("page", page.getPageNum());
         result.put("records", page.getTotal());
         result.put("rows", sysUserCustomList);
@@ -66,7 +58,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Override
     public SysUser updateSysUser(String userId, String chainId) {
-        SysUser sysUser=sysUserMapper.selectByPrimaryKey(userId);
+        SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
         sysUser.setChainId(chainId);
         sysUserMapper.updateByPrimaryKeySelective(sysUser);
         return sysUser;
@@ -74,7 +66,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Override
     public void register(String userName, String password) {
-        SysUser user=new SysUser();
+        SysUser user = new SysUser();
         user.setUserId(UUIDUtils.getUUID());
         user.setUserName(userName);
         user.setPassword(password);

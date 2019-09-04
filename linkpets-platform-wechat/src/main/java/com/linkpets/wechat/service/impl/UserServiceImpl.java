@@ -1,8 +1,5 @@
 package com.linkpets.wechat.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.linkpets.core.dao.CmsUserLoginMapper;
 import com.linkpets.core.dao.CmsUserMapper;
 import com.linkpets.core.dao.UserTempMapper;
@@ -11,12 +8,10 @@ import com.linkpets.core.model.CmsUserLogin;
 import com.linkpets.core.model.UserTemp;
 import com.linkpets.util.UUIDUtils;
 import com.linkpets.wechat.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -27,11 +22,11 @@ public class UserServiceImpl implements IUserService {
 
     private final static String USER_ID_TEMP = "hu-03+区号+年份（后两位）+00001";
 
-    @Autowired
+    @Resource
     private CmsUserMapper userMapper;
-    @Autowired
+    @Resource
     private UserTempMapper userTempMapper;
-    @Autowired
+    @Resource
     private CmsUserLoginMapper userLoginMapper;
 
 

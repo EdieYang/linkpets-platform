@@ -4,13 +4,14 @@ package com.linkpets.wechat.service.impl;
 import com.linkpets.core.dao.SysUserMapper;
 import com.linkpets.core.model.SysUser;
 import com.linkpets.wechat.service.ISysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 @Service
 public class SysUserServiceImpl  implements ISysUserService {
 
-    @Autowired
+    @Resource
     private SysUserMapper sysUserMapper;
 
     @Override

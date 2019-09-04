@@ -50,4 +50,12 @@ public interface SysOrgMapper {
      * @mbggenerated Thu Apr 04 10:42:35 CST 2019
      */
     int updateByPrimaryKey(SysOrg record);
+
+    /**
+     * 根据机构编码获取机构信息
+     *
+     * @param code
+     * @return
+     */
+    SysOrg getSysOrg(String code);
 }

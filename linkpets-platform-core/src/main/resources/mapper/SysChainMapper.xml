@@ -190,4 +190,14 @@
         is_valid = #{isValid,jdbcType=INTEGER}
         where chain_id = #{chainId,jdbcType=VARCHAR}
     </update>
+    <select id="getSysChains" resultType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_chain
+        where org_id=#{orgId}
+        <if test="chainName!='' and chainName!=null">
+            and chain_name like CONCAT('%',#{chainName},'%')
+        </if>
+        and is_valid=1
+    </select>
 </mapper>

@@ -25,17 +25,16 @@ public class ApplyScheduleManager {
 
     @Async
     @Scheduled(cron = "0 0 2 * * ?")
-    public void applyHandlerJob(){
+    public void applyHandlerJob() {
         log.info("处理过期申请领养单JOB>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        List<CmsAdoptApply> cmsAdoptApplyList= applyService.getExpiredAdoptApplyList();
-        cmsAdoptApplyList.stream().forEach(item->{
-            item.setApplyStatus("5");
-            item.setApplyResp("此申请超过系统有效时间，已自动取消");
-            applyService.uptApply(item);
+        List<CmsAdoptApply> cmsAdoptApplyList = applyService.getExpiredAdoptApplyList();
+        cmsAdoptApplyList.stream().forEach(item -> {
+            if (!item.getApplyStatus().equals("4") || !item.getApplyStatus().equals("5")) {
+                item.setApplyStatus("5");
+                item.setApplyResp("此申请超过系统有效时间，已自动取消");
+                applyService.uptApply(item);
+            }
         });
     }
-
-
-
 
 }

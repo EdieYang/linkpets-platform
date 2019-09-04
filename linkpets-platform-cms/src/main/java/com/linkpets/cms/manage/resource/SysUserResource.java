@@ -74,7 +74,7 @@ public class SysUserResource {
                                      @RequestParam(required = false) String chainId,
                                      @RequestParam(defaultValue = "20", required = false) int pageNo,
                                      @RequestParam(defaultValue = "1", required = false) int pageSize) {
-        return sysUserService.listSysUserCustom(orgId, chainId, pageNo, pageSize);
+        return sysUserService.listSysUser(orgId, chainId, pageNo, pageSize);
     }
 
 

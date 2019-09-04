@@ -198,6 +198,67 @@
         from sys_user
         where user_name = #{userName,jdbcType=VARCHAR}
     </select>
+    <select id="listSysUser" parameterType="String" resultType="com.linkpets.core.model.SysUser">
 
+        SELECT u.user_id as userId,
+        u.user_name as userName,
+        u.role_id as roleId,
+        r.role_type as roleType,
+        u.chain_id as chainId,
+        c.chain_name as chainName,
+        o.org_id as orgId,
+        o.org_name as orgName,
+        u.open_id as openId,
+        u.is_active as isActive,
+        u.create_time as createTime,
+        u.is_valid as isValid
+        FROM sys_user u
+        LEFT JOIN sys_role r
+        ON u.role_id= r.role_id
+        LEFT JOIN sys_chain c
+        ON u.chain_id= c.chain_id
+        LEFT JOIN sys_org o
+        ON o.org_id = c.org_id
+        WHERE 1=1
+        <if test="orgId !=null and orgId !='' ">
+            AND o.org_id=#{orgId}
+        </if>
+        <if test="chainId !=null and chainId !='' ">
+            AND u.chain_id=#{chainId}
+        </if>
+        AND u.is_valid = 1
+        ORDER BY u.create_time DESC
+
+    </select>
+
+    <select id="getSysUserByUserName" parameterType="String" resultType="com.linkpets.core.model.SysUser">
+
+        SELECT u.user_id as userId,
+        u.user_name as userName,
+        u.password as password,
+        u.role_id as roleId,
+        r.role_type as roleType,
+        u.chain_id as chainId,
+        c.chain_name as chainName,
+        o.org_id as orgId,
+        o.org_name as orgName,
+        u.open_id as openId,
+        u.is_active as isActive,
+        u.create_time as createTime,
+        u.is_valid as isValid
+        FROM sys_user u
+        LEFT JOIN sys_role r
+        ON u.role_id= r.role_id
+        LEFT JOIN sys_chain c
+        ON u.chain_id= c.chain_id
+        LEFT JOIN sys_org o
+        ON o.org_id = c.org_id
+        WHERE 1=1
+        <if test="userName!='' and userName !=null ">
+            AND u.user_name=#{userName}
+        </if>
+        AND u.is_valid=1
+
+    </select>
 
 </mapper>

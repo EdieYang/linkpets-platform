@@ -17,6 +17,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <project.package.name>lpWechat</project.package.name>
     </properties>
 
     <dependencies>
@@ -28,7 +29,7 @@
     </dependencies>
 
     <build>
-        <finalName>lpWechat</finalName>
+        <finalName>${project.package.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -45,4 +46,22 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <!-- 测试环境 -->
+            <id>test</id>
+            <properties>
+                <profiles.active>test</profiles.active>
+                <project.package.name>lpWechatTest</project.package.name>
+            </properties>
+        </profile>
+        <profile>
+            <!-- 生产环境 -->
+            <id>pro</id>
+            <properties>
+                <profiles.active>pro</profiles.active>
+                <project.package.name>lpWechat</project.package.name>
+            </properties>
+        </profile>
+    </profiles>
 </project>

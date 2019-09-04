@@ -4,32 +4,18 @@
     <bookmark url="file://F:/carelinker/kangsai-develop/src/main/java/com/kangsai/login/service/ILoginInfoService.java" description="DataResponseResult&lt;PatientLoginInfo&gt; getPatientLog..." line="13" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82df6815-9dcc-440a-929a-d1a7de50b851" name="Default" comment="更新dao">
+    <list default="true" id="82df6815-9dcc-440a-929a-d1a7de50b851" name="Default" comment="Dao版本更新">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/linkpets_platform_cms_war.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/linkpets_platform_cms_war.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/linkpets_platform_cms_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/linkpets_platform_cms_war_exploded.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/adopt/schedule/ApplyScheduleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/adopt/schedule/ApplyScheduleManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/dao/SysChainCustomMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/dao/SysOrgCustomMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/dao/SysUserCustomMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/model/SysUserCustom.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/resource/SysOrgResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/resource/SysOrgResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/resource/SysUserResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/resource/SysUserResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/service/ISysUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/service/ISysUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/service/impl/SysOrgServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/service/impl/SysOrgServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/service/impl/SysUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/manage/service/impl/SysUserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/oss/resource/OssUploadResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/oss/OssUploadResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/resources/mapper/manage/SysChainCustomMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/resources/mapper/manage/SysOrgCustomMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/resources/mapper/manage/SysUserCustomMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-core/src/main/java/com/linkpets/core/dao/SysChainMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-core/src/main/java/com/linkpets/core/dao/SysChainMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-core/src/main/java/com/linkpets/core/dao/SysOrgMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-core/src/main/java/com/linkpets/core/dao/SysOrgMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-core/src/main/java/com/linkpets/core/dao/SysUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-core/src/main/java/com/linkpets/core/dao/SysUserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-core/src/main/java/com/linkpets/core/model/SysUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-core/src/main/java/com/linkpets/core/model/SysUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-core/src/main/resources/mapper/SysChainMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-core/src/main/resources/mapper/SysChainMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-core/src/main/resources/mapper/SysOrgMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-core/src/main/resources/mapper/SysOrgMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-core/src/main/resources/mapper/SysUserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-core/src/main/resources/mapper/SysUserMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/impl/SysUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/impl/SysUserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/impl/UserTempServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/impl/UserTempServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-cms/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/netty/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/netty/NettyServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/configuration/SwaggerConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/configuration/SwaggerConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/resources/application-pro.properties" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-cms/src/main/resources/application-pro.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linkpets-platform-cms/src/main/resources/application-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-cms/src/main/resources/application-test.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linkpets-platform-wechat/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-wechat/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linkpets-platform-wechat/src/main/resources/application-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/linkpets-platform-wechat/src/main/resources/application-test.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <ignored path="linkpets-platform-v1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -59,91 +45,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/resource/WxMiniAdoptAuthorizeResource.java">
+        <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/resources/application-test.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/resource/WxMiniAdoptResource.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="35" column="14" lean-forward="true" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
+            <state relative-caret-position="16">
+              <caret line="1" column="41" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="41" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/resource/WxMiniAuthorizeResource.java">
+        <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/resource/WxAuthorizeResource.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/impl/UserTempServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="18" column="13" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/ISysUserService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/IUserService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/IUserTempService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/resources/mapper/UserTempCustomMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="23" column="33" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/linkpets-platform-core/src/main/resources/mapper/UserTempMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="112" column="24" lean-forward="true" selection-start-line="112" selection-start-column="24" selection-end-line="112" selection-end-column="24" />
+            <state relative-caret-position="556">
+              <caret line="66" column="10" lean-forward="true" selection-start-line="66" selection-start-column="10" selection-end-line="66" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -161,8 +75,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>activity/register</find>
-      <find>OSS_STORAGE_SLICE</find>
       <find>agreement</find>
       <find>fileObjName</find>
       <find>CatalogListResultMap</find>
@@ -191,6 +103,8 @@
       <find>sysUserCustomMapper</find>
       <find>SysUserCustom</find>
       <find>getTempUserByOpenId</find>
+      <find>swagger.version</find>
+      <find>lpWechatTest</find>
     </findStrings>
     <replaceStrings>
       <replace>172.16.179.223</replace>
@@ -228,14 +142,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/linkpets-platform-core/src/main/java/com/linkpets/core/dao/CmsActivityRegistryMapper.java" />
-        <option value="$PROJECT_DIR$/linkpets-platform-core/src/main/resources/mapper/CmsActivityRegistryInfoMapper.xml" />
-        <option value="$PROJECT_DIR$/linkpets-platform-core/src/main/java/com/linkpets/core/dao/CmsActivityRegistryInfoMapper.java" />
-        <option value="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/aprilfool/service/IActivityDraftService.java" />
-        <option value="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/aprilfool/service/impl/IActivityAssistServiceImpl.java" />
-        <option value="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/aprilfool/service/IActivityRegisterService.java" />
-        <option value="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/aprilfool/service/impl/ActivityRegisterImpl.java" />
-        <option value="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/aprilfool/service/IActivityService.java" />
         <option value="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/aprilfool/service/IActivityAssistService.java" />
         <option value="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/aprilfool/service/impl/ActivityServiceImpl.java" />
         <option value="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/aprilfool/resource/CmsActivityDraftResource.java" />
@@ -279,6 +185,14 @@
         <option value="$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/impl/UserServiceImpl.java" />
         <option value="$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/impl/SysUserServiceImpl.java" />
         <option value="$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/service/impl/UserTempServiceImpl.java" />
+        <option value="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/netty/NettyServer.java" />
+        <option value="$PROJECT_DIR$/linkpets-platform-cms/src/main/resources/application-pro.properties" />
+        <option value="$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/configuration/SwaggerConfiguration.java" />
+        <option value="$PROJECT_DIR$/linkpets-platform-wechat/src/main/resources/application-test.properties" />
+        <option value="$PROJECT_DIR$/linkpets-platform-cms/src/main/resources/application-test.properties" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/linkpets-platform-cms/pom.xml" />
+        <option value="$PROJECT_DIR$/linkpets-platform-wechat/pom.xml" />
       </list>
     </option>
   </component>
@@ -294,35 +208,7 @@
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
-      <expand>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="linkpets-platform-cms" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-        </path>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="linkpets-platform-cms" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
-        </path>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="linkpets-platform-v1" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-        </path>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="linkpets-platform-v1" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
-        </path>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="linkpets-platform-wechat" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-        </path>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="linkpets-platform-wechat" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
-        </path>
-      </expand>
+      <expand />
       <select />
     </treeState>
   </component>
@@ -420,98 +306,9 @@
               <item name="linkpets-platform-cms" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="linkpets-platform-v1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="linkpets-platform" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets-platform-core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="linkpets-platform-v1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="linkpets-platform" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets-platform-core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="linkpets-platform-v1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="linkpets-platform" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets-platform-core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="linkpets-platform-v1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="linkpets-platform" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets-platform-core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="linkpets-platform-v1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="linkpets-platform" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets-platform-core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="linkpets-platform-v1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="linkpets-platform" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets-platform-wechat" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="linkpets-platform-v1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="linkpets-platform" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets-platform-wechat" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="linkpets-platform-v1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="linkpets-platform" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets-platform-wechat" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="linkpets-platform-v1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="linkpets-platform" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets-platform-wechat" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="linkpets-platform-v1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="linkpets-platform" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets-platform-wechat" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="linkpets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="linkpets-platform-v1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="linkpets-platform" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets-platform-wechat" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets" type="462c0819:PsiDirectoryNode" />
-              <item name="wechat" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="linkpets-platform-v1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="linkpets-platform" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets-platform-wechat" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="linkpets" type="462c0819:PsiDirectoryNode" />
-              <item name="wechat" type="462c0819:PsiDirectoryNode" />
-              <item name="resource" type="462c0819:PsiDirectoryNode" />
+              <item name="cms" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -527,7 +324,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1567569240068" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1567588028725" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="last_opened_file_path" value="F:/carelinker/kangsai-test" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -948,7 +745,7 @@
       <workItem from="1566361437866" duration="12032000" />
       <workItem from="1566471007222" duration="19745000" />
       <workItem from="1566785283248" duration="10812000" />
-      <workItem from="1567501017751" duration="9251000" />
+      <workItem from="1567501017751" duration="17652000" />
     </task>
     <task id="LOCAL-00001" summary="修改签署协议接口">
       <created>1560941292655</created>
@@ -1146,11 +943,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567511732432</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Dao版本更新">
+      <created>1567569279768</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1567569279768</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="353221000" />
+    <option name="totallyTimeSpent" value="361622000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1165,7 +969,7 @@
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49362245" visible="true" weight="0.22563897" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49362245" visible="true" weight="0.22563897" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5063776" side_tool="true" weight="0.2827476" />
@@ -1176,8 +980,8 @@
       <window_info id="Image Layers" order="8" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32913843" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49640575" weight="0.3180016" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4928115" visible="true" weight="0.40523395" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49640575" visible="true" weight="0.42109436" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4928115" weight="0.40523395" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3298969" />
@@ -1238,7 +1042,8 @@
     <MESSAGE value="更新开发环境" />
     <MESSAGE value="提交" />
     <MESSAGE value="更新dao" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新dao" />
+    <MESSAGE value="Dao版本更新" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dao版本更新" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1382,103 +1187,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/coupon/resource/CmsCouponResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="22" column="41" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/coupon/service/ICmsCouponService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/coupon/service/ICmsCouponBatchService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/coupon/service/impl/CmsCouponServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/coupon/service/impl/CmsCouponBatchServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="30" column="54" selection-start-line="30" selection-start-column="54" selection-end-line="30" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/coupon/service/ICouponBatchItemService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/coupon/service/impl/CouponBatchItemServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-core/src/main/java/com/linkpets/core/dao/CmsCouponBatchItemMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="72" column="29" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-core/src/main/resources/mapper/CmsCouponBatchItemMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="221" column="33" selection-start-line="221" selection-start-column="18" selection-end-line="221" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/coupon/resource/CmsCouponBatchItemResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
-          <caret line="66" selection-start-line="66" selection-end-line="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/aprilfool/service/IActivityDraftService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/aprilfool/resource/CmsActivityDraftResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="66" selection-start-line="66" selection-end-line="66" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/aprilfool/service/impl/ActivityDraftServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="83" column="36" selection-start-line="83" selection-start-column="33" selection-end-line="83" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/enums/PresentType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
@@ -1738,17 +1446,111 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/resource/WxMiniAdoptResource.java">
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/resource/WxMiniAuthorizeResource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="35" column="14" lean-forward="true" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
+        <state relative-caret-position="80">
+          <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/resource/WxMiniAuthorizeResource.java">
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/resource/WxMiniAdoptResource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+        <state relative-caret-position="288">
+          <caret line="35" column="14" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/java/com/linkpets/wechat/resource/WxTemplateMsgResource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
+          <folding>
+            <element signature="e#1598#1634#1" expanded="true" />
+            <element signature="e#1692#1726#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/cms/netty/NettyServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="21" column="28" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-core/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/java/com/linkpets/configuration/SwaggerConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="54" column="7" selection-start-line="54" selection-start-column="7" selection-end-line="54" selection-end-column="7" />
+          <folding>
+            <element signature="e#996#1023#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/resources/application-pro.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="6" selection-start-line="6" selection-end-line="8" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="778">
+          <caret line="56" column="24" selection-start-line="56" selection-start-column="24" selection-end-line="56" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/resources/application-test.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="1" column="38" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/resources/application-pro.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="42" column="46" selection-start-line="42" selection-start-column="46" selection-end-line="42" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-cms/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/src/main/resources/application-test.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="1" column="41" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkpets-platform-wechat/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="66" column="10" lean-forward="true" selection-start-line="66" selection-start-column="10" selection-end-line="66" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -1853,5 +1655,9 @@
         </settings>
       </state>
     </states>
+  </component>
+  <component name="mavenExecuteGoalHistory">
+    <option value="$PROJECT_DIR$" />
+    <option value="clean package -PlpWechatTest" />
   </component>
 </project>

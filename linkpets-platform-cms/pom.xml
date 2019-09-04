@@ -15,6 +15,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <project.package.name>lpCms</project.package.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.linkpets</groupId>
@@ -35,9 +39,31 @@
     </dependencies>
 
 
+    <profiles>
+        <profile>
+            <!-- 测试环境 -->
+            <id>test</id>
+            <properties>
+                <profiles.active>test</profiles.active>
+                <project.package.name>lpCmsTest</project.package.name>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <!-- 生产环境 -->
+            <id>pro</id>
+            <properties>
+                <profiles.active>pro</profiles.active>
+                <project.package.name>lpCms</project.package.name>
+            </properties>
+        </profile>
+    </profiles>
+
 
     <build>
-        <finalName>lpCms</finalName>
+        <finalName>${project.package.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -57,5 +83,7 @@
             </plugin>
         </plugins>
     </build>
+
+
 
 </project>

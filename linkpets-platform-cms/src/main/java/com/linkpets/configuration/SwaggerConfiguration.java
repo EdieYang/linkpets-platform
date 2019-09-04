@@ -2,6 +2,7 @@ package com.linkpets.configuration;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -27,6 +28,8 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
+    @Value("${spring.profiles.active}")
+    private String active;
     /**
      * 创建API应用
      * apiInfo() 增加API相关信息
@@ -38,8 +41,10 @@ public class SwaggerConfiguration {
     @Bean
     public Docket createRestApi() {
 
+        String host=active.equals("test")?"www.linchongpets.com":"";
+
         return new Docket(DocumentationType.SWAGGER_2)
-//                .host("www.memorychilli.com")
+                .host(host)
                 .apiInfo(apiInfo()).select()
                 .apis(RequestHandlerSelectors.basePackage("com.linkpets.cms"))
                 .paths(PathSelectors.any())
@@ -60,7 +65,7 @@ public class SwaggerConfiguration {
                 .license("")
                 .licenseUrl("")
                 .termsOfServiceUrl("")
-                .contact(new Contact("EdieYang", "", "haojie_look@163.com"))
+                .contact(new Contact("EdieRahman", "", "haojie_look@163.com"))
                 .version("1.0.0")
                 .build();
     }

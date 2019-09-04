@@ -3,6 +3,7 @@ package com.linkpets.cms.netty;
 import javax.annotation.PostConstruct;
 
 import io.netty.channel.ChannelOption;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -18,19 +19,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 @Service
 public class NettyServer {
-//    public static void main(String[] args) {
-//        new NettyServer().run();
-//    }
-
-//    @PostConstruct
-//    public void initNetty() {
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                new NettyServer().run();
-//            }
-//        }.start();
-//    }
+    @Value("${netty.inetPort}")
+    private int inetPort;
 
     public void run() {
         System.out.println("===========================Netty端口启动========");
@@ -49,7 +39,7 @@ public class NettyServer {
             // ChildChannelHandler 对出入的数据进行的业务操作,其继承ChannelInitializer
             b.childHandler(new ChildChannelHandler());
             System.out.println("服务端开启等待客户端连接 ... ...");
-            Channel ch = b.bind(8098).sync().channel();
+            Channel ch = b.bind(inetPort).sync().channel();
             ch.closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();

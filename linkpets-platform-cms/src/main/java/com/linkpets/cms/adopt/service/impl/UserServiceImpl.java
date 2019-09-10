@@ -7,9 +7,11 @@ import com.linkpets.cms.adopt.service.IUserService;
 import com.linkpets.core.dao.CmsAdoptAttentionMapper;
 import com.linkpets.core.dao.CmsUserLoginMapper;
 import com.linkpets.core.dao.CmsUserMapper;
+import com.linkpets.core.dao.SysUserMapper;
 import com.linkpets.core.model.CmsAdoptAttention;
 import com.linkpets.core.model.CmsUser;
 import com.linkpets.core.model.CmsUserLogin;
+import com.linkpets.core.model.SysUser;
 import com.linkpets.util.UserAnalyseUtil;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,9 @@ public class UserServiceImpl implements IUserService {
 
     @Resource
     CmsAdoptAttentionMapper cmsAdoptAttentionMapper;
+    
+    @Resource
+    SysUserMapper sysUserMapper;
 
     @Override
     public CmsUser getUserInfoByUserId(String userId) {
@@ -104,6 +109,11 @@ public class UserServiceImpl implements IUserService {
     public int getTotalUserCount() {
         return cmsUserMapper.getTotalUserCount();
     }
+
+	@Override
+	public SysUser getUserByAccountAndPassword(String userAcc, String password) {
+		return sysUserMapper.getUserByAccountAndPassword(userAcc, password);
+	}
 
 
 }

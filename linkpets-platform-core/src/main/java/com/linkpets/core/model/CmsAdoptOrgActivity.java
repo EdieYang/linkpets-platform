@@ -1,8 +1,10 @@
 package com.linkpets.core.model;
 
-import lombok.Data;
-
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.Data;
 
 @Data
 public class CmsAdoptOrgActivity {
@@ -19,6 +21,7 @@ public class CmsAdoptOrgActivity {
 
     private Integer sort;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;
 
     private Integer isValid;

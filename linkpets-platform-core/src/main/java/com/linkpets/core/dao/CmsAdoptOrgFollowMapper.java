@@ -4,6 +4,8 @@ import com.linkpets.core.model.CmsAdoptOrgFollow;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface CmsAdoptOrgFollowMapper {
 
     /**
@@ -44,4 +46,6 @@ public interface CmsAdoptOrgFollowMapper {
      * @return
      */
     int getOrgFollowNum(String orgId);
+
+	int getFansCountForCreateByOrgIdWithRange(@Param("orgId") String orgId, @Param("fromDay") String fromDay, @Param("toDay") String toDay);
 }

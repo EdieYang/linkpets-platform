@@ -130,4 +130,24 @@
         create_date = #{createDate,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=VARCHAR}
     </update>
+    
+    <select id="getAdoptCountForCreateByOrgIdWithRange" parameterType="java.lang.String" resultType="java.lang.Integer">
+    	SELECT 
+		  count(1)
+		FROM
+		  cms_adopt_pet_org_rel t_r,
+		  cms_adopt_pet t_p 
+		WHERE t_p.pet_id = t_r.pet_id 
+		AND t_p.is_valid = 1
+		AND t_r.is_valid = 1
+		<if test="null != orgId and '' != orgId">
+			AND t_r.org_id = #{orgId,jdbcType=VARCHAR}
+		</if>
+		<if test="null != fromDay and '' != fromDay">
+			AND DATE_FORMAT(t_r.create_date,'%Y-%m-%d') &gt;= #{fromDay,jdbcType=VARCHAR}
+		</if>
+		<if test="null != toDay and '' != toDay">
+			AND DATE_FORMAT(t_r.create_date,'%Y-%m-%d') &lt;= #{toDay,jdbcType=VARCHAR}
+		</if>
+    </select>
 </mapper>

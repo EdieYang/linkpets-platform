@@ -137,4 +137,21 @@
           and is_valid = 1
         order by create_date desc
     </select>
+    
+    <select id="getGalleryCountForByOrgIdWithRange" parameterType="java.lang.String" resultType="java.lang.Integer">
+    	SELECT 
+		  count(1)
+		FROM
+		  cms_adopt_org_gallery t_r
+		WHERE t_r.is_valid = 1
+		<if test="null != orgId and '' != orgId">
+			AND t_r.org_id = #{orgId,jdbcType=VARCHAR}
+		</if>
+		<if test="null != fromDay and '' != fromDay">
+			AND DATE_FORMAT(t_r.create_date,'%Y-%m-%d') &gt;= #{fromDay,jdbcType=VARCHAR}
+		</if>
+		<if test="null != toDay and '' != toDay">
+			AND DATE_FORMAT(t_r.create_date,'%Y-%m-%d') &lt;= #{toDay,jdbcType=VARCHAR}
+		</if>
+    </select>
 </mapper>

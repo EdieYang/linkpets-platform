@@ -4,9 +4,34 @@ import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
+	
+	static SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-DD");
+
+	public static String getCurrentDay() {
+		return df.format(new Date());
+	}
+	
+	public static String getLastWeekDay() {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -7);
+		return df.format(cal.getTime());
+	}
+	
+	public static String getLastMonthDay() {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		return df.format(cal.getTime());
+	}	
+	
+	public static String getLastYearDay() {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.YEAR, -1);
+		return df.format(cal.getTime());
+	}
 
     public static Date getFormatDateTime(String date) {
         if (StringUtils.isEmpty(date)) {

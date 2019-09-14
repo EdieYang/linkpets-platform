@@ -1,5 +1,7 @@
 package com.linkpets.core.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.linkpets.core.model.CmsAdoptPetOrgRel;
 
 public interface CmsAdoptPetOrgRelMapper {
@@ -50,4 +52,6 @@ public interface CmsAdoptPetOrgRelMapper {
      * @mbggenerated Fri Aug 16 17:21:11 CST 2019
      */
     int updateByPrimaryKey(CmsAdoptPetOrgRel record);
+
+	int getAdoptCountForCreateByOrgIdWithRange(@Param("orgId") String orgId, @Param("fromDay") String fromDay, @Param("toDay") String toDay);
 }

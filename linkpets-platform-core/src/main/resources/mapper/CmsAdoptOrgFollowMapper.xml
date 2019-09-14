@@ -98,5 +98,22 @@
         </set>
         where id= #{id}
     </update>
+    
+    <select id="getFansCountForCreateByOrgIdWithRange" parameterType="java.lang.String" resultType="java.lang.Integer">
+    	SELECT 
+		  count(DISTINCT t_r.user_id)
+		FROM
+		  cms_adopt_org_follow t_r
+		WHERE t_r.is_valid = 1
+		<if test="null != orgId and '' != orgId">
+			AND t_r.org_id = #{orgId,jdbcType=VARCHAR}
+		</if>
+		<if test="null != fromDay and '' != fromDay">
+			AND DATE_FORMAT(t_r.create_date,'%Y-%m-%d') &gt;= #{fromDay,jdbcType=VARCHAR}
+		</if>
+		<if test="null != toDay and '' != toDay">
+			AND DATE_FORMAT(t_r.create_date,'%Y-%m-%d') &lt;= #{toDay,jdbcType=VARCHAR}
+		</if>
+    </select>
 
 </mapper>

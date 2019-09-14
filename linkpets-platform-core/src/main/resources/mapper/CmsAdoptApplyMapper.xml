@@ -346,4 +346,27 @@
         and apply_by = #{applyBy,jdbcType=VARCHAR}
         and pet_id =#{petId}
     </select>
+    
+    <select id="getApplyCountByOrgIdWithRange" parameterType="java.lang.String" resultType="java.lang.Integer">
+    	SELECT 
+		  COUNT(1)
+		FROM
+		  cms_adopt_pet_org_rel t_r,
+		  cms_adopt_apply t_p 
+		WHERE t_p.pet_id = t_r.pet_id 
+		AND t_p.is_valid = 1
+		AND t_r.is_valid = 1
+		<if test="null != orgId and '' != orgId">
+			AND t_r.org_id = #{orgId,jdbcType=VARCHAR}
+		</if>
+		<if test="null != applyStatus and '' != applyStatus">
+			AND t_p.apply_status = #{applyStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="null != fromDay and '' != fromDay">
+			AND DATE_FORMAT(t_p.apply_time,'%Y-%m-%d') &gt;= #{fromDay,jdbcType=VARCHAR}
+		</if>
+		<if test="null != toDay and '' != toDay">
+			AND DATE_FORMAT(t_p.apply_time,'%Y-%m-%d') &lt;= #{toDay,jdbcType=VARCHAR}
+		</if>
+    </select>
 </mapper>

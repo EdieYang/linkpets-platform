@@ -31,6 +31,9 @@ public class OrgServiceImpl implements IOrgService {
 
     @Resource
     private CmsAdoptOrgGalleryMapper cmsAdoptOrgGalleryMapper;
+    
+    @Resource
+    SysUserMapper sysUserMapper;
 
     @Override
     public List<CmsAdoptOrg> getAdoptOrgList() {
@@ -161,4 +164,12 @@ public class OrgServiceImpl implements IOrgService {
     public void delGallery(CmsAdoptOrgGallery gallery) {
         cmsAdoptOrgGalleryMapper.updateByPrimaryKeySelective(gallery);
     }
+
+	@Override
+	public PageInfo<Map<String, Object>> getOrgUserList(String orgId, int pageNum, int pageSize, String orderBy) {
+		PageHelper.startPage(pageNum, pageSize, orderBy);
+        List<Map<String, Object>> list = sysUserMapper.getOrgUserList(orgId);
+        PageInfo<Map<String, Object>> page = new PageInfo<>(list);
+        return page;
+	}
 }

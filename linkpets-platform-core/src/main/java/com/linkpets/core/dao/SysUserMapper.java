@@ -3,6 +3,7 @@ package com.linkpets.core.dao;
 import com.linkpets.core.model.SysUser;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -99,6 +100,8 @@ public interface SysUserMapper {
      * @return
      */
     SysUser getSysUserByUserName(@Param("userName") String userName);
+
+	List<Map<String, Object>> getOrgUserList(String orgId);
 
 
 }

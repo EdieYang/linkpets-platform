@@ -161,4 +161,7 @@ public interface IOrgService {
      * @param gallery
      */
     void delGallery(CmsAdoptOrgGallery gallery);
+
+    PageInfo<Map<String, Object>> getOrgUserList(String orgId, int pageNum, int pageSize, String orderBy);
+
 }

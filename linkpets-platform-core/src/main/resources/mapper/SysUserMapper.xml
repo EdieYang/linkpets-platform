@@ -228,5 +228,21 @@
         AND u.is_valid=1
 
     </select>
+    
+    <select id="getOrgUserList" parameterType="java.lang.String" resultType="java.util.Map">
+    	SELECT 
+		  t_cu.user_id AS userId,
+		  t_cu.nick_name AS nickName,
+		  t_cu.portrait,
+		  t_su.user_name AS userName,
+		  t_su.user_acc AS userAcc
+		FROM
+		  cms_user t_cu,
+		  sys_user t_su 
+		WHERE t_cu.user_id = t_su.ref_user_id 
+		AND t_cu.is_valid = 1
+		AND t_su.is_valid = 1
+		AND t_su.org_id = #{orgId}
+    </select>
 
 </mapper>

@@ -135,9 +135,9 @@ public class PetResource {
         petService.uptAdopt(pet);
         //查看公益组织绑定
         CmsAdoptPetOrgRel orgPet = orgService.getAdoptPetOrgInfoByPetId(pet.getPetId());
-        if (orgPet != null && StringUtils.isNotEmpty(pet.getOrgId())) {
-            orgService.crtAdoptOrgPet(pet.getOrgId(), pet.getPetId());
-        }
+//        if (orgPet != null && StringUtils.isNotEmpty(pet.getOrgId())) {
+//            orgService.uptAdoptOrgPet(pet.getOrgId(), pet.getPetId());
+//        }
 
         if (orgPet != null && !orgPet.getOrgId().equals(pet.getOrgId()) && StringUtils.isNotEmpty(pet.getPetFrom())) {
             orgService.uptAdoptOrgPet(orgPet.getId());

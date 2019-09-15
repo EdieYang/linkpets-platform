@@ -51,6 +51,7 @@ public class PetServiceImpl implements IPetService {
         return petId;
     }
 
+    @Transactional
     @Override
     public void uptAdopt(CmsAdoptPet pet) {
         String petId = pet.getPetId();

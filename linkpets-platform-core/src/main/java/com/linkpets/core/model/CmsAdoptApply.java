@@ -33,6 +33,8 @@ public class CmsAdoptApply {
 
     private String mobilePhone;
 
+    private String wxAccount;
+
     private String toAdopter;
 
     private String applyStatus;

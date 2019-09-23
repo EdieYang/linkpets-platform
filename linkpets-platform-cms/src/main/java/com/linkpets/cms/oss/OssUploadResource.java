@@ -35,8 +35,6 @@ public class OssUploadResource {
 
     private final static String OSS_STORAGE_SLICE = "adopt";
 
-    private final static String URL_PREFIX = "https://melody.memorychilli.com/";
-
 
     @PostMapping("/image")
     @ApiOperation(value = "上传图片接口")

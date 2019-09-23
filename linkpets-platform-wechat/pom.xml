@@ -17,7 +17,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <project.package.name>lpWechat</project.package.name>
+        <project.package.name>lpWechatTest</project.package.name>
     </properties>
 
     <dependencies>

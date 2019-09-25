@@ -144,10 +144,10 @@
 			AND t_r.org_id = #{orgId,jdbcType=VARCHAR}
 		</if>
 		<if test="null != fromDay and '' != fromDay">
-			AND DATE_FORMAT(t_r.create_date,'%Y-%m-%d') &gt;= #{fromDay,jdbcType=VARCHAR}
+			AND t_r.create_date &gt;= STR_TO_DATE(#{fromDay,jdbcType=VARCHAR},'%Y-%m-%d')
 		</if>
 		<if test="null != toDay and '' != toDay">
-			AND DATE_FORMAT(t_r.create_date,'%Y-%m-%d') &lt;= #{toDay,jdbcType=VARCHAR}
+			AND t_r.create_date &lt;= STR_TO_DATE(#{toDay,jdbcType=VARCHAR},'%Y-%m-%d')
 		</if>
     </select>
 </mapper>

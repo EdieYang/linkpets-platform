@@ -118,6 +118,7 @@ public class AgreementResource {
         return PlatformResult.success(result);
     }
 
+    
 
     @ApiOperation("根据applyId获取领养合同详情接口")
     @GetMapping(value = "info")

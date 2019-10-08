@@ -14,6 +14,7 @@
         <result column="logo" property="logo" jdbcType="VARCHAR"/>
         <result column="cover_img" property="coverImg" jdbcType="VARCHAR"/>
         <result column="post_img" property="postImg" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="is_valid" property="isValid" jdbcType="INTEGER"/>
     </resultMap>
@@ -40,6 +41,7 @@
         select
         <include refid="Base_Column_List"/>
         from cms_adopt_org
+        order by sort
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         <!--

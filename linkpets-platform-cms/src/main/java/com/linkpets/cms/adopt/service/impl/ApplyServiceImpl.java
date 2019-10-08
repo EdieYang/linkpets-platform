@@ -60,6 +60,18 @@ public class ApplyServiceImpl implements IApplyService {
     }
 
     @Override
+    public JSONObject getOrgApplyListForPage(Map<String, Object> param, int pageNum, int pageSize, String orderBy) {
+        JSONObject result = new JSONObject();
+        PageHelper.startPage(pageNum, pageSize, orderBy);
+        List<Map<String, Object>> applyList = cmsAdoptApplyMapper.getOrgList(param);
+        PageInfo<Map<String, Object>> page = new PageInfo<Map<String, Object>>(applyList);
+        result.put("page", page.getPageNum());
+        result.put("total", page.getTotal());
+        result.put("rows", applyList);
+        return result;
+    }
+
+    @Override
     public int getApplyCount(String syncDate) {
         return cmsAdoptApplyMapper.getApplyCount(syncDate);
     }

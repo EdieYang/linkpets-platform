@@ -153,7 +153,7 @@ public interface IOrgService {
      *
      * @param gallery
      */
-    void insertGallery(CmsAdoptOrgGallery gallery);
+    String insertGallery(CmsAdoptOrgGallery gallery);
 
     /**
      * 删除公益机构相册

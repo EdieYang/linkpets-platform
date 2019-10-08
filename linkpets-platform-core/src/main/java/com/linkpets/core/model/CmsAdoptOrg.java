@@ -21,6 +21,8 @@ public class CmsAdoptOrg {
 
     private String postImg;
 
+    private Integer sort;
+
     private Date createDate;
 
     private Integer isValid;

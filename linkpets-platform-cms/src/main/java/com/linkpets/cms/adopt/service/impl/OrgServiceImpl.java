@@ -6,6 +6,7 @@ import com.linkpets.cms.adopt.service.IOrgService;
 import com.linkpets.core.dao.*;
 import com.linkpets.core.model.*;
 import com.linkpets.util.UUIDUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,7 +32,7 @@ public class OrgServiceImpl implements IOrgService {
 
     @Resource
     private CmsAdoptOrgGalleryMapper cmsAdoptOrgGalleryMapper;
-    
+
     @Resource
     SysUserMapper sysUserMapper;
 
@@ -111,7 +112,9 @@ public class OrgServiceImpl implements IOrgService {
 
     @Override
     public PageInfo<CmsAdoptOrgGallery> getAdoptGalleryList(int pageNum, int pageSize, String orgId) {
-        PageHelper.startPage(pageNum, pageSize);
+        if (pageNum != 0 && pageSize != 0) {
+            PageHelper.startPage(pageNum, pageSize);
+        }
         List<CmsAdoptOrgGallery> list = cmsAdoptOrgGalleryMapper.getAdoptGalleryList(orgId);
         PageInfo<CmsAdoptOrgGallery> page = new PageInfo<>(list);
         return page;
@@ -156,8 +159,13 @@ public class OrgServiceImpl implements IOrgService {
     }
 
     @Override
-    public void insertGallery(CmsAdoptOrgGallery gallery) {
+    public String insertGallery(CmsAdoptOrgGallery gallery) {
+        String id = UUIDUtils.getUUID();
+        gallery.setId(id);
+        gallery.setCreateDate(new Date());
+        gallery.setIsValid(1);
         cmsAdoptOrgGalleryMapper.insertSelective(gallery);
+        return id;
     }
 
     @Override
@@ -165,11 +173,11 @@ public class OrgServiceImpl implements IOrgService {
         cmsAdoptOrgGalleryMapper.updateByPrimaryKeySelective(gallery);
     }
 
-	@Override
-	public PageInfo<Map<String, Object>> getOrgUserList(String orgId, int pageNum, int pageSize, String orderBy) {
-		PageHelper.startPage(pageNum, pageSize, orderBy);
+    @Override
+    public PageInfo<Map<String, Object>> getOrgUserList(String orgId, int pageNum, int pageSize, String orderBy) {
+        PageHelper.startPage(pageNum, pageSize, orderBy);
         List<Map<String, Object>> list = sysUserMapper.getOrgUserList(orgId);
         PageInfo<Map<String, Object>> page = new PageInfo<>(list);
         return page;
-	}
+    }
 }

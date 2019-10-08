@@ -42,6 +42,18 @@ public interface IApplyService {
     JSONObject getApplyListForPage(Map<String, Object> param, int pageNum, int pageSize, String orderBy);
 
     /**
+     * 获取公益组织申请领养列表（分页）
+     *
+     * @param param
+     * @param pageNum
+     * @param pageSize
+     * @param orderBy
+     * @return
+     */
+    JSONObject getOrgApplyListForPage(Map<String, Object> param, int pageNum, int pageSize, String orderBy);
+
+
+    /**
      * 获取当天领养申请数
      *
      * @param syncDate

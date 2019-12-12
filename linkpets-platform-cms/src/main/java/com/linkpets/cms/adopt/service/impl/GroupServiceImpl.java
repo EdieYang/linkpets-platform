@@ -66,6 +66,9 @@ public class GroupServiceImpl implements IGroupService {
             cmsAdoptGroupUserRel.setCreateDate(new Date());
             cmsAdoptGroupUserRelMapper.updateByPrimaryKeySelective(cmsAdoptGroupUserRel);
         } else {
+            cmsAdoptGroupUserRel=new CmsAdoptGroupUserRel();
+            cmsAdoptGroupUserRel.setUserId(userId);
+            cmsAdoptGroupUserRel.setGroupId(groupId);
             cmsAdoptGroupUserRel.setCreateDate(new Date());
             cmsAdoptGroupUserRel.setId(UUIDUtils.getUUID());
             cmsAdoptGroupUserRelMapper.insertSelective(cmsAdoptGroupUserRel);

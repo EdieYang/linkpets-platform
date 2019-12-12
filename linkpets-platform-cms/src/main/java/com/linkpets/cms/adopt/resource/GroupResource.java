@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author Edie
@@ -52,6 +53,31 @@ public class GroupResource {
     @PutMapping("")
     public PlatformResult uptGroup(@RequestBody CmsAdoptGroup cmsAdoptGroup) {
         groupService.uptAdoptGroup(cmsAdoptGroup);
+        return PlatformResult.success();
+    }
+
+
+    @ApiOperation("用户关注的圈子列表")
+    @GetMapping("follow")
+    public PlatformResult getFollowGroupList(@RequestParam("userId") String userId) {
+        List<CmsAdoptGroup> followGroupList = groupService.getFollowedGroupList(userId);
+        return PlatformResult.success(followGroupList);
+    }
+
+    @ApiOperation("用户关注圈子")
+    @PostMapping("follow")
+    public PlatformResult followGroup(@RequestParam("groupId") String groupId,
+                                      @RequestParam("userId") String userId) {
+        groupService.followGroup(userId, groupId);
+        return PlatformResult.success();
+    }
+
+
+    @ApiOperation("用户取消关注圈子")
+    @DeleteMapping("follow")
+    public PlatformResult unFollowGroup(@RequestParam("groupId") String groupId,
+                                        @RequestParam("userId") String userId) {
+        groupService.unFollowGroup(userId, groupId);
         return PlatformResult.success();
     }
 }

@@ -4,7 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.cms.adopt.service.IGroupService;
 import com.linkpets.core.dao.CmsAdoptGroupMapper;
+import com.linkpets.core.dao.CmsAdoptGroupUserRelMapper;
 import com.linkpets.core.model.CmsAdoptGroup;
+import com.linkpets.core.model.CmsAdoptGroupUserRel;
 import com.linkpets.util.UUIDUtils;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,9 @@ public class GroupServiceImpl implements IGroupService {
 
     @Resource
     private CmsAdoptGroupMapper cmsAdoptGroupMapper;
+
+    @Resource
+    private CmsAdoptGroupUserRelMapper cmsAdoptGroupUserRelMapper;
 
     @Override
     public PageInfo<CmsAdoptGroup> getAdoptGroupPage(String groupType, Integer pageNum, Integer pageSize) {
@@ -46,5 +51,34 @@ public class GroupServiceImpl implements IGroupService {
     @Override
     public void uptAdoptGroup(CmsAdoptGroup cmsAdoptGroup) {
         cmsAdoptGroupMapper.updateByPrimaryKeySelective(cmsAdoptGroup);
+    }
+
+    @Override
+    public List<CmsAdoptGroup> getFollowedGroupList(String userId) {
+        return cmsAdoptGroupMapper.getFollowedGroupList(userId);
+    }
+
+    @Override
+    public void followGroup(String userId, String groupId) {
+        CmsAdoptGroupUserRel cmsAdoptGroupUserRel = cmsAdoptGroupUserRelMapper.selectByUserIdAndGroupId(userId, groupId);
+        if (cmsAdoptGroupUserRel != null) {
+            cmsAdoptGroupUserRel.setIsValid(1);
+            cmsAdoptGroupUserRel.setCreateDate(new Date());
+            cmsAdoptGroupUserRelMapper.updateByPrimaryKeySelective(cmsAdoptGroupUserRel);
+        } else {
+            cmsAdoptGroupUserRel.setCreateDate(new Date());
+            cmsAdoptGroupUserRel.setId(UUIDUtils.getUUID());
+            cmsAdoptGroupUserRelMapper.insertSelective(cmsAdoptGroupUserRel);
+        }
+
+    }
+
+    @Override
+    public void unFollowGroup(String userId, String groupId) {
+        CmsAdoptGroupUserRel cmsAdoptGroupUserRel = cmsAdoptGroupUserRelMapper.selectByUserIdAndGroupId(userId, groupId);
+        if (cmsAdoptGroupUserRel != null) {
+            cmsAdoptGroupUserRel.setIsValid(0);
+            cmsAdoptGroupUserRelMapper.updateByPrimaryKeySelective(cmsAdoptGroupUserRel);
+        }
     }
 }

@@ -47,6 +47,17 @@
         </if>
         order by sort
     </select>
+    <select id="getFollowedGroupList" resultType="com.linkpets.core.model.CmsAdoptGroup">
+        select
+        g.group_id, group_type, group_name, group_info, group_portrait, group_banner, sort,
+        g.is_valid, g.create_date
+        from cms_adopt_group g,cms_adopt_group_user_rel r
+        where g.is_valid = 1
+        and r.is_valid = 1
+        and g.id = r.group_id
+        and r.user_id = #{userId}
+        order by group_type,r.create_date desc
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         <!--
           WARNING - @mbg.generated

@@ -1,6 +1,6 @@
 package com.linkpets.core.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
@@ -75,7 +75,7 @@ public class CmsAdoptGroup {
      *
      * @mbg.generated Thu Dec 12 13:42:44 CST 2019
      */
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;
 
     /**

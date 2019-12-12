@@ -55,8 +55,16 @@ public interface CmsAdoptGroupMapper {
 
     /**
      * 获取圈子列表
+     *
      * @param groupType
      * @return
      */
     List<CmsAdoptGroup> getAdoptGroupList(String groupType);
+
+    /**
+     * 获取关注圈子列表
+     * @param userId
+     * @return
+     */
+    List<CmsAdoptGroup> getFollowedGroupList(String userId);
 }

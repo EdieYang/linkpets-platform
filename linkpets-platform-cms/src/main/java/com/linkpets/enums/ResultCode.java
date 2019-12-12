@@ -29,6 +29,7 @@ public enum ResultCode {
     DRAFT_COUNT_NOT_EXIST(30001, "您已没有抽奖机会"),
     DRAFT_COUNT_NO_MORE(30002, "您抽奖机会已达上限"),
 
+
     /* 系统错误：40001-49999 */
     SYSTEM_INNER_ERROR(40001, "系统繁忙，请稍后重试"),
 

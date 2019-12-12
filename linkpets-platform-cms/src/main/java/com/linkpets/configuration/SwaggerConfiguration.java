@@ -41,10 +41,10 @@ public class SwaggerConfiguration {
     @Bean
     public Docket createRestApi() {
 
-        String host=active.equals("test")?"www.linchongpets.com":"";
+//        String host=active.equals("test")?"localhost":"";
 
         return new Docket(DocumentationType.SWAGGER_2)
-                .host(host)
+//                .host(host)
                 .apiInfo(apiInfo()).select()
                 .apis(RequestHandlerSelectors.basePackage("com.linkpets.cms"))
                 .paths(PathSelectors.any())

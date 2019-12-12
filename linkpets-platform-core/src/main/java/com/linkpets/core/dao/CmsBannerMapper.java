@@ -53,5 +53,5 @@ public interface CmsBannerMapper {
      */
     int updateByPrimaryKey(CmsBanner record);
 
-    List<CmsBanner> getBannerList(String activityId);
+    List<CmsBanner> getBannerList(String activityId,Integer count);
 }

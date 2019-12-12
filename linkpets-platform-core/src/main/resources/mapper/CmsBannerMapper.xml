@@ -159,6 +159,11 @@
         select banner_id, activity_id, banner_img_url, banner_redirect_url, sort, create_time, is_valid
         from cms_banner
         where activity_id = #{activityId}
+        and is_valid =1
+        order by sort
+        <if test="count!=null">
+            limit #{count}
+        </if>
     </select>
 
 </mapper>

@@ -4,7 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.cms.adopt.service.IGroupActivityService;
 import com.linkpets.core.dao.CmsAdoptGroupActivityMapper;
+import com.linkpets.core.dao.CmsAdoptGroupActivityUserRelMapper;
 import com.linkpets.core.model.CmsAdoptGroupActivity;
+import com.linkpets.core.model.CmsAdoptGroupActivityUserRel;
 import com.linkpets.util.UUIDUtils;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,9 @@ public class GroupActivityServiceImpl implements IGroupActivityService {
 
     @Resource
     private CmsAdoptGroupActivityMapper cmsAdoptGroupActivityMapper;
+
+    @Resource
+    private CmsAdoptGroupActivityUserRelMapper cmsAdoptGroupActivityUserRelMapper;
 
     @Override
     public List<CmsAdoptGroupActivity> getAdoptGroupActivityList(String groupId, Integer isActive) {
@@ -51,5 +56,31 @@ public class GroupActivityServiceImpl implements IGroupActivityService {
     @Override
     public void uptAdoptGroupActivity(CmsAdoptGroupActivity cmsAdoptGroupActivity) {
         cmsAdoptGroupActivityMapper.updateByPrimaryKeySelective(cmsAdoptGroupActivity);
+    }
+
+    @Override
+    public String crtGroupActivityFollow(String userId, String activityId) {
+        CmsAdoptGroupActivityUserRel followUser = cmsAdoptGroupActivityUserRelMapper.getFollowUserByUserIdAndActivityId(userId, activityId);
+        if (followUser == null) {
+            String id = UUIDUtils.getUUID();
+            followUser = new CmsAdoptGroupActivityUserRel();
+            followUser.setId(id);
+            followUser.setUserId(userId);
+            followUser.setActivityId(activityId);
+            cmsAdoptGroupActivityUserRelMapper.insertSelective(followUser);
+            return id;
+        }
+        followUser.setIsValid(1);
+        cmsAdoptGroupActivityUserRelMapper.updateByPrimaryKeySelective(followUser);
+        return followUser.getId();
+    }
+
+    @Override
+    public void delGroupActivityFollow(String userId, String activityId) {
+        CmsAdoptGroupActivityUserRel followUser = cmsAdoptGroupActivityUserRelMapper.getFollowUserByUserIdAndActivityId(userId, activityId);
+        if (followUser != null) {
+            followUser.setIsValid(0);
+            cmsAdoptGroupActivityUserRelMapper.updateByPrimaryKeySelective(followUser);
+        }
     }
 }

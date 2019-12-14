@@ -29,10 +29,10 @@ public class GroupActivityResource {
     @ApiOperation("分页查询圈子活动列表")
     @GetMapping("page")
     public PlatformResult getGroupActivityPage(@RequestParam(value = "groupId") String groupType,
-                                       @RequestParam(value = "isActive",required = false) Integer isActive,
-                                       @RequestParam("pageNum") Integer pageNum,
-                                       @RequestParam("pageSize") Integer pageSize) {
-        PageInfo<CmsAdoptGroupActivity> pageInfo = groupActivityService.getAdoptGroupActivityPage(groupType, isActive,pageNum, pageSize);
+                                               @RequestParam(value = "isActive", required = false) Integer isActive,
+                                               @RequestParam("pageNum") Integer pageNum,
+                                               @RequestParam("pageSize") Integer pageSize) {
+        PageInfo<CmsAdoptGroupActivity> pageInfo = groupActivityService.getAdoptGroupActivityPage(groupType, isActive, pageNum, pageSize);
         return PlatformResult.success(pageInfo);
     }
 
@@ -57,5 +57,21 @@ public class GroupActivityResource {
         return PlatformResult.success();
     }
 
+    @ApiOperation("关注圈子活动")
+    @PostMapping("/follow")
+    public PlatformResult crtGroupActivityFollow(@RequestParam("userId") String userId,
+                                                 @RequestParam("activityId") String activityId) {
+        groupActivityService.crtGroupActivityFollow(userId, activityId);
+        return PlatformResult.success();
+    }
+
+
+    @ApiOperation("取消关注圈子活动")
+    @DeleteMapping("/follow")
+    public PlatformResult delGroupActivityFollow(@RequestParam("userId") String userId,
+                                                 @RequestParam("activityId") String activityId) {
+        groupActivityService.delGroupActivityFollow(userId, activityId);
+        return PlatformResult.success();
+    }
 
 }

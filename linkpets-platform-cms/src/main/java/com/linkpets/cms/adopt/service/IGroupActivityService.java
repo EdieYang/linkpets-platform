@@ -9,14 +9,16 @@ public interface IGroupActivityService {
 
     /**
      * 查询圈子活动列表
+     *
      * @param groupId
      * @param isActive
      * @return
      */
-    List<CmsAdoptGroupActivity> getAdoptGroupActivityList(String groupId,Integer isActive);
+    List<CmsAdoptGroupActivity> getAdoptGroupActivityList(String groupId, Integer isActive);
 
     /**
      * 分页获取圈子活动列表
+     *
      * @param groupId
      * @param isActive
      * @param pageNum
@@ -27,6 +29,7 @@ public interface IGroupActivityService {
 
     /**
      * 获取圈子活动详情
+     *
      * @param activityId
      * @return
      */
@@ -34,6 +37,7 @@ public interface IGroupActivityService {
 
     /**
      * 创建圈子活动
+     *
      * @param cmsAdoptGroupActivity
      * @return
      */
@@ -41,8 +45,24 @@ public interface IGroupActivityService {
 
     /**
      * 更新圈子活动
+     *
      * @param cmsAdoptGroupActivity
      */
     void uptAdoptGroupActivity(CmsAdoptGroupActivity cmsAdoptGroupActivity);
 
+    /**
+     * 关注圈子活动
+     *
+     * @param userId
+     * @param activityId
+     * @return
+     */
+    String crtGroupActivityFollow(String userId, String activityId);
+
+    /**
+     *
+     * @param userId
+     * @param activityId
+     */
+    void delGroupActivityFollow(String userId, String activityId);
 }

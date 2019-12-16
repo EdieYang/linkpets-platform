@@ -7,6 +7,7 @@ import com.linkpets.core.dao.CmsAdoptGroupMapper;
 import com.linkpets.core.dao.CmsAdoptGroupUserRelMapper;
 import com.linkpets.core.model.CmsAdoptGroup;
 import com.linkpets.core.model.CmsAdoptGroupUserRel;
+import com.linkpets.core.respEntity.RespGroupInfo;
 import com.linkpets.util.UUIDUtils;
 import org.springframework.stereotype.Service;
 
@@ -27,16 +28,16 @@ public class GroupServiceImpl implements IGroupService {
     private CmsAdoptGroupUserRelMapper cmsAdoptGroupUserRelMapper;
 
     @Override
-    public PageInfo<CmsAdoptGroup> getAdoptGroupPage(String groupType, Integer pageNum, Integer pageSize) {
+    public PageInfo<RespGroupInfo> getAdoptGroupPage(String groupType, Integer isActive, Integer orderBy, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<CmsAdoptGroup> cmsAdoptGroupList = cmsAdoptGroupMapper.getAdoptGroupList(groupType);
-        PageInfo<CmsAdoptGroup> cmsAdoptGroupPageInfo = new PageInfo<>(cmsAdoptGroupList);
+        List<RespGroupInfo> cmsAdoptGroupList = cmsAdoptGroupMapper.getAdoptGroupList(groupType, isActive, orderBy);
+        PageInfo<RespGroupInfo> cmsAdoptGroupPageInfo = new PageInfo<>(cmsAdoptGroupList);
         return cmsAdoptGroupPageInfo;
     }
 
     @Override
-    public CmsAdoptGroup getAdoptGroup(String groupId) {
-        return cmsAdoptGroupMapper.selectByPrimaryKey(groupId);
+    public RespGroupInfo getAdoptGroup(String groupId) {
+        return cmsAdoptGroupMapper.getAdoptGroup(groupId);
     }
 
     @Override
@@ -44,6 +45,7 @@ public class GroupServiceImpl implements IGroupService {
         String groupId = UUIDUtils.getUUID();
         cmsAdoptGroup.setGroupId(groupId);
         cmsAdoptGroup.setCreateDate(new Date());
+        cmsAdoptGroup.setSort(999);
         cmsAdoptGroupMapper.insertSelective(cmsAdoptGroup);
         return groupId;
     }
@@ -66,7 +68,7 @@ public class GroupServiceImpl implements IGroupService {
             cmsAdoptGroupUserRel.setCreateDate(new Date());
             cmsAdoptGroupUserRelMapper.updateByPrimaryKeySelective(cmsAdoptGroupUserRel);
         } else {
-            cmsAdoptGroupUserRel=new CmsAdoptGroupUserRel();
+            cmsAdoptGroupUserRel = new CmsAdoptGroupUserRel();
             cmsAdoptGroupUserRel.setUserId(userId);
             cmsAdoptGroupUserRel.setGroupId(groupId);
             cmsAdoptGroupUserRel.setCreateDate(new Date());

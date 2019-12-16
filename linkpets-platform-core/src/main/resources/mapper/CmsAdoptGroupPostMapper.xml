@@ -1,106 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linkpets.core.dao.CmsAdoptGroupPostMapper">
-  <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsAdoptGroupPost">
-    <id column="post_id" jdbcType="VARCHAR" property="postId" />
-    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="post_content" jdbcType="VARCHAR" property="postContent" />
-    <result column="is_valid" jdbcType="INTEGER" property="isValid" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    post_id, group_id, user_id, post_content, is_valid, create_date
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from cms_adopt_group_post
-    where post_id = #{postId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from cms_adopt_group_post
-    where post_id = #{postId,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptGroupPost">
-    insert into cms_adopt_group_post (post_id, group_id, user_id, 
-      post_content, is_valid, create_date
-      )
-    values (#{postId,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
-      #{postContent,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptGroupPost">
-    insert into cms_adopt_group_post
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="postId != null">
-        post_id,
-      </if>
-      <if test="groupId != null">
-        group_id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="postContent != null">
-        post_content,
-      </if>
-      <if test="isValid != null">
-        is_valid,
-      </if>
-      <if test="createDate != null">
-        create_date,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="postId != null">
-        #{postId,jdbcType=VARCHAR},
-      </if>
-      <if test="groupId != null">
-        #{groupId,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="postContent != null">
-        #{postContent,jdbcType=VARCHAR},
-      </if>
-      <if test="isValid != null">
-        #{isValid,jdbcType=INTEGER},
-      </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsAdoptGroupPost">
-    update cms_adopt_group_post
-    <set>
-      <if test="groupId != null">
-        group_id = #{groupId,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="postContent != null">
-        post_content = #{postContent,jdbcType=VARCHAR},
-      </if>
-      <if test="isValid != null">
-        is_valid = #{isValid,jdbcType=INTEGER},
-      </if>
-      <if test="createDate != null">
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where post_id = #{postId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsAdoptGroupPost">
-    update cms_adopt_group_post
-    set group_id = #{groupId,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR},
-      post_content = #{postContent,jdbcType=VARCHAR},
-      is_valid = #{isValid,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=TIMESTAMP}
-    where post_id = #{postId,jdbcType=VARCHAR}
-  </update>
+    <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsAdoptGroupPost">
+        <id column="post_id" jdbcType="VARCHAR" property="postId"/>
+        <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="post_content" jdbcType="VARCHAR" property="postContent"/>
+        <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+    </resultMap>
+    <resultMap id="BaseResultListMap" type="com.linkpets.core.respEntity.RespGroupPost">
+        <id column="post_id" jdbcType="VARCHAR" property="postId"/>
+        <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="post_content" jdbcType="VARCHAR" property="postContent"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="portrait" jdbcType="VARCHAR" property="portrait"/>
+        <collection property="groupPostImgList" column="post_id" select="listPostImage"></collection>
+    </resultMap>
+    <resultMap id="PostImageResultMap" type="com.linkpets.core.model.CmsAdoptGroupPostImg">
+        <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        post_id, group_id, user_id, post_content, is_valid, create_date
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_adopt_group_post
+        where post_id = #{postId,jdbcType=VARCHAR}
+    </select>
+    <select id="getGroupPostPage" resultMap="BaseResultListMap">
+        select p.post_id,
+               p.group_id,
+               p.user_id,
+               p.post_content,
+               p.is_valid,
+               p.create_date,
+               u.nick_name,
+               u.portrait
+        from cms_adopt_group_post p,
+             cms_user u
+        where p.user_id = u.id
+          and p.group_id = #{groupId}
+          and p.is_valid = 1
+        order by p.create_date desc
+    </select>
+    <select id="listPostImage" resultMap="PostImageResultMap">
+        select img_url, sort
+        from cms_adopt_group_post_img
+        where post_id = #{postId}
+          and is_valid = 1
+        order by sort
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from cms_adopt_group_post
+        where post_id = #{postId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptGroupPost">
+        insert into cms_adopt_group_post (post_id, group_id, user_id,
+                                          post_content, is_valid, create_date)
+        values (#{postId,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+                #{postContent,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptGroupPost">
+        insert into cms_adopt_group_post
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="postId != null">
+                post_id,
+            </if>
+            <if test="groupId != null">
+                group_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="postContent != null">
+                post_content,
+            </if>
+            <if test="isValid != null">
+                is_valid,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="postId != null">
+                #{postId,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null">
+                #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="postContent != null">
+                #{postContent,jdbcType=VARCHAR},
+            </if>
+            <if test="isValid != null">
+                #{isValid,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsAdoptGroupPost">
+        update cms_adopt_group_post
+        <set>
+            <if test="groupId != null">
+                group_id = #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="postContent != null">
+                post_content = #{postContent,jdbcType=VARCHAR},
+            </if>
+            <if test="isValid != null">
+                is_valid = #{isValid,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where post_id = #{postId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsAdoptGroupPost">
+        update cms_adopt_group_post
+        set group_id     = #{groupId,jdbcType=VARCHAR},
+            user_id      = #{userId,jdbcType=VARCHAR},
+            post_content = #{postContent,jdbcType=VARCHAR},
+            is_valid     = #{isValid,jdbcType=INTEGER},
+            create_date  = #{createDate,jdbcType=TIMESTAMP}
+        where post_id = #{postId,jdbcType=VARCHAR}
+    </update>
 </mapper>

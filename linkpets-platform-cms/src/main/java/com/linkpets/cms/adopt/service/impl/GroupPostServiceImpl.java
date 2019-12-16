@@ -1,5 +1,8 @@
 package com.linkpets.cms.adopt.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.linkpets.core.respEntity.RespGroupPost;
 import com.linkpets.cms.adopt.service.IGroupPostService;
 import com.linkpets.core.dao.CmsAdoptGroupPostImgMapper;
 import com.linkpets.core.dao.CmsAdoptGroupPostMapper;
@@ -24,6 +27,13 @@ public class GroupPostServiceImpl implements IGroupPostService {
 
     @Resource
     private CmsAdoptGroupPostImgMapper groupPostImgMapper;
+
+    @Override
+    public PageInfo<RespGroupPost> getGroupPostPage(String groupId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<RespGroupPost> postList = groupPostMapper.getGroupPostPage(groupId);
+        return new PageInfo<>(postList);
+    }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -56,5 +66,15 @@ public class GroupPostServiceImpl implements IGroupPostService {
                 groupPostImgMapper.insertSelective(postImg);
             });
         }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void delGroupPost(String postId) {
+        CmsAdoptGroupPost groupPost = new CmsAdoptGroupPost();
+        groupPost.setPostId(postId);
+        groupPost.setIsValid(0);
+        groupPostMapper.updateByPrimaryKeySelective(groupPost);
+        groupPostImgMapper.deleteByPostId(postId);
     }
 }

@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(value = "领养平台领养申请接口",tags = "领养平台-领养申请接口")
+@Api(value = "领养平台-领养申请接口",tags = "领养平台-领养申请接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/apply")

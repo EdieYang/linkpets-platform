@@ -19,7 +19,7 @@ import java.util.Map;
  * @date 2019/5/26
  */
 
-@Api(value = "领养平台领养协议接口",tags = "领养平台-领养协议接口")
+@Api(value = "领养平台-领养协议接口",tags = "领养平台-领养协议接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/agreement")

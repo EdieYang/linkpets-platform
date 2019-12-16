@@ -19,7 +19,7 @@ import java.util.Date;
  * @date 2019/5/19
  */
 
-@Api(value = "领养平台举报接口",tags = "领养平台-举报接口")
+@Api(value = "领养平台-举报接口",tags = "领养平台-举报接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/reports")

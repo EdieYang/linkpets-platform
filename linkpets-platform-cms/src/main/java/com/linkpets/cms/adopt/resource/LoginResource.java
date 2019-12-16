@@ -16,7 +16,7 @@ import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value = "领养后台用户登录接口",tags = "领养平台-用户登录接口")
+@Api(value = "领养平台-系统用户登录接口",tags = "领养平台-系统用户登录接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/login")

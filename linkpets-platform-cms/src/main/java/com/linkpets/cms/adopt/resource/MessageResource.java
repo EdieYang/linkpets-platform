@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.*;
 
-@Api(value = "领养平台消息接口", tags = "领养平台-消息接口")
+@Api(value = "领养平台-消息接口", tags = "领养平台-消息接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/messages")

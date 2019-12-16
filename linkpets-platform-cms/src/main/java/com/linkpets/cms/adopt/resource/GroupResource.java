@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.service.IGroupService;
 import com.linkpets.core.model.CmsAdoptGroup;
+import com.linkpets.core.respEntity.RespGroupInfo;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * @Author Edie
  */
-@Api(value = "平台圈子接口", tags = "平台圈子接口")
+@Api(value = "领养平台-圈子接口", tags = "领养平台-圈子接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/group")
@@ -29,16 +30,20 @@ public class GroupResource {
     @GetMapping("page")
     public PlatformResult getGroupPage(@ApiParam(name = "groupType", value = "圈子类型: 1 活动圈 2 普通圈子 ")
                                        @RequestParam(value = "groupType", required = false) String groupType,
+                                       @ApiParam(name = "isActive", value = "是否上线: 0 下线 1 上线 ")
+                                       @RequestParam(value = "isActive", required = false) Integer isActive,
+                                       @ApiParam(name = "orderBy", value = "排序: 0 默认排序 1 按创建时间排序 ")
+                                       @RequestParam(value = "orderBy", required = false) Integer orderBy,
                                        @RequestParam("pageNum") Integer pageNum,
                                        @RequestParam("pageSize") Integer pageSize) {
-        PageInfo<CmsAdoptGroup> pageInfo = groupService.getAdoptGroupPage(groupType, pageNum, pageSize);
+        PageInfo<RespGroupInfo> pageInfo = groupService.getAdoptGroupPage(groupType, isActive, orderBy, pageNum, pageSize);
         return PlatformResult.success(pageInfo);
     }
 
     @ApiOperation("查询圈子详情")
     @GetMapping("")
     public PlatformResult getGroupInfo(@RequestParam("groupId") String groupId) {
-        CmsAdoptGroup cmsAdoptGroup = groupService.getAdoptGroup(groupId);
+        RespGroupInfo cmsAdoptGroup = groupService.getAdoptGroup(groupId);
         return PlatformResult.success(cmsAdoptGroup);
     }
 

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(value = "领养平台公益机构接口", tags = "领养平台-公益机构接口")
+@Api(value = "领养平台-公益机构接口", tags = "领养平台-公益机构接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/orgs")

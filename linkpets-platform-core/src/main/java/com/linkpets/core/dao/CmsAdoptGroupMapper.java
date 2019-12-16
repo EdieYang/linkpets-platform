@@ -1,6 +1,7 @@
 package com.linkpets.core.dao;
 
 import com.linkpets.core.model.CmsAdoptGroup;
+import com.linkpets.core.respEntity.RespGroupInfo;
 
 import java.util.List;
 
@@ -57,14 +58,25 @@ public interface CmsAdoptGroupMapper {
      * 获取圈子列表
      *
      * @param groupType
+     * @param isActive
+     * @param orderBy
      * @return
      */
-    List<CmsAdoptGroup> getAdoptGroupList(String groupType);
+    List<RespGroupInfo> getAdoptGroupList(String groupType, Integer isActive, Integer orderBy);
 
     /**
      * 获取关注圈子列表
+     *
      * @param userId
      * @return
      */
     List<CmsAdoptGroup> getFollowedGroupList(String userId);
+
+    /**
+     * 获取圈子详情
+     *
+     * @param groupId
+     * @return
+     */
+    RespGroupInfo getAdoptGroup(String groupId);
 }

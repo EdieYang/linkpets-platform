@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 /**
  * @author Edie
  */
-@Api(value = "平台圈子活动接口", tags = "平台圈子活动接口")
+@Api(value = "领养平台-圈子活动接口", tags = "领养平台-圈子活动接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/group/activities")

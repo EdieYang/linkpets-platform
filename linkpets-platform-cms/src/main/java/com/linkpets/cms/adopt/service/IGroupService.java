@@ -24,6 +24,16 @@ public interface IGroupService {
     PageInfo<RespGroupInfo> getAdoptGroupPage(String groupType, Integer isActive, Integer orderBy, Integer pageNum, Integer pageSize);
 
     /**
+     * 查询圈子列表
+     *
+     * @param groupType
+     * @param isActive
+     * @param orderBy
+     * @return
+     */
+    List<RespGroupInfo> getAdoptGroupList(String groupType, Integer isActive, Integer orderBy);
+
+    /**
      * 获取圈子详情
      *
      * @param groupId

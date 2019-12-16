@@ -7,27 +7,32 @@
         <result column="activity_type" jdbcType="CHAR" property="activityType"/>
         <result column="activity_title" jdbcType="VARCHAR" property="activityTitle"/>
         <result column="activity_banner" jdbcType="VARCHAR" property="activityBanner"/>
-        <result column="activity_img" jdbcType="VARCHAR" property="activityImg"/>
         <result column="activity_area" jdbcType="VARCHAR" property="activityArea"/>
         <result column="activity_address" jdbcType="VARCHAR" property="activityAddress"/>
         <result column="activity_content" jdbcType="VARCHAR" property="activityContent"/>
         <result column="activity_should_verify" jdbcType="CHAR" property="activityShouldVerify"/>
-        <result column="activity_should_ questionnaire" jdbcType="VARCHAR" property="activityShouldQuestionnaire"/>
+        <result column="activity_should_questionnaire" jdbcType="VARCHAR" property="activityShouldQuestionnaire"/>
+        <result column="questionnaire_id" jdbcType="VARCHAR" property="questionnaireId"/>
+        <result column="activity_register_start_time" jdbcType="TIMESTAMP" property="activityRegisterStartTime"/>
+        <result column="activity_register_end_time" jdbcType="TIMESTAMP" property="activityRegisterEndTime"/>
         <result column="activity_start_time" jdbcType="TIMESTAMP" property="activityStartTime"/>
         <result column="activity_end_time" jdbcType="TIMESTAMP" property="activityEndTime"/>
+        <result column="activity_pick_time" jdbcType="VARCHAR" property="activityPickTime"/>
         <result column="activity_is_free" jdbcType="INTEGER" property="activityIsFree"/>
         <result column="activity_cost" jdbcType="INTEGER" property="activityCost"/>
+        <result column="activity_point" jdbcType="INTEGER" property="activityPoint"/>
         <result column="customer_support" jdbcType="VARCHAR" property="customerSupport"/>
         <result column="is_active" jdbcType="INTEGER" property="isActive"/>
         <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, group_id, activity_type, activity_title, activity_banner, activity_img, activity_area,
-    activity_address, activity_content, activity_should_verify, "activity_should_ questionnaire", 
-    activity_start_time, activity_end_time, activity_is_free, activity_cost, customer_support, 
+    id, group_id, activity_type, activity_title, activity_banner, activity_area, activity_address, 
+    activity_content, activity_should_verify, activity_should_questionnaire, questionnaire_id, 
+    activity_register_start_time, activity_register_end_time, activity_start_time, activity_end_time, 
+    activity_pick_time, activity_is_free, activity_cost, activity_point, customer_support, 
     is_active, is_valid, create_date
-    </sql>
+  </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -38,36 +43,38 @@
         select
         <include refid="Base_Column_List"/>
         from cms_adopt_group_activity
-        where group_id = #{groupId,jdbcType=VARCHAR}
-        <if test="isActive !=null">
-            and is_active = #{isActive}
+        where 1=1
+        <if test="activityType!=null">
+            activity_type = #{activityType}
         </if>
-        and is_valid = 1
-        order by activity_start_time desc,activity_end_time desc
+        <if test="isActive!=null">
+            is_active=#{isActive}
+        </if>
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete
-        from cms_adopt_group_activity
-        where id = #{id,jdbcType=VARCHAR}
-    </delete>
+    delete from cms_adopt_group_activity
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
     <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptGroupActivity">
-        insert into cms_adopt_group_activity (id, group_id, activity_type,
-                                              activity_title, activity_banner, activity_img,
-                                              activity_area, activity_address, activity_content,
-                                              activity_should_verify, "activity_should_ questionnaire",
-                                              activity_start_time, activity_end_time,
-                                              activity_is_free, activity_cost, customer_support,
-                                              is_active, is_valid, create_date)
-        values (#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{activityType,jdbcType=CHAR},
-                #{activityTitle,jdbcType=VARCHAR}, #{activityBanner,jdbcType=VARCHAR}, #{activityImg,jdbcType=VARCHAR},
-                #{activityArea,jdbcType=VARCHAR}, #{activityAddress,jdbcType=VARCHAR},
-                #{activityContent,jdbcType=VARCHAR},
-                #{activityShouldVerify,jdbcType=CHAR}, #{activityShouldQuestionnaire,jdbcType=VARCHAR},
-                #{activityStartTime,jdbcType=TIMESTAMP}, #{activityEndTime,jdbcType=TIMESTAMP},
-                #{activityIsFree,jdbcType=INTEGER}, #{activityCost,jdbcType=INTEGER},
-                #{customerSupport,jdbcType=VARCHAR},
-                #{isActive,jdbcType=INTEGER}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
-    </insert>
+    insert into cms_adopt_group_activity (id, group_id, activity_type, 
+      activity_title, activity_banner, activity_area, 
+      activity_address, activity_content, activity_should_verify, 
+      activity_should_questionnaire, questionnaire_id, 
+      activity_register_start_time, activity_register_end_time, 
+      activity_start_time, activity_end_time, 
+      activity_pick_time, activity_is_free, activity_cost, 
+      activity_point, customer_support, is_active, 
+      is_valid, create_date)
+    values (#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{activityType,jdbcType=CHAR}, 
+      #{activityTitle,jdbcType=VARCHAR}, #{activityBanner,jdbcType=VARCHAR}, #{activityArea,jdbcType=VARCHAR}, 
+      #{activityAddress,jdbcType=VARCHAR}, #{activityContent,jdbcType=VARCHAR}, #{activityShouldVerify,jdbcType=CHAR}, 
+      #{activityShouldQuestionnaire,jdbcType=VARCHAR}, #{questionnaireId,jdbcType=VARCHAR}, 
+      #{activityRegisterStartTime,jdbcType=TIMESTAMP}, #{activityRegisterEndTime,jdbcType=TIMESTAMP}, 
+      #{activityStartTime,jdbcType=TIMESTAMP}, #{activityEndTime,jdbcType=TIMESTAMP}, 
+      #{activityPickTime,jdbcType=VARCHAR}, #{activityIsFree,jdbcType=INTEGER}, #{activityCost,jdbcType=INTEGER}, 
+      #{activityPoint,jdbcType=INTEGER}, #{customerSupport,jdbcType=VARCHAR}, #{isActive,jdbcType=INTEGER}, 
+      #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptGroupActivity">
         insert into cms_adopt_group_activity
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -86,9 +93,6 @@
             <if test="activityBanner != null">
                 activity_banner,
             </if>
-            <if test="activityImg != null">
-                activity_img,
-            </if>
             <if test="activityArea != null">
                 activity_area,
             </if>
@@ -102,7 +106,16 @@
                 activity_should_verify,
             </if>
             <if test="activityShouldQuestionnaire != null">
-                "activity_should_ questionnaire",
+                activity_should_questionnaire,
+            </if>
+            <if test="questionnaireId != null">
+                questionnaire_id,
+            </if>
+            <if test="activityRegisterStartTime != null">
+                activity_register_start_time,
+            </if>
+            <if test="activityRegisterEndTime != null">
+                activity_register_end_time,
             </if>
             <if test="activityStartTime != null">
                 activity_start_time,
@@ -110,11 +123,17 @@
             <if test="activityEndTime != null">
                 activity_end_time,
             </if>
+            <if test="activityPickTime != null">
+                activity_pick_time,
+            </if>
             <if test="activityIsFree != null">
                 activity_is_free,
             </if>
             <if test="activityCost != null">
                 activity_cost,
+            </if>
+            <if test="activityPoint != null">
+                activity_point,
             </if>
             <if test="customerSupport != null">
                 customer_support,
@@ -145,9 +164,6 @@
             <if test="activityBanner != null">
                 #{activityBanner,jdbcType=VARCHAR},
             </if>
-            <if test="activityImg != null">
-                #{activityImg,jdbcType=VARCHAR},
-            </if>
             <if test="activityArea != null">
                 #{activityArea,jdbcType=VARCHAR},
             </if>
@@ -163,17 +179,32 @@
             <if test="activityShouldQuestionnaire != null">
                 #{activityShouldQuestionnaire,jdbcType=VARCHAR},
             </if>
+            <if test="questionnaireId != null">
+                #{questionnaireId,jdbcType=VARCHAR},
+            </if>
+            <if test="activityRegisterStartTime != null">
+                #{activityRegisterStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="activityRegisterEndTime != null">
+                #{activityRegisterEndTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="activityStartTime != null">
                 #{activityStartTime,jdbcType=TIMESTAMP},
             </if>
             <if test="activityEndTime != null">
                 #{activityEndTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="activityPickTime != null">
+                #{activityPickTime,jdbcType=VARCHAR},
+            </if>
             <if test="activityIsFree != null">
                 #{activityIsFree,jdbcType=INTEGER},
             </if>
             <if test="activityCost != null">
                 #{activityCost,jdbcType=INTEGER},
+            </if>
+            <if test="activityPoint != null">
+                #{activityPoint,jdbcType=INTEGER},
             </if>
             <if test="customerSupport != null">
                 #{customerSupport,jdbcType=VARCHAR},
@@ -204,9 +235,6 @@
             <if test="activityBanner != null">
                 activity_banner = #{activityBanner,jdbcType=VARCHAR},
             </if>
-            <if test="activityImg != null">
-                activity_img = #{activityImg,jdbcType=VARCHAR},
-            </if>
             <if test="activityArea != null">
                 activity_area = #{activityArea,jdbcType=VARCHAR},
             </if>
@@ -220,7 +248,16 @@
                 activity_should_verify = #{activityShouldVerify,jdbcType=CHAR},
             </if>
             <if test="activityShouldQuestionnaire != null">
-                "activity_should_ questionnaire" = #{activityShouldQuestionnaire,jdbcType=VARCHAR},
+                activity_should_questionnaire = #{activityShouldQuestionnaire,jdbcType=VARCHAR},
+            </if>
+            <if test="questionnaireId != null">
+                questionnaire_id = #{questionnaireId,jdbcType=VARCHAR},
+            </if>
+            <if test="activityRegisterStartTime != null">
+                activity_register_start_time = #{activityRegisterStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="activityRegisterEndTime != null">
+                activity_register_end_time = #{activityRegisterEndTime,jdbcType=TIMESTAMP},
             </if>
             <if test="activityStartTime != null">
                 activity_start_time = #{activityStartTime,jdbcType=TIMESTAMP},
@@ -228,11 +265,17 @@
             <if test="activityEndTime != null">
                 activity_end_time = #{activityEndTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="activityPickTime != null">
+                activity_pick_time = #{activityPickTime,jdbcType=VARCHAR},
+            </if>
             <if test="activityIsFree != null">
                 activity_is_free = #{activityIsFree,jdbcType=INTEGER},
             </if>
             <if test="activityCost != null">
                 activity_cost = #{activityCost,jdbcType=INTEGER},
+            </if>
+            <if test="activityPoint != null">
+                activity_point = #{activityPoint,jdbcType=INTEGER},
             </if>
             <if test="customerSupport != null">
                 customer_support = #{customerSupport,jdbcType=VARCHAR},
@@ -250,25 +293,29 @@
         where id = #{id,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsAdoptGroupActivity">
-        update cms_adopt_group_activity
-        set group_id                         = #{groupId,jdbcType=VARCHAR},
-            activity_type                    = #{activityType,jdbcType=CHAR},
-            activity_title                   = #{activityTitle,jdbcType=VARCHAR},
-            activity_banner                  = #{activityBanner,jdbcType=VARCHAR},
-            activity_img                     = #{activityImg,jdbcType=VARCHAR},
-            activity_area                    = #{activityArea,jdbcType=VARCHAR},
-            activity_address                 = #{activityAddress,jdbcType=VARCHAR},
-            activity_content                 = #{activityContent,jdbcType=VARCHAR},
-            activity_should_verify           = #{activityShouldVerify,jdbcType=CHAR},
-            "activity_should_ questionnaire" = #{activityShouldQuestionnaire,jdbcType=VARCHAR},
-            activity_start_time              = #{activityStartTime,jdbcType=TIMESTAMP},
-            activity_end_time                = #{activityEndTime,jdbcType=TIMESTAMP},
-            activity_is_free                 = #{activityIsFree,jdbcType=INTEGER},
-            activity_cost                    = #{activityCost,jdbcType=INTEGER},
-            customer_support                 = #{customerSupport,jdbcType=VARCHAR},
-            is_active                        = #{isActive,jdbcType=INTEGER},
-            is_valid                         = #{isValid,jdbcType=INTEGER},
-            create_date                      = #{createDate,jdbcType=TIMESTAMP}
-        where id = #{id,jdbcType=VARCHAR}
-    </update>
+    update cms_adopt_group_activity
+    set group_id = #{groupId,jdbcType=VARCHAR},
+      activity_type = #{activityType,jdbcType=CHAR},
+      activity_title = #{activityTitle,jdbcType=VARCHAR},
+      activity_banner = #{activityBanner,jdbcType=VARCHAR},
+      activity_area = #{activityArea,jdbcType=VARCHAR},
+      activity_address = #{activityAddress,jdbcType=VARCHAR},
+      activity_content = #{activityContent,jdbcType=VARCHAR},
+      activity_should_verify = #{activityShouldVerify,jdbcType=CHAR},
+      activity_should_questionnaire = #{activityShouldQuestionnaire,jdbcType=VARCHAR},
+      questionnaire_id = #{questionnaireId,jdbcType=VARCHAR},
+      activity_register_start_time = #{activityRegisterStartTime,jdbcType=TIMESTAMP},
+      activity_register_end_time = #{activityRegisterEndTime,jdbcType=TIMESTAMP},
+      activity_start_time = #{activityStartTime,jdbcType=TIMESTAMP},
+      activity_end_time = #{activityEndTime,jdbcType=TIMESTAMP},
+      activity_pick_time = #{activityPickTime,jdbcType=VARCHAR},
+      activity_is_free = #{activityIsFree,jdbcType=INTEGER},
+      activity_cost = #{activityCost,jdbcType=INTEGER},
+      activity_point = #{activityPoint,jdbcType=INTEGER},
+      customer_support = #{customerSupport,jdbcType=VARCHAR},
+      is_active = #{isActive,jdbcType=INTEGER},
+      is_valid = #{isValid,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 </mapper>

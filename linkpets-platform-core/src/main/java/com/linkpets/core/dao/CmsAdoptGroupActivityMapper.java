@@ -21,9 +21,9 @@ public interface CmsAdoptGroupActivityMapper {
     /**
      * 查询圈子活动列表
      *
-     * @param groupId
+     * @param activityType
      * @param isActive
      * @return
      */
-    List<CmsAdoptGroupActivity> getAdoptGroupActivityList(String groupId, Integer isActive);
+    List<CmsAdoptGroupActivity> getAdoptGroupActivityList(Integer activityType, Integer isActive);
 }

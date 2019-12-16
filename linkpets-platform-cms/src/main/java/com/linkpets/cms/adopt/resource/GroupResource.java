@@ -40,6 +40,18 @@ public class GroupResource {
         return PlatformResult.success(pageInfo);
     }
 
+    @ApiOperation("查询圈子列表")
+    @GetMapping("list")
+    public PlatformResult getGroupPage(@ApiParam(name = "groupType", value = "圈子类型: 1 活动圈 2 普通圈子 ")
+                                       @RequestParam(value = "groupType", required = false) String groupType,
+                                       @ApiParam(name = "isActive", value = "是否上线: 0 下线 1 上线 ")
+                                       @RequestParam(value = "isActive", required = false) Integer isActive,
+                                       @ApiParam(name = "orderBy", value = "排序: 0 默认排序 1 按创建时间排序 ")
+                                       @RequestParam(value = "orderBy", required = false) Integer orderBy) {
+        List<RespGroupInfo> groupList = groupService.getAdoptGroupList(groupType, isActive, orderBy);
+        return PlatformResult.success(groupList);
+    }
+
     @ApiOperation("查询圈子详情")
     @GetMapping("")
     public PlatformResult getGroupInfo(@RequestParam("groupId") String groupId) {

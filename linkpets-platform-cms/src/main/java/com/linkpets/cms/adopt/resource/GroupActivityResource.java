@@ -6,6 +6,7 @@ import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.service.IGroupActivityService;
 import com.linkpets.core.model.CmsAdoptGroup;
 import com.linkpets.core.model.CmsAdoptGroupActivity;
+import com.linkpets.core.respEntity.RespGroupActivity;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,11 +29,11 @@ public class GroupActivityResource {
 
     @ApiOperation("分页查询圈子活动列表")
     @GetMapping("page")
-    public PlatformResult getGroupActivityPage(@RequestParam(value = "groupId") String groupType,
+    public PlatformResult getGroupActivityPage(@RequestParam(value = "activityType", required = false) Integer activityType,
                                                @RequestParam(value = "isActive", required = false) Integer isActive,
                                                @RequestParam("pageNum") Integer pageNum,
                                                @RequestParam("pageSize") Integer pageSize) {
-        PageInfo<CmsAdoptGroupActivity> pageInfo = groupActivityService.getAdoptGroupActivityPage(groupType, isActive, pageNum, pageSize);
+        PageInfo<RespGroupActivity> pageInfo = groupActivityService.getAdoptGroupActivityPage(activityType, isActive, pageNum, pageSize);
         return PlatformResult.success(pageInfo);
     }
 

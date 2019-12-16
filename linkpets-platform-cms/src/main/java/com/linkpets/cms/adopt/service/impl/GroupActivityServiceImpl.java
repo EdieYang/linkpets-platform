@@ -7,10 +7,14 @@ import com.linkpets.core.dao.CmsAdoptGroupActivityMapper;
 import com.linkpets.core.dao.CmsAdoptGroupActivityUserRelMapper;
 import com.linkpets.core.model.CmsAdoptGroupActivity;
 import com.linkpets.core.model.CmsAdoptGroupActivityUserRel;
+import com.linkpets.core.respEntity.RespGroupActivity;
+import com.linkpets.util.DateUtils;
 import com.linkpets.util.UUIDUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,15 +31,22 @@ public class GroupActivityServiceImpl implements IGroupActivityService {
     private CmsAdoptGroupActivityUserRelMapper cmsAdoptGroupActivityUserRelMapper;
 
     @Override
-    public List<CmsAdoptGroupActivity> getAdoptGroupActivityList(String groupId, Integer isActive) {
-        return cmsAdoptGroupActivityMapper.getAdoptGroupActivityList(groupId, isActive);
+    public List<CmsAdoptGroupActivity> getAdoptGroupActivityList(Integer activityType, Integer isActive) {
+        return cmsAdoptGroupActivityMapper.getAdoptGroupActivityList(activityType, isActive);
     }
 
     @Override
-    public PageInfo<CmsAdoptGroupActivity> getAdoptGroupActivityPage(String groupId, Integer isActive, Integer pageNum, Integer pageSize) {
+    public PageInfo<RespGroupActivity> getAdoptGroupActivityPage(Integer activityType, Integer isActive, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<CmsAdoptGroupActivity> cmsAdoptGroupActivityList = cmsAdoptGroupActivityMapper.getAdoptGroupActivityList(groupId, isActive);
-        PageInfo<CmsAdoptGroupActivity> cmsAdoptGroupActivityPageInfo = new PageInfo<>(cmsAdoptGroupActivityList);
+        List<RespGroupActivity> groupActivityList = new ArrayList<>();
+        List<CmsAdoptGroupActivity> cmsAdoptGroupActivityList = cmsAdoptGroupActivityMapper.getAdoptGroupActivityList(activityType, isActive);
+        cmsAdoptGroupActivityList.forEach(cmsAdoptGroupActivity -> {
+            RespGroupActivity groupActivity = new RespGroupActivity();
+            BeanUtils.copyProperties(cmsAdoptGroupActivity, groupActivity);
+            groupActivity.setActivityStatus(calActivityStatus(cmsAdoptGroupActivity));
+            groupActivityList.add(groupActivity);
+        });
+        PageInfo<RespGroupActivity> cmsAdoptGroupActivityPageInfo = new PageInfo<>(groupActivityList);
         return cmsAdoptGroupActivityPageInfo;
     }
 
@@ -82,5 +93,30 @@ public class GroupActivityServiceImpl implements IGroupActivityService {
             followUser.setIsValid(0);
             cmsAdoptGroupActivityUserRelMapper.updateByPrimaryKeySelective(followUser);
         }
+    }
+
+    private String calActivityStatus(CmsAdoptGroupActivity cmsAdoptGroupActivity) {
+        Date registerStartTime = cmsAdoptGroupActivity.getActivityRegisterStartTime();
+        Date registerEndTime = cmsAdoptGroupActivity.getActivityRegisterEndTime();
+        Date activityStartTime = cmsAdoptGroupActivity.getActivityStartTime();
+        Date activityEndTime = cmsAdoptGroupActivity.getActivityEndTime();
+        Integer isActive = cmsAdoptGroupActivity.getIsActive();
+        Date now = new Date();
+        if (isActive == 0) {
+            return "活动已下线";
+        }
+        if (now.after(registerStartTime) && now.before(registerEndTime)) {
+            return "活动报名中";
+        }
+        if (now.before(registerStartTime) || now.before(activityStartTime) && now.after(registerEndTime)) {
+            return "活动即将开始";
+        }
+        if (now.after(activityStartTime) && now.before(activityEndTime)) {
+            return "活动进行中";
+        }
+        if (now.after(activityEndTime)) {
+            return "活动已结束";
+        }
+        return "";
     }
 }

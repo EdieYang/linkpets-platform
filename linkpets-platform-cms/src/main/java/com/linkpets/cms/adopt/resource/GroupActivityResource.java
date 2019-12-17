@@ -58,6 +58,14 @@ public class GroupActivityResource {
         return PlatformResult.success();
     }
 
+
+    @ApiOperation("删除圈子活动")
+    @DeleteMapping("")
+    public PlatformResult delGroupActivity(@RequestParam("activityId") String activityId) {
+        groupActivityService.delGroupActivity(activityId);
+        return PlatformResult.success();
+    }
+
     @ApiOperation("关注圈子活动")
     @PostMapping("/follow")
     public PlatformResult crtGroupActivityFollow(@RequestParam("userId") String userId,

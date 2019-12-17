@@ -79,6 +79,7 @@ public class CmsAdoptGroupActivity {
 
     private Integer isValid;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;
 
     public String getId() {

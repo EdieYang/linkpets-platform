@@ -52,6 +52,12 @@ public interface IGroupActivityService {
     void uptAdoptGroupActivity(CmsAdoptGroupActivity cmsAdoptGroupActivity);
 
     /**
+     * 删除圈子活动
+     * @param activityId
+     */
+    void delGroupActivity(String activityId);
+
+    /**
      * 关注圈子活动
      *
      * @param userId

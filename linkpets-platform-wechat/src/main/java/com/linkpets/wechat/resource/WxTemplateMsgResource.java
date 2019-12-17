@@ -139,7 +139,7 @@ public class WxTemplateMsgResource {
             templateForm.put("page", "pages/mine/receiveapplydetail/receiveapplydetail?scene=" + applyId);
             templateForm.put("form_id", cmsAdoptMsg.getFormId());
             templateForm.put("data", templateData);
-            sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
+            sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + accessToken, templateForm.toJSONString());
             log.info(sendTemplateMsg);
 
 
@@ -170,39 +170,35 @@ public class WxTemplateMsgResource {
             JSONObject resJsonObj = JSON.parseObject(response);
             String accessToken = resJsonObj.getString("access_token");
             switch (status) {
-                //申请领养通知
+                //实名认证通知
                 case "0":
                     templateId = certificateTemplateId;
-
-                    templateData.put("keyword1", new KeyWordValue("平台将在1-3个工作日内审核您的实名认证信息").toJson());
-                    templateData.put("keyword2", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
-                    templateData.put("keyword3", new KeyWordValue("认证中"));
+                    templateData.put("phrase1", new KeyWordValue("认证中"));
+                    templateData.put("thing2", new KeyWordValue("平台实名认证").toJson());
+                    templateData.put("date3", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
                     break;
                 case "1":
                     templateId = certificateTemplateId;
-                    templateData.put("keyword1", new KeyWordValue("恭喜您！实名认证信息已通过").toJson());
-                    templateData.put("keyword2", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
-                    templateData.put("keyword3", new KeyWordValue("认证成功").toJson());
+                    templateData.put("phrase1", new KeyWordValue("认证已通过").toJson());
+                    templateData.put("thing2", new KeyWordValue("平台实名认证").toJson());
+                    templateData.put("date3", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
                     break;
                 case "2":
                     templateId = certificateTemplateId;
-                    templateData.put("keyword1", new KeyWordValue("很抱歉！您的实名认证信息未通过审核。").toJson());
-                    templateData.put("keyword2", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
-                    templateData.put("keyword3", new KeyWordValue("认证失败").toJson());
+                    templateData.put("phrase1", new KeyWordValue("认证失败").toJson());
+                    templateData.put("thing2", new KeyWordValue("平台实名认证").toJson());
+                    templateData.put("date3", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
                     break;
                 default:
                     break;
             }
 
             templateForm.put("touser", openId);
-            templateForm.put("template_id", templateId);
+            templateForm.put("templateId", templateId);
             templateForm.put("page", "pages/mine/identify/identify?scene=1");
-            templateForm.put("form_id", cmsAdoptMsg.getFormId());
             templateForm.put("data", templateData);
-            sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
+            sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + accessToken, templateForm.toJSONString());
             log.info(sendTemplateMsg);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -234,7 +230,6 @@ public class WxTemplateMsgResource {
                 //申请领养通知
                 case "0":
                     templateId = adoptionCheckTemplateId;
-
                     templateData.put("keyword1", new KeyWordValue(msgJson.getString("petName") + "的送养申请已创建，等待审核中").toJson());
                     templateData.put("keyword2", new KeyWordValue("平台将在1-3个工作日内对送养申请进行审核,请耐心等待").toJson());
                     templateData.put("keyword3", new KeyWordValue("-").toJson());
@@ -261,7 +256,7 @@ public class WxTemplateMsgResource {
             templateForm.put("form_id", cmsAdoptMsg.getFormId());
             templateForm.put("data", templateData);
             log.info("发送模板消息请求报文：" + templateForm.toJSONString());
-            sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
+            sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + accessToken, templateForm.toJSONString());
             log.info(sendTemplateMsg);
 
 
@@ -302,7 +297,7 @@ public class WxTemplateMsgResource {
             templateForm.put("page", "pages/msg/index/index");
             templateForm.put("form_id", cmsAdoptFormid.getFormId());
             templateForm.put("data", templateData);
-            sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + accessToken, templateForm.toJSONString());
+            sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + accessToken, templateForm.toJSONString());
             log.info(sendTemplateMsg);
 
 

@@ -45,11 +45,13 @@
         from cms_adopt_group_activity
         where 1=1
         <if test="activityType!=null">
-            activity_type = #{activityType}
+            and activity_type = #{activityType}
         </if>
         <if test="isActive!=null">
-            is_active=#{isActive}
+            and is_active=#{isActive}
         </if>
+        and is_valid = 1
+        order by activity_start_time desc
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from cms_adopt_group_activity
@@ -318,4 +320,10 @@
       create_date = #{createDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+    <update id="delGroupActivity">
+        update cms_adopt_group_activity
+         set is_valid= 0
+         where  id = #{activityId}
+    </update>
+
 </mapper>

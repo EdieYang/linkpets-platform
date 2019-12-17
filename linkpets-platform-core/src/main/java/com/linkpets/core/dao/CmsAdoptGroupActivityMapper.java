@@ -26,4 +26,10 @@ public interface CmsAdoptGroupActivityMapper {
      * @return
      */
     List<CmsAdoptGroupActivity> getAdoptGroupActivityList(Integer activityType, Integer isActive);
+
+    /**
+     * 删除圈子活动
+     * @param activityId
+     */
+    void delGroupActivity(String activityId);
 }

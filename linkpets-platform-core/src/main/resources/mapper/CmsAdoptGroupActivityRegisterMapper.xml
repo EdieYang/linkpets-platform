@@ -5,14 +5,16 @@
         <id column="register_id" jdbcType="VARCHAR" property="registerId"/>
         <result column="activity_id" jdbcType="VARCHAR" property="activityId"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="involvement_time" jdbcType="VARCHAR" property="involvementTime"/>
         <result column="is_paid" jdbcType="INTEGER" property="isPaid"/>
         <result column="payment_amount" jdbcType="INTEGER" property="paymentAmount"/>
         <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
     </resultMap>
     <sql id="Base_Column_List">
-        register_id, activity_id, user_id, is_paid, payment_amount, is_valid, create_date
-    </sql>
+    register_id, activity_id, user_id, involvement_time, is_paid, payment_amount, is_valid, 
+    create_date
+  </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -28,18 +30,17 @@
         and is_valid = 1
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete
-        from cms_adopt_group_activity_register
-        where register_id = #{registerId,jdbcType=VARCHAR}
-    </delete>
+    delete from cms_adopt_group_activity_register
+    where register_id = #{registerId,jdbcType=VARCHAR}
+  </delete>
     <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptGroupActivityRegister">
-        insert into cms_adopt_group_activity_register (register_id, activity_id, user_id,
-                                                       is_paid, payment_amount, is_valid,
-                                                       create_date)
-        values (#{registerId,jdbcType=VARCHAR}, #{activityId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
-                #{isPaid,jdbcType=INTEGER}, #{paymentAmount,jdbcType=INTEGER}, #{isValid,jdbcType=INTEGER},
-                #{createDate,jdbcType=TIMESTAMP})
-    </insert>
+    insert into cms_adopt_group_activity_register (register_id, activity_id, user_id, 
+      involvement_time, is_paid, payment_amount, 
+      is_valid, create_date)
+    values (#{registerId,jdbcType=VARCHAR}, #{activityId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{involvementTime,jdbcType=VARCHAR}, #{isPaid,jdbcType=INTEGER}, #{paymentAmount,jdbcType=INTEGER}, 
+      #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptGroupActivityRegister">
         insert into cms_adopt_group_activity_register
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -51,6 +52,9 @@
             </if>
             <if test="userId != null">
                 user_id,
+            </if>
+            <if test="involvementTime != null">
+                involvement_time,
             </if>
             <if test="isPaid != null">
                 is_paid,
@@ -75,6 +79,9 @@
             <if test="userId != null">
                 #{userId,jdbcType=VARCHAR},
             </if>
+            <if test="involvementTime != null">
+                #{involvementTime,jdbcType=VARCHAR},
+            </if>
             <if test="isPaid != null">
                 #{isPaid,jdbcType=INTEGER},
             </if>
@@ -98,6 +105,9 @@
             <if test="userId != null">
                 user_id = #{userId,jdbcType=VARCHAR},
             </if>
+            <if test="involvementTime != null">
+                involvement_time = #{involvementTime,jdbcType=VARCHAR},
+            </if>
             <if test="isPaid != null">
                 is_paid = #{isPaid,jdbcType=INTEGER},
             </if>
@@ -114,13 +124,14 @@
         where register_id = #{registerId,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsAdoptGroupActivityRegister">
-        update cms_adopt_group_activity_register
-        set activity_id    = #{activityId,jdbcType=VARCHAR},
-            user_id        = #{userId,jdbcType=VARCHAR},
-            is_paid        = #{isPaid,jdbcType=INTEGER},
-            payment_amount = #{paymentAmount,jdbcType=INTEGER},
-            is_valid       = #{isValid,jdbcType=INTEGER},
-            create_date    = #{createDate,jdbcType=TIMESTAMP}
-        where register_id = #{registerId,jdbcType=VARCHAR}
-    </update>
+    update cms_adopt_group_activity_register
+    set activity_id = #{activityId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      involvement_time = #{involvementTime,jdbcType=VARCHAR},
+      is_paid = #{isPaid,jdbcType=INTEGER},
+      payment_amount = #{paymentAmount,jdbcType=INTEGER},
+      is_valid = #{isValid,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where register_id = #{registerId,jdbcType=VARCHAR}
+  </update>
 </mapper>

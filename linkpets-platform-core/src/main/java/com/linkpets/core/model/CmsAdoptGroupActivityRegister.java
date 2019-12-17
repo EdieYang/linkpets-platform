@@ -9,6 +9,8 @@ public class CmsAdoptGroupActivityRegister {
 
     private String userId;
 
+    private String involvementTime;
+
     private Integer isPaid;
 
     private Integer paymentAmount;
@@ -39,6 +41,14 @@ public class CmsAdoptGroupActivityRegister {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getInvolvementTime() {
+        return involvementTime;
+    }
+
+    public void setInvolvementTime(String involvementTime) {
+        this.involvementTime = involvementTime;
     }
 
     public Integer getIsPaid() {

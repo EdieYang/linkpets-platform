@@ -62,6 +62,11 @@ public class QuestionnaireServiceImpl implements IQuestionnaireService {
     }
 
     @Override
+    public List<RespQuestionnaireAnswerInfo> getQuestionnaireAnswerList(String questionnaireId, String activityId, String userId) {
+        return answerMapper.getQuestionnaireAnswerListByParams(questionnaireId, activityId, userId);
+    }
+
+    @Override
     public RespQuestionnaireAnswerInfo getQuestionnaireAnswerInfo(String answerId) {
         return answerMapper.getQuestionnaireAnswerInfo(answerId);
     }

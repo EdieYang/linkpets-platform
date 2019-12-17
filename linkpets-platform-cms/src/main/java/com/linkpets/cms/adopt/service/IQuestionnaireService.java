@@ -49,6 +49,17 @@ public interface IQuestionnaireService {
      */
     PageInfo<RespQuestionnaireAnswerInfo> getQuestionnaireAnswerPage(String questionnaireId, String activityId, Integer pageNum, Integer pageSize);
 
+
+    /**
+     * 查询问卷答案列表
+     *
+     * @param questionnaireId
+     * @param activityId
+     * @param userId
+     * @return
+     */
+    List<RespQuestionnaireAnswerInfo> getQuestionnaireAnswerList(String questionnaireId, String activityId, String userId);
+
     /**
      * 查询问卷答案详情
      *

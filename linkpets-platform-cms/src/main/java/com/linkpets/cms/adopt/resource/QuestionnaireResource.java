@@ -54,7 +54,7 @@ public class QuestionnaireResource {
         return PlatformResult.success(questionnaireInfo);
     }
 
-    @ApiOperation("查询问卷答案列表")
+    @ApiOperation("分页查询答案列表")
     @GetMapping("answerPage")
     public PlatformResult getQuestionnaireAnswerPage(@RequestParam(value = "questionnaireId") String questionnaireId,
                                                      @RequestParam(value = "activityId") String activityId,
@@ -64,12 +64,23 @@ public class QuestionnaireResource {
         return PlatformResult.success(answerPage);
     }
 
-    @ApiOperation("查询问卷答案列表")
+    @ApiOperation("查询答案列表")
+    @GetMapping("answerList")
+    public PlatformResult getQuestionnaireAnswerList(@RequestParam(value = "questionnaireId", required = false) String questionnaireId,
+                                                     @RequestParam(value = "activityId", required = false) String activityId,
+                                                     @RequestParam(value = "userId", required = false) String userId) {
+        List<RespQuestionnaireAnswerInfo> answerList = questionnaireService.getQuestionnaireAnswerList(questionnaireId, activityId, userId);
+        return PlatformResult.success(answerList);
+    }
+
+
+    @ApiOperation("查询答案详情")
     @GetMapping("answer")
     public PlatformResult getQuestionnaireAnswer(@RequestParam(value = "answerId") String answerId) {
         RespQuestionnaireAnswerInfo answerInfo = questionnaireService.getQuestionnaireAnswerInfo(answerId);
         return PlatformResult.success(answerInfo);
     }
+
 
     @ApiOperation("创建问卷")
     @PostMapping("")
@@ -85,7 +96,7 @@ public class QuestionnaireResource {
         return PlatformResult.success();
     }
 
-    @ApiOperation("更新问卷")
+    @ApiOperation("删除问卷")
     @DeleteMapping("")
     public PlatformResult delQuestionnaire(@RequestParam(value = "questionnaireId") String questionnaireId) {
         questionnaireService.delQuestionnaire(questionnaireId);

@@ -70,6 +70,32 @@
           and a.is_valid = 1
           and a.answer_id = #{answerId}
     </select>
+    <select id="getQuestionnaireAnswerListByParams" resultMap="BaseInfoResultMap">
+        select answer_id,
+        questionnaire_id,
+        activity_id,
+        a.user_id,
+        answer_detail,
+        is_pass,
+        a.is_valid,
+        a.create_date,
+        u.nick_name,
+        u.mobile_phone,
+        u.portrait
+        from cms_adopt_questionnaire_answer a,
+        cms_user u
+        where a.user_id = u.user_id
+        and a.is_valid = 1
+        <if test="questionnireId!=null and questionnireId!=''">
+            and a.questionnaire_id = #{questionnireId}
+        </if>
+        <if test="activityId!=null and activityId!=''">
+            and a.activity_id = #{activityId}
+        </if>
+        <if test="userId!=null and userId!=''">
+            and a.user_id = #{userId}
+        </if>
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete
         from cms_adopt_questionnaire_answer

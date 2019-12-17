@@ -70,6 +70,11 @@ public class GroupActivityServiceImpl implements IGroupActivityService {
     }
 
     @Override
+    public void delGroupActivity(String activityId) {
+        cmsAdoptGroupActivityMapper.delGroupActivity(activityId);
+    }
+
+    @Override
     public String crtGroupActivityFollow(String userId, String activityId) {
         CmsAdoptGroupActivityUserRel followUser = cmsAdoptGroupActivityUserRelMapper.getFollowUserByUserIdAndActivityId(userId, activityId);
         if (followUser == null) {

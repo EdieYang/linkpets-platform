@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkpets.core.dao.CmsAdoptQuestionnaireItemMapper">
+    <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsAdoptQuestionnaireItem">
+        <id column="questionnaire_item_id" jdbcType="VARCHAR" property="questionnaireItemId"/>
+        <result column="questionnaire_id" jdbcType="VARCHAR" property="questionnaireId"/>
+        <result column="questionnaire_item_title" jdbcType="VARCHAR" property="questionnaireItemTitle"/>
+        <result column="questionnaire_item_type" jdbcType="INTEGER" property="questionnaireItemType"/>
+        <result column="questionnaire_item_content" jdbcType="VARCHAR" property="questionnaireItemContent"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        questionnaire_item_id, questionnaire_id, questionnaire_item_title, questionnaire_item_type,
+    questionnaire_item_content, sort, is_valid, create_date
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_adopt_questionnaire_item
+        where questionnaire_item_id = #{questionnaireItemId,jdbcType=VARCHAR}
+    </select>
+    <select id="getListByQuestionnaireId" resultType="com.linkpets.core.model.CmsAdoptQuestionnaireItem">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_adopt_questionnaire_item
+        where questionnaire_id = #{questionnaireId}
+        and is_valid = 1
+        order by sort
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from cms_adopt_questionnaire_item
+        where questionnaire_item_id = #{questionnaireItemId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptQuestionnaireItem">
+        insert into cms_adopt_questionnaire_item (questionnaire_item_id, questionnaire_id,
+                                                  questionnaire_item_title, questionnaire_item_type,
+                                                  questionnaire_item_content, sort, is_valid,
+                                                  create_date)
+        values (#{questionnaireItemId,jdbcType=VARCHAR}, #{questionnaireId,jdbcType=VARCHAR},
+                #{questionnaireItemTitle,jdbcType=VARCHAR}, #{questionnaireItemType,jdbcType=INTEGER},
+                #{questionnaireItemContent,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{isValid,jdbcType=INTEGER},
+                #{createDate,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptQuestionnaireItem">
+        insert into cms_adopt_questionnaire_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="questionnaireItemId != null">
+                questionnaire_item_id,
+            </if>
+            <if test="questionnaireId != null">
+                questionnaire_id,
+            </if>
+            <if test="questionnaireItemTitle != null">
+                questionnaire_item_title,
+            </if>
+            <if test="questionnaireItemType != null">
+                questionnaire_item_type,
+            </if>
+            <if test="questionnaireItemContent != null">
+                questionnaire_item_content,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="isValid != null">
+                is_valid,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="questionnaireItemId != null">
+                #{questionnaireItemId,jdbcType=VARCHAR},
+            </if>
+            <if test="questionnaireId != null">
+                #{questionnaireId,jdbcType=VARCHAR},
+            </if>
+            <if test="questionnaireItemTitle != null">
+                #{questionnaireItemTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="questionnaireItemType != null">
+                #{questionnaireItemType,jdbcType=INTEGER},
+            </if>
+            <if test="questionnaireItemContent != null">
+                #{questionnaireItemContent,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="isValid != null">
+                #{isValid,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsAdoptQuestionnaireItem">
+        update cms_adopt_questionnaire_item
+        <set>
+            <if test="questionnaireId != null">
+                questionnaire_id = #{questionnaireId,jdbcType=VARCHAR},
+            </if>
+            <if test="questionnaireItemTitle != null">
+                questionnaire_item_title = #{questionnaireItemTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="questionnaireItemType != null">
+                questionnaire_item_type = #{questionnaireItemType,jdbcType=INTEGER},
+            </if>
+            <if test="questionnaireItemContent != null">
+                questionnaire_item_content = #{questionnaireItemContent,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="isValid != null">
+                is_valid = #{isValid,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where questionnaire_item_id = #{questionnaireItemId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsAdoptQuestionnaireItem">
+        update cms_adopt_questionnaire_item
+        set questionnaire_id           = #{questionnaireId,jdbcType=VARCHAR},
+            questionnaire_item_title   = #{questionnaireItemTitle,jdbcType=VARCHAR},
+            questionnaire_item_type    = #{questionnaireItemType,jdbcType=INTEGER},
+            questionnaire_item_content = #{questionnaireItemContent,jdbcType=VARCHAR},
+            sort                       = #{sort,jdbcType=INTEGER},
+            is_valid                   = #{isValid,jdbcType=INTEGER},
+            create_date                = #{createDate,jdbcType=TIMESTAMP}
+        where questionnaire_item_id = #{questionnaireItemId,jdbcType=VARCHAR}
+    </update>
+    <update id="delQuestionnaireItemByQuestionnaireId">
+        update cms_adopt_questionnaire_item
+        set is_valid = 0
+        where questionnaire_id = #{questionnaireId}
+    </update>
+</mapper>

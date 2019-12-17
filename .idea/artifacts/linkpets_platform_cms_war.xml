@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="lpCms.war">
+    <root id="archive" name="lpCmsTest.war">
       <element id="artifact" artifact-name="linkpets-platform-cms:war exploded" />
     </root>
   </artifact>

@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="lpWechat.war">
+    <root id="archive" name="lpWechatTest.war">
       <element id="artifact" artifact-name="linkpets-platform-wechat:war exploded" />
     </root>
   </artifact>

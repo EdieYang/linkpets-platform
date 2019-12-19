@@ -28,7 +28,9 @@ public enum ResultCode {
     /* 业务错误：30001-30100 */
     DRAFT_COUNT_NOT_EXIST(30001, "您已没有抽奖机会"),
     DRAFT_COUNT_NO_MORE(30002, "您抽奖机会已达上限"),
-
+    MOBILE_PHONE_INVALID(30003, "手机号不正确"),
+    VERIFY_CODE_INVALID(30003, "验证码不正确"),
+    VERIFY_CODE_SEND_FAIL(30003, "验证码发送失败"),
 
     /* 系统错误：40001-49999 */
     SYSTEM_INNER_ERROR(40001, "系统繁忙，请稍后重试"),

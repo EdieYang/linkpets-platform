@@ -13,6 +13,8 @@ public class CmsUser {
 
     private String mobilePhone;
 
+    private String wxAccount;
+
     private String portrait;
 
     private String unionId;

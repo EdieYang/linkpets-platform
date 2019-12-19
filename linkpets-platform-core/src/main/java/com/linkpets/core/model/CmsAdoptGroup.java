@@ -7,6 +7,8 @@ import java.util.Date;
 public class CmsAdoptGroup {
     private String groupId;
 
+    private String orgId;
+
     private String groupType;
 
     private String groupName;
@@ -32,6 +34,14 @@ public class CmsAdoptGroup {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
     }
 
     public String getGroupType() {

@@ -21,7 +21,7 @@
         from cms_adopt_questionnaire_item
         where questionnaire_item_id = #{questionnaireItemId,jdbcType=VARCHAR}
     </select>
-    <select id="getListByQuestionnaireId" resultType="com.linkpets.core.model.CmsAdoptQuestionnaireItem">
+    <select id="getListByQuestionnaireId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from cms_adopt_questionnaire_item

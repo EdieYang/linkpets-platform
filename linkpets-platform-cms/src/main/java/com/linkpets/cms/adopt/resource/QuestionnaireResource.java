@@ -54,6 +54,27 @@ public class QuestionnaireResource {
         return PlatformResult.success(questionnaireInfo);
     }
 
+    @ApiOperation("创建问卷")
+    @PostMapping("")
+    public PlatformResult crtQuestionnaire(@RequestBody QuestionnaireReq questionnaireReq) {
+        String questionnaireId = questionnaireService.crtQuestionnaire(questionnaireReq.getQuestionnaire(), questionnaireReq.getQuestionnaireItemList());
+        return PlatformResult.success(questionnaireId);
+    }
+
+    @ApiOperation("更新问卷")
+    @PutMapping("")
+    public PlatformResult putQuestionnaire(@RequestBody QuestionnaireReq questionnaireReq) {
+        questionnaireService.uptQuestionnaire(questionnaireReq.getQuestionnaire(), questionnaireReq.getQuestionnaireItemList());
+        return PlatformResult.success();
+    }
+
+    @ApiOperation("删除问卷")
+    @DeleteMapping("")
+    public PlatformResult delQuestionnaire(@RequestParam(value = "questionnaireId") String questionnaireId) {
+        questionnaireService.delQuestionnaire(questionnaireId);
+        return PlatformResult.success();
+    }
+
     @ApiOperation("分页查询答案列表")
     @GetMapping("answerPage")
     public PlatformResult getQuestionnaireAnswerPage(@RequestParam(value = "questionnaireId") String questionnaireId,
@@ -79,28 +100,6 @@ public class QuestionnaireResource {
     public PlatformResult getQuestionnaireAnswer(@RequestParam(value = "answerId") String answerId) {
         RespQuestionnaireAnswerInfo answerInfo = questionnaireService.getQuestionnaireAnswerInfo(answerId);
         return PlatformResult.success(answerInfo);
-    }
-
-
-    @ApiOperation("创建问卷")
-    @PostMapping("")
-    public PlatformResult crtQuestionnaire(@RequestBody QuestionnaireReq questionnaireReq) {
-        String questionnaireId = questionnaireService.crtQuestionnaire(questionnaireReq.getQuestionnaire(), questionnaireReq.getQuestionnaireItemList());
-        return PlatformResult.success(questionnaireId);
-    }
-
-    @ApiOperation("更新问卷")
-    @PutMapping("")
-    public PlatformResult putQuestionnaire(@RequestBody QuestionnaireReq questionnaireReq) {
-        questionnaireService.uptQuestionnaire(questionnaireReq.getQuestionnaire(), questionnaireReq.getQuestionnaireItemList());
-        return PlatformResult.success();
-    }
-
-    @ApiOperation("删除问卷")
-    @DeleteMapping("")
-    public PlatformResult delQuestionnaire(@RequestParam(value = "questionnaireId") String questionnaireId) {
-        questionnaireService.delQuestionnaire(questionnaireId);
-        return PlatformResult.success();
     }
 
 

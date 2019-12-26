@@ -26,10 +26,12 @@ public class GroupPostResource {
 
     @ApiOperation("分页获取圈子帖子")
     @GetMapping("page")
-    public PlatformResult getGroupPostPage(@RequestParam(value = "groupId") String groupId,
+    public PlatformResult getGroupPostPage(@RequestParam(value = "groupId", required = false) String groupId,
+                                           @RequestParam(value = "isValid", required = false) Integer isValid,
+                                           @RequestParam(value = "nickName", required = false) String nickName,
                                            @RequestParam("pageNum") Integer pageNum,
                                            @RequestParam("pageSize") Integer pageSize) {
-        PageInfo<RespGroupPost> postId = groupPostService.getGroupPostPage(groupId, pageNum, pageSize);
+        PageInfo<RespGroupPost> postId = groupPostService.getGroupPostPage(groupId, isValid, nickName, pageNum, pageSize);
         return PlatformResult.success(postId);
     }
 

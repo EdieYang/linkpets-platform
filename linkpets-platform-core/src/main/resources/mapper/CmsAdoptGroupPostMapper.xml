@@ -6,6 +6,7 @@
         <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
         <result column="post_content" jdbcType="VARCHAR" property="postContent"/>
+        <result column="memo" jdbcType="VARCHAR" property="memo"/>
         <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
     </resultMap>
@@ -14,18 +15,19 @@
         <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
         <result column="post_content" jdbcType="VARCHAR" property="postContent"/>
+        <result column="memo" jdbcType="VARCHAR" property="memo"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
         <result column="portrait" jdbcType="VARCHAR" property="portrait"/>
-        <collection property="groupPostImgList" column="post_id" select="listPostImage"></collection>
+        <collection column="post_id" property="groupPostImgList" select="listPostImage"/>
     </resultMap>
     <resultMap id="PostImageResultMap" type="com.linkpets.core.model.CmsAdoptGroupPostImg">
         <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
         <result column="sort" jdbcType="INTEGER" property="sort"/>
     </resultMap>
     <sql id="Base_Column_List">
-        post_id, group_id, user_id, post_content, is_valid, create_date
-    </sql>
+    post_id, group_id, user_id, post_content, memo, is_valid, create_date
+  </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -34,18 +36,26 @@
     </select>
     <select id="getGroupPostPage" resultMap="BaseResultListMap">
         select p.post_id,
-               p.group_id,
-               p.user_id,
-               p.post_content,
-               p.is_valid,
-               p.create_date,
-               u.nick_name,
-               u.portrait
+        p.group_id,
+        p.user_id,
+        p.post_content,
+        p.memo,
+        p.is_valid,
+        p.create_date,
+        u.nick_name,
+        u.portrait
         from cms_adopt_group_post p,
-             cms_user u
-        where p.user_id = u.id
-          and p.group_id = #{groupId}
-          and p.is_valid = 1
+        cms_user u
+        where p.user_id = u.user_id
+        <if test="groupId!=null and groupId!=''">
+            and p.group_id = #{groupId}
+        </if>
+        <if test="isValid!=null and isValid!=''">
+            and p.is_valid = #{isValid}
+        </if>
+        <if test="nickName!=null and nickName!=''">
+            and u.nick_name like CONCAT('#{nickName},'%')
+        </if>
         order by p.create_date desc
     </select>
     <select id="listPostImage" resultMap="PostImageResultMap">
@@ -56,16 +66,17 @@
         order by sort
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete
-        from cms_adopt_group_post
-        where post_id = #{postId,jdbcType=VARCHAR}
-    </delete>
+    delete from cms_adopt_group_post
+    where post_id = #{postId,jdbcType=VARCHAR}
+  </delete>
     <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptGroupPost">
-        insert into cms_adopt_group_post (post_id, group_id, user_id,
-                                          post_content, is_valid, create_date)
-        values (#{postId,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
-                #{postContent,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
-    </insert>
+    insert into cms_adopt_group_post (post_id, group_id, user_id, 
+      post_content, memo, is_valid, 
+      create_date)
+    values (#{postId,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{postContent,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptGroupPost">
         insert into cms_adopt_group_post
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -80,6 +91,9 @@
             </if>
             <if test="postContent != null">
                 post_content,
+            </if>
+            <if test="memo != null">
+                memo,
             </if>
             <if test="isValid != null">
                 is_valid,
@@ -101,6 +115,9 @@
             <if test="postContent != null">
                 #{postContent,jdbcType=VARCHAR},
             </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
             <if test="isValid != null">
                 #{isValid,jdbcType=INTEGER},
             </if>
@@ -121,6 +138,9 @@
             <if test="postContent != null">
                 post_content = #{postContent,jdbcType=VARCHAR},
             </if>
+            <if test="memo != null">
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
             <if test="isValid != null">
                 is_valid = #{isValid,jdbcType=INTEGER},
             </if>
@@ -131,12 +151,15 @@
         where post_id = #{postId,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsAdoptGroupPost">
-        update cms_adopt_group_post
-        set group_id     = #{groupId,jdbcType=VARCHAR},
-            user_id      = #{userId,jdbcType=VARCHAR},
-            post_content = #{postContent,jdbcType=VARCHAR},
-            is_valid     = #{isValid,jdbcType=INTEGER},
-            create_date  = #{createDate,jdbcType=TIMESTAMP}
-        where post_id = #{postId,jdbcType=VARCHAR}
-    </update>
+    update cms_adopt_group_post
+    set group_id = #{groupId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      post_content = #{postContent,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      is_valid = #{isValid,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where post_id = #{postId,jdbcType=VARCHAR}
+  </update>
+
+
 </mapper>

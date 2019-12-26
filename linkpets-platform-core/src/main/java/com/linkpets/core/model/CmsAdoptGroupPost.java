@@ -11,6 +11,8 @@ public class CmsAdoptGroupPost {
 
     private String postContent;
 
+    private String memo;
+
     private Integer isValid;
 
     private Date createDate;
@@ -45,6 +47,14 @@ public class CmsAdoptGroupPost {
 
     public void setPostContent(String postContent) {
         this.postContent = postContent;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
     public Integer getIsValid() {

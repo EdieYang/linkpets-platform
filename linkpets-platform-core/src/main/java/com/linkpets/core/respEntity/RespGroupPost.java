@@ -27,6 +27,8 @@ public class RespGroupPost {
 
     private String postContent;
 
+    private String memo;
+
     private List<CmsAdoptGroupPostImg> groupPostImgList;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

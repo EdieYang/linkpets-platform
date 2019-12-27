@@ -24,5 +24,5 @@ public interface CmsAdoptGroupPostMapper {
      * @param groupId
      * @return
      */
-    List<RespGroupPost> getGroupPostPage(String groupId);
+    List<RespGroupPost> getGroupPostPage(String groupId, Integer isValid, String nickName);
 }

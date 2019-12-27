@@ -52,8 +52,9 @@ public class GroupPostResource {
 
     @ApiOperation("删除圈子帖子")
     @DeleteMapping("")
-    public PlatformResult delGroupPost(@RequestParam("postId") String postId) {
-        groupPostService.delGroupPost(postId);
+    public PlatformResult delGroupPost(@RequestParam("postId") String postId,
+                                       @RequestParam("memo") String memo) {
+        groupPostService.delGroupPost(postId,memo);
         return PlatformResult.success();
     }
 }

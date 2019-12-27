@@ -15,6 +15,7 @@ public interface IGroupPostService {
 
     /**
      * 分页获取圈子发帖列表
+     *
      * @param groupId
      * @param isValid
      * @param nickName
@@ -46,8 +47,9 @@ public interface IGroupPostService {
      * 删除圈子发帖
      *
      * @param postId
+     * @param memo
      */
-    void delGroupPost(String postId);
+    void delGroupPost(String postId, String memo);
 
 
 }

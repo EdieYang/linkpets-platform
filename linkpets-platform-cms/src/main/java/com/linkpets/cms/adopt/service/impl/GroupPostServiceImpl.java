@@ -32,7 +32,7 @@ public class GroupPostServiceImpl implements IGroupPostService {
     @Override
     public PageInfo<RespGroupPost> getGroupPostPage(String groupId, Integer isValid, String nickName, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<RespGroupPost> postList = groupPostMapper.getGroupPostPage(groupId);
+        List<RespGroupPost> postList = groupPostMapper.getGroupPostPage(groupId,isValid,nickName);
         return new PageInfo<>(postList);
     }
 
@@ -71,9 +71,10 @@ public class GroupPostServiceImpl implements IGroupPostService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void delGroupPost(String postId) {
+    public void delGroupPost(String postId,String memo) {
         CmsAdoptGroupPost groupPost = new CmsAdoptGroupPost();
         groupPost.setPostId(postId);
+        groupPost.setMemo(memo);
         groupPost.setIsValid(0);
         groupPostMapper.updateByPrimaryKeySelective(groupPost);
         groupPostImgMapper.deleteByPostId(postId);

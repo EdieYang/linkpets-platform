@@ -19,6 +19,9 @@
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
         <result column="portrait" jdbcType="VARCHAR" property="portrait"/>
+        <result column="wx_account" jdbcType="VARCHAR" property="wxAccount"/>
+        <result column="likeAmount" jdbcType="INTEGER" property="likeAmount"/>
+        <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
         <collection column="post_id" property="groupPostImgList" select="listPostImage"/>
     </resultMap>
     <resultMap id="PostImageResultMap" type="com.linkpets.core.model.CmsAdoptGroupPostImg">
@@ -43,18 +46,20 @@
         p.is_valid,
         p.create_date,
         u.nick_name,
-        u.portrait
+        u.portrait,
+        u.wx_account,
+        0 as likeAmount
         from cms_adopt_group_post p,
         cms_user u
         where p.user_id = u.user_id
         <if test="groupId!=null and groupId!=''">
             and p.group_id = #{groupId}
         </if>
-        <if test="isValid!=null and isValid!=''">
+        <if test="isValid!=null">
             and p.is_valid = #{isValid}
         </if>
         <if test="nickName!=null and nickName!=''">
-            and u.nick_name like CONCAT('#{nickName},'%')
+            and u.nick_name like CONCAT(#{nickName},'%')
         </if>
         order by p.create_date desc
     </select>

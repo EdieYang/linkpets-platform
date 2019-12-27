@@ -29,6 +29,12 @@ public class RespGroupPost {
 
     private String memo;
 
+    private String wxAccount;
+
+    private Integer likeAmount;
+
+    private Integer isValid;
+
     private List<CmsAdoptGroupPostImg> groupPostImgList;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

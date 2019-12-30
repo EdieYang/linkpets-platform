@@ -141,7 +141,7 @@ public class ActivityDraftServiceImpl implements IActivityDraftService {
     @Override
     public CmsActivityDraft addActivityDraft(String activityId, String userId) {
         CmsActivityDraft draft = new CmsActivityDraft();
-        draft.setDraftId(UUIDUtils.getUUID());
+        draft.setDraftId(UUIDUtils.getId());
         draft.setActivityId(activityId);
         draft.setUserId(userId);
         draft.setDraftStatus(UNDRAFTED);

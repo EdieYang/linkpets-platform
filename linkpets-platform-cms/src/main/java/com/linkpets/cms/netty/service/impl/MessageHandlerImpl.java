@@ -61,7 +61,7 @@ public class MessageHandlerImpl implements IMessageHandler {
                 String sendTime=chatMessage.getSendTime();
                 String formId=chatMessage.getFormId();
                 CmsAdoptFormid formid=new CmsAdoptFormid();
-                formid.setId(UUIDUtils.getUUID());
+                formid.setId(UUIDUtils.getId());
                 formid.setUserId(userId);
                 formid.setFormId(formId);
                 Date createDate=new Date();

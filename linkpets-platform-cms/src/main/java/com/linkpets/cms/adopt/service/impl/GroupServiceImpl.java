@@ -48,7 +48,7 @@ public class GroupServiceImpl implements IGroupService {
 
     @Override
     public String crtAdoptGroup(CmsAdoptGroup cmsAdoptGroup) {
-        String groupId = UUIDUtils.getUUID();
+        String groupId = UUIDUtils.getId();
         cmsAdoptGroup.setGroupId(groupId);
         cmsAdoptGroup.setCreateDate(new Date());
         cmsAdoptGroup.setSort(999);
@@ -78,7 +78,7 @@ public class GroupServiceImpl implements IGroupService {
             cmsAdoptGroupUserRel.setUserId(userId);
             cmsAdoptGroupUserRel.setGroupId(groupId);
             cmsAdoptGroupUserRel.setCreateDate(new Date());
-            cmsAdoptGroupUserRel.setId(UUIDUtils.getUUID());
+            cmsAdoptGroupUserRel.setId(UUIDUtils.getId());
             cmsAdoptGroupUserRelMapper.insertSelective(cmsAdoptGroupUserRel);
         }
 

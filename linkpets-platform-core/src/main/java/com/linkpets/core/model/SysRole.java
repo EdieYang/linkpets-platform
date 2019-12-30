@@ -5,13 +5,15 @@ import java.util.Date;
 public class SysRole {
     private String roleId;
 
-    private String roleType;
+    private String roleName;
 
-    private String orgId;
+    private String roleCode;
 
-    private Date createTime;
+    private String roleDescription;
 
-    private Integer isValid;
+    private Date createDate;
+
+    private String delFlag;
 
     public String getRoleId() {
         return roleId;
@@ -21,35 +23,43 @@ public class SysRole {
         this.roleId = roleId;
     }
 
-    public String getRoleType() {
-        return roleType;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRoleType(String roleType) {
-        this.roleType = roleType;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
-    public String getOrgId() {
-        return orgId;
+    public String getRoleCode() {
+        return roleCode;
     }
 
-    public void setOrgId(String orgId) {
-        this.orgId = orgId;
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getRoleDescription() {
+        return roleDescription;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setRoleDescription(String roleDescription) {
+        this.roleDescription = roleDescription;
     }
 
-    public Integer getIsValid() {
-        return isValid;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setIsValid(Integer isValid) {
-        this.isValid = isValid;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
     }
 }

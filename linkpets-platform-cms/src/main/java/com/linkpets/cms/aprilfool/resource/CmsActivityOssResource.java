@@ -51,7 +51,7 @@ public class CmsActivityOssResource {
                                   @RequestParam("ossZone") String ossZone) throws IOException {
         JSONObject result = new JSONObject();
         String objName = "";
-        objName += OSS_STORAGE_SLICE + "/" + ossZone + "/" + UUIDUtils.getUUID();
+        objName += OSS_STORAGE_SLICE + "/" + ossZone + "/" + UUIDUtils.getId();
 
 
         //拼文件格式
@@ -107,14 +107,14 @@ public class CmsActivityOssResource {
     public JSONObject getPosterImage(@RequestParam String userId){
         JSONObject result = new JSONObject();
         String objName = "";
-        objName += OSS_STORAGE_SLICE + "/tempPost/" + UUIDUtils.getUUID();
+        objName += OSS_STORAGE_SLICE + "/tempPost/" + UUIDUtils.getId();
 
 
 
         // 创建OSSClient实例。
         OSSClient client = new OSSClient(ENDPOINT, ACCESSKEY, ACCESS_SK);
 
-        String fileName=UUIDUtils.getUUID()+".jpg";
+        String fileName=UUIDUtils.getId()+".jpg";
         try {
 
 

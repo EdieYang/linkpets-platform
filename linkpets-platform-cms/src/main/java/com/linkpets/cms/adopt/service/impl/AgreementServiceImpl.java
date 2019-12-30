@@ -27,7 +27,7 @@ public class AgreementServiceImpl implements IAgreementService {
 
     @Override
     public String crtAgreement(CmsAdoptAgreement agreement) {
-        String agreementId = UUIDUtils.getUUID();
+        String agreementId = UUIDUtils.getId();
         agreement.setAgreementId(agreementId);
         agreement.setCreateDate(new Date());
         cmsAdoptAgreementMapper.insertSelective(agreement);

@@ -127,7 +127,7 @@ public class WikiResource {
     public PlatformResult uploadImg(@RequestParam("img")MultipartFile file){
         System.out.println("上传图片是否为空："+file.isEmpty());
         String objName = "";
-        objName += OSS_STORAGE_SLICE + "/hmts/" + UUIDUtils.getUUID();
+        objName += OSS_STORAGE_SLICE + "/hmts/" + UUIDUtils.getId();
 
 
         //拼文件格式

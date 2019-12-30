@@ -1,6 +1,5 @@
 package com.linkpets.cms.manage.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.cms.manage.service.ISysUserService;
@@ -13,42 +12,17 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author SteveYang
- * @date 2019/3/15
- */
-
-@Service("sysUserService")
+@Service
 public class SysUserServiceImpl implements ISysUserService {
 
     @Resource
     private SysUserMapper sysUserMapper;
 
     @Override
-    public JSONObject listSysUser(String orgId, String chainId, int pageNo, int pageSize) {
-        JSONObject result = new JSONObject();
-        PageHelper.startPage(pageNo, pageSize);
-        List<SysUser> sysUserCustomList = sysUserMapper.listSysUser(orgId, chainId);
-        PageInfo<SysUser> page = new PageInfo<>(sysUserCustomList);
-        result.put("page", page.getPageNum());
-        result.put("records", page.getTotal());
-        result.put("rows", sysUserCustomList);
-        return result;
-    }
-
-    @Override
-    public JSONObject loginSysUser(String userName, String password) {
-        JSONObject result = new JSONObject();
-        SysUser sysUser = sysUserMapper.selectByUserName(userName);
-
-
-        result.put("data", sysUser);
-        return result;
-    }
-
-    @Override
-    public SysUser getSysUserByUserName(String userName) {
-        return sysUserMapper.selectByUserName(userName);
+    public PageInfo<SysUser> getSysUserPage(String userAccount, String userName, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<SysUser> sysUserList = sysUserMapper.getSysUserList(userAccount, userName);
+        return new PageInfo<>(sysUserList);
     }
 
     @Override
@@ -57,22 +31,38 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
-    public SysUser updateSysUser(String userId, String chainId) {
-        SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
-        sysUser.setChainId(chainId);
-        sysUserMapper.updateByPrimaryKeySelective(sysUser);
-        return sysUser;
+    public SysUser getSysUserByUserAccount(String userAcc) {
+        return sysUserMapper.getSysUserByUserAccount(userAcc);
     }
 
     @Override
-    public void register(String userName, String password) {
-        SysUser user = new SysUser();
-        user.setUserId(UUIDUtils.getUUID());
-        user.setUserName(userName);
-        user.setPassword(password);
-        user.setRoleId("10001");
-        user.setCreateTime(new Date());
-        user.setUpdateTime(new Date());
-        sysUserMapper.insertSelective(user);
+    public SysUser getSysUserByUserId(String userId) {
+        return sysUserMapper.selectByPrimaryKey(userId);
     }
+
+    @Override
+    public String crtSysUser(SysUser sysUser) {
+        String userId = UUIDUtils.getId();
+        sysUser.setCreateDate(new Date());
+        sysUser.setUserId(userId);
+        sysUserMapper.insertSelective(sysUser);
+        return userId;
+    }
+
+    @Override
+    public void uptSysUser(SysUser sysUser) {
+        sysUserMapper.updateByPrimaryKeySelective(sysUser);
+    }
+
+    @Override
+    public void delSysUser(String userId) {
+        sysUserMapper.delSysUser(userId);
+    }
+
+    @Override
+    public void batchDelSysUser(List<String> userIdList) {
+        sysUserMapper.batchDelSysUser(userIdList);
+    }
+
+
 }

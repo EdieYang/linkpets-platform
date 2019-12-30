@@ -58,7 +58,7 @@ public class OssUploadResource {
                                       @RequestParam("userId") String userId,
                                       @RequestParam("ossZone") String ossZone) throws IOException {
         String objName = "";
-        objName += OSS_STORAGE_SLICE + "/" + ossZone + "/" + userId + "/" + UUIDUtils.getUUID();
+        objName += OSS_STORAGE_SLICE + "/" + ossZone + "/" + userId + "/" + UUIDUtils.getId();
 
 
         //拼文件格式
@@ -116,9 +116,9 @@ public class OssUploadResource {
                                              @RequestParam(value = "userId", required = false) String userId) throws IOException {
         String objName = "";
         if (StringUtils.isEmpty(userId)) {
-            objName += OSS_STORAGE_SLICE + "/" + ossZone + "/" + UUIDUtils.getUUID();
+            objName += OSS_STORAGE_SLICE + "/" + ossZone + "/" + UUIDUtils.getId();
         } else {
-            objName += OSS_STORAGE_SLICE + "/" + ossZone + "/" + userId + "/" + UUIDUtils.getUUID();
+            objName += OSS_STORAGE_SLICE + "/" + ossZone + "/" + userId + "/" + UUIDUtils.getId();
         }
 
 

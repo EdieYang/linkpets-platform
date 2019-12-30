@@ -25,7 +25,7 @@ public class ApplyServiceImpl implements IApplyService {
     public String crtApply(CmsAdoptApply apply) {
         CmsAdoptApply existApply = cmsAdoptApplyMapper.getApply(apply.getApplyBy(), apply.getPetId());
         if (existApply == null) {
-            String applyId = UUIDUtils.getUUID();
+            String applyId = UUIDUtils.getId();
             apply.setApplyId(applyId);
             apply.setApplyTime(new Date());
             cmsAdoptApplyMapper.insertSelective(apply);

@@ -359,7 +359,7 @@ public class CommonUtil {
 		}
 	}
 	
-	public static String getUuid() {
+	public static String getId() {
 		return UUID.randomUUID().toString().replace("-", "");
 	}
 }

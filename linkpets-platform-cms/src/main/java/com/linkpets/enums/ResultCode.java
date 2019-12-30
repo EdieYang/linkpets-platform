@@ -24,6 +24,9 @@ public enum ResultCode {
     USER_ACCOUNT_FORBIDDEN(20003, "账号已被禁用"),
     USER_NOT_EXIST(20004, "用户不存在"),
     USER_HAS_EXISTED(20005, "用户已存在"),
+    VALID_USER_ACCOUNT(40001,"系统账户不存在"),
+    VALID_USER_ACCOUNT_PASSWORD(40002,"密码错误"),
+    VALID_USER_LOGIN_TOKEN(40003,"TOKNE失效，请重新登录"),
 
     /* 业务错误：30001-30100 */
     DRAFT_COUNT_NOT_EXIST(30001, "您已没有抽奖机会"),
@@ -84,6 +87,22 @@ public enum ResultCode {
             }
         }
         return null;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override

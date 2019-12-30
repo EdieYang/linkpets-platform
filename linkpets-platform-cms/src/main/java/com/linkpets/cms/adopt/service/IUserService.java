@@ -101,18 +101,18 @@ public interface IUserService {
      */
     int getTotalUserCount();
 
-    /**
-     * 
-    * @Title: getUserByAccountAndPassword 
-    * @Description: 根据账号密码查找用户
-    * @param @param userAcc
-    * @param @param password
-    * @param @return
-    * @return SysUser
-    * @author wando 
-    * @throws
-    * @date 2019年9月10日 上午10:52:16 
-    * @version V1.0   
-     */
-	SysUser getUserByAccountAndPassword(String userAcc, String password);
+//    /**
+//     *
+//    * @Title: getUserByAccountAndPassword 
+//    * @Description: 根据账号密码查找用户
+//    * @param @param userAcc
+//    * @param @param password
+//    * @param @return
+//    * @return SysUser
+//    * @author wando 
+//    * @throws
+//    * @date 2019年9月10日 上午10:52:16 
+//    * @version V1.0   
+//     */
+//	SysUser getUserByAccountAndPassword(String userAcc, String password);
 }

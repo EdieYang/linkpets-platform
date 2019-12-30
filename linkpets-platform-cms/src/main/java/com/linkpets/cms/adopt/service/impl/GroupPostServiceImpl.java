@@ -39,13 +39,13 @@ public class GroupPostServiceImpl implements IGroupPostService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String crtGroupPost(CmsAdoptGroupPost cmsAdoptGroupPost, List<CmsAdoptGroupPostImg> postImgList) {
-        String postId = UUIDUtils.getUUID();
+        String postId = UUIDUtils.getId();
         cmsAdoptGroupPost.setPostId(postId);
         cmsAdoptGroupPost.setCreateDate(new Date());
         groupPostMapper.insertSelective(cmsAdoptGroupPost);
 
         postImgList.forEach(postImg -> {
-            postImg.setId(UUIDUtils.getUUID());
+            postImg.setId(UUIDUtils.getId());
             postImg.setPostId(postId);
             postImg.setCreateDate(new Date());
             groupPostImgMapper.insertSelective(postImg);

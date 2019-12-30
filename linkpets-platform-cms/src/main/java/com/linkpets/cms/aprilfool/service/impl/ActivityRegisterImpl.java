@@ -29,7 +29,7 @@ public class ActivityRegisterImpl implements IActivityRegisterService {
     @Override
     public String registerActivity(String activityId, String userId, int registryType) {
         CmsActivityRegistry cmsActivityRegistry = new CmsActivityRegistry();
-        cmsActivityRegistry.setRegistryId(UUIDUtils.getUUID());
+        cmsActivityRegistry.setRegistryId(UUIDUtils.getId());
         cmsActivityRegistry.setActivityId(activityId);
         cmsActivityRegistry.setUserId(userId);
         cmsActivityRegistry.setCreateTime(new Date());
@@ -73,7 +73,7 @@ public class ActivityRegisterImpl implements IActivityRegisterService {
         }
         //插入报名问卷
         CmsActivityRegistryInfo activityRegistryInfoCons = new CmsActivityRegistryInfo();
-        activityRegistryInfoCons.setInfoId(UUIDUtils.getUUID());
+        activityRegistryInfoCons.setInfoId(UUIDUtils.getId());
         activityRegistryInfoCons.setActivityId(activityId);
         activityRegistryInfoCons.setUserId(userId);
         activityRegistryInfoCons.setRegisterName(registerName);
@@ -90,7 +90,7 @@ public class ActivityRegisterImpl implements IActivityRegisterService {
 
         //同步注册活动表
         CmsActivityRegistry registry = new CmsActivityRegistry();
-        registry.setRegistryId(UUIDUtils.getUUID());
+        registry.setRegistryId(UUIDUtils.getId());
         registry.setRegistryType(registryType);
         registry.setUserId(userId);
         registry.setActivityId(activityId);

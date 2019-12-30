@@ -25,7 +25,7 @@ public class FormIdGeneratorServiceImpl implements IFormIdGeneratorService {
     @Override
     public void addFormId(String formId, String userId) {
         CmsAdoptFormid cmsAdoptFormid = new CmsAdoptFormid();
-        cmsAdoptFormid.setId(UUIDUtils.getUUID());
+        cmsAdoptFormid.setId(UUIDUtils.getId());
         cmsAdoptFormid.setFormId(formId);
         cmsAdoptFormid.setUserId(userId);
         Date createDate = new Date();

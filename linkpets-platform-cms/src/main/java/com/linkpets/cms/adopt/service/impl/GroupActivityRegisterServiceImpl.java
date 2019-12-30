@@ -42,7 +42,7 @@ public class GroupActivityRegisterServiceImpl implements IGroupActivityRegisterS
         //TODO 扣除用户积分
 
         activityRegister = new CmsAdoptGroupActivityRegister();
-        String registerId = UUIDUtils.getUUID();
+        String registerId = UUIDUtils.getId();
         activityRegister.setRegisterId(registerId);
         activityRegister.setActivityId(activityId);
         activityRegister.setUserId(userId);

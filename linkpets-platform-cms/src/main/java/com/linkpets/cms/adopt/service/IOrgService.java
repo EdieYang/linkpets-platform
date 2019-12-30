@@ -162,6 +162,6 @@ public interface IOrgService {
      */
     void delGallery(CmsAdoptOrgGallery gallery);
 
-    PageInfo<Map<String, Object>> getOrgUserList(String orgId, int pageNum, int pageSize, String orderBy);
+//    PageInfo<Map<String, Object>> getOrgUserList(String orgId, int pageNum, int pageSize, String orderBy);
 
 }

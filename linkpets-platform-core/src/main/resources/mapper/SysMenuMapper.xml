@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkpets.core.dao.SysMenuMapper">
+    <resultMap id="BaseResultMap" type="com.linkpets.core.model.SysMenu">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="del_flag" jdbcType="VARCHAR" property="delFlag"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, parent_id, title, path, icon, sort, create_date, del_flag
+  </sql>
+    <insert id="insertSelective" parameterType="com.linkpets.core.model.SysMenu">
+        insert into sys_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="path != null">
+                path,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.SysMenu">
+        update sys_menu
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                path = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="getSysMenuListByParentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from sys_menu
+        where parent_id = #{parentId}
+        and del_flag = '1'
+        order by sort
+    </select>
+    <select id="getSysMenuListByParentIds" resultType="com.linkpets.core.model.SysMenu">
+        select
+        <include refid="Base_Column_List"></include>
+        from sys_menu
+        where del_flag = 1
+        and id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        order by sort
+    </select>
+    <select id="getSysRoleMenuList" resultType="com.linkpets.core.model.SysMenu">
+        select
+        m.id, m.parent_id, m.title, m.path, m.icon, m.sort
+        from sys_menu m,sys_role_menu_rel r
+        where m.id = r.menu_id
+        and m.del_flag = 1
+        and r.del_flag = 1
+        and r.role_id =#{roleId}
+    </select>
+    <select id="getSysMenuListByUserId" resultMap="BaseResultMap">
+        select m.id, m.parent_id, m.title, m.path, m.icon, m.sort
+        from sys_menu m,sys_role_menu_rel r,sys_user_role_rel u,sys_role ro
+        where m.id = r.menu_id
+        and r.role_id = u.role_id
+        and u.role_id = ro.role_id
+        and m.del_flag = 1
+        and r.del_flag = 1
+        and u.del_flag = 1
+        and ro.del_flag = 1
+        and u.user_id = #{userId}
+        order by sort
+    </select>
+
+</mapper>

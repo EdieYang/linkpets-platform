@@ -77,7 +77,7 @@ public class CertificationResource {
         }
         //上传认证信息
         CmsAdoptCertification certification = new CmsAdoptCertification();
-        certification.setId(UUIDUtils.getUUID());
+        certification.setId(UUIDUtils.getId());
         certification.setImageFront(imageFront);
         certification.setImageBack(imageBack);
         certification.setRealName(realName);

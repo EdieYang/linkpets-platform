@@ -34,7 +34,7 @@ public class PetServiceImpl implements IPetService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String crtAdopt(CmsAdoptPet pet) {
-        String petId = UUIDUtils.getUUID();
+        String petId = UUIDUtils.getId();
         pet.setPetId(petId);
         pet.setCreateDate(new Date());
         cmsAdoptPetMapper.insertSelective(pet);

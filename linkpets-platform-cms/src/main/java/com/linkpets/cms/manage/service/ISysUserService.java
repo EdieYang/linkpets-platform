@@ -1,38 +1,72 @@
 package com.linkpets.cms.manage.service;
 
-import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 import com.linkpets.core.model.SysUser;
 
-/**
- * @author SteveYang
- * @date 2019/3/15
- */
+import java.util.List;
+
 public interface ISysUserService {
 
     /**
-     * 查询系统用户账号列表
-     * @param orgId
-     * @param chainId
-     * @param pageNo
+     * 分页查询用户列表
+     *
+     * @param userAccount
+     * @param userName
+     * @param pageNum
      * @param pageSize
      * @return
      */
-    JSONObject listSysUser(String orgId, String chainId, int pageNo, int pageSize);
+    PageInfo<SysUser> getSysUserPage(String userAccount, String userName, Integer pageNum, Integer pageSize);
 
     /**
-     * 系统用户账号登录
-     * @param userName
-     * @param password
+     * 查询用户信息
+     *
+     * @param userId
      * @return
      */
-    JSONObject loginSysUser(String userName, String password);
-
-    SysUser getSysUserByUserName(String userName);
-
     SysUser getSysUser(String userId);
 
-    SysUser updateSysUser(String userId,String chainId);
+    /**
+     * 根据登录账号获取用户信息
+     *
+     * @param userAcc
+     * @return
+     */
+    SysUser getSysUserByUserAccount(String userAcc);
 
-    void register(String userName, String password);
+    /**
+     * 根据userId查询用户
+     * @param userId
+     * @return
+     */
+    SysUser getSysUserByUserId(String userId);
 
+    /**
+     * 创建系统用户
+     *
+     * @param sysUser
+     * @return
+     */
+    String crtSysUser(SysUser sysUser);
+
+    /**
+     * 更新系统用户
+     *
+     * @param sysUser
+     */
+    void uptSysUser(SysUser sysUser);
+
+    /**
+     * 删除系统用户
+     *
+     * @param userId
+     */
+    void delSysUser(String userId);
+
+    /**
+     * 批量删除系统用户
+     *
+     * @param userIdList
+     */
+    void batchDelSysUser(List<String> userIdList);
 }

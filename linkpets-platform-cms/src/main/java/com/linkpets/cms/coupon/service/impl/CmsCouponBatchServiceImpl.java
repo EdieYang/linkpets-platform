@@ -68,7 +68,7 @@ public class CmsCouponBatchServiceImpl implements ICmsCouponBatchService {
         while (index < couponAmount) {
             CmsCouponBatchItem cmsCouponBatchItem = new CmsCouponBatchItem();
             cmsCouponBatchItem.setBatchNo(batchNo);
-            cmsCouponBatchItem.setCouponItemId(UUIDUtils.getUUID());
+            cmsCouponBatchItem.setCouponItemId(UUIDUtils.getId());
             cmsCouponBatchItem.setCreateTime(new Date());
             cmsCouponBatchItem.setStatus(COUPON_STATUS_UNUSED);
             index++;

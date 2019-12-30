@@ -23,7 +23,7 @@ public class ActivityServiceImpl implements IActivityService {
 
     @Override
     public String createActivity(String activityName, String introduction, String startTime, String endTime, String orgId) {
-        String activityId = UUIDUtils.getUUID();
+        String activityId = UUIDUtils.getId();
         CmsActivity activity = new CmsActivity(activityId, activityName, introduction, startTime, endTime, orgId, new Date());
         cmsActivityMapper.insertSelective(activity);
         return activity.getActivityId();

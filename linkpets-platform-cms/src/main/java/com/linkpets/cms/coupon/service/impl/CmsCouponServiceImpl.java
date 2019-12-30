@@ -29,7 +29,7 @@ public class CmsCouponServiceImpl implements ICmsCouponService {
     @Override
     public String createCoupon(String couponName, String couponEnName, int couponType, String couponRule, String couponRemind, String orgId) {
         CmsCoupon coupon = new CmsCoupon();
-        coupon.setCouponId(UUIDUtils.getUUID());
+        coupon.setCouponId(UUIDUtils.getId());
         coupon.setCouponName(couponName);
         coupon.setCouponEnName(couponEnName);
         coupon.setCouponType(couponType);

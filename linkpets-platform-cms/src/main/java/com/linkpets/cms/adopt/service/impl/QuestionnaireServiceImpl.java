@@ -74,13 +74,13 @@ public class QuestionnaireServiceImpl implements IQuestionnaireService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String crtQuestionnaire(CmsAdoptQuestionnaire adoptQuestionnaire, List<CmsAdoptQuestionnaireItem> cmsAdoptQuestionnaireItemList) {
-        String questionnaireId = UUIDUtils.getUUID();
+        String questionnaireId = UUIDUtils.getId();
         adoptQuestionnaire.setQuestionnaireId(questionnaireId);
         adoptQuestionnaire.setCreateDate(new Date());
         questionnaireMapper.insertSelective(adoptQuestionnaire);
 
         cmsAdoptQuestionnaireItemList.forEach(cmsAdoptQuestionnaireItem -> {
-            cmsAdoptQuestionnaireItem.setQuestionnaireItemId(UUIDUtils.getUUID());
+            cmsAdoptQuestionnaireItem.setQuestionnaireItemId(UUIDUtils.getId());
             cmsAdoptQuestionnaireItem.setQuestionnaireId(questionnaireId);
             cmsAdoptQuestionnaireItem.setCreateDate(new Date());
             questionnaireItemMapper.insertSelective(cmsAdoptQuestionnaireItem);
@@ -95,7 +95,7 @@ public class QuestionnaireServiceImpl implements IQuestionnaireService {
         questionnaireMapper.updateByPrimaryKeySelective(adoptQuestionnaire);
         questionnaireItemMapper.delQuestionnaireItemByQuestionnaireId(questionnaireId);
         cmsAdoptQuestionnaireItemList.forEach(cmsAdoptQuestionnaireItem -> {
-            cmsAdoptQuestionnaireItem.setQuestionnaireItemId(UUIDUtils.getUUID());
+            cmsAdoptQuestionnaireItem.setQuestionnaireItemId(UUIDUtils.getId());
             cmsAdoptQuestionnaireItem.setQuestionnaireId(questionnaireId);
             cmsAdoptQuestionnaireItem.setCreateDate(new Date());
             questionnaireItemMapper.insertSelective(cmsAdoptQuestionnaireItem);
@@ -109,7 +109,7 @@ public class QuestionnaireServiceImpl implements IQuestionnaireService {
 
     @Override
     public String crtAnswer(CmsAdoptQuestionnaireAnswer cmsAdoptQuestionnaireAnswer) {
-        String answerId = UUIDUtils.getUUID();
+        String answerId = UUIDUtils.getId();
         cmsAdoptQuestionnaireAnswer.setAnswerId(answerId);
         cmsAdoptQuestionnaireAnswer.setCreateDate(new Date());
         return answerId;

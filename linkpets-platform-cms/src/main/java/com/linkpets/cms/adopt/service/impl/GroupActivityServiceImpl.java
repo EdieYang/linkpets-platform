@@ -57,7 +57,7 @@ public class GroupActivityServiceImpl implements IGroupActivityService {
 
     @Override
     public String crtAdoptGroupActivity(CmsAdoptGroupActivity cmsAdoptGroupActivity) {
-        String activityId = UUIDUtils.getUUID();
+        String activityId = UUIDUtils.getId();
         cmsAdoptGroupActivity.setId(activityId);
         cmsAdoptGroupActivity.setCreateDate(new Date());
         cmsAdoptGroupActivityMapper.insertSelective(cmsAdoptGroupActivity);
@@ -78,7 +78,7 @@ public class GroupActivityServiceImpl implements IGroupActivityService {
     public String crtGroupActivityFollow(String userId, String activityId) {
         CmsAdoptGroupActivityUserRel followUser = cmsAdoptGroupActivityUserRelMapper.getFollowUserByUserIdAndActivityId(userId, activityId);
         if (followUser == null) {
-            String id = UUIDUtils.getUUID();
+            String id = UUIDUtils.getId();
             followUser = new CmsAdoptGroupActivityUserRel();
             followUser.setId(id);
             followUser.setUserId(userId);

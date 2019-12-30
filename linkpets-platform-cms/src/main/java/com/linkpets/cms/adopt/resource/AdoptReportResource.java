@@ -34,7 +34,7 @@ public class AdoptReportResource {
                                     @RequestParam("petId") String petId,
                                     @RequestParam("userId") String userId) {
         CmsAdoptReport report = new CmsAdoptReport();
-        report.setReportId(UUIDUtils.getUUID());
+        report.setReportId(UUIDUtils.getId());
         report.setPetId(petId);
         report.setReportType(reportType);
         report.setReportUserId(userId);

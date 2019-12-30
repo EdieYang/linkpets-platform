@@ -48,7 +48,7 @@ public class OrgServiceImpl implements IOrgService {
 
     @Override
     public String insertOrg(CmsAdoptOrg org) {
-        String orgId = UUIDUtils.getUUID();
+        String orgId = UUIDUtils.getId();
         org.setOrgId(orgId);
         org.setCreateDate(new Date());
         orgMapper.insertSelective(org);
@@ -75,7 +75,7 @@ public class OrgServiceImpl implements IOrgService {
         CmsAdoptOrgFollow orgFollow = orgFollowMapper.getOrgUserFollowByOrgId(orgId, userId);
         if (orgFollow == null) {
             orgFollow = new CmsAdoptOrgFollow();
-            orgFollow.setId(UUIDUtils.getUUID());
+            orgFollow.setId(UUIDUtils.getId());
             orgFollow.setOrgId(orgId);
             orgFollow.setUserId(userId);
             orgFollow.setCreateDate(new Date());
@@ -136,7 +136,7 @@ public class OrgServiceImpl implements IOrgService {
 
     @Override
     public void crtAdoptOrgPet(String orgId, String petId) {
-        orgMapper.crtAdoptOrgPetRel(UUIDUtils.getUUID(), orgId, petId);
+        orgMapper.crtAdoptOrgPetRel(UUIDUtils.getId(), orgId, petId);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class OrgServiceImpl implements IOrgService {
 
     @Override
     public String insertActivity(CmsAdoptOrgActivity activity) {
-        String activityId = UUIDUtils.getUUID();
+        String activityId = UUIDUtils.getId();
         activity.setId(activityId);
         activity.setCreateDate(new Date());
         cmsAdoptOrgActivityMapper.insertSelective(activity);
@@ -160,7 +160,7 @@ public class OrgServiceImpl implements IOrgService {
 
     @Override
     public String insertGallery(CmsAdoptOrgGallery gallery) {
-        String id = UUIDUtils.getUUID();
+        String id = UUIDUtils.getId();
         gallery.setId(id);
         gallery.setCreateDate(new Date());
         gallery.setIsValid(1);
@@ -173,11 +173,11 @@ public class OrgServiceImpl implements IOrgService {
         cmsAdoptOrgGalleryMapper.updateByPrimaryKeySelective(gallery);
     }
 
-    @Override
-    public PageInfo<Map<String, Object>> getOrgUserList(String orgId, int pageNum, int pageSize, String orderBy) {
-        PageHelper.startPage(pageNum, pageSize, orderBy);
-        List<Map<String, Object>> list = sysUserMapper.getOrgUserList(orgId);
-        PageInfo<Map<String, Object>> page = new PageInfo<>(list);
-        return page;
-    }
+//    @Override
+//    public PageInfo<Map<String, Object>> getOrgUserList(String orgId, int pageNum, int pageSize, String orderBy) {
+//        PageHelper.startPage(pageNum, pageSize, orderBy);
+//        List<Map<String, Object>> list = sysUserMapper.getOrgUserList(orgId);
+//        PageInfo<Map<String, Object>> page = new PageInfo<>(list);
+//        return page;
+//    }
 }

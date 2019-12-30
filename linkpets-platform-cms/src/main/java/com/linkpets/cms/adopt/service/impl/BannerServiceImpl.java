@@ -35,7 +35,7 @@ public class BannerServiceImpl implements IBannerService {
 
     @Override
     public String crtBanner(CmsBanner cmsBanner) {
-        String id = UUIDUtils.getUUID();
+        String id = UUIDUtils.getId();
         cmsBanner.setBannerId(id);
         cmsBanner.setCreateTime(new Date());
         bannerMapper.insertSelective(cmsBanner);

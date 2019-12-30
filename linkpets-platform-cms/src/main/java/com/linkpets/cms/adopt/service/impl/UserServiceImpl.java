@@ -110,10 +110,10 @@ public class UserServiceImpl implements IUserService {
         return cmsUserMapper.getTotalUserCount();
     }
 
-	@Override
-	public SysUser getUserByAccountAndPassword(String userAcc, String password) {
-		return sysUserMapper.getUserByAccountAndPassword(userAcc, password);
-	}
+//	@Override
+//	public SysUser getUserByAccountAndPassword(String userAcc, String password) {
+//		return sysUserMapper.getUserByAccountAndPassword(userAcc, password);
+//	}
 
 
 }

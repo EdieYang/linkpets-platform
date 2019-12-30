@@ -40,7 +40,7 @@ public class IActivityAssistServiceImpl implements IActivityAssistService {
 
 
         CmsActivityAssistance activityAssistance = new CmsActivityAssistance();
-        activityAssistance.setAssistId(UUIDUtils.getUUID());
+        activityAssistance.setAssistId(UUIDUtils.getId());
         activityAssistance.setActivityId(activityId);
         activityAssistance.setUserId(userId);
         activityAssistance.setAssistType(assistType);
@@ -51,7 +51,7 @@ public class IActivityAssistServiceImpl implements IActivityAssistService {
 
         //新增抽奖机会
         CmsActivityDraft activityDraft = new CmsActivityDraft();
-        activityDraft.setDraftId(UUIDUtils.getUUID());
+        activityDraft.setDraftId(UUIDUtils.getId());
         activityDraft.setActivityId(activityId);
         activityDraft.setDraftStatus(UN_DRAFT_STATUS);
         activityDraft.setUserId(userId);

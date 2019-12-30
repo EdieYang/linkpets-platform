@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkpets.core.dao.SysRouteMapper">
+  <resultMap id="BaseResultMap" type="com.linkpets.core.model.SysRoute">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="component" jdbcType="VARCHAR" property="component" />
+    <result column="component_path" jdbcType="VARCHAR" property="componentPath" />
+    <result column="cache" jdbcType="INTEGER" property="cache" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, parent_id, title, path, name, component, component_path, cache, sort, create_date, 
+    del_flag
+  </sql>
+  <insert id="insertSelective" parameterType="com.linkpets.core.model.SysRoute">
+    insert into sys_route
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="component != null">
+        component,
+      </if>
+      <if test="componentPath != null">
+        component_path,
+      </if>
+      <if test="cache != null">
+        cache,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null">
+        #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="componentPath != null">
+        #{componentPath,jdbcType=VARCHAR},
+      </if>
+      <if test="cache != null">
+        #{cache,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.SysRoute">
+    update sys_route
+    <set>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null">
+        component = #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="componentPath != null">
+        component_path = #{componentPath,jdbcType=VARCHAR},
+      </if>
+      <if test="cache != null">
+        cache = #{cache,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

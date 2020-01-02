@@ -6,10 +6,10 @@
         <result column="role_id" jdbcType="VARCHAR" property="roleId"/>
         <result column="menu_id" jdbcType="VARCHAR" property="menuId"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
-        <result column="del_flag" jdbcType="VARCHAR" property="delFlag"/>
+        <result column="is_valid" jdbcType="VARCHAR" property="isValid"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, role_id, menu_id, create_date, del_flag
+    id, role_id, menu_id, create_date, is_valid
   </sql>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.SysRoleMenuRel">
         insert into sys_role_menu_rel
@@ -26,8 +26,8 @@
             <if test="createDate != null">
                 create_date,
             </if>
-            <if test="delFlag != null">
-                del_flag,
+            <if test="isValid != null">
+                is_valid,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -43,8 +43,8 @@
             <if test="createDate != null">
                 #{createDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="delFlag != null">
-                #{delFlag,jdbcType=VARCHAR},
+            <if test="isValid != null">
+                #{isValid,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -67,8 +67,8 @@
             <if test="createDate != null">
                 create_date = #{createDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="delFlag != null">
-                del_flag = #{delFlag,jdbcType=VARCHAR},
+            <if test="isValid != null">
+                is_valid = #{isValid,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}

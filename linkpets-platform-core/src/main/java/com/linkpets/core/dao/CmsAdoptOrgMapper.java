@@ -2,6 +2,7 @@ package com.linkpets.core.dao;
 
 import com.linkpets.core.model.*;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -93,5 +94,12 @@ public interface CmsAdoptOrgMapper {
      * @param id
      */
     void uptAdoptOrgPetRel(@Param("id") String id);
+
+    @Update({
+            "UPDATE cms_adopt_org ",
+            "SET is_valid = 0 ",
+            "where org_id = #{orgId}"
+    })
+    void delOrg(String orgId);
 
 }

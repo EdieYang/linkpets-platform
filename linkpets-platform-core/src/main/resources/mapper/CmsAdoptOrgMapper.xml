@@ -41,7 +41,7 @@
         select
         <include refid="Base_Column_List"/>
         from cms_adopt_org
-        order by sort
+        where is_valid = 1
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         <!--

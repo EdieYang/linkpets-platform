@@ -18,13 +18,13 @@ public interface SysUserMapper {
             "user_portrait, mobile_phone, ",
             "email, is_active, ",
             "create_by, create_date, ",
-            "del_flag)",
+            "is_valid)",
             "values (#{userId,jdbcType=VARCHAR}, #{userAccount,jdbcType=VARCHAR}, ",
             "#{password,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, ",
             "#{userPortrait,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, ",
             "#{email,jdbcType=VARCHAR}, #{isActive,jdbcType=VARCHAR}, ",
             "#{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, ",
-            "#{delFlag,jdbcType=VARCHAR})"
+            "#{isValid,jdbcType=INTEGER})"
     })
     int insert(SysUser record);
 
@@ -33,7 +33,7 @@ public interface SysUserMapper {
     @Select({
             "select",
             "user_id, user_account, password, user_name, user_portrait, mobile_phone, email, ",
-            "is_active, create_by, create_date, del_flag",
+            "is_active, create_by, create_date, is_valid",
             "from sys_user",
             "where user_id = #{userId,jdbcType=VARCHAR}"
     })
@@ -53,7 +53,7 @@ public interface SysUserMapper {
             "is_active = #{isActive,jdbcType=VARCHAR},",
             "create_by = #{createBy,jdbcType=VARCHAR},",
             "create_date = #{createDate,jdbcType=TIMESTAMP},",
-            "del_flag = #{delFlag,jdbcType=VARCHAR}",
+            "is_valid = #{isValid,jdbcType=INTEGER}",
             "where user_id = #{userId,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(SysUser record);
@@ -61,7 +61,7 @@ public interface SysUserMapper {
     @Select({
             "select",
             "user_id, user_account, password, user_name, user_portrait, mobile_phone, ",
-            "email, is_active, create_by, create_date, del_flag",
+            "email, is_active, create_by, create_date, is_valid",
             "from sys_user",
             "where user_account = #{userAccount,jdbcType=VARCHAR}"
     })
@@ -70,7 +70,7 @@ public interface SysUserMapper {
 
     @Update({
             "update sys_user",
-            "set del_flag = '0'",
+            "set is_valid = 0",
             "where user_id = #{userId,jdbcType=VARCHAR}"
     })
     void delSysUser(String userId);

@@ -1,9 +1,11 @@
 package com.linkpets.cms.adopt.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 import com.linkpets.core.model.CmsAdoptAttention;
 import com.linkpets.core.model.CmsUser;
 import com.linkpets.core.model.SysUser;
+import com.linkpets.core.respEntity.RespOrgUser;
 
 import java.util.Map;
 
@@ -115,4 +117,16 @@ public interface IUserService {
 //    * @version V1.0   
 //     */
 //	SysUser getUserByAccountAndPassword(String userAcc, String password);
+
+    /**
+     * 分页获取组织用户列表
+     *
+     * @param wxAccount
+     * @param orgId
+     * @param mobilePhone
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageInfo<RespOrgUser> getOrgUserInfoPage(String wxAccount, String mobilePhone, String orgId, Integer pageNum, Integer pageSize);
 }

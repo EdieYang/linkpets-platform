@@ -9,6 +9,14 @@ import java.util.Map;
 public interface IOrgService {
 
     /**
+     * 分页获取组织列表
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageInfo<CmsAdoptOrg> getAdoptOrgPage(Integer pageNum, Integer pageSize);
+
+    /**
      * 获取公益机构列表
      *
      * @return
@@ -37,6 +45,12 @@ public interface IOrgService {
      * @param org
      */
     void uptOrg(CmsAdoptOrg org);
+
+    /**
+     * 删除公益组织
+     * @param orgId
+     */
+    void delOrg(String orgId);
 
     /**
      * 获取公益机构粉丝列表

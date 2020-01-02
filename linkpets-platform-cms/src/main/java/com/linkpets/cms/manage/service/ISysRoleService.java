@@ -44,6 +44,13 @@ public interface ISysRoleService {
     SysRole getSysRole(String id);
 
     /**
+     * 根据roleCode获取角色信息
+     * @param roleCode
+     * @return
+     */
+    SysRole getSysRoleByRoleCode(String roleCode);
+
+    /**
      * 创建角色
      *
      * @param sysRole

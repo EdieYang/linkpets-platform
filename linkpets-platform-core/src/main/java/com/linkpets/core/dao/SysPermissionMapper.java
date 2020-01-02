@@ -15,10 +15,10 @@ public interface SysPermissionMapper {
     @Insert({
             "insert into sys_permission (id, permission_name, ",
             "permission_code, permission_description, ",
-            "del_flag, create_date)",
+            "is_valid, create_date)",
             "values (#{id,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR}, ",
             "#{permissionCode,jdbcType=VARCHAR}, #{permissionDescription,jdbcType=VARCHAR}, ",
-            "#{delFlag,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})"
+            "#{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})"
     })
     int insert(SysPermission record);
 
@@ -26,7 +26,7 @@ public interface SysPermissionMapper {
 
     @Select({
             "select",
-            "id, permission_name, permission_code, permission_description, del_flag, create_date",
+            "id, permission_name, permission_code, permission_description, is_valid, create_date",
             "from sys_permission",
             "where id = #{id,jdbcType=VARCHAR}"
     })
@@ -40,7 +40,7 @@ public interface SysPermissionMapper {
             "set permission_name = #{permissionName,jdbcType=VARCHAR},",
             "permission_code = #{permissionCode,jdbcType=VARCHAR},",
             "permission_description = #{permissionDescription,jdbcType=VARCHAR},",
-            "del_flag = #{delFlag,jdbcType=INTEGER},",
+            "is_valid = #{isValid,jdbcType=INTEGER},",
             "create_date = #{createDate,jdbcType=TIMESTAMP}",
             "where id = #{id,jdbcType=VARCHAR}"
     })
@@ -50,7 +50,7 @@ public interface SysPermissionMapper {
 
     @Update({
             "update sys_permission",
-            "set del_flag = '0'",
+            "set is_valid = '0'",
             "where id = #{id,jdbcType=VARCHAR}"
     })
     void delSysPermission(String id);

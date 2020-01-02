@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.linkpets.core.model.CmsUser;
+import com.linkpets.core.respEntity.RespOrgUser;
 import org.apache.ibatis.annotations.Param;
 
 public interface CmsUserMapper {
@@ -110,5 +111,14 @@ public interface CmsUserMapper {
      * @return
      */
     CmsUser getUserByUnionId(String unionId);
+
+    /**
+     * 获取组织所属用户列表
+     * @param wxAccount
+     * @param mobilePhone
+     * @param orgId
+     * @return
+     */
+    List<RespOrgUser> getOrgUserInfoPage(String wxAccount, String mobilePhone, String orgId);
 
 }

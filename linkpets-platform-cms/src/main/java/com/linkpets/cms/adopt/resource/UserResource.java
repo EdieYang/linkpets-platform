@@ -2,10 +2,12 @@ package com.linkpets.cms.adopt.resource;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.service.IUserService;
 import com.linkpets.core.model.CmsAdoptAttention;
 import com.linkpets.core.model.CmsUser;
+import com.linkpets.core.respEntity.RespOrgUser;
 import com.linkpets.result.PlatformResult;
 import com.linkpets.util.DateUtils;
 import com.linkpets.util.UserAnalyseUtil;

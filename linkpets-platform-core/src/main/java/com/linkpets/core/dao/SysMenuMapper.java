@@ -16,11 +16,11 @@ public interface SysMenuMapper {
             "insert into sys_menu (id, parent_id, ",
             "title, path, icon, ",
             "sort, create_date, ",
-            "del_flag)",
+            "is_valid)",
             "values (#{id,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, ",
             "#{title,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, ",
             "#{sort,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, ",
-            "#{delFlag,jdbcType=VARCHAR})"
+            "#{isValid,jdbcType=VARCHAR})"
     })
     int insert(SysMenu record);
 
@@ -28,7 +28,7 @@ public interface SysMenuMapper {
 
     @Select({
             "select",
-            "id, parent_id, title, path, icon, sort, create_date, del_flag",
+            "id, parent_id, title, path, icon, sort, create_date, is_valid",
             "from sys_menu",
             "where id = #{id,jdbcType=VARCHAR}"
     })
@@ -45,14 +45,14 @@ public interface SysMenuMapper {
             "icon = #{icon,jdbcType=VARCHAR},",
             "sort = #{sort,jdbcType=INTEGER},",
             "create_date = #{createDate,jdbcType=TIMESTAMP},",
-            "del_flag = #{delFlag,jdbcType=VARCHAR}",
+            "is_valid = #{isValid,jdbcType=VARCHAR}",
             "where id = #{id,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(SysMenu record);
 
     @Update({
             "update sys_menu",
-            "set del_flag = '0'",
+            "set is_valid = '0'",
             "where id = #{id,jdbcType=VARCHAR}"
     })
     void delSysMenu(String menuId);
@@ -60,9 +60,9 @@ public interface SysMenuMapper {
 
     @Select({
             "select",
-            "id, parent_id, title, path, icon, sort, create_date, del_flag",
+            "id, parent_id, title, path, icon, sort, create_date, is_valid",
             "from sys_menu",
-            "where del_flag = '1'",
+            "where is_valid = '1'",
             "order by sort"
     })
     @ResultMap("com.linkpets.core.dao.SysMenuMapper.BaseResultMap")

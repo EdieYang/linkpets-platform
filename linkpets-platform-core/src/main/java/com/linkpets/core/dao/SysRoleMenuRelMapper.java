@@ -15,10 +15,10 @@ public interface SysRoleMenuRelMapper {
     @Insert({
             "insert into sys_role_menu_rel (id, role_id, ",
             "menu_id, create_date, ",
-            "del_flag)",
+            "is_valid)",
             "values (#{id,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, ",
             "#{menuId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, ",
-            "#{delFlag,jdbcType=VARCHAR})"
+            "#{isValid,jdbcType=VARCHAR})"
     })
     int insert(SysRoleMenuRel record);
 
@@ -26,7 +26,7 @@ public interface SysRoleMenuRelMapper {
 
     @Select({
             "select",
-            "id, role_id, menu_id, create_date, del_flag",
+            "id, role_id, menu_id, create_date, is_valid",
             "from sys_role_menu_rel",
             "where id = #{id,jdbcType=VARCHAR}"
     })
@@ -40,14 +40,14 @@ public interface SysRoleMenuRelMapper {
             "set role_id = #{roleId,jdbcType=VARCHAR},",
             "menu_id = #{menuId,jdbcType=VARCHAR},",
             "create_date = #{createDate,jdbcType=TIMESTAMP},",
-            "del_flag = #{delFlag,jdbcType=VARCHAR}",
+            "is_valid = #{isValid,jdbcType=VARCHAR}",
             "where id = #{id,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(SysRoleMenuRel record);
 
     @Update({
             "update sys_role_menu_rel",
-            "set del_flag = 0",
+            "set is_valid = 0",
             "where role_id = #{roleId,jdbcType=VARCHAR}"
     })
     void delAllMenusByRoleId(String roleId);

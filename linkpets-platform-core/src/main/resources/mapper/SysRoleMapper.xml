@@ -7,10 +7,10 @@
         <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
         <result column="role_description" jdbcType="VARCHAR" property="roleDescription"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
-        <result column="del_flag" jdbcType="VARCHAR" property="delFlag"/>
+        <result column="is_valid" jdbcType="VARCHAR" property="isValid"/>
     </resultMap>
     <sql id="Base_Column_List">
-        role_id, role_name, role_code, role_description, create_date, del_flag
+        role_id, role_name, role_code, role_description, create_date, is_valid
     </sql>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.SysRole">
         insert into sys_role
@@ -30,8 +30,8 @@
             <if test="createDate != null">
                 create_date,
             </if>
-            <if test="delFlag != null">
-                del_flag,
+            <if test="isValid != null">
+                is_valid,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -50,8 +50,8 @@
             <if test="createDate != null">
                 #{createDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="delFlag != null">
-                #{delFlag,jdbcType=VARCHAR},
+            <if test="isValid != null">
+                #{isValid,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -70,14 +70,14 @@
             <if test="createDate != null">
                 create_date = #{createDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="delFlag != null">
-                del_flag = #{delFlag,jdbcType=VARCHAR},
+            <if test="isValid != null">
+                is_valid = #{isValid,jdbcType=VARCHAR},
             </if>
         </set>
         where role_id = #{roleId,jdbcType=VARCHAR}
     </update>
     <update id="batchDelSysRole">
-        update sys_role set del_flag = 0
+        update sys_role set is_valid = 0
         where role_id in
         <foreach collection="list" index="index" item="item"
                  separator="," open="(" close=")">
@@ -88,7 +88,7 @@
         select
         <include refid="Base_Column_List"/>
         from sys_role
-        where del_flag = 1
+        where is_valid = 1
         <if test="roleName!=null and roleName!=''">
             and role_name like CONCAT('%',#{roleName},'%')
         </if>
@@ -100,8 +100,8 @@
         select ro.role_id, ro.role_name, ro.role_code, ro.role_description
         from sys_role ro,
              sys_user_role_rel r
-        where ro.del_flag = 1
-          and r.del_flag = 1
+        where ro.is_valid = 1
+          and r.is_valid = 1
           and ro.role_id = r.role_id
           and r.user_id = #{userId}
         order by ro.create_date desc

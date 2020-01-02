@@ -12,6 +12,7 @@ import com.linkpets.core.model.CmsAdoptAttention;
 import com.linkpets.core.model.CmsUser;
 import com.linkpets.core.model.CmsUserLogin;
 import com.linkpets.core.model.SysUser;
+import com.linkpets.core.respEntity.RespOrgUser;
 import com.linkpets.util.UserAnalyseUtil;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class UserServiceImpl implements IUserService {
 
     @Resource
     CmsAdoptAttentionMapper cmsAdoptAttentionMapper;
-    
+
     @Resource
     SysUserMapper sysUserMapper;
 
@@ -108,6 +109,13 @@ public class UserServiceImpl implements IUserService {
     @Override
     public int getTotalUserCount() {
         return cmsUserMapper.getTotalUserCount();
+    }
+
+    @Override
+    public PageInfo<RespOrgUser> getOrgUserInfoPage(String wxAccount, String mobilePhone, String orgId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<RespOrgUser> orgUserList = cmsUserMapper.getOrgUserInfoPage(wxAccount, mobilePhone, orgId);
+        return new PageInfo<>(orgUserList);
     }
 
 //	@Override

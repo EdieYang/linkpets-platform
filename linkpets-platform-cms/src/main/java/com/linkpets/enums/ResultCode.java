@@ -34,6 +34,7 @@ public enum ResultCode {
     MOBILE_PHONE_INVALID(30003, "手机号不正确"),
     VERIFY_CODE_INVALID(30003, "验证码不正确"),
     VERIFY_CODE_SEND_FAIL(30003, "验证码发送失败"),
+    CREATE_SYS_USER_ACCOUNT_FAIL(30004,"创建组织账号失败"),
 
     /* 系统错误：40001-49999 */
     SYSTEM_INNER_ERROR(40001, "系统繁忙，请稍后重试"),

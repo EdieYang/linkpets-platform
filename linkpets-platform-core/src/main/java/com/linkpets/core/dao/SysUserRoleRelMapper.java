@@ -16,10 +16,10 @@ public interface SysUserRoleRelMapper {
 
     @Insert({
             "insert into sys_user_role_rel (id, user_id, ",
-            "role_id, del_flag, ",
+            "role_id, is_valid, ",
             "create_date)",
             "values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, ",
-            "#{roleId,jdbcType=VARCHAR}, #{delFlag,jdbcType=INTEGER}, ",
+            "#{roleId,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, ",
             "#{createDate,jdbcType=TIMESTAMP})"
     })
     int insert(SysUserRoleRel record);
@@ -28,7 +28,7 @@ public interface SysUserRoleRelMapper {
 
     @Select({
             "select",
-            "id, user_id, role_id, del_flag, create_date",
+            "id, user_id, role_id, is_valid, create_date",
             "from sys_user_role_rel",
             "where id = #{id,jdbcType=VARCHAR}"
     })
@@ -41,7 +41,7 @@ public interface SysUserRoleRelMapper {
             "update sys_user_role_rel",
             "set user_id = #{userId,jdbcType=VARCHAR},",
             "role_id = #{roleId,jdbcType=VARCHAR},",
-            "del_flag = #{delFlag,jdbcType=INTEGER},",
+            "is_valid = #{isValid,jdbcType=INTEGER},",
             "create_date = #{createDate,jdbcType=TIMESTAMP}",
             "where id = #{id,jdbcType=VARCHAR}"
     })
@@ -51,15 +51,22 @@ public interface SysUserRoleRelMapper {
 
     @Select({
             "select",
-            "id, user_id, role_id, del_flag, create_date",
+            "id, user_id, role_id, is_valid, create_date",
             "from sys_user_role_rel",
             "where user_id = #{userId,jdbcType=VARCHAR}",
             "and role_id = #{roleId,jdbcType=VARCHAR}",
-            "and del_flag = 1",
+            "and is_valid = 1",
     })
     @ResultMap("com.linkpets.core.dao.SysUserRoleRelMapper.BaseResultMap")
     SysUserRoleRel selectByUserIdAndRoleId(String userId, String roleId);
 
     List<SysUserRoleRes> getSysUserRolePage(String userId, String roleName, String roleCode);
+
+
+    @Delete({
+            "delete from sys_user_role_rel",
+            "where user_id = #{userId,jdbcType=VARCHAR}"
+    })
+    void deleteByUserId(String userId);
 
 }

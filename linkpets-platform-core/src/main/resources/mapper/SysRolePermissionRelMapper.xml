@@ -5,7 +5,7 @@
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="role_id" jdbcType="VARCHAR" property="roleId"/>
         <result column="permission_id" jdbcType="VARCHAR" property="permissionId"/>
-        <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
+        <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
     </resultMap>
     <resultMap id="BaseRolePermissionResultMap" type="com.linkpets.core.respEntity.system.SysRolePermissionRes">
@@ -17,7 +17,7 @@
         <result column="is_add" jdbcType="INTEGER" property="isAdd"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, role_id, permission_id, del_flag, create_date
+    id, role_id, permission_id, is_valid, create_date
   </sql>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.SysRolePermissionRel">
         insert into sys_role_permission_rel
@@ -31,8 +31,8 @@
             <if test="permissionId != null">
                 permission_id,
             </if>
-            <if test="delFlag != null">
-                del_flag,
+            <if test="isValid != null">
+                is_valid,
             </if>
             <if test="createDate != null">
                 create_date,
@@ -48,8 +48,8 @@
             <if test="permissionId != null">
                 #{permissionId,jdbcType=VARCHAR},
             </if>
-            <if test="delFlag != null">
-                #{delFlag,jdbcType=INTEGER},
+            <if test="isValid != null">
+                #{isValid,jdbcType=INTEGER},
             </if>
             <if test="createDate != null">
                 #{createDate,jdbcType=TIMESTAMP},
@@ -65,8 +65,8 @@
             <if test="permissionId != null">
                 permission_id = #{permissionId,jdbcType=VARCHAR},
             </if>
-            <if test="delFlag != null">
-                del_flag = #{delFlag,jdbcType=INTEGER},
+            <if test="isValid != null">
+                is_valid = #{isValid,jdbcType=INTEGER},
             </if>
             <if test="createDate != null">
                 create_date = #{createDate,jdbcType=TIMESTAMP},
@@ -79,8 +79,8 @@
         0 else 1 end as is_add
         from sys_permission p
         left join sys_role_permission_rel r
-        on p.id = r.permission_id and r.del_flag = 1 and r.role_id = #{roleId}
-        where p.del_flag = 1
+        on p.id = r.permission_id and r.is_valid = 1 and r.role_id = #{roleId}
+        where p.is_valid = 1
         <if test="permissionName !=null and permissionName !='' ">
             and p.permission_name like CONCAT(#{permissionName},'%')
         </if>

@@ -17,12 +17,12 @@ public interface SysRouteMapper {
             "title, path, name, ",
             "component, component_path, ",
             "cache, sort, create_date, ",
-            "del_flag)",
+            "is_valid)",
             "values (#{id,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, ",
             "#{title,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, ",
             "#{component,jdbcType=VARCHAR}, #{componentPath,jdbcType=VARCHAR}, ",
             "#{cache,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, ",
-            "#{delFlag,jdbcType=VARCHAR})"
+            "#{isValid,jdbcType=VARCHAR})"
     })
     int insert(SysRoute record);
 
@@ -31,7 +31,7 @@ public interface SysRouteMapper {
     @Select({
             "select",
             "id, parent_id, title, path, name, component, component_path, cache, sort, create_date, ",
-            "del_flag",
+            "is_valid",
             "from sys_route",
             "where id = #{id,jdbcType=VARCHAR}"
     })
@@ -51,14 +51,14 @@ public interface SysRouteMapper {
             "cache = #{cache,jdbcType=INTEGER},",
             "sort = #{sort,jdbcType=INTEGER},",
             "create_date = #{createDate,jdbcType=TIMESTAMP},",
-            "del_flag = #{delFlag,jdbcType=VARCHAR}",
+            "is_valid = #{isValid,jdbcType=VARCHAR}",
             "where id = #{id,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(SysRoute record);
 
     @Update({
             "update sys_route",
-            "set del_flag = '0'",
+            "set is_valid = '0'",
             "where id = #{id,jdbcType=VARCHAR}"
     })
     void delSysRoute(String routeId);
@@ -66,10 +66,10 @@ public interface SysRouteMapper {
     @Select({
             "select",
             "id, parent_id, title, path, name, component, component_path, cache, sort, create_date, ",
-            "del_flag",
+            "is_valid",
             "from sys_route",
             "where parent_id = #{parentId,jdbcType=VARCHAR}",
-            "and del_flag = '1'",
+            "and is_valid = '1'",
             "order by sort"
     })
     @ResultMap("com.linkpets.core.dao.SysRouteMapper.BaseResultMap")

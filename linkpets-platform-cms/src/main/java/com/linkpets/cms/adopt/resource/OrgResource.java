@@ -6,7 +6,9 @@ import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.service.IApplyService;
 import com.linkpets.cms.adopt.service.IOrgService;
 import com.linkpets.cms.adopt.service.IPetService;
+import com.linkpets.cms.adopt.service.IUserService;
 import com.linkpets.core.model.*;
+import com.linkpets.core.respEntity.RespOrgUser;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -36,6 +38,17 @@ public class OrgResource {
     @Resource
     IApplyService applyService;
 
+    @Resource
+    IUserService userService;
+
+    @ApiOperation("分页获取公益组织列表")
+    @GetMapping(value = "/page")
+    public PlatformResult getAdoptOrgPage(@RequestParam("pageNum") Integer pageNum,
+                                          @RequestParam("pageSize") Integer pageSize) {
+        PageInfo<CmsAdoptOrg> orgPageInfo = orgService.getAdoptOrgPage(pageNum, pageSize);
+        return PlatformResult.success(orgPageInfo);
+    }
+
     @ApiOperation("获取公益组织列表")
     @GetMapping(value = "/list")
     public PlatformResult getAdoptOrgList() {
@@ -50,6 +63,17 @@ public class OrgResource {
         return PlatformResult.success(adoptOrg);
     }
 
+    @ApiOperation("分页获取组织用户列表")
+    @GetMapping("/user/page")
+    public PlatformResult getOrgUserInfoPage(@RequestParam("wxAccount") String wxAccount,
+                                             @RequestParam("mobilePhone") String mobilePhone,
+                                             @RequestParam(value = "orgId", required = false) String orgId,
+                                             @RequestParam("pageNum") Integer pageNum,
+                                             @RequestParam("pageSize") Integer pageSize) {
+        PageInfo<RespOrgUser> orgUserPageInfo = userService.getOrgUserInfoPage(wxAccount, mobilePhone, orgId, pageNum, pageSize);
+        return PlatformResult.success(orgUserPageInfo);
+    }
+
     @ApiOperation("新增公益组织")
     @PostMapping(value = "/org")
     public PlatformResult insertAdoptOrgInfo(@RequestBody CmsAdoptOrg adoptOrg) {
@@ -61,6 +85,14 @@ public class OrgResource {
     @PutMapping(value = "/org")
     public PlatformResult uptAdoptOrgInfo(@RequestBody CmsAdoptOrg adoptOrg) {
         orgService.uptOrg(adoptOrg);
+        return PlatformResult.success();
+    }
+
+
+    @ApiOperation("删除公益组织")
+    @DeleteMapping(value = "/org")
+    public PlatformResult delAdoptOrgInfo(@RequestParam("orgId") String orgId) {
+        orgService.delOrg(orgId);
         return PlatformResult.success();
     }
 
@@ -214,14 +246,14 @@ public class OrgResource {
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "sort", value = "排序规则", required = false)})
     @GetMapping(value = "/apply")
     PlatformResult getApplyList(@RequestParam("pageNum") int pageNum,
-                               @RequestParam("pageSize") int pageSize,
-                               @RequestParam("orgId") String orgId,
-                               @RequestParam(value = "petId", required = false) String petId,
-                               @RequestParam(value = "adopterId", required = false) String adopterId,
-                               @RequestParam(value = "applyBy", required = false, defaultValue = "") String applyBy,
-                               @RequestParam(value = "applyStatus", required = false) String applyStatus,
-                               @RequestParam(value = "sortCol", required = false, defaultValue = "applyTime") String sortCol,
-                               @RequestParam(value = "sort", required = false, defaultValue = "desc") String sort) {
+                                @RequestParam("pageSize") int pageSize,
+                                @RequestParam("orgId") String orgId,
+                                @RequestParam(value = "petId", required = false) String petId,
+                                @RequestParam(value = "adopterId", required = false) String adopterId,
+                                @RequestParam(value = "applyBy", required = false, defaultValue = "") String applyBy,
+                                @RequestParam(value = "applyStatus", required = false) String applyStatus,
+                                @RequestParam(value = "sortCol", required = false, defaultValue = "applyTime") String sortCol,
+                                @RequestParam(value = "sort", required = false, defaultValue = "desc") String sort) {
 
 
         Map<String, Object> param = new HashMap<String, Object>();

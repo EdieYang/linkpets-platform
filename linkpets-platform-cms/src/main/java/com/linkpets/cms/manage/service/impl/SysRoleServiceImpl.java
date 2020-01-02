@@ -57,6 +57,11 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
+    public SysRole getSysRoleByRoleCode(String roleCode) {
+        return sysRoleMapper.getSysRoleByRoleCode(roleCode);
+    }
+
+    @Override
     public String crtSysRole(SysRole sysRole) {
         String roleId = UUIDUtils.getId();
         sysRole.setRoleId(roleId);
@@ -97,7 +102,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public void delSysUserRole(String userId, String roleId) {
         SysUserRoleRel sysUserRoleRel = sysUserRoleRelMapper.selectByUserIdAndRoleId(userId, roleId);
         if (sysUserRoleRel != null) {
-            sysUserRoleRel.setDelFlag(0);
+            sysUserRoleRel.setIsValid(0);
             sysUserRoleRelMapper.updateByPrimaryKeySelective(sysUserRoleRel);
         }
     }
@@ -126,7 +131,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public void delSysRolePermission(String roleId, String permissionId) {
         SysRolePermissionRel sysRolePermissionRel = sysRolePermissionRelMapper.selectByPermissionIdAndRoleId(permissionId, roleId);
         if (sysRolePermissionRel != null) {
-            sysRolePermissionRel.setDelFlag(0);
+            sysRolePermissionRel.setIsValid(0);
             sysRolePermissionRelMapper.updateByPrimaryKeySelective(sysRolePermissionRel);
         }
     }

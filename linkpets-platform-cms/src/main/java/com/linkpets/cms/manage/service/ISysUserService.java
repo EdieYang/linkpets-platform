@@ -36,6 +36,7 @@ public interface ISysUserService {
 
     /**
      * 根据userId查询用户
+     *
      * @param userId
      * @return
      */
@@ -69,4 +70,19 @@ public interface ISysUserService {
      * @param userIdList
      */
     void batchDelSysUser(List<String> userIdList);
+
+    /**
+     * 新增组织用户账号
+     *
+     * @param userId
+     * @param orgId
+     */
+    String crtOrgSysUser(String userId, String orgId);
+
+    /**
+     * 删除组织用户
+     * @param userId
+     * @param orgId
+     */
+    void delOrgSysUser(String userId, String orgId);
 }

@@ -15,10 +15,10 @@ public interface SysRolePermissionRelMapper {
 
     @Insert({
             "insert into sys_role_permission_rel (id, role_id, ",
-            "permission_id, del_flag, ",
+            "permission_id, is_valid, ",
             "create_date)",
             "values (#{id,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, ",
-            "#{permissionId,jdbcType=VARCHAR}, #{delFlag,jdbcType=INTEGER}, ",
+            "#{permissionId,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, ",
             "#{createDate,jdbcType=TIMESTAMP})"
     })
     int insert(SysRolePermissionRel record);
@@ -27,7 +27,7 @@ public interface SysRolePermissionRelMapper {
 
     @Select({
             "select",
-            "id, role_id, permission_id, del_flag, create_date",
+            "id, role_id, permission_id, is_valid, create_date",
             "from sys_role_permission_rel",
             "where id = #{id,jdbcType=VARCHAR}"
     })
@@ -40,7 +40,7 @@ public interface SysRolePermissionRelMapper {
             "update sys_role_permission_rel",
             "set role_id = #{roleId,jdbcType=VARCHAR},",
             "permission_id = #{permissionId,jdbcType=VARCHAR},",
-            "del_flag = #{delFlag,jdbcType=INTEGER},",
+            "is_valid = #{isValid,jdbcType=INTEGER},",
             "create_date = #{createDate,jdbcType=TIMESTAMP}",
             "where id = #{id,jdbcType=VARCHAR}"
     })
@@ -48,11 +48,11 @@ public interface SysRolePermissionRelMapper {
 
     @Select({
             "select",
-            "id, role_id, permission_id, del_flag, create_date",
+            "id, role_id, permission_id, is_valid, create_date",
             "from sys_role_permission_rel",
             "where permission_id = #{permissionId,jdbcType=VARCHAR}",
             "and role_id = #{roleId,jdbcType=VARCHAR}",
-            "and del_flag = 1 "
+            "and is_valid = 1 "
     })
     @ResultMap("com.linkpets.core.dao.SysRolePermissionRelMapper.BaseResultMap")
     SysRolePermissionRel selectByPermissionIdAndRoleId(String permissionId, String roleId);

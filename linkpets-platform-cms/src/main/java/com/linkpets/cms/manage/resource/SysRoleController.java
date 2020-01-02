@@ -48,6 +48,13 @@ public class SysRoleController {
         return PlatformResult.success(rolePage);
     }
 
+    @ApiOperation("根据ROLE_CODE获取角色信息")
+    @GetMapping("roleCode")
+    public PlatformResult getSysRoleByRoleCode(@RequestParam(value = "roleCode") String roleCode) {
+        SysRole rolePage = sysRoleService.getSysRoleByRoleCode(roleCode);
+        return PlatformResult.success(rolePage);
+    }
+
     @ApiOperation("新增角色")
     @PostMapping()
     public PlatformResult crtSysRole(@RequestBody SysRole sysRole) {

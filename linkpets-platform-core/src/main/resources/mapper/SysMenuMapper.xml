@@ -9,10 +9,10 @@
         <result column="icon" jdbcType="VARCHAR" property="icon"/>
         <result column="sort" jdbcType="INTEGER" property="sort"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
-        <result column="del_flag" jdbcType="VARCHAR" property="delFlag"/>
+        <result column="is_valid" jdbcType="VARCHAR" property="isValid"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, parent_id, title, path, icon, sort, create_date, del_flag
+    id, parent_id, title, path, icon, sort, create_date, is_valid
   </sql>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.SysMenu">
         insert into sys_menu
@@ -38,8 +38,8 @@
             <if test="createDate != null">
                 create_date,
             </if>
-            <if test="delFlag != null">
-                del_flag,
+            <if test="isValid != null">
+                is_valid,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -64,8 +64,8 @@
             <if test="createDate != null">
                 #{createDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="delFlag != null">
-                #{delFlag,jdbcType=VARCHAR},
+            <if test="isValid != null">
+                #{isValid,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -90,8 +90,8 @@
             <if test="createDate != null">
                 create_date = #{createDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="delFlag != null">
-                del_flag = #{delFlag,jdbcType=VARCHAR},
+            <if test="isValid != null">
+                is_valid = #{isValid,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
@@ -101,14 +101,14 @@
         <include refid="Base_Column_List"></include>
         from sys_menu
         where parent_id = #{parentId}
-        and del_flag = '1'
+        and is_valid = '1'
         order by sort
     </select>
     <select id="getSysMenuListByParentIds" resultType="com.linkpets.core.model.SysMenu">
         select
         <include refid="Base_Column_List"></include>
         from sys_menu
-        where del_flag = 1
+        where is_valid = 1
         and id in
         <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
             #{item}
@@ -120,8 +120,8 @@
         m.id, m.parent_id, m.title, m.path, m.icon, m.sort
         from sys_menu m,sys_role_menu_rel r
         where m.id = r.menu_id
-        and m.del_flag = 1
-        and r.del_flag = 1
+        and m.is_valid = 1
+        and r.is_valid = 1
         and r.role_id =#{roleId}
     </select>
     <select id="getSysMenuListByUserId" resultMap="BaseResultMap">
@@ -130,10 +130,10 @@
         where m.id = r.menu_id
         and r.role_id = u.role_id
         and u.role_id = ro.role_id
-        and m.del_flag = 1
-        and r.del_flag = 1
-        and u.del_flag = 1
-        and ro.del_flag = 1
+        and m.is_valid = 1
+        and r.is_valid = 1
+        and u.is_valid = 1
+        and ro.is_valid = 1
         and u.user_id = #{userId}
         order by sort
     </select>

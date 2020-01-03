@@ -25,7 +25,7 @@
         <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
         <result column="mobilePhone" jdbcType="VARCHAR" property="mobilePhone"/>
         <result column="isAdd" jdbcType="INTEGER" property="isAdd"/>
-        <collection property="sysRoleList" column="" select="getOrgUserRoleList"/>
+        <collection property="sysRoleList" column="sysUserId" select="getOrgUserRoleList"/>
     </resultMap>
 
 
@@ -319,9 +319,7 @@
         CASE
         WHEN o.org_id IS NULL THEN 0
         ELSE 1
-        END AS isAdd,
-        IFNULL(rr.role_id, '') AS roleId,
-        IFNULL(sr.role_code, '') AS roleCode
+        END AS isAdd
         FROM
         cms_user u
         LEFT JOIN
@@ -329,12 +327,6 @@
         LEFT JOIN
         sys_user s ON o.sys_user_id = s.user_id
         AND s.is_valid = 1
-        LEFT JOIN
-        sys_user_role_rel rr ON s.user_id = rr.user_id
-        AND rr.is_valid = 1
-        LEFT JOIN
-        sys_role sr ON rr.role_id = sr.role_id
-        AND sr.is_valid = 1
         WHERE
         u.is_valid = 1
         and u.mobile_phone is not null
@@ -351,5 +343,13 @@
             and u.mobile_phone like CONCAT(#{mobilePhone},'%')
         </if>
         ORDER BY s.create_date DESC
+    </select>
+    <select id="getOrgUserRoleList" resultType="com.linkpets.core.model.SysRole">
+        select r.role_id as roleId , r.role_name as roleName,r.role_code as roleCode
+        from sys_user_role_rel srr ,sys_role r
+        where srr.role_id = r.role_id
+        and srr.is_valid = 1
+        and r.is_valid =1
+        and srr.user_id = #{userId}
     </select>
 </mapper>

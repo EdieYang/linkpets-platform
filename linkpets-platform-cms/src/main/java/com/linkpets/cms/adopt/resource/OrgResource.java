@@ -65,8 +65,8 @@ public class OrgResource {
 
     @ApiOperation("分页获取组织用户列表")
     @GetMapping("/user/page")
-    public PlatformResult getOrgUserInfoPage(@RequestParam("wxAccount") String wxAccount,
-                                             @RequestParam("mobilePhone") String mobilePhone,
+    public PlatformResult getOrgUserInfoPage(@RequestParam(value = "wxAccount",required = false) String wxAccount,
+                                             @RequestParam(value = "mobilePhone",required = false) String mobilePhone,
                                              @RequestParam(value = "orgId", required = false) String orgId,
                                              @RequestParam("pageNum") Integer pageNum,
                                              @RequestParam("pageSize") Integer pageSize) {

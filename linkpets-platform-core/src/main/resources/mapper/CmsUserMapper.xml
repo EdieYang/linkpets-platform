@@ -17,6 +17,18 @@
         <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
     </resultMap>
+    <resultMap id="BaseOrgUserResultMap" type="com.linkpets.core.respEntity.RespOrgUser">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="userId" jdbcType="VARCHAR" property="userId"/>
+        <result column="sysUserId" jdbcType="VARCHAR" property="sysUserId"/>
+        <result column="wxAccount" jdbcType="VARCHAR" property="wxAccount"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="mobilePhone" jdbcType="VARCHAR" property="mobilePhone"/>
+        <result column="isAdd" jdbcType="INTEGER" property="isAdd"/>
+        <collection property="sysRoleList" column="" select="getOrgUserRoleList"/>
+    </resultMap>
+
+
     <sql id="Base_Column_List">
         user_id, nick_name, mobile_phone, wx_account, portrait, union_id, openid, birthday,
     gender, location, intro, authenticated, is_valid, create_date
@@ -296,7 +308,7 @@
         from cms_user
         where union_id = #{unionId}
     </select>
-    <select id="getOrgUserInfoPage" resultType="com.linkpets.core.respEntity.RespOrgUser">
+    <select id="getOrgUserInfoPage" resultMap="BaseOrgUserResultMap">
         SELECT
         o.id AS id,
         u.user_id as userId,

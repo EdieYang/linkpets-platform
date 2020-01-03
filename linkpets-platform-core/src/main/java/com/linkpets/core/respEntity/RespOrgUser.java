@@ -1,9 +1,13 @@
 package com.linkpets.core.respEntity;
 
+import com.linkpets.core.model.SysRole;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * 所属组织用户
+ *
  * @author edie
  */
 @Data
@@ -23,8 +27,6 @@ public class RespOrgUser {
 
     private Integer isAdd;
 
-    private String roleId;
-
-    private String roleCode;
+    private List<SysRole> sysRoleList;
 
 }

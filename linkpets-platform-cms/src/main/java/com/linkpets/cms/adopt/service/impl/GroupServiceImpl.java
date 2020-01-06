@@ -42,6 +42,11 @@ public class GroupServiceImpl implements IGroupService {
     }
 
     @Override
+    public List<CmsAdoptGroup> getActivityGroupList() {
+        return cmsAdoptGroupMapper.getActivityGroupList();
+    }
+
+    @Override
     public RespGroupInfo getAdoptGroup(String groupId) {
         return cmsAdoptGroupMapper.getAdoptGroup(groupId);
     }

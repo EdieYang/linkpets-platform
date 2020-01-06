@@ -54,9 +54,11 @@ public class SysLoginController {
             return PlatformResult.failure(ResultCode.VALID_USER_ACCOUNT_PASSWORD);
         }
         String token = TokenUtils.getToken(sysUser);
+        String orgId = sysUserService.getOrgIdByUserId(sysUser.getUserId());
         SysLoginRes loginRes = new SysLoginRes();
         loginRes.setUserId(sysUser.getUserId());
         loginRes.setUserName(sysUser.getUserName());
+        loginRes.setOrgId(orgId);
         loginRes.setToken(token);
         return PlatformResult.success(loginRes);
     }

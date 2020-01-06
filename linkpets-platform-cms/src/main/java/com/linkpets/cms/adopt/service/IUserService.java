@@ -7,6 +7,7 @@ import com.linkpets.core.model.CmsUser;
 import com.linkpets.core.model.SysUser;
 import com.linkpets.core.respEntity.RespOrgUser;
 
+import java.util.List;
 import java.util.Map;
 
 public interface IUserService {
@@ -129,4 +130,14 @@ public interface IUserService {
      * @return
      */
     PageInfo<RespOrgUser> getOrgUserInfoPage(String wxAccount, String mobilePhone, String orgId, Integer pageNum, Integer pageSize);
+
+    /**
+     * 获取组织用户列表
+     *
+     * @param orgId
+     * @return
+     */
+    List<RespOrgUser> getOrgUserInfoList(String orgId);
+
+
 }

@@ -12,6 +12,7 @@ public class SysLoginRes {
 
     private String userId;
     private String userName;
+    private String orgId;
     private String token;
     private List<String> userRoles;
     private List<String> userPermissions;

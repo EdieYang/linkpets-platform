@@ -81,8 +81,16 @@ public interface ISysUserService {
 
     /**
      * 删除组织用户
+     *
      * @param userId
      * @param orgId
      */
     void delOrgSysUser(String userId, String orgId);
+
+    /**
+     * 根据用户id获取组织id
+     * @param userId
+     * @return
+     */
+    String getOrgIdByUserId(String userId);
 }

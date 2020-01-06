@@ -16,4 +16,6 @@ public interface CmsAdoptOrgUserMapper {
     int updateByPrimaryKey(CmsAdoptOrgUser record);
 
     CmsAdoptOrgUser selectByUserIdAndOrgIdAndSysUserId(String userId, String sysUserId, String orgId);
+
+    String getOrgIdByUserId(String userId);
 }

@@ -27,6 +27,12 @@
         and org_id = #{orgId}
         and is_valid =1
     </select>
+    <select id="getOrgIdByUserId" resultType="java.lang.String">
+        select org_id
+        from cms_adopt_org_user
+        where sys_user_id = #{userId,jdbcType=VARCHAR}
+        and is_valid =1
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete
         from cms_adopt_org_user

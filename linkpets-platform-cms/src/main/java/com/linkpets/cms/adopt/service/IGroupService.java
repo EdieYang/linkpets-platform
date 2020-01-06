@@ -34,6 +34,12 @@ public interface IGroupService {
     List<RespGroupInfo> getAdoptGroupList(String groupType, Integer isActive, Integer orderBy);
 
     /**
+     * 查询活动圈子列表
+     * @return
+     */
+    List<CmsAdoptGroup> getActivityGroupList();
+
+    /**
      * 获取圈子详情
      *
      * @param groupId

@@ -118,6 +118,11 @@ public class UserServiceImpl implements IUserService {
         return new PageInfo<>(orgUserList);
     }
 
+    @Override
+    public List<RespOrgUser> getOrgUserInfoList(String orgId) {
+        return cmsUserMapper.getOrgUserInfoList(orgId);
+    }
+
 //	@Override
 //	public SysUser getUserByAccountAndPassword(String userAcc, String password) {
 //		return sysUserMapper.getUserByAccountAndPassword(userAcc, password);

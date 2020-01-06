@@ -125,7 +125,7 @@
         and r.role_id =#{roleId}
     </select>
     <select id="getSysMenuListByUserId" resultMap="BaseResultMap">
-        select m.id, m.parent_id, m.title, m.path, m.icon, m.sort
+        select distinct m.id, m.parent_id, m.title, m.path, m.icon, m.sort
         from sys_menu m,sys_role_menu_rel r,sys_user_role_rel u,sys_role ro
         where m.id = r.menu_id
         and r.role_id = u.role_id

@@ -65,8 +65,8 @@ public class OrgResource {
 
     @ApiOperation("分页获取组织用户列表")
     @GetMapping("/user/page")
-    public PlatformResult getOrgUserInfoPage(@RequestParam(value = "wxAccount",required = false) String wxAccount,
-                                             @RequestParam(value = "mobilePhone",required = false) String mobilePhone,
+    public PlatformResult getOrgUserInfoPage(@RequestParam(value = "wxAccount", required = false) String wxAccount,
+                                             @RequestParam(value = "mobilePhone", required = false) String mobilePhone,
                                              @RequestParam(value = "orgId", required = false) String orgId,
                                              @RequestParam("pageNum") Integer pageNum,
                                              @RequestParam("pageSize") Integer pageSize) {
@@ -223,14 +223,11 @@ public class OrgResource {
         return PlatformResult.success(adoptOrgStatistic);
     }
 
-//    @ApiOperation("获取公益组织用户列表")
-//    @GetMapping(value = "/{orgId}/user")
-//    public PlatformResult getOrgUserList(@PathVariable("orgId") String orgId, @RequestParam("pageNum") int pageNum,
-//                                         @RequestParam("pageSize") int pageSize,
-//                                         @RequestParam(value = "sortCol", required = false, defaultValue = "userAcc") String sortCol,
-//                                         @RequestParam(value = "sort", required = false, defaultValue = "desc") String sort) {
-//        return PlatformResult.success(orgService.getOrgUserList(orgId, pageNum, pageSize, sortCol + " " + sort));
-//    }
+    @ApiOperation("获取公益组织用户列表")
+    @GetMapping(value = "/user")
+    public PlatformResult getOrgUserList(@RequestParam("orgId") String orgId) {
+        return PlatformResult.success(userService.getOrgUserInfoList(orgId));
+    }
 
 
     @ApiOperation(value = "公益组织领养申请列表", notes = "分页获取领养申请列表（支持模糊查询）")

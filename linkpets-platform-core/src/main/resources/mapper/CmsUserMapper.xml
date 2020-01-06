@@ -22,12 +22,19 @@
         <result column="userId" jdbcType="VARCHAR" property="userId"/>
         <result column="sysUserId" jdbcType="VARCHAR" property="sysUserId"/>
         <result column="wxAccount" jdbcType="VARCHAR" property="wxAccount"/>
-        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="nickName" jdbcType="VARCHAR" property="nickName"/>
         <result column="mobilePhone" jdbcType="VARCHAR" property="mobilePhone"/>
         <result column="isAdd" jdbcType="INTEGER" property="isAdd"/>
         <collection property="sysRoleList" column="sysUserId" select="getOrgUserRoleList"/>
     </resultMap>
-
+    <resultMap id="BaseOrgUserListResultMap" type="com.linkpets.core.respEntity.RespOrgUser">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="userId" jdbcType="VARCHAR" property="userId"/>
+        <result column="sysUserId" jdbcType="VARCHAR" property="sysUserId"/>
+        <result column="wxAccount" jdbcType="VARCHAR" property="wxAccount"/>
+        <result column="nickName" jdbcType="VARCHAR" property="nickName"/>
+        <result column="mobilePhone" jdbcType="VARCHAR" property="mobilePhone"/>
+    </resultMap>
 
     <sql id="Base_Column_List">
         user_id, nick_name, mobile_phone, wx_account, portrait, union_id, openid, birthday,
@@ -351,5 +358,25 @@
         and srr.is_valid = 1
         and r.is_valid =1
         and srr.user_id = #{userId}
+    </select>
+    <select id="getOrgUserInfoList" resultMap="BaseOrgUserListResultMap">
+        SELECT
+        o.id AS id,
+        u.user_id as userId,
+        u.nick_name AS nickName,
+        u.wx_account AS wxAccount,
+        s.user_id AS sysUserId,
+        u.mobile_phone AS mobilePhone
+        FROM
+        cms_user u,cms_adopt_org_user o,sys_user s
+        WHERE
+        u.user_id = o.user_id
+        and o.is_valid = 1
+        and o.sys_user_id = s.user_id
+        and s.is_valid = 1
+        and u.is_valid = 1
+        and u.mobile_phone is not null
+        and o.org_id =#{orgId}
+        ORDER BY s.create_date DESC
     </select>
 </mapper>

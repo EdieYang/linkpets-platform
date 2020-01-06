@@ -200,6 +200,13 @@
             order by create_date desc
         </if>
     </select>
+    <select id="getActivityGroupList" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from cms_adopt_group g
+        where is_valid = 1
+        and group_type = '1'
+    </select>
     <select id="getFollowedGroupList" resultMap="BaseResultMap">
         select g.group_id,
                 org_id,

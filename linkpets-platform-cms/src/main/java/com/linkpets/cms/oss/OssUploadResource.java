@@ -108,7 +108,7 @@ public class OssUploadResource {
     @PostMapping("/image/backend")
     @ApiOperation(value = "后台管理系统上传图片接口：图片访问格式https://linkpets-adopt-platform-bucket-test.oss-cn-shanghai.aliyuncs.com/+图片相对路径")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "ossZone", value = "存储片区(圈子图片：group；活动图片：group/activity；帖子图片：group/post；组织图片：organization)", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "ossZone", value = "存储片区(圈子图片：group；活动图片：group/activity；帖子图片：group/post；组织图片：organization；送养发布：adoption；组织活动图片：organization/article)", required = true, dataType = "String", paramType = "query")
     })
     public PlatformResult uploadBackEndImage(@ApiParam(name = "file", value = "上传的文件", required = true) MultipartFile file,
                                              @RequestParam("ossZone") String ossZone,
@@ -123,7 +123,6 @@ public class OssUploadResource {
 
 
         //拼文件格式
-
         if (file == null || file.isEmpty()) {
             return PlatformResult.failure("file is empty");
         }

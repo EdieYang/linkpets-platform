@@ -137,5 +137,10 @@ public class SysUserServiceImpl implements ISysUserService {
         sysUserRoleRelMapper.deleteByUserId(sysUserId);
     }
 
+    @Override
+    public String getOrgIdByUserId(String userId) {
+        return orgUserMapper.getOrgIdByUserId(userId);
+    }
+
 
 }

@@ -87,6 +87,13 @@ public class PetResource {
         return PlatformResult.success(petPageInfo);
     }
 
+    @ApiOperation("获取宠物详情")
+    @GetMapping(value = "/pet")
+    public PlatformResult getAdoptPet(@RequestParam("petId") String petId) {
+        CmsAdoptPet adoptPet = petService.getAdopt(petId);
+        return PlatformResult.success(adoptPet);
+    }
+
     @ApiOperation("获取宠物详情接口")
     @GetMapping(value = "{petId}")
     public PlatformResult getAdoptPet(@PathVariable("petId") String petId,

@@ -114,6 +114,7 @@ public interface CmsUserMapper {
 
     /**
      * 获取组织所属用户列表
+     *
      * @param wxAccount
      * @param mobilePhone
      * @param orgId
@@ -121,4 +122,10 @@ public interface CmsUserMapper {
      */
     List<RespOrgUser> getOrgUserInfoPage(String wxAccount, String mobilePhone, String orgId);
 
+    /**
+     * 获取组织所属用户列表
+     * @param orgId
+     * @return
+     */
+    List<RespOrgUser> getOrgUserInfoList(String orgId);
 }

@@ -65,6 +65,12 @@ public interface CmsAdoptGroupMapper {
     List<RespGroupInfo> getAdoptGroupList(String groupType, Integer isActive, Integer orderBy);
 
     /**
+     * 获取活动圈子列表
+     * @return
+     */
+    List<CmsAdoptGroup> getActivityGroupList();
+
+    /**
      * 获取关注圈子列表
      *
      * @param userId

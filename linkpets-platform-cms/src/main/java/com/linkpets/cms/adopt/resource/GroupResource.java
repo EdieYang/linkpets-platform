@@ -5,6 +5,7 @@ import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.service.IGroupService;
 import com.linkpets.core.model.CmsAdoptGroup;
 import com.linkpets.core.respEntity.RespGroupInfo;
+import com.linkpets.enums.ResultCode;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -59,9 +60,16 @@ public class GroupResource {
         return PlatformResult.success(cmsAdoptGroup);
     }
 
-    @ApiOperation("创建圈子")
+    @ApiOperation("创建圈子：重复创建活动圈返回错误码【ACTIVITY_GROUP_DUPLICATE】：30010")
     @PostMapping("")
     public PlatformResult crtGroup(@RequestBody CmsAdoptGroup cmsAdoptGroup) {
+        String groupType = cmsAdoptGroup.getGroupType();
+        if (groupType.equals("1")) {
+           List<CmsAdoptGroup> groupList=groupService.getActivityGroupList();
+           if(groupList!=null && groupList.size()>0){
+               return PlatformResult.failure(ResultCode.ACTIVITY_GROUP_DUPLICATE);
+           }
+        }
         String groupId = groupService.crtAdoptGroup(cmsAdoptGroup);
         return PlatformResult.success(groupId);
     }

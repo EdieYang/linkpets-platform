@@ -85,4 +85,8 @@ public class CmsUser {
      */
     private String applyHandle;
 
+    /**
+     * 用户积分总数
+     */
+    private Integer points;
 }

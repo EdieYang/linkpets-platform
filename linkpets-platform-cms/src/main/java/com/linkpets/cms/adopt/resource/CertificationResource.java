@@ -71,10 +71,10 @@ public class CertificationResource {
                                               @RequestParam("mobilePhone") String mobilePhone,
                                               @RequestParam("verifyCode") String verifyCode) {
         //校验验证码
-        String verifyCodeStorage = stringRedisTemplate.opsForValue().get("verifyCode." + userId + "." + mobilePhone);
-        if (!verifyCode.equals(verifyCodeStorage)) {
-            return PlatformResult.failure(ResultCode.VERIFY_CODE_INVALID);
-        }
+//        String verifyCodeStorage = stringRedisTemplate.opsForValue().get("verifyCode." + userId + "." + mobilePhone);
+//        if (!verifyCode.equals(verifyCodeStorage)) {
+//            return PlatformResult.failure(ResultCode.VERIFY_CODE_INVALID);
+//        }
         //上传认证信息
         CmsAdoptCertification certification = new CmsAdoptCertification();
         certification.setId(UUIDUtils.getId());

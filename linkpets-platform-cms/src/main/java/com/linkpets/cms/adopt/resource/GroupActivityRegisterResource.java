@@ -7,12 +7,15 @@ import com.linkpets.cms.adopt.service.IGroupActivityRegisterService;
 import com.linkpets.cms.adopt.service.IGroupActivityService;
 import com.linkpets.core.model.CmsAdoptGroupActivity;
 import com.linkpets.core.model.CmsAdoptGroupActivityRegister;
+import com.linkpets.core.respEntity.RespActivityRegister;
+import com.linkpets.enums.ResultCode;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Edie
@@ -31,7 +34,7 @@ public class GroupActivityRegisterResource {
     public PlatformResult getGroupActivityRegisterPage(@RequestParam(value = "activityId") String activityId,
                                                        @RequestParam("pageNum") Integer pageNum,
                                                        @RequestParam("pageSize") Integer pageSize) {
-        PageInfo<CmsAdoptGroupActivityRegister> pageInfo = activityRegisterService.getGroupActivityRegisterPage(activityId, pageNum, pageSize);
+        PageInfo<RespActivityRegister> pageInfo = activityRegisterService.getGroupActivityRegisterPage(activityId, pageNum, pageSize);
         return PlatformResult.success(pageInfo);
     }
 
@@ -41,6 +44,10 @@ public class GroupActivityRegisterResource {
     public PlatformResult crtGroupActivityRegister(@RequestParam(value = "activityId") String activityId,
                                                    @RequestParam(value = "userId") String userId) {
         //TODO 判断活动必备条件是否满足
+        List<CmsAdoptGroupActivityRegister> registerList=activityRegisterService.getGroupActivityRegisterListByUserId(userId,activityId);
+        if(registerList.size()>0){
+            return PlatformResult.failure(ResultCode.ACTIVITY_REGISTER_DUPLICATE);
+        }
         String registerId = activityRegisterService.crtGroupActivityRegister(userId, activityId);
         return PlatformResult.success(registerId);
     }

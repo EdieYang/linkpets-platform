@@ -10,6 +10,7 @@
         <result column="activity_area" jdbcType="VARCHAR" property="activityArea"/>
         <result column="activity_address" jdbcType="VARCHAR" property="activityAddress"/>
         <result column="activity_content" jdbcType="VARCHAR" property="activityContent"/>
+        <result column="register_limit" jdbcType="INTEGER" property="registerLimit"/>
         <result column="activity_should_verify" jdbcType="CHAR" property="activityShouldVerify"/>
         <result column="activity_should_questionnaire" jdbcType="VARCHAR" property="activityShouldQuestionnaire"/>
         <result column="questionnaire_id" jdbcType="VARCHAR" property="questionnaireId"/>
@@ -28,30 +29,16 @@
     </resultMap>
     <sql id="Base_Column_List">
     id, group_id, activity_type, activity_title, activity_banner, activity_area, activity_address, 
-    activity_content, activity_should_verify, activity_should_questionnaire, questionnaire_id, 
-    activity_register_start_time, activity_register_end_time, activity_start_time, activity_end_time, 
-    activity_pick_time, activity_is_free, activity_cost, activity_point, customer_support, 
-    is_active, is_valid, create_date
+    activity_content, register_limit, activity_should_verify, activity_should_questionnaire, 
+    questionnaire_id, activity_register_start_time, activity_register_end_time, activity_start_time, 
+    activity_end_time, activity_pick_time, activity_is_free, activity_cost, activity_point, 
+    customer_support, is_active, is_valid, create_date
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from cms_adopt_group_activity
         where id = #{id,jdbcType=VARCHAR}
-    </select>
-    <select id="getAdoptGroupActivityList" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from cms_adopt_group_activity
-        where 1=1
-        <if test="activityType!=null">
-            and activity_type = #{activityType}
-        </if>
-        <if test="isActive!=null">
-            and is_active=#{isActive}
-        </if>
-        and is_valid = 1
-        order by activity_start_time desc
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from cms_adopt_group_activity
@@ -60,22 +47,24 @@
     <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptGroupActivity">
     insert into cms_adopt_group_activity (id, group_id, activity_type, 
       activity_title, activity_banner, activity_area, 
-      activity_address, activity_content, activity_should_verify, 
-      activity_should_questionnaire, questionnaire_id, 
-      activity_register_start_time, activity_register_end_time, 
-      activity_start_time, activity_end_time, 
-      activity_pick_time, activity_is_free, activity_cost, 
-      activity_point, customer_support, is_active, 
-      is_valid, create_date)
+      activity_address, activity_content, register_limit, 
+      activity_should_verify, activity_should_questionnaire, 
+      questionnaire_id, activity_register_start_time, 
+      activity_register_end_time, activity_start_time, 
+      activity_end_time, activity_pick_time, activity_is_free, 
+      activity_cost, activity_point, customer_support, 
+      is_active, is_valid, create_date
+      )
     values (#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{activityType,jdbcType=CHAR}, 
       #{activityTitle,jdbcType=VARCHAR}, #{activityBanner,jdbcType=VARCHAR}, #{activityArea,jdbcType=VARCHAR}, 
-      #{activityAddress,jdbcType=VARCHAR}, #{activityContent,jdbcType=VARCHAR}, #{activityShouldVerify,jdbcType=CHAR}, 
-      #{activityShouldQuestionnaire,jdbcType=VARCHAR}, #{questionnaireId,jdbcType=VARCHAR}, 
-      #{activityRegisterStartTime,jdbcType=TIMESTAMP}, #{activityRegisterEndTime,jdbcType=TIMESTAMP}, 
-      #{activityStartTime,jdbcType=TIMESTAMP}, #{activityEndTime,jdbcType=TIMESTAMP}, 
-      #{activityPickTime,jdbcType=VARCHAR}, #{activityIsFree,jdbcType=INTEGER}, #{activityCost,jdbcType=INTEGER}, 
-      #{activityPoint,jdbcType=INTEGER}, #{customerSupport,jdbcType=VARCHAR}, #{isActive,jdbcType=INTEGER}, 
-      #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+      #{activityAddress,jdbcType=VARCHAR}, #{activityContent,jdbcType=VARCHAR}, #{registerLimit,jdbcType=INTEGER}, 
+      #{activityShouldVerify,jdbcType=CHAR}, #{activityShouldQuestionnaire,jdbcType=VARCHAR}, 
+      #{questionnaireId,jdbcType=VARCHAR}, #{activityRegisterStartTime,jdbcType=TIMESTAMP}, 
+      #{activityRegisterEndTime,jdbcType=TIMESTAMP}, #{activityStartTime,jdbcType=TIMESTAMP}, 
+      #{activityEndTime,jdbcType=TIMESTAMP}, #{activityPickTime,jdbcType=VARCHAR}, #{activityIsFree,jdbcType=INTEGER}, 
+      #{activityCost,jdbcType=INTEGER}, #{activityPoint,jdbcType=INTEGER}, #{customerSupport,jdbcType=VARCHAR}, 
+      #{isActive,jdbcType=INTEGER}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}
+      )
   </insert>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptGroupActivity">
         insert into cms_adopt_group_activity
@@ -103,6 +92,9 @@
             </if>
             <if test="activityContent != null">
                 activity_content,
+            </if>
+            <if test="registerLimit != null">
+                register_limit,
             </if>
             <if test="activityShouldVerify != null">
                 activity_should_verify,
@@ -175,6 +167,9 @@
             <if test="activityContent != null">
                 #{activityContent,jdbcType=VARCHAR},
             </if>
+            <if test="registerLimit != null">
+                #{registerLimit,jdbcType=INTEGER},
+            </if>
             <if test="activityShouldVerify != null">
                 #{activityShouldVerify,jdbcType=CHAR},
             </if>
@@ -246,6 +241,9 @@
             <if test="activityContent != null">
                 activity_content = #{activityContent,jdbcType=VARCHAR},
             </if>
+            <if test="registerLimit != null">
+                register_limit = #{registerLimit,jdbcType=INTEGER},
+            </if>
             <if test="activityShouldVerify != null">
                 activity_should_verify = #{activityShouldVerify,jdbcType=CHAR},
             </if>
@@ -303,6 +301,7 @@
       activity_area = #{activityArea,jdbcType=VARCHAR},
       activity_address = #{activityAddress,jdbcType=VARCHAR},
       activity_content = #{activityContent,jdbcType=VARCHAR},
+      register_limit = #{registerLimit,jdbcType=INTEGER},
       activity_should_verify = #{activityShouldVerify,jdbcType=CHAR},
       activity_should_questionnaire = #{activityShouldQuestionnaire,jdbcType=VARCHAR},
       questionnaire_id = #{questionnaireId,jdbcType=VARCHAR},
@@ -325,5 +324,18 @@
          set is_valid= 0
          where  id = #{activityId}
     </update>
-
+    <select id="getAdoptGroupActivityList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_adopt_group_activity
+        where 1=1
+        <if test="activityType!=null">
+            and activity_type = #{activityType}
+        </if>
+        <if test="isActive!=null">
+            and is_active=#{isActive}
+        </if>
+        and is_valid = 1
+        order by activity_start_time desc
+    </select>
 </mapper>

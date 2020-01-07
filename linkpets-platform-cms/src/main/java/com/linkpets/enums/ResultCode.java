@@ -37,6 +37,7 @@ public enum ResultCode {
     CREATE_SYS_USER_ACCOUNT_FAIL(30004,"创建组织账号失败"),
 
     ACTIVITY_GROUP_DUPLICATE(30010,"无法创建多个活动圈子"),
+    ACTIVITY_REGISTER_DUPLICATE(30011,"已活动报名成功"),
     /* 系统错误：40001-49999 */
     SYSTEM_INNER_ERROR(40001, "系统繁忙，请稍后重试"),
 

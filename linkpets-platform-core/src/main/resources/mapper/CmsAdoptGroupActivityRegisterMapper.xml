@@ -11,6 +11,17 @@
         <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
     </resultMap>
+    <resultMap id="BaseRegisterInfoMap" type="com.linkpets.core.respEntity.RespActivityRegister">
+        <result column="activity_id" jdbcType="VARCHAR" property="activityId"/>
+        <result column="activity_title" jdbcType="VARCHAR" property="activityTitle"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="wx_account" jdbcType="VARCHAR" property="wxAccount"/>
+        <result column="mobile_phone" jdbcType="VARCHAR" property="mobilePhone"/>
+        <result column="is_paid" jdbcType="INTEGER" property="isPaid"/>
+        <result column="payment_amount" jdbcType="INTEGER" property="paymentAmount"/>
+        <result column="involvement_time" jdbcType="VARCHAR" property="involvementTime"/>
+    </resultMap>
     <sql id="Base_Column_List">
     register_id, activity_id, user_id, involvement_time, is_paid, payment_amount, is_valid, 
     create_date
@@ -27,6 +38,37 @@
         from cms_adopt_group_activity_register
         where user_id = #{userId,jdbcType=VARCHAR}
         and activity_id =#{activityId}
+        and is_valid = 1
+    </select>
+    <select id="getGroupActivityRegisterList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_adopt_group_activity_register
+        where activity_id =#{activityId}
+        and is_valid = 1
+    </select>
+    <select id="getGroupActivityRegisterInfoList" resultMap="BaseRegisterInfoMap">
+         select r.activity_id,
+                a.activity_title,
+                u.user_id,
+                u.nick_name,
+                u.wx_account,
+                u.mobile_phone,
+                r.involvement_time,
+                r.is_paid,
+                r.payment_amount
+         from cms_adopt_group_activity_register r,cms_adopt_group_activity a ,cms_user u
+         where r.activity_id = a.id
+         and r.user_id = u.user_id
+         and r.activity_id = #{activityId}
+         and r.is_valid =1
+    </select>
+    <select id="getGroupActivityRegisterListByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_adopt_group_activity_register
+        where activity_id =#{activityId}
+        and user_id = #{userId}
         and is_valid = 1
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

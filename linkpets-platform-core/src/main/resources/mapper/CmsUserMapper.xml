@@ -14,6 +14,9 @@
         <result column="location" jdbcType="VARCHAR" property="location"/>
         <result column="intro" jdbcType="VARCHAR" property="intro"/>
         <result column="authenticated" jdbcType="INTEGER" property="authenticated"/>
+        <result column="followNum" jdbcType="INTEGER" property="followNum"/>
+        <result column="followByNum" jdbcType="INTEGER" property="followByNum"/>
+        <result column="points" jdbcType="INTEGER" property="points"/>
         <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
     </resultMap>
@@ -297,7 +300,8 @@
                intro,
                authenticated,
                (select count(1) from cms_adopt_attention where attent_by = #{userId} and is_valid = '1') as followNum,
-               (select count(1) from cms_adopt_attention where user_id = #{userId} and is_valid = '1')   as followByNum
+               (select count(1) from cms_adopt_attention where user_id = #{userId} and is_valid = '1')   as followByNum,
+               (select SUM(points) from cms_adopt_points_statement where user_id = #{userId} and is_valid = 1) as points
         from cms_user
         where user_id = #{userId}
     </select>

@@ -1,5 +1,6 @@
 package com.linkpets.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -19,6 +20,7 @@ public class CmsUser {
 
     private String unionId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date birthday;
 
     private String gender;
@@ -36,6 +38,9 @@ public class CmsUser {
 
     private int followed;
 
+    private String memo;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;
 
     private Integer isValid;
@@ -89,4 +94,19 @@ public class CmsUser {
      * 用户积分总数
      */
     private Integer points;
+
+    /**
+     * 用户身份证
+     */
+    private String idCard;
+
+    /**
+     * 身份证正面
+     */
+    private String idCardImageFront;
+
+    /**
+     * 身份证反面
+     */
+    private String idCardImageBack;
 }

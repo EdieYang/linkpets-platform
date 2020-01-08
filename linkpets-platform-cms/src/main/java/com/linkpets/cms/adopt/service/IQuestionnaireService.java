@@ -38,35 +38,6 @@ public interface IQuestionnaireService {
      */
     RespQuestionnaireInfo getQuestionnaireInfo(String questionnaireId);
 
-    /**
-     * 分页查询问卷答案列表
-     *
-     * @param questionnaireId
-     * @param activityId
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
-    PageInfo<RespQuestionnaireAnswerInfo> getQuestionnaireAnswerPage(String questionnaireId, String activityId, Integer pageNum, Integer pageSize);
-
-
-    /**
-     * 查询问卷答案列表
-     *
-     * @param questionnaireId
-     * @param activityId
-     * @param userId
-     * @return
-     */
-    List<RespQuestionnaireAnswerInfo> getQuestionnaireAnswerList(String questionnaireId, String activityId, String userId);
-
-    /**
-     * 查询问卷答案详情
-     *
-     * @param answerId
-     * @return
-     */
-    RespQuestionnaireAnswerInfo getQuestionnaireAnswerInfo(String answerId);
 
     /**
      * 创建问卷
@@ -92,12 +63,5 @@ public interface IQuestionnaireService {
      */
     void delQuestionnaire(String questionnaireId);
 
-    /**
-     * 创建答案
-     *
-     * @param cmsAdoptQuestionnaireAnswer
-     * @return
-     */
-    String crtAnswer(CmsAdoptQuestionnaireAnswer cmsAdoptQuestionnaireAnswer);
 
 }

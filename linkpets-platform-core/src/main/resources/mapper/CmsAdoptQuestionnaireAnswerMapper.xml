@@ -96,6 +96,15 @@
             and a.user_id = #{userId}
         </if>
     </select>
+    <select id="getQuestionnaireAnswerListByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_adopt_questionnaire_answer
+        where questionnaire_id = #{questionnaireId,jdbcType=VARCHAR}
+        and activity_id = #{activityId}
+        and user_id = #{userId}
+        and is_valid = 1
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete
         from cms_adopt_questionnaire_answer

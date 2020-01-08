@@ -38,8 +38,25 @@ public class UserServiceImpl implements IUserService {
     SysUserMapper sysUserMapper;
 
     @Override
+    public PageInfo<CmsUser> getUserPage(String wxAccount, String mobilePhone, Integer authenticated, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<CmsUser> userList = cmsUserMapper.getUserList(wxAccount, mobilePhone, authenticated);
+        return new PageInfo<>(userList);
+    }
+
+    @Override
+    public List<CmsUser> getUserList(String wxAccount, String mobilePhone, Integer authenticated) {
+        return cmsUserMapper.getUserList(wxAccount, mobilePhone, authenticated);
+    }
+
+    @Override
     public CmsUser getUserInfoByUserId(String userId) {
         return cmsUserMapper.getUserInfoByUserId(userId);
+    }
+
+    @Override
+    public CmsUser getUser(String userId) {
+        return cmsUserMapper.selectByPrimaryKey(userId);
     }
 
     @Override

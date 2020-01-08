@@ -1,7 +1,11 @@
 package com.linkpets.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 public class CmsAdoptGroupActivityRegister {
     private String registerId;
 
@@ -15,71 +19,11 @@ public class CmsAdoptGroupActivityRegister {
 
     private Integer paymentAmount;
 
+    private String memo;
+
     private Integer isValid;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;
 
-    public String getRegisterId() {
-        return registerId;
-    }
-
-    public void setRegisterId(String registerId) {
-        this.registerId = registerId;
-    }
-
-    public String getActivityId() {
-        return activityId;
-    }
-
-    public void setActivityId(String activityId) {
-        this.activityId = activityId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getInvolvementTime() {
-        return involvementTime;
-    }
-
-    public void setInvolvementTime(String involvementTime) {
-        this.involvementTime = involvementTime;
-    }
-
-    public Integer getIsPaid() {
-        return isPaid;
-    }
-
-    public void setIsPaid(Integer isPaid) {
-        this.isPaid = isPaid;
-    }
-
-    public Integer getPaymentAmount() {
-        return paymentAmount;
-    }
-
-    public void setPaymentAmount(Integer paymentAmount) {
-        this.paymentAmount = paymentAmount;
-    }
-
-    public Integer getIsValid() {
-        return isValid;
-    }
-
-    public void setIsValid(Integer isValid) {
-        this.isValid = isValid;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
 }

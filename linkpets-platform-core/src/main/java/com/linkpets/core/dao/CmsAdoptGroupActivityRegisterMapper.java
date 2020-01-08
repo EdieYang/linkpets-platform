@@ -31,15 +31,26 @@ public interface CmsAdoptGroupActivityRegisterMapper {
      * 获取活动报名明细列表
      *
      * @param activityId
+     * @param isValid
      * @return
      */
-    List<RespActivityRegister> getGroupActivityRegisterInfoList(String activityId);
+    List<RespActivityRegister> getGroupActivityRegisterInfoList(String activityId, Integer isValid, String wxAccount, String mobilePhone, String involvementTime);
 
     /**
-     * 获取用户活动报名列表
+     * 获取用户活动报名
+     *
      * @param userId
      * @param activityId
      * @return
      */
-    List<CmsAdoptGroupActivityRegister> getGroupActivityRegisterListByUserId(String userId, String activityId);
+    CmsAdoptGroupActivityRegister getGroupActivityRegisterListByUserId(String userId, String activityId);
+
+    /**
+     * 获取活动报名列表
+     *
+     * @param activityId
+     * @return
+     */
+    List<CmsAdoptGroupActivityRegister> getGroupActivityRegisterListByActivityId(String activityId);
+
 }

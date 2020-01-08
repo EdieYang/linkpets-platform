@@ -13,12 +13,40 @@ import java.util.Map;
 public interface IUserService {
 
     /**
+     * 分页获取用户列表
+     *
+     * @param wxAccount
+     * @param mobilePhone
+     * @param authenticated
+     * @return
+     */
+    PageInfo<CmsUser> getUserPage(String wxAccount, String mobilePhone, Integer authenticated, Integer pageNum, Integer pageSize);
+
+    /**
+     * 获取用户列表
+     *
+     * @param wxAccount
+     * @param mobilePhone
+     * @param authenticated
+     * @return
+     */
+    List<CmsUser> getUserList(String wxAccount, String mobilePhone, Integer authenticated);
+
+    /**
      * 获取用户信息
      *
      * @param userId
      * @return
      */
     CmsUser getUserInfoByUserId(String userId);
+
+    /**
+     * 获取用户基础信息
+     *
+     * @param userId
+     * @return
+     */
+    CmsUser getUser(String userId);
 
     /**
      * 更新用户信息

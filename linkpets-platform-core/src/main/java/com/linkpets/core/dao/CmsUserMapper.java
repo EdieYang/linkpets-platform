@@ -57,6 +57,11 @@ public interface CmsUserMapper {
     int updateByPrimaryKey(CmsUser record);
 
     /**
+     * 获取用户列表
+     */
+    List<CmsUser> getUserList(String wxAccount, String mobilePhone, Integer authenticated);
+
+    /**
      * 获取用户是否关注
      *
      * @param userId
@@ -124,6 +129,7 @@ public interface CmsUserMapper {
 
     /**
      * 获取组织所属用户列表
+     *
      * @param orgId
      * @return
      */

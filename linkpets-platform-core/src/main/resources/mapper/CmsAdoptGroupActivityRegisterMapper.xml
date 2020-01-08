@@ -8,6 +8,7 @@
         <result column="involvement_time" jdbcType="VARCHAR" property="involvementTime"/>
         <result column="is_paid" jdbcType="INTEGER" property="isPaid"/>
         <result column="payment_amount" jdbcType="INTEGER" property="paymentAmount"/>
+        <result column="memo" jdbcType="VARCHAR" property="memo"/>
         <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
     </resultMap>
@@ -21,55 +22,19 @@
         <result column="is_paid" jdbcType="INTEGER" property="isPaid"/>
         <result column="payment_amount" jdbcType="INTEGER" property="paymentAmount"/>
         <result column="involvement_time" jdbcType="VARCHAR" property="involvementTime"/>
+        <result column="memo" jdbcType="VARCHAR" property="memo"/>
+        <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
     </resultMap>
     <sql id="Base_Column_List">
-    register_id, activity_id, user_id, involvement_time, is_paid, payment_amount, is_valid, 
-    create_date
+    register_id, activity_id, user_id, involvement_time, is_paid, payment_amount, memo, 
+    is_valid, create_date
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from cms_adopt_group_activity_register
         where register_id = #{registerId,jdbcType=VARCHAR}
-    </select>
-    <select id="getGroupActivityRegister" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from cms_adopt_group_activity_register
-        where user_id = #{userId,jdbcType=VARCHAR}
-        and activity_id =#{activityId}
-        and is_valid = 1
-    </select>
-    <select id="getGroupActivityRegisterList" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from cms_adopt_group_activity_register
-        where activity_id =#{activityId}
-        and is_valid = 1
-    </select>
-    <select id="getGroupActivityRegisterInfoList" resultMap="BaseRegisterInfoMap">
-         select r.activity_id,
-                a.activity_title,
-                u.user_id,
-                u.nick_name,
-                u.wx_account,
-                u.mobile_phone,
-                r.involvement_time,
-                r.is_paid,
-                r.payment_amount
-         from cms_adopt_group_activity_register r,cms_adopt_group_activity a ,cms_user u
-         where r.activity_id = a.id
-         and r.user_id = u.user_id
-         and r.activity_id = #{activityId}
-         and r.is_valid =1
-    </select>
-    <select id="getGroupActivityRegisterListByUserId" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from cms_adopt_group_activity_register
-        where activity_id =#{activityId}
-        and user_id = #{userId}
-        and is_valid = 1
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from cms_adopt_group_activity_register
@@ -78,10 +43,12 @@
     <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptGroupActivityRegister">
     insert into cms_adopt_group_activity_register (register_id, activity_id, user_id, 
       involvement_time, is_paid, payment_amount, 
-      is_valid, create_date)
+      memo, is_valid, create_date
+      )
     values (#{registerId,jdbcType=VARCHAR}, #{activityId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
       #{involvementTime,jdbcType=VARCHAR}, #{isPaid,jdbcType=INTEGER}, #{paymentAmount,jdbcType=INTEGER}, 
-      #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+      #{memo,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}
+      )
   </insert>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptGroupActivityRegister">
         insert into cms_adopt_group_activity_register
@@ -103,6 +70,9 @@
             </if>
             <if test="paymentAmount != null">
                 payment_amount,
+            </if>
+            <if test="memo != null">
+                memo,
             </if>
             <if test="isValid != null">
                 is_valid,
@@ -130,6 +100,9 @@
             <if test="paymentAmount != null">
                 #{paymentAmount,jdbcType=INTEGER},
             </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
             <if test="isValid != null">
                 #{isValid,jdbcType=INTEGER},
             </if>
@@ -156,6 +129,9 @@
             <if test="paymentAmount != null">
                 payment_amount = #{paymentAmount,jdbcType=INTEGER},
             </if>
+            <if test="memo != null">
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
             <if test="isValid != null">
                 is_valid = #{isValid,jdbcType=INTEGER},
             </if>
@@ -172,8 +148,70 @@
       involvement_time = #{involvementTime,jdbcType=VARCHAR},
       is_paid = #{isPaid,jdbcType=INTEGER},
       payment_amount = #{paymentAmount,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
       is_valid = #{isValid,jdbcType=INTEGER},
       create_date = #{createDate,jdbcType=TIMESTAMP}
     where register_id = #{registerId,jdbcType=VARCHAR}
   </update>
+
+    <select id="getGroupActivityRegister" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_adopt_group_activity_register
+        where user_id = #{userId,jdbcType=VARCHAR}
+        and activity_id =#{activityId}
+        and is_valid = 1
+    </select>
+    <select id="getGroupActivityRegisterList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_adopt_group_activity_register
+        where activity_id =#{activityId}
+        and is_valid = 1
+    </select>
+    <select id="getGroupActivityRegisterInfoList" resultMap="BaseRegisterInfoMap">
+        select r.activity_id,
+        a.activity_title,
+        u.user_id,
+        u.nick_name,
+        u.wx_account,
+        u.mobile_phone,
+        r.involvement_time,
+        r.is_paid,
+        r.payment_amount,
+        r.memo,
+        r.is_valid,
+        r.create_date
+        from cms_adopt_group_activity_register r,cms_adopt_group_activity a ,cms_user u
+        where r.activity_id = a.id
+        and r.user_id = u.user_id
+        and r.activity_id = #{activityId}
+        <if test="isValid!=null">
+            and r.is_valid = #{isValid}
+        </if>
+        <if test="wxAccount!=null and wxAccount!=''">
+            and r.wx_account = #{wxAccount}
+        </if>
+        <if test="involvementTime!=null and involvementTime!=''">
+            and r.involvement_time = #{involvementTime}
+        </if>
+        <if test="mobilePhone!=null and mobilePhone!=''">
+            and r.mobile_phone = #{mobilePhone}
+        </if>
+    </select>
+    <select id="getGroupActivityRegisterListByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_adopt_group_activity_register
+        where activity_id =#{activityId}
+        and user_id = #{userId}
+        and is_valid = 1
+    </select>
+    <select id="getGroupActivityRegisterListByActivityId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_adopt_group_activity_register
+        where activity_id =#{activityId}
+        and is_valid = 1
+    </select>
 </mapper>

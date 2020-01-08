@@ -1,9 +1,11 @@
 package com.linkpets.core.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import java.util.Date;
 
+@Data
 public class CmsAdoptQuestionnaire {
     private String questionnaireId;
 
@@ -16,43 +18,6 @@ public class CmsAdoptQuestionnaire {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;
 
-    public String getQuestionnaireId() {
-        return questionnaireId;
-    }
+    private String matchActivity;
 
-    public void setQuestionnaireId(String questionnaireId) {
-        this.questionnaireId = questionnaireId;
-    }
-
-    public String getQuestionnaireTitle() {
-        return questionnaireTitle;
-    }
-
-    public void setQuestionnaireTitle(String questionnaireTitle) {
-        this.questionnaireTitle = questionnaireTitle;
-    }
-
-    public String getQuestionnaireContent() {
-        return questionnaireContent;
-    }
-
-    public void setQuestionnaireContent(String questionnaireContent) {
-        this.questionnaireContent = questionnaireContent;
-    }
-
-    public Integer getIsValid() {
-        return isValid;
-    }
-
-    public void setIsValid(Integer isValid) {
-        this.isValid = isValid;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
 }

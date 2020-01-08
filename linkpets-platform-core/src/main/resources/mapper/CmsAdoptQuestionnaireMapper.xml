@@ -19,8 +19,10 @@
     </select>
     <select id="getQuestionnaireList" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
-        from cms_adopt_questionnaire
+        questionnaire_id, questionnaire_title, questionnaire_content, is_valid, create_date,
+        (select GROUP_CONCAT(activity_title) from cms_adopt_group_activity a where a.questionnaire_id =
+        q.questionnaire_id group by a.questionnaire_id) as matchActivity
+        from cms_adopt_questionnaire q
         where is_valid = 1
         <if test="questionnaireTitle!=null and questionnaireTitle!=''">
             and questionnaire_title like concat('%',#{questionnaireTitle},'%')

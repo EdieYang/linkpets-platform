@@ -3,6 +3,7 @@ package com.linkpets.cms.adopt.resource;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.reqEntity.QuestionnaireReq;
+import com.linkpets.cms.adopt.service.IQuestionnaireAnswerService;
 import com.linkpets.cms.adopt.service.IQuestionnaireService;
 import com.linkpets.core.model.CmsAdoptQuestionnaire;
 import com.linkpets.core.model.CmsAdoptQuestionnaireAnswer;
@@ -28,6 +29,8 @@ public class QuestionnaireResource {
 
     @Resource
     private IQuestionnaireService questionnaireService;
+    @Resource
+    private IQuestionnaireAnswerService questionnaireAnswerService;
 
     @ApiOperation("分页查询问卷列表")
     @GetMapping("page")
@@ -81,7 +84,7 @@ public class QuestionnaireResource {
                                                      @RequestParam(value = "activityId") String activityId,
                                                      @RequestParam("pageNum") Integer pageNum,
                                                      @RequestParam("pageSize") Integer pageSize) {
-        PageInfo<RespQuestionnaireAnswerInfo> answerPage = questionnaireService.getQuestionnaireAnswerPage(questionnaireId, activityId, pageNum, pageSize);
+        PageInfo<RespQuestionnaireAnswerInfo> answerPage = questionnaireAnswerService.getQuestionnaireAnswerPage(questionnaireId, activityId, pageNum, pageSize);
         return PlatformResult.success(answerPage);
     }
 
@@ -90,7 +93,7 @@ public class QuestionnaireResource {
     public PlatformResult getQuestionnaireAnswerList(@RequestParam(value = "questionnaireId", required = false) String questionnaireId,
                                                      @RequestParam(value = "activityId", required = false) String activityId,
                                                      @RequestParam(value = "userId", required = false) String userId) {
-        List<RespQuestionnaireAnswerInfo> answerList = questionnaireService.getQuestionnaireAnswerList(questionnaireId, activityId, userId);
+        List<RespQuestionnaireAnswerInfo> answerList = questionnaireAnswerService.getQuestionnaireAnswerList(questionnaireId, activityId, userId);
         return PlatformResult.success(answerList);
     }
 
@@ -98,7 +101,7 @@ public class QuestionnaireResource {
     @ApiOperation("查询答案详情")
     @GetMapping("answer")
     public PlatformResult getQuestionnaireAnswer(@RequestParam(value = "answerId") String answerId) {
-        RespQuestionnaireAnswerInfo answerInfo = questionnaireService.getQuestionnaireAnswerInfo(answerId);
+        RespQuestionnaireAnswerInfo answerInfo = questionnaireAnswerService.getQuestionnaireAnswerInfo(answerId);
         return PlatformResult.success(answerInfo);
     }
 
@@ -106,7 +109,7 @@ public class QuestionnaireResource {
     @ApiOperation("上传问卷答案")
     @PostMapping("answer")
     public PlatformResult crtQuestionnaireAnswer(@RequestBody CmsAdoptQuestionnaireAnswer questionnaireAnswer) {
-        String answerId = questionnaireService.crtAnswer(questionnaireAnswer);
+        String answerId = questionnaireAnswerService.crtAnswer(questionnaireAnswer);
         return PlatformResult.success(answerId);
     }
 }

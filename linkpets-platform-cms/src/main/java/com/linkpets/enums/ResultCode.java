@@ -27,6 +27,8 @@ public enum ResultCode {
     VALID_USER_ACCOUNT(40001,"系统账户不存在"),
     VALID_USER_ACCOUNT_PASSWORD(40002,"密码错误"),
     VALID_USER_LOGIN_TOKEN(40003,"TOKNE失效，请重新登录"),
+    UNAUTHENTICATED_USER(40004,"用户未实名，请完善资料"),
+    AUTHENTICATED_USER_PROCEEDING(40004,"用户实名审核中，请耐心等待"),
 
     /* 业务错误：30001-30100 */
     DRAFT_COUNT_NOT_EXIST(30001, "您已没有抽奖机会"),
@@ -38,6 +40,12 @@ public enum ResultCode {
 
     ACTIVITY_GROUP_DUPLICATE(30010,"无法创建多个活动圈子"),
     ACTIVITY_REGISTER_DUPLICATE(30011,"已活动报名成功"),
+    GROUP_ACTIVITY_NOT_EXIST(30012,"活动不存在"),
+    GROUP_ACTIVITY_REGISTER_TIMEOUT(30013,"报名时间不在活动报名时间范围内"),
+    GROUP_ACTIVITY_QUESTIONNAIRE_NOT_ANSWER(30014,"活动问卷未填写"),
+    GROUP_ACTIVITY_REGISTER_FULL(30015,"活动报名人数已满"),
+    GROUP_ACTIVITY_REGISTER_POINT_LACK(30016,"活动报名积分不足"),
+
     /* 系统错误：40001-49999 */
     SYSTEM_INNER_ERROR(40001, "系统繁忙，请稍后重试"),
 

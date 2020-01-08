@@ -29,9 +29,6 @@ public class QuestionnaireServiceImpl implements IQuestionnaireService {
     @Resource
     private CmsAdoptQuestionnaireItemMapper questionnaireItemMapper;
 
-    @Resource
-    private CmsAdoptQuestionnaireAnswerMapper answerMapper;
-
     @Override
     public PageInfo<CmsAdoptQuestionnaire> getQuestionnairePage(String questionnaireTitle, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -54,22 +51,6 @@ public class QuestionnaireServiceImpl implements IQuestionnaireService {
         return respQuestionnaireInfo;
     }
 
-    @Override
-    public PageInfo<RespQuestionnaireAnswerInfo> getQuestionnaireAnswerPage(String questionnaireId, String activityId, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<RespQuestionnaireAnswerInfo> answerInfoList = answerMapper.getQuestionnaireAnswerList(questionnaireId, activityId);
-        return new PageInfo<>(answerInfoList);
-    }
-
-    @Override
-    public List<RespQuestionnaireAnswerInfo> getQuestionnaireAnswerList(String questionnaireId, String activityId, String userId) {
-        return answerMapper.getQuestionnaireAnswerListByParams(questionnaireId, activityId, userId);
-    }
-
-    @Override
-    public RespQuestionnaireAnswerInfo getQuestionnaireAnswerInfo(String answerId) {
-        return answerMapper.getQuestionnaireAnswerInfo(answerId);
-    }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -107,11 +88,5 @@ public class QuestionnaireServiceImpl implements IQuestionnaireService {
         questionnaireMapper.delQuestionnaireByQuestionnaireId(questionnaireId);
     }
 
-    @Override
-    public String crtAnswer(CmsAdoptQuestionnaireAnswer cmsAdoptQuestionnaireAnswer) {
-        String answerId = UUIDUtils.getId();
-        cmsAdoptQuestionnaireAnswer.setAnswerId(answerId);
-        cmsAdoptQuestionnaireAnswer.setCreateDate(new Date());
-        return answerId;
-    }
+
 }

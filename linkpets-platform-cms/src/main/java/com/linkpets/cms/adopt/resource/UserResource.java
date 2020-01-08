@@ -19,9 +19,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-@Api(value = "领养平台用户接口",tags = "领养平台-用户接口")
+@Api(value = "领养平台用户接口", tags = "领养平台-用户接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/users")
@@ -30,12 +31,33 @@ public class UserResource {
     @Resource
     private IUserService userService;
 
+    @ApiOperation("分页获取用户列表")
+    @GetMapping("/page")
+    public PlatformResult getUserPage(@RequestParam(value = "wxAccount", required = false) String wxAccount,
+                                      @RequestParam(value = "mobilePhone", required = false) String mobilePhone,
+                                      @RequestParam(value = "authenticated", required = false) Integer authenticated,
+                                      @RequestParam(value = "pageNum") Integer pageNum,
+                                      @RequestParam(value = "pageSize") Integer pageSize) {
+        PageInfo<CmsUser> userPage = userService.getUserPage(wxAccount, mobilePhone, authenticated, pageNum, pageSize);
+        return PlatformResult.success(userPage);
+    }
+
+    @ApiOperation("获取用户列表")
+    @GetMapping("/list")
+    public PlatformResult getUseList(@RequestParam(value = "wxAccount", required = false) String wxAccount,
+                                     @RequestParam(value = "mobilePhone", required = false) String mobilePhone,
+                                     @RequestParam(value = "authenticated", required = false) Integer authenticated) {
+        List<CmsUser> userList = userService.getUserList(wxAccount, mobilePhone, authenticated);
+        return PlatformResult.success(userList);
+    }
+
     @ApiOperation("获取用户详情接口")
     @GetMapping("/user")
     public PlatformResult getUserInfo(@RequestParam("userId") String userId) {
         CmsUser userInfo = userService.getUserInfoByUserId(userId);
         return PlatformResult.success(userInfo);
     }
+
 
     @ApiOperation("修改用户信息接口")
     @PutMapping("/user")
@@ -54,6 +76,17 @@ public class UserResource {
         user.setLocation(location);
         user.setIntro(intro);
         user.setBirthday(DateUtils.getFormatDate(birthday));
+        userService.updateUserInfo(user);
+        return PlatformResult.success();
+    }
+
+    @ApiOperation("添加用户系统备注")
+    @PutMapping("/user/memo")
+    public PlatformResult updateUserMemo(@RequestParam("userId") String userId,
+                                         @RequestParam("memo") String memo) {
+        CmsUser user = new CmsUser();
+        user.setUserId(userId);
+        user.setMemo(memo);
         userService.updateUserInfo(user);
         return PlatformResult.success();
     }

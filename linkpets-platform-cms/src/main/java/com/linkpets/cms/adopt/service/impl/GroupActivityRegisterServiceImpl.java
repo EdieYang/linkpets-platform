@@ -6,7 +6,6 @@ import com.linkpets.cms.adopt.enums.PointsChannelEnum;
 import com.linkpets.cms.adopt.service.IGroupActivityRegisterService;
 import com.linkpets.cms.adopt.service.IGroupActivityService;
 import com.linkpets.cms.adopt.service.IPointStatementService;
-import com.linkpets.core.dao.CmsAdoptGroupActivityMapper;
 import com.linkpets.core.dao.CmsAdoptGroupActivityRegisterMapper;
 import com.linkpets.core.model.CmsAdoptGroupActivity;
 import com.linkpets.core.model.CmsAdoptGroupActivityRegister;
@@ -33,25 +32,22 @@ public class GroupActivityRegisterServiceImpl implements IGroupActivityRegisterS
     private IPointStatementService pointStatementService;
 
     @Override
-    public List<RespActivityRegister> getGroupActivityRegisterList(String activityId) {
-        return activityRegisterMapper.getGroupActivityRegisterInfoList(activityId);
+    public List<RespActivityRegister> getGroupActivityRegisterList(String activityId, Integer isValid, String wxAccount, String mobilePhone, String involvementTime) {
+        return activityRegisterMapper.getGroupActivityRegisterInfoList(activityId, isValid, wxAccount, mobilePhone, involvementTime);
     }
 
     @Override
-    public PageInfo<RespActivityRegister> getGroupActivityRegisterPage(String activityId, Integer pageNum, Integer pageSize) {
+    public PageInfo<RespActivityRegister> getGroupActivityRegisterPage(String activityId, Integer isValid, String wxAccount, String mobilePhone, String involvementTime, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<RespActivityRegister> activityRegisterList = activityRegisterMapper.getGroupActivityRegisterInfoList(activityId);
+        List<RespActivityRegister> activityRegisterList = activityRegisterMapper.getGroupActivityRegisterInfoList(activityId, isValid, wxAccount, mobilePhone, involvementTime);
         return new PageInfo<>(activityRegisterList);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String crtGroupActivityRegister(String userId, String activityId) {
+    public String crtGroupActivityRegister(String userId, String activityId, String involvementTime) {
         CmsAdoptGroupActivity activity = groupActivityService.getAdoptGroupActivityInfo(activityId);
-        //TODO 扣除用户积分
-        if (activity == null) {
-            return null;
-        }
+        //扣除用户积分
         if (activity.getActivityCost() != 0) {
             pointStatementService.crtPointStatement(userId, 0 - activity.getActivityCost(), activityId, PointsChannelEnum.GROUP_ACTIVITY_REGISTER);
         }
@@ -60,14 +56,38 @@ public class GroupActivityRegisterServiceImpl implements IGroupActivityRegisterS
         activityRegister.setRegisterId(registerId);
         activityRegister.setActivityId(activityId);
         activityRegister.setUserId(userId);
-        activityRegister.setCreateDate(new Date());
         activityRegister.setIsPaid(1);
+        activityRegister.setInvolvementTime(involvementTime);
+        activityRegister.setPaymentAmount(activity.getActivityCost());
+        activityRegister.setCreateDate(new Date());
         activityRegisterMapper.insertSelective(activityRegister);
         return registerId;
     }
 
     @Override
-    public List<CmsAdoptGroupActivityRegister> getGroupActivityRegisterListByUserId(String userId, String activityId) {
+    public CmsAdoptGroupActivityRegister getGroupActivityRegisterListByUserId(String userId, String activityId) {
         return activityRegisterMapper.getGroupActivityRegisterListByUserId(userId, activityId);
+    }
+
+    @Override
+    public List<CmsAdoptGroupActivityRegister> getGroupActivityRegisterListByActivityId(String activityId) {
+        return activityRegisterMapper.getGroupActivityRegisterListByActivityId(activityId);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void delGroupActivityRegister(String userId, String activityId, String memo) {
+        CmsAdoptGroupActivityRegister register = activityRegisterMapper.getGroupActivityRegisterListByUserId(userId, activityId);
+        if (register != null) {
+            //返回用户积分
+            if (register.getPaymentAmount() != 0) {
+                pointStatementService.crtPointStatement(userId, register.getPaymentAmount(), activityId, PointsChannelEnum.GROUP_ACTIVITY_SYSTEM_CANCEL);
+            }
+            CmsAdoptGroupActivityRegister cancelRegister = new CmsAdoptGroupActivityRegister();
+            cancelRegister.setRegisterId(register.getRegisterId());
+            cancelRegister.setIsValid(0);
+            cancelRegister.setMemo(memo);
+            activityRegisterMapper.updateByPrimaryKeySelective(cancelRegister);
+        }
     }
 }

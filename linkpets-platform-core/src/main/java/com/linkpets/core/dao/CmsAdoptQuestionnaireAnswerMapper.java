@@ -23,4 +23,8 @@ public interface CmsAdoptQuestionnaireAnswerMapper {
     List<RespQuestionnaireAnswerInfo> getQuestionnaireAnswerListByParams(String questionnaireId, String activityId, String userId);
 
     RespQuestionnaireAnswerInfo getQuestionnaireAnswerInfo(String answerId);
+
+    List<CmsAdoptQuestionnaireAnswer> getQuestionnaireAnswerListByUserId(String userId, String activityId, String questionnaireId);
+
+
 }

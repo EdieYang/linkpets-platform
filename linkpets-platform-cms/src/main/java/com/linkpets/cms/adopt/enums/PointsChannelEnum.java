@@ -10,7 +10,9 @@ public enum PointsChannelEnum {
     GROUP_ACTIVITY_SHARE("6", 10, "活动分享获得积分"),
     GROUP_ACTIVITY_ATTEND("7", 50, "参加活动获得积分"),
     GROUP_POST("8", 5, "圈内发帖获得积分"),
-    GROUP_ACTIVITY_REGISTER("9", 0, "报名活动扣除积分");
+    GROUP_ACTIVITY_REGISTER("9", 0, "报名活动扣除积分"),
+    SYSTEM_POINTS("10", 0, "系统奖励积分"),
+    GROUP_ACTIVITY_SYSTEM_CANCEL("11", 0, "系统取消活动报名退还积分");
 
     private String channel;
     private Integer points;

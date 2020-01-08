@@ -24,7 +24,7 @@ public class PointStatementResource {
     @PostMapping
     public PlatformResult crtPointStatement(@ApiParam(name = "userId", value = "", required = true)
                                             @RequestParam("userId") String userId,
-                                            @ApiParam(name = "channel", value = "4:领养信息转发获得积分;5:领养信息浏览获得积分;6:活动分享获得积分;7:参加活动获得积分;8:圈内发帖获得积分", required = true)
+                                            @ApiParam(name = "channel", value = "4:领养信息转发获得积分;5:领养信息浏览获得积分;6:活动分享获得积分;7:参加活动获得积分;8:圈内发帖获得积分;10:系统奖励积分", required = true)
                                             @RequestParam("channel") String channel,
                                             @ApiParam(name = "targetId", value = "领养信息浏览及转发传petId,活动转发传activityId", required = true)
                                             @RequestParam("targetId") String targetId) {

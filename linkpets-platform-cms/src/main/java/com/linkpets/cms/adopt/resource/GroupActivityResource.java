@@ -37,7 +37,7 @@ public class GroupActivityResource {
         return PlatformResult.success(pageInfo);
     }
 
-    @ApiOperation("查询圈子详情")
+    @ApiOperation("查询圈子活动详情")
     @GetMapping("")
     public PlatformResult getGroupActivityInfo(@RequestParam("activityId") String activityId) {
         CmsAdoptGroupActivity cmsAdoptGroupActivity = groupActivityService.getAdoptGroupActivityInfo(activityId);

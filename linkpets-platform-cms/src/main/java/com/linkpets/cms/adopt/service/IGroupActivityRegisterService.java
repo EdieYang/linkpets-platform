@@ -17,7 +17,7 @@ public interface IGroupActivityRegisterService {
      * @param activityId
      * @return
      */
-    List<RespActivityRegister> getGroupActivityRegisterList(String activityId);
+    List<RespActivityRegister> getGroupActivityRegisterList(String activityId, Integer isValid, String wxAccount, String mobilePhone, String involvementTime);
 
 
     /**
@@ -26,7 +26,7 @@ public interface IGroupActivityRegisterService {
      * @param activityId
      * @return
      */
-    PageInfo<RespActivityRegister> getGroupActivityRegisterPage(String activityId, Integer pageNum, Integer pageSize);
+    PageInfo<RespActivityRegister> getGroupActivityRegisterPage(String activityId, Integer isValid, String wxAccount, String mobilePhone, String involvementTime, Integer pageNum, Integer pageSize);
 
 
     /**
@@ -35,15 +35,33 @@ public interface IGroupActivityRegisterService {
      * @param userId
      * @param activityId
      */
-    String crtGroupActivityRegister(String userId, String activityId);
+    String crtGroupActivityRegister(String userId, String activityId, String involvementTime);
 
     /**
-     * 获取用户报名列表
+     * 获取用户报名记录
+     *
      * @param userId
      * @param activityId
      * @return
      */
-    List<CmsAdoptGroupActivityRegister> getGroupActivityRegisterListByUserId(String userId, String activityId);
+    CmsAdoptGroupActivityRegister getGroupActivityRegisterListByUserId(String userId, String activityId);
+
+    /**
+     * 获取活动报名列表
+     *
+     * @param activityId
+     * @return
+     */
+    List<CmsAdoptGroupActivityRegister> getGroupActivityRegisterListByActivityId(String activityId);
+
+    /**
+     * 取消用户活动报名
+     *
+     * @param userId
+     * @param activityId
+     * @param memo
+     */
+    void delGroupActivityRegister(String userId, String activityId, String memo);
 
 
 }

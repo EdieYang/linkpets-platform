@@ -5,7 +5,7 @@ import com.linkpets.cms.adopt.model.AdoptionStatistic;
 import com.linkpets.cms.adopt.service.IApplyService;
 import com.linkpets.cms.adopt.service.IPetService;
 import com.linkpets.cms.adopt.service.IStatisticService;
-import com.linkpets.cms.adopt.service.IUserService;
+import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.result.PlatformResult;
 import com.linkpets.util.DateUtils;
 import io.swagger.annotations.Api;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.Date;
 
-@Api(value = "领养平台统计接口",tags = "领养平台-统计接口")
+@Api(value = "领养平台统计接口",tags = "领养模块-统计接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/statistic")

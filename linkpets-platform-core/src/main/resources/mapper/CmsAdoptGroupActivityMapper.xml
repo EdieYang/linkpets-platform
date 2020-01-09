@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linkpets.core.dao.CmsAdoptGroupActivityMapper">
-    <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsAdoptGroupActivity">
+    <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsGroupActivity">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
         <result column="activity_type" jdbcType="CHAR" property="activityType"/>
@@ -27,6 +27,22 @@
         <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
     </resultMap>
+    <resultMap id="BaseRespResultMap" type="com.linkpets.core.respEntity.RespGroupActivity">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
+        <result column="activity_type" jdbcType="CHAR" property="activityType"/>
+        <result column="activity_title" jdbcType="VARCHAR" property="activityTitle"/>
+        <result column="activity_banner" jdbcType="VARCHAR" property="activityBanner"/>
+        <result column="activity_area" jdbcType="VARCHAR" property="activityArea"/>
+        <result column="activity_address" jdbcType="VARCHAR" property="activityAddress"/>
+        <result column="register_limit" jdbcType="INTEGER" property="registerLimit"/>
+        <result column="activity_start_time" jdbcType="TIMESTAMP" property="activityStartTime"/>
+        <result column="activity_end_time" jdbcType="TIMESTAMP" property="activityEndTime"/>
+        <result column="is_active" jdbcType="INTEGER" property="isActive"/>
+        <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="hasRegistered" jdbcType="VARCHAR" property="hasRegistered"/>
+    </resultMap>
     <sql id="Base_Column_List">
     id, group_id, activity_type, activity_title, activity_banner, activity_area, activity_address, 
     activity_content, register_limit, activity_should_verify, activity_should_questionnaire, 
@@ -37,15 +53,15 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_group_activity
+        from cms_group_activity
         where id = #{id,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from cms_adopt_group_activity
+    delete from cms_group_activity
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-    <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptGroupActivity">
-    insert into cms_adopt_group_activity (id, group_id, activity_type, 
+    <insert id="insert" parameterType="com.linkpets.core.model.CmsGroupActivity">
+    insert into cms_group_activity (id, group_id, activity_type,
       activity_title, activity_banner, activity_area, 
       activity_address, activity_content, register_limit, 
       activity_should_verify, activity_should_questionnaire, 
@@ -66,8 +82,8 @@
       #{isActive,jdbcType=INTEGER}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}
       )
   </insert>
-    <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptGroupActivity">
-        insert into cms_adopt_group_activity
+    <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsGroupActivity">
+        insert into cms_group_activity
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -217,8 +233,8 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsAdoptGroupActivity">
-        update cms_adopt_group_activity
+    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsGroupActivity">
+        update cms_group_activity
         <set>
             <if test="groupId != null">
                 group_id = #{groupId,jdbcType=VARCHAR},
@@ -292,8 +308,8 @@
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsAdoptGroupActivity">
-    update cms_adopt_group_activity
+    <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsGroupActivity">
+    update cms_group_activity
     set group_id = #{groupId,jdbcType=VARCHAR},
       activity_type = #{activityType,jdbcType=CHAR},
       activity_title = #{activityTitle,jdbcType=VARCHAR},
@@ -320,14 +336,14 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <update id="delGroupActivity">
-        update cms_adopt_group_activity
+        update cms_group_activity
          set is_valid= 0
          where  id = #{activityId}
     </update>
     <select id="getAdoptGroupActivityList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_group_activity
+        from cms_group_activity
         where 1=1
         <if test="activityType!=null">
             and activity_type = #{activityType}
@@ -337,5 +353,17 @@
         </if>
         and is_valid = 1
         order by activity_start_time desc
+    </select>
+    <select id="getGroupActivityListByUserId" resultMap="BaseRespResultMap">
+        select  a.id, a.group_id, a.activity_type, a.activity_title, a.activity_banner, a.activity_area, a.activity_address,  a.activity_start_time,
+                a.activity_end_time,  a.is_active, a.is_valid, a.create_date,
+                (select count(1) from cms_group_activity_register ar where ar.user_id = r.user_id and ar.activity_id = a.id and ar.is_valid = 1 ) as hasRegistered
+        from cms_group_activity_user_rel r ,cms_group_activity a
+        where r.activity_id = a.id
+        and r.is_valid = 1
+        and r.user_id = #{userId}
+        and a.is_valid = 1
+        and a.is_active = 1
+        order by a.activity_start_time
     </select>
 </mapper>

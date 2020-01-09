@@ -1,7 +1,7 @@
 package com.linkpets.cms.manage.resource;
 
 import com.linkpets.annotation.UserLoginToken;
-import com.linkpets.cms.adopt.utils.TokenUtils;
+import com.linkpets.util.TokenUtils;
 import com.linkpets.cms.manage.service.*;
 import com.linkpets.core.model.SysPermission;
 import com.linkpets.core.model.SysRole;
@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @Author Edie
  */
-@Api(tags = "系统用户登录")
+@Api(tags = "系统模块-用户登录接口")
 @RestController
 @RequestMapping("/sys/login")
 public class SysLoginController {

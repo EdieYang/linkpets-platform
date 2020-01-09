@@ -1,6 +1,7 @@
 package com.linkpets.core.dao;
 
-import com.linkpets.core.model.CmsAdoptGroupActivity;
+import com.linkpets.core.model.CmsGroupActivity;
+import com.linkpets.core.respEntity.RespGroupActivity;
 
 import java.util.List;
 
@@ -8,15 +9,15 @@ public interface CmsAdoptGroupActivityMapper {
 
     int deleteByPrimaryKey(String id);
 
-    int insert(CmsAdoptGroupActivity record);
+    int insert(CmsGroupActivity record);
 
-    int insertSelective(CmsAdoptGroupActivity record);
+    int insertSelective(CmsGroupActivity record);
 
-    CmsAdoptGroupActivity selectByPrimaryKey(String id);
+    CmsGroupActivity selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(CmsAdoptGroupActivity record);
+    int updateByPrimaryKeySelective(CmsGroupActivity record);
 
-    int updateByPrimaryKey(CmsAdoptGroupActivity record);
+    int updateByPrimaryKey(CmsGroupActivity record);
 
     /**
      * 查询圈子活动列表
@@ -25,10 +26,19 @@ public interface CmsAdoptGroupActivityMapper {
      * @param isActive
      * @return
      */
-    List<CmsAdoptGroupActivity> getAdoptGroupActivityList(Integer activityType, Integer isActive);
+    List<CmsGroupActivity> getAdoptGroupActivityList(Integer activityType, Integer isActive);
+
+    /**
+     * 查询用户关注活动列表
+     *
+     * @param userId
+     * @return
+     */
+    List<RespGroupActivity> getGroupActivityListByUserId(String userId);
 
     /**
      * 删除圈子活动
+     *
      * @param activityId
      */
     void delGroupActivity(String activityId);

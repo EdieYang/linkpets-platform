@@ -3,6 +3,7 @@ package com.linkpets.cms.adopt.resource;
 import com.alibaba.fastjson.JSONObject;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.service.*;
+import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.core.model.*;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
@@ -19,7 +20,7 @@ import java.util.Map;
  * @date 2019/5/26
  */
 
-@Api(value = "领养平台-领养协议接口",tags = "领养平台-领养协议接口")
+@Api(value = "领养模块-领养协议接口",tags = "领养模块-领养协议接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/agreement")

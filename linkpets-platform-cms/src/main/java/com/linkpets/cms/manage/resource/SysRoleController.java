@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author edie
  */
-@Api(tags = "系统角色")
+@Api(tags = "系统模块-角色接口")
 @UserLoginToken
 @RestController
 @RequestMapping("/sys/role")

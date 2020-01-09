@@ -52,8 +52,6 @@ public class WxMiniAuthorizeResource {
     @Autowired
     private ISysUserService sysUserService;
 
-    private static final String ROLE_ID = "10002";
-
     private static final int ACTIVE_SYS_USER = 1;
 
 
@@ -112,63 +110,63 @@ public class WxMiniAuthorizeResource {
     }
 
 
-    @RequestMapping("/checkIfSysUserAuthorized")
-    public Map<String, Object> checkIfUserAuthorized(@RequestParam("userId") String userId) {
-        Map<String, Object> map = new HashMap<>();
-        //find authorized user by userId
-        SysUser sysUser = sysUserService.getSysUserInfo(userId);
-        if (sysUser != null && StringUtil.isNotEmpty(sysUser.getUnionId()) && sysUser.getIsActive()==1) {
-            map.put("authorized", true);
-            map.put("userInfo", sysUser);
-        } else {
-            map.put("authorized", false);
-            map.put("userInfo", null);
-        }
-        return map;
-    }
+//    @RequestMapping("/checkIfSysUserAuthorized")
+//    public Map<String, Object> checkIfUserAuthorized(@RequestParam("userId") String userId) {
+//        Map<String, Object> map = new HashMap<>();
+//        //find authorized user by userId
+//        SysUser sysUser = sysUserService.getSysUserInfo(userId);
+//        if (sysUser != null && StringUtil.isNotEmpty(sysUser.getUnionId()) && sysUser.getIsActive()==1) {
+//            map.put("authorized", true);
+//            map.put("userInfo", sysUser);
+//        } else {
+//            map.put("authorized", false);
+//            map.put("userInfo", null);
+//        }
+//        return map;
+//    }
 
 
-    @RequestMapping("/authorizeUser/{userId}")
-    public PlatformResult authorizeUserAndReturnUserInfo(@RequestBody JSONObject data, @PathVariable("userId") String userId) {
-        Map<String, Object> map = new HashMap<>();
-        String encryptedData = data.getString("encryptedData");
-        String iv = data.getString("iv");
-        String sessionKey = "";
-        try {
-            sessionKey = stringRedisTemplate.opsForValue().get(userId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (StringUtils.isEmpty(sessionKey)) {
-                sessionKey = data.getString("sessionKey");
-            }
-            String decryptData = WXCore.decrypt(chainAppId, encryptedData, sessionKey, iv);
-            if (StringUtil.isNotEmpty(decryptData)) {
-                JSONObject jsonObject = JSON.parseObject(decryptData);
-                String unionId = jsonObject.getString("unionId");
-                String nickName = jsonObject.getString("nickName");
-
-                //register authorized  user
-                SysUser user = sysUserService.getSysUserInfo(userId);
-                if (user == null) {
-                    user = new SysUser();
-                    user.setUserId(userId);
-                    user.setUserName(nickName);
-                    user.setRoleId(ROLE_ID);
-                    user.setUnionId(unionId);
-                    user.setIsActive(ACTIVE_SYS_USER);
-                    user.setCreateTime(new Date());
-                    user.setUpdateTime(new Date());
-                    sysUserService.insertSysUser(user);
-                }
-
-                map.put("userInfo", user);
-            } else {
-                map.put("userInfo", null);
-            }
-        }
-        return PlatformResult.success(map);
-    }
+//    @RequestMapping("/authorizeUser/{userId}")
+//    public PlatformResult authorizeUserAndReturnUserInfo(@RequestBody JSONObject data, @PathVariable("userId") String userId) {
+//        Map<String, Object> map = new HashMap<>();
+//        String encryptedData = data.getString("encryptedData");
+//        String iv = data.getString("iv");
+//        String sessionKey = "";
+//        try {
+//            sessionKey = stringRedisTemplate.opsForValue().get(userId);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (StringUtils.isEmpty(sessionKey)) {
+//                sessionKey = data.getString("sessionKey");
+//            }
+//            String decryptData = WXCore.decrypt(chainAppId, encryptedData, sessionKey, iv);
+//            if (StringUtil.isNotEmpty(decryptData)) {
+//                JSONObject jsonObject = JSON.parseObject(decryptData);
+//                String unionId = jsonObject.getString("unionId");
+//                String nickName = jsonObject.getString("nickName");
+//
+//                //register authorized  user
+//                SysUser user = sysUserService.getSysUserInfo(userId);
+//                if (user == null) {
+//                    user = new SysUser();
+//                    user.setUserId(userId);
+//                    user.setUserName(nickName);
+//                    user.setRoleId(ROLE_ID);
+//                    user.setUnionId(unionId);
+//                    user.setIsActive(ACTIVE_SYS_USER);
+//                    user.setCreateTime(new Date());
+//                    user.setUpdateTime(new Date());
+//                    sysUserService.insertSysUser(user);
+//                }
+//
+//                map.put("userInfo", user);
+//            } else {
+//                map.put("userInfo", null);
+//            }
+//        }
+//        return PlatformResult.success(map);
+//    }
 
 
     @RequestMapping("/authorizeUserPhoneNumber/{userId}")

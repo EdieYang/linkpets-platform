@@ -1,7 +1,7 @@
 package com.linkpets.core.respEntity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.linkpets.core.model.CmsAdoptGroupPostImg;
+import com.linkpets.core.model.CmsGroupPostImg;
 import lombok.Data;
 
 import java.util.Date;
@@ -33,9 +33,11 @@ public class RespGroupPost {
 
     private Integer likeAmount;
 
+    private Integer isFollowed;
+
     private Integer isValid;
 
-    private List<CmsAdoptGroupPostImg> groupPostImgList;
+    private List<CmsGroupPostImg> groupPostImgList;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;

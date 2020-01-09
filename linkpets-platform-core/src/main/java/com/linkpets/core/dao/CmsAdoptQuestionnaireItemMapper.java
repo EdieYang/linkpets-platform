@@ -1,23 +1,23 @@
 package com.linkpets.core.dao;
 
-import com.linkpets.core.model.CmsAdoptQuestionnaireItem;
+import com.linkpets.core.model.CmsQuestionnaireItem;
 
 import java.util.List;
 
 public interface CmsAdoptQuestionnaireItemMapper {
     int deleteByPrimaryKey(String questionnaireItemId);
 
-    int insert(CmsAdoptQuestionnaireItem record);
+    int insert(CmsQuestionnaireItem record);
 
-    int insertSelective(CmsAdoptQuestionnaireItem record);
+    int insertSelective(CmsQuestionnaireItem record);
 
-    CmsAdoptQuestionnaireItem selectByPrimaryKey(String questionnaireItemId);
+    CmsQuestionnaireItem selectByPrimaryKey(String questionnaireItemId);
 
-    int updateByPrimaryKeySelective(CmsAdoptQuestionnaireItem record);
+    int updateByPrimaryKeySelective(CmsQuestionnaireItem record);
 
-    int updateByPrimaryKey(CmsAdoptQuestionnaireItem record);
+    int updateByPrimaryKey(CmsQuestionnaireItem record);
 
-    List<CmsAdoptQuestionnaireItem> getListByQuestionnaireId(String questionnaireId);
+    List<CmsQuestionnaireItem> getListByQuestionnaireId(String questionnaireId);
 
     void delQuestionnaireItemByQuestionnaireId(String questionnaireId);
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linkpets.core.dao.CmsAdoptQuestionnaireMapper">
-    <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsAdoptQuestionnaire">
+    <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsQuestionnaire">
         <id column="questionnaire_id" jdbcType="VARCHAR" property="questionnaireId"/>
         <result column="questionnaire_title" jdbcType="VARCHAR" property="questionnaireTitle"/>
         <result column="questionnaire_content" jdbcType="VARCHAR" property="questionnaireContent"/>
@@ -14,15 +14,15 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_questionnaire
+        from cms_questionnaire
         where questionnaire_id = #{questionnaireId,jdbcType=VARCHAR}
     </select>
     <select id="getQuestionnaireList" resultMap="BaseResultMap">
         select
         questionnaire_id, questionnaire_title, questionnaire_content, is_valid, create_date,
-        (select GROUP_CONCAT(activity_title) from cms_adopt_group_activity a where a.questionnaire_id =
+        (select GROUP_CONCAT(activity_title) from cms_group_activity a where a.questionnaire_id =
         q.questionnaire_id group by a.questionnaire_id) as matchActivity
-        from cms_adopt_questionnaire q
+        from cms_questionnaire q
         where is_valid = 1
         <if test="questionnaireTitle!=null and questionnaireTitle!=''">
             and questionnaire_title like concat('%',#{questionnaireTitle},'%')
@@ -31,17 +31,17 @@
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete
-        from cms_adopt_questionnaire
+        from cms_questionnaire
         where questionnaire_id = #{questionnaireId,jdbcType=VARCHAR}
     </delete>
-    <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptQuestionnaire">
-        insert into cms_adopt_questionnaire (questionnaire_id, questionnaire_title,
+    <insert id="insert" parameterType="com.linkpets.core.model.CmsQuestionnaire">
+        insert into cms_questionnaire (questionnaire_id, questionnaire_title,
                                              questionnaire_content, is_valid, create_date)
         values (#{questionnaireId,jdbcType=VARCHAR}, #{questionnaireTitle,jdbcType=VARCHAR},
                 #{questionnaireContent,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptQuestionnaire">
-        insert into cms_adopt_questionnaire
+    <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsQuestionnaire">
+        insert into cms_questionnaire
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="questionnaireId != null">
                 questionnaire_id,
@@ -77,8 +77,8 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsAdoptQuestionnaire">
-        update cms_adopt_questionnaire
+    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsQuestionnaire">
+        update cms_questionnaire
         <set>
             <if test="questionnaireTitle != null">
                 questionnaire_title = #{questionnaireTitle,jdbcType=VARCHAR},
@@ -95,8 +95,8 @@
         </set>
         where questionnaire_id = #{questionnaireId,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsAdoptQuestionnaire">
-        update cms_adopt_questionnaire
+    <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsQuestionnaire">
+        update cms_questionnaire
         set questionnaire_title   = #{questionnaireTitle,jdbcType=VARCHAR},
             questionnaire_content = #{questionnaireContent,jdbcType=VARCHAR},
             is_valid              = #{isValid,jdbcType=INTEGER},
@@ -104,7 +104,7 @@
         where questionnaire_id = #{questionnaireId,jdbcType=VARCHAR}
     </update>
     <update id="delQuestionnaireByQuestionnaireId">
-        update cms_adopt_questionnaire
+        update cms_questionnaire
         set is_valid = 0
         where questionnaire_id = #{questionnaireId,jdbcType=VARCHAR}
     </update>

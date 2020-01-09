@@ -3,6 +3,7 @@ package com.linkpets.cms.adopt.aop;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.linkpets.cms.adopt.service.*;
+import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.core.model.*;
 import com.linkpets.util.HttpUtil;
 import lombok.extern.slf4j.Slf4j;

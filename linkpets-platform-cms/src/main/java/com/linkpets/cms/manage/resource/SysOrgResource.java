@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(tags = "系统机构", description = "机构的增、改、查")
+@Api(tags = "系统模块-机构接口")
 @ResponseResult
 @RestController
 @RequestMapping("/sysOrg")

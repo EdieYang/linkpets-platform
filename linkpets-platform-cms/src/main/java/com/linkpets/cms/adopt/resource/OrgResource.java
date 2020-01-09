@@ -6,7 +6,7 @@ import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.service.IApplyService;
 import com.linkpets.cms.adopt.service.IOrgService;
 import com.linkpets.cms.adopt.service.IPetService;
-import com.linkpets.cms.adopt.service.IUserService;
+import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.core.model.*;
 import com.linkpets.core.respEntity.RespOrgUser;
 import com.linkpets.result.PlatformResult;
@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(value = "领养平台-公益机构接口", tags = "领养平台-公益机构接口")
+@Api(value = "领养模块-公益机构接口", tags = "领养模块-公益机构接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/orgs")

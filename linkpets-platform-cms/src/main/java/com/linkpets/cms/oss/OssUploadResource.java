@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 
-@Api(value = "领养平台-文件上传接口", tags = "领养平台-文件上传接口")
+@Api(value = "领养模块-文件上传接口", tags = "领养模块-文件上传接口")
 @ResponseResult
 @RestController
 @RequestMapping("/oss")
@@ -52,7 +52,7 @@ public class OssUploadResource {
     @PostMapping("/image")
     @ApiOperation(value = "上传图片接口")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "ossZone", value = "存储片区(此处填活动id)", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "ossZone", value = "存储片区", required = true, dataType = "String", paramType = "query")
     })
     public PlatformResult uploadImage(@ApiParam(name = "file", value = "上传的文件", required = true) MultipartFile file,
                                       @RequestParam("userId") String userId,
@@ -62,7 +62,6 @@ public class OssUploadResource {
 
 
         //拼文件格式
-
         if (file == null || file.isEmpty()) {
             return PlatformResult.failure("file is empty");
         }
@@ -74,12 +73,9 @@ public class OssUploadResource {
         // 创建OSSClient实例。
         OSSClient client = new OSSClient(ENDPOINT, ACCESSKEY, ACCESS_SK);
 
-
         try {
-
             // 上传文件流。
             InputStream inputStream = file.getInputStream();
-
             client.putObject(BUCKET_NAME, fileObjName, inputStream);
         } catch (OSSException oe) {
             log.error("Caught an OSSException, which means your request made it to OSS, "
@@ -94,13 +90,10 @@ public class OssUploadResource {
                     + "such as not being able to access the network.");
             log.error("Error Message: " + ce.getMessage());
         } finally {
-
             if (client != null) {
                 client.shutdown();
             }
-
             return PlatformResult.success(fileObjName);
-
         }
     }
 

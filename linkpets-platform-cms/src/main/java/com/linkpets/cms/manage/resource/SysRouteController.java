@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author edie
  */
-@Api(tags = "系统路由")
+@Api(tags = "系统模块-路由接口")
 @UserLoginToken
 @RestController
 @RequestMapping("/sys/route")

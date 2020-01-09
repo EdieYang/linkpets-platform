@@ -1,11 +1,9 @@
 package com.linkpets.cms.adopt.resource;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.service.ICertificationService;
-import com.linkpets.cms.adopt.service.IUserService;
+import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.cms.sms.SmsSendHandler;
 import com.linkpets.cms.sms.SmsTemplateBuilder;
 import com.linkpets.cms.sms.SmsTypeEnum;
@@ -18,8 +16,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +23,7 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-@Api(value = "领养平台-实名认证接口", tags = "领养平台-实名认证接口")
+@Api(value = "领养模块-实名认证接口", tags = "领养模块-实名认证接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/certification")

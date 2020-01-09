@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Api(value = "领养平台-BANNER接口", tags = "领养平台-BANNER接口")
+@Api(value = "领养模块-BANNER接口", tags = "领养模块-BANNER接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/banner")

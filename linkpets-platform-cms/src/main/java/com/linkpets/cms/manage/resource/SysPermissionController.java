@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @Author Edie
  */
-@Api(tags = "系统权限")
+@Api(tags = "系统模块-权限接口")
 @UserLoginToken
 @RestController
 @RequestMapping("/sys/permission")

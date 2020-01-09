@@ -1,29 +1,29 @@
 package com.linkpets.core.dao;
 
-import com.linkpets.core.model.CmsAdoptPointsStatement;
+import com.linkpets.core.model.CmsPointStatement;
 
 import java.util.List;
 
 public interface CmsAdoptPointsStatementMapper {
     int deleteByPrimaryKey(String id);
 
-    int insert(CmsAdoptPointsStatement record);
+    int insert(CmsPointStatement record);
 
-    int insertSelective(CmsAdoptPointsStatement record);
+    int insertSelective(CmsPointStatement record);
 
-    CmsAdoptPointsStatement selectByPrimaryKey(String id);
+    CmsPointStatement selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(CmsAdoptPointsStatement record);
+    int updateByPrimaryKeySelective(CmsPointStatement record);
 
-    int updateByPrimaryKey(CmsAdoptPointsStatement record);
+    int updateByPrimaryKey(CmsPointStatement record);
 
-    List<CmsAdoptPointsStatement> getPointStatementList(String userId);
+    List<CmsPointStatement> getPointStatementList(String userId);
 
-    List<CmsAdoptPointsStatement> getPointStatementListByChannel(String userId, String channel);
+    List<CmsPointStatement> getPointStatementListByChannel(String userId, String channel);
 
-    List<CmsAdoptPointsStatement> getPointStatementListByChannelAndDay(String userId, String channel, String date);
+    List<CmsPointStatement> getPointStatementListByChannelAndDay(String userId, String channel, String date);
 
-    List<CmsAdoptPointsStatement> getPointStatementListByTargetId(String userId, String channel, String date, String targetId);
+    List<CmsPointStatement> getPointStatementListByTargetId(String userId, String channel, String date, String targetId);
 
     Integer getUserPoints(String userId);
 }

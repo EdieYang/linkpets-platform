@@ -1,19 +1,19 @@
 package com.linkpets.core.dao;
 
-import com.linkpets.core.model.CmsAdoptGroupPostImg;
+import com.linkpets.core.model.CmsGroupPostImg;
 
 public interface CmsAdoptGroupPostImgMapper {
     int deleteByPrimaryKey(String id);
 
-    int insert(CmsAdoptGroupPostImg record);
+    int insert(CmsGroupPostImg record);
 
-    int insertSelective(CmsAdoptGroupPostImg record);
+    int insertSelective(CmsGroupPostImg record);
 
-    CmsAdoptGroupPostImg selectByPrimaryKey(String id);
+    CmsGroupPostImg selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(CmsAdoptGroupPostImg record);
+    int updateByPrimaryKeySelective(CmsGroupPostImg record);
 
-    int updateByPrimaryKey(CmsAdoptGroupPostImg record);
+    int updateByPrimaryKey(CmsGroupPostImg record);
 
     void deleteByPostId(String postId);
 }

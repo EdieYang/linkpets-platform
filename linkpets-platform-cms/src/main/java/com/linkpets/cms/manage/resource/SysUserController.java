@@ -3,7 +3,7 @@ package com.linkpets.cms.manage.resource;
 
 import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.UserLoginToken;
-import com.linkpets.cms.adopt.service.IUserService;
+import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.cms.manage.service.ISysUserService;
 import com.linkpets.core.model.SysUser;
 import com.linkpets.enums.ResultCode;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author edie
  */
-@Api(tags = "系统用户")
+@Api(tags = "系统模块-用户接口")
 @UserLoginToken
 @RestController
 @RequestMapping("/sys/user")

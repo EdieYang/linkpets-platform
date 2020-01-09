@@ -1,6 +1,6 @@
 package com.linkpets.core.dao;
 
-import com.linkpets.core.model.CmsAdoptGroupActivityRegister;
+import com.linkpets.core.model.CmsGroupActivityRegister;
 import com.linkpets.core.respEntity.RespActivityRegister;
 
 import java.util.List;
@@ -8,15 +8,15 @@ import java.util.List;
 public interface CmsAdoptGroupActivityRegisterMapper {
     int deleteByPrimaryKey(String registerId);
 
-    int insert(CmsAdoptGroupActivityRegister record);
+    int insert(CmsGroupActivityRegister record);
 
-    int insertSelective(CmsAdoptGroupActivityRegister record);
+    int insertSelective(CmsGroupActivityRegister record);
 
-    CmsAdoptGroupActivityRegister selectByPrimaryKey(String registerId);
+    CmsGroupActivityRegister selectByPrimaryKey(String registerId);
 
-    int updateByPrimaryKeySelective(CmsAdoptGroupActivityRegister record);
+    int updateByPrimaryKeySelective(CmsGroupActivityRegister record);
 
-    int updateByPrimaryKey(CmsAdoptGroupActivityRegister record);
+    int updateByPrimaryKey(CmsGroupActivityRegister record);
 
     /**
      * 根据活动id获取用户活动报名信息
@@ -25,7 +25,7 @@ public interface CmsAdoptGroupActivityRegisterMapper {
      * @param activityId
      * @return
      */
-    CmsAdoptGroupActivityRegister getGroupActivityRegister(String userId, String activityId);
+    CmsGroupActivityRegister getGroupActivityRegister(String userId, String activityId);
 
     /**
      * 获取活动报名明细列表
@@ -43,7 +43,7 @@ public interface CmsAdoptGroupActivityRegisterMapper {
      * @param activityId
      * @return
      */
-    CmsAdoptGroupActivityRegister getGroupActivityRegisterListByUserId(String userId, String activityId);
+    CmsGroupActivityRegister getGroupActivityRegisterListByUserId(String userId, String activityId);
 
     /**
      * 获取活动报名列表
@@ -51,6 +51,6 @@ public interface CmsAdoptGroupActivityRegisterMapper {
      * @param activityId
      * @return
      */
-    List<CmsAdoptGroupActivityRegister> getGroupActivityRegisterListByActivityId(String activityId);
+    List<CmsGroupActivityRegister> getGroupActivityRegisterListByActivityId(String activityId);
 
 }

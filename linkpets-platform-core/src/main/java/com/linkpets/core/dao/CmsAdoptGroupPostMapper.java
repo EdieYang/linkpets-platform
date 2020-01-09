@@ -1,6 +1,6 @@
 package com.linkpets.core.dao;
 
-import com.linkpets.core.model.CmsAdoptGroupPost;
+import com.linkpets.core.model.CmsGroupPost;
 import com.linkpets.core.respEntity.RespGroupPost;
 
 import java.util.List;
@@ -8,15 +8,15 @@ import java.util.List;
 public interface CmsAdoptGroupPostMapper {
     int deleteByPrimaryKey(String postId);
 
-    int insert(CmsAdoptGroupPost record);
+    int insert(CmsGroupPost record);
 
-    int insertSelective(CmsAdoptGroupPost record);
+    int insertSelective(CmsGroupPost record);
 
-    CmsAdoptGroupPost selectByPrimaryKey(String postId);
+    CmsGroupPost selectByPrimaryKey(String postId);
 
-    int updateByPrimaryKeySelective(CmsAdoptGroupPost record);
+    int updateByPrimaryKeySelective(CmsGroupPost record);
 
-    int updateByPrimaryKey(CmsAdoptGroupPost record);
+    int updateByPrimaryKey(CmsGroupPost record);
 
     /**
      * 分页获取圈子发帖列表

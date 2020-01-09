@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linkpets.core.dao.CmsAdoptPointsStatementMapper">
-    <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsAdoptPointsStatement">
+    <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsPointStatement">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
         <result column="points" jdbcType="INTEGER" property="points"/>
@@ -16,20 +16,20 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_points_statement
+        from cms_point_statement
         where id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="getPointStatementList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_points_statement
+        from cms_point_statement
         where user_id = #{userId}
         and is_valid = 1
     </select>
     <select id="getPointStatementListByChannel" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_points_statement
+        from cms_point_statement
         where user_id = #{userId}
         and channel = #{channel}
         and is_valid = 1
@@ -37,7 +37,7 @@
     <select id="getPointStatementListByChannelAndDay" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_points_statement
+        from cms_point_statement
         where user_id = #{userId}
         and channel = #{channel}
         and create_date between CONCAT(#{date},' 00:00:00') and CONCAT(#{date},' 23:59:59')
@@ -46,7 +46,7 @@
     <select id="getPointStatementListByTargetId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_points_statement
+        from cms_point_statement
         where user_id = #{userId}
         and channel = #{channel}
         and create_date between CONCAT(#{date},' 00:00:00') and CONCAT(#{date},' 23:59:59')
@@ -55,24 +55,24 @@
     </select>
     <select id="getUserPoints" resultType="java.lang.Integer">
         select SUM(points)
-        from cms_adopt_points_statement
+        from cms_point_statement
         where user_id = #{userId}
         and is_valid = 1
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from cms_adopt_points_statement
+    delete from cms_point_statement
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-    <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptPointsStatement">
-    insert into cms_adopt_points_statement (id, user_id, points, 
+    <insert id="insert" parameterType="com.linkpets.core.model.CmsPointStatement">
+    insert into cms_point_statement (id, user_id, points,
       target_id, channel, create_date, 
       is_valid)
     values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{points,jdbcType=INTEGER}, 
       #{targetId,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{isValid,jdbcType=INTEGER})
   </insert>
-    <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptPointsStatement">
-        insert into cms_adopt_points_statement
+    <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsPointStatement">
+        insert into cms_point_statement
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -120,8 +120,8 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsAdoptPointsStatement">
-        update cms_adopt_points_statement
+    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsPointStatement">
+        update cms_point_statement
         <set>
             <if test="userId != null">
                 user_id = #{userId,jdbcType=VARCHAR},
@@ -144,8 +144,8 @@
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsAdoptPointsStatement">
-    update cms_adopt_points_statement
+    <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsPointStatement">
+    update cms_point_statement
     set user_id = #{userId,jdbcType=VARCHAR},
       points = #{points,jdbcType=INTEGER},
       target_id = #{targetId,jdbcType=VARCHAR},

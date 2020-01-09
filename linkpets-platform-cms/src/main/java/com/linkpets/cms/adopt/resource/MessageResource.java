@@ -5,7 +5,7 @@ import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.model.ChatMessage;
 import com.linkpets.cms.adopt.model.ChatMessageList;
 import com.linkpets.cms.adopt.service.ICmsAdoptMsgService;
-import com.linkpets.cms.adopt.service.IUserService;
+import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.core.model.CmsAdoptMsg;
 import com.linkpets.core.model.CmsUser;
 import com.linkpets.result.PlatformResult;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.*;
 
-@Api(value = "领养平台-消息接口", tags = "领养平台-消息接口")
+@Api(value = "领养模块-消息接口", tags = "领养模块-消息接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/messages")

@@ -240,7 +240,7 @@
         intro,
         authenticated,
         memo,
-        (select SUM(points) from cms_adopt_points_statement where user_id = u.user_id and is_valid = 1) as points,
+        (select SUM(points) from cms_point_statement where user_id = u.user_id and is_valid = 1) as points,
         create_date
         from cms_user u
         where 1=1
@@ -338,7 +338,7 @@
                u.create_date,
                (select count(1) from cms_adopt_attention where attent_by = #{userId} and is_valid = '1') as followNum,
                (select count(1) from cms_adopt_attention where user_id = #{userId} and is_valid = '1')   as followByNum,
-               (select SUM(points) from cms_adopt_points_statement where user_id = #{userId} and is_valid = 1) as points,
+               (select SUM(points) from cms_point_statement where user_id = #{userId} and is_valid = 1) as points,
                c.image_front as idCardImageFront,
                c.image_back as idCardImageBack,
                c.id_card as idCard

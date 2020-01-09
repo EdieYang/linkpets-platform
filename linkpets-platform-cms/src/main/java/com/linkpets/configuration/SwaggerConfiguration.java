@@ -44,7 +44,7 @@ public class SwaggerConfiguration {
 //        String host=active.equals("test")?"localhost":"";
 
         return new Docket(DocumentationType.SWAGGER_2)
-//                .host(host)
+                .host("linchong.natapp1.cc")
                 .apiInfo(apiInfo()).select()
                 .apis(RequestHandlerSelectors.basePackage("com.linkpets.cms"))
                 .paths(PathSelectors.any())

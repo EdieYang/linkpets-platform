@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linkpets.core.dao.CmsAdoptGroupMapper">
-    <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsAdoptGroup">
+    <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsGroup">
         <id column="group_id" jdbcType="VARCHAR" property="groupId"/>
         <result column="org_id" jdbcType="VARCHAR" property="orgId"/>
         <result column="group_type" jdbcType="CHAR" property="groupType"/>
@@ -36,15 +36,15 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_group
+        from cms_group
         where group_id = #{groupId,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from cms_adopt_group
+    delete from cms_group
     where group_id = #{groupId,jdbcType=VARCHAR}
   </delete>
-    <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptGroup">
-    insert into cms_adopt_group (group_id, org_id, group_type, 
+    <insert id="insert" parameterType="com.linkpets.core.model.CmsGroup">
+    insert into cms_group (group_id, org_id, group_type,
       group_name, group_info, group_banner, 
       customer_support, sort, is_active, 
       is_valid, create_date)
@@ -53,8 +53,8 @@
       #{customerSupport,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{isActive,jdbcType=INTEGER}, 
       #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
   </insert>
-    <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptGroup">
-        insert into cms_adopt_group
+    <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsGroup">
+        insert into cms_group
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="groupId != null">
                 group_id,
@@ -126,8 +126,8 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsAdoptGroup">
-        update cms_adopt_group
+    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsGroup">
+        update cms_group
         <set>
             <if test="orgId != null">
                 org_id = #{orgId,jdbcType=VARCHAR},
@@ -162,8 +162,8 @@
         </set>
         where group_id = #{groupId,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsAdoptGroup">
-    update cms_adopt_group
+    <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsGroup">
+    update cms_group
     set org_id = #{orgId,jdbcType=VARCHAR},
       group_type = #{groupType,jdbcType=CHAR},
       group_name = #{groupName,jdbcType=VARCHAR},
@@ -180,12 +180,12 @@
         select
         group_id, group_type, group_name, group_info, group_banner, customer_support, sort,is_active,
         is_valid, create_date,
-        (select count(1) from cms_adopt_group_user_rel where group_id = g.group_id and is_valid = 1) as fansCount,
+        (select count(1) from cms_group_user_rel where group_id = g.group_id and is_valid = 1) as fansCount,
         case group_type
-        when '1' then (select count(1) from cms_adopt_group_user_rel where group_id = g.group_id and is_valid = 1)
-        else (select count(1) from cms_adopt_group_activity where group_id = g.group_id and is_valid = 1)
+        when '1' then (select count(1) from cms_group_user_rel where group_id = g.group_id and is_valid = 1)
+        else (select count(1) from cms_group_activity where group_id = g.group_id and is_valid = 1)
         end as contentCount
-        from cms_adopt_group g
+        from cms_group g
         where is_valid = 1
         <if test="groupType !=null and groupType !=''">
             and group_type = #{groupType}
@@ -203,7 +203,7 @@
     <select id="getActivityGroupList" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"></include>
-        from cms_adopt_group g
+        from cms_group g
         where is_valid = 1
         and group_type = '1'
     </select>
@@ -219,8 +219,8 @@
                is_active,
                g.is_valid,
                g.create_date
-        from cms_adopt_group g,
-             cms_adopt_group_user_rel r
+        from cms_group g,
+             cms_group_user_rel r
         where g.is_valid = 1
           and r.is_valid = 1
           and g.group_id = r.group_id
@@ -231,12 +231,12 @@
         select
         <include refid="Base_Column_List"/>
         ,
-        (select count(1) from cms_adopt_group_user_rel where group_id = g.group_id and is_valid = 1) as fansCount,
+        (select count(1) from cms_group_user_rel where group_id = g.group_id and is_valid = 1) as fansCount,
         case group_type
-        when '1' then (select count(1) from cms_adopt_group_user_rel where group_id = g.group_id and is_valid = 1)
-        else (select count(1) from cms_adopt_group_activity where group_id = g.group_id and is_valid = 1)
+        when '1' then (select count(1) from cms_group_user_rel where group_id = g.group_id and is_valid = 1)
+        else (select count(1) from cms_group_activity where group_id = g.group_id and is_valid = 1)
         end as contentCount
-        from cms_adopt_group g
+        from cms_group g
         where is_valid = 1
         <if test="isActive!=null">
             and is_active = #{active}

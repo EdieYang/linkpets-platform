@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linkpets.core.dao.CmsAdoptGroupActivityRegisterMapper">
-    <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsAdoptGroupActivityRegister">
+    <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsGroupActivityRegister">
         <id column="register_id" jdbcType="VARCHAR" property="registerId"/>
         <result column="activity_id" jdbcType="VARCHAR" property="activityId"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
@@ -33,15 +33,15 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_group_activity_register
+        from cms_group_activity_register
         where register_id = #{registerId,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from cms_adopt_group_activity_register
+    delete from cms_group_activity_register
     where register_id = #{registerId,jdbcType=VARCHAR}
   </delete>
-    <insert id="insert" parameterType="com.linkpets.core.model.CmsAdoptGroupActivityRegister">
-    insert into cms_adopt_group_activity_register (register_id, activity_id, user_id, 
+    <insert id="insert" parameterType="com.linkpets.core.model.CmsGroupActivityRegister">
+    insert into cms_group_activity_register (register_id, activity_id, user_id,
       involvement_time, is_paid, payment_amount, 
       memo, is_valid, create_date
       )
@@ -50,8 +50,8 @@
       #{memo,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}
       )
   </insert>
-    <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsAdoptGroupActivityRegister">
-        insert into cms_adopt_group_activity_register
+    <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsGroupActivityRegister">
+        insert into cms_group_activity_register
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="registerId != null">
                 register_id,
@@ -111,8 +111,8 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsAdoptGroupActivityRegister">
-        update cms_adopt_group_activity_register
+    <update id="updateByPrimaryKeySelective" parameterType="com.linkpets.core.model.CmsGroupActivityRegister">
+        update cms_group_activity_register
         <set>
             <if test="activityId != null">
                 activity_id = #{activityId,jdbcType=VARCHAR},
@@ -141,8 +141,8 @@
         </set>
         where register_id = #{registerId,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsAdoptGroupActivityRegister">
-    update cms_adopt_group_activity_register
+    <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsGroupActivityRegister">
+    update cms_group_activity_register
     set activity_id = #{activityId,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
       involvement_time = #{involvementTime,jdbcType=VARCHAR},
@@ -157,7 +157,7 @@
     <select id="getGroupActivityRegister" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_group_activity_register
+        from cms_group_activity_register
         where user_id = #{userId,jdbcType=VARCHAR}
         and activity_id =#{activityId}
         and is_valid = 1
@@ -165,7 +165,7 @@
     <select id="getGroupActivityRegisterList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_group_activity_register
+        from cms_group_activity_register
         where activity_id =#{activityId}
         and is_valid = 1
     </select>
@@ -182,7 +182,7 @@
         r.memo,
         r.is_valid,
         r.create_date
-        from cms_adopt_group_activity_register r,cms_adopt_group_activity a ,cms_user u
+        from cms_group_activity_register r,cms_group_activity a ,cms_user u
         where r.activity_id = a.id
         and r.user_id = u.user_id
         and r.activity_id = #{activityId}
@@ -202,7 +202,7 @@
     <select id="getGroupActivityRegisterListByUserId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_group_activity_register
+        from cms_group_activity_register
         where activity_id =#{activityId}
         and user_id = #{userId}
         and is_valid = 1
@@ -210,7 +210,7 @@
     <select id="getGroupActivityRegisterListByActivityId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from cms_adopt_group_activity_register
+        from cms_group_activity_register
         where activity_id =#{activityId}
         and is_valid = 1
     </select>

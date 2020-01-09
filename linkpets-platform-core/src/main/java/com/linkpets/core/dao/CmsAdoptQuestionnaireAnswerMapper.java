@@ -1,6 +1,6 @@
 package com.linkpets.core.dao;
 
-import com.linkpets.core.model.CmsAdoptQuestionnaireAnswer;
+import com.linkpets.core.model.CmsQuestionnaireAnswer;
 import com.linkpets.core.respEntity.RespQuestionnaireAnswerInfo;
 
 import java.util.List;
@@ -8,15 +8,15 @@ import java.util.List;
 public interface CmsAdoptQuestionnaireAnswerMapper {
     int deleteByPrimaryKey(String answerId);
 
-    int insert(CmsAdoptQuestionnaireAnswer record);
+    int insert(CmsQuestionnaireAnswer record);
 
-    int insertSelective(CmsAdoptQuestionnaireAnswer record);
+    int insertSelective(CmsQuestionnaireAnswer record);
 
-    CmsAdoptQuestionnaireAnswer selectByPrimaryKey(String answerId);
+    CmsQuestionnaireAnswer selectByPrimaryKey(String answerId);
 
-    int updateByPrimaryKeySelective(CmsAdoptQuestionnaireAnswer record);
+    int updateByPrimaryKeySelective(CmsQuestionnaireAnswer record);
 
-    int updateByPrimaryKey(CmsAdoptQuestionnaireAnswer record);
+    int updateByPrimaryKey(CmsQuestionnaireAnswer record);
 
     List<RespQuestionnaireAnswerInfo> getQuestionnaireAnswerList(String questionnaireId, String activityId);
 
@@ -24,7 +24,7 @@ public interface CmsAdoptQuestionnaireAnswerMapper {
 
     RespQuestionnaireAnswerInfo getQuestionnaireAnswerInfo(String answerId);
 
-    List<CmsAdoptQuestionnaireAnswer> getQuestionnaireAnswerListByUserId(String userId, String activityId, String questionnaireId);
+    List<CmsQuestionnaireAnswer> getQuestionnaireAnswerListByUserId(String userId, String activityId, String questionnaireId);
 
 
 }

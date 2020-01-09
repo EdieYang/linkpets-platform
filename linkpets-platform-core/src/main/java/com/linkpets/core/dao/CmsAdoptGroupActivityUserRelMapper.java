@@ -1,19 +1,19 @@
 package com.linkpets.core.dao;
 
-import com.linkpets.core.model.CmsAdoptGroupActivityUserRel;
+import com.linkpets.core.model.CmsGroupActivityUserRel;
 
 public interface CmsAdoptGroupActivityUserRelMapper {
     int deleteByPrimaryKey(String id);
 
-    int insert(CmsAdoptGroupActivityUserRel record);
+    int insert(CmsGroupActivityUserRel record);
 
-    int insertSelective(CmsAdoptGroupActivityUserRel record);
+    int insertSelective(CmsGroupActivityUserRel record);
 
-    CmsAdoptGroupActivityUserRel selectByPrimaryKey(String id);
+    CmsGroupActivityUserRel selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(CmsAdoptGroupActivityUserRel record);
+    int updateByPrimaryKeySelective(CmsGroupActivityUserRel record);
 
-    int updateByPrimaryKey(CmsAdoptGroupActivityUserRel record);
+    int updateByPrimaryKey(CmsGroupActivityUserRel record);
 
     /**
      * 获取用户关注圈子活动记录
@@ -21,5 +21,5 @@ public interface CmsAdoptGroupActivityUserRelMapper {
      * @param activityId
      * @return
      */
-    CmsAdoptGroupActivityUserRel getFollowUserByUserIdAndActivityId(String userId, String activityId);
+    CmsGroupActivityUserRel getFollowUserByUserIdAndActivityId(String userId, String activityId);
 }

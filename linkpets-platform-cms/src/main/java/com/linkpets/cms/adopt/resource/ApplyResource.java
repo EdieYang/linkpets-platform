@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.service.IApplyService;
 import com.linkpets.cms.adopt.service.IPetService;
-import com.linkpets.cms.adopt.service.IUserService;
+import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.core.model.CmsAdoptApply;
 import com.linkpets.core.model.CmsAdoptPet;
 import com.linkpets.core.model.CmsUser;
@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(value = "领养平台-领养申请接口",tags = "领养平台-领养申请接口")
+@Api(value = "领养模块-领养申请接口",tags = "领养模块-领养申请接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/apply")

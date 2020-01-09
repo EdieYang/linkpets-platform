@@ -1,6 +1,6 @@
 package com.linkpets.core.respEntity;
 
-import com.linkpets.core.model.CmsAdoptQuestionnaireAnswer;
+import com.linkpets.core.model.CmsQuestionnaireAnswer;
 import lombok.Data;
 
 /**
@@ -9,7 +9,7 @@ import lombok.Data;
  * @author edie
  */
 @Data
-public class RespQuestionnaireAnswerInfo extends CmsAdoptQuestionnaireAnswer {
+public class RespQuestionnaireAnswerInfo extends CmsQuestionnaireAnswer {
 
     private String nickName;
 

@@ -1,7 +1,7 @@
 package com.linkpets.core.respEntity;
 
-import com.linkpets.core.model.CmsAdoptQuestionnaire;
-import com.linkpets.core.model.CmsAdoptQuestionnaireItem;
+import com.linkpets.core.model.CmsQuestionnaire;
+import com.linkpets.core.model.CmsQuestionnaireItem;
 import lombok.Data;
 
 import java.util.List;
@@ -13,8 +13,8 @@ import java.util.List;
 @Data
 public class RespQuestionnaireInfo {
 
-    private CmsAdoptQuestionnaire questionnaire;
+    private CmsQuestionnaire questionnaire;
 
-    private List<CmsAdoptQuestionnaireItem> questionnaireItemList;
+    private List<CmsQuestionnaireItem> questionnaireItemList;
 
 }

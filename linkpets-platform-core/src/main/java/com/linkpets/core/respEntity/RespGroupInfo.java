@@ -1,6 +1,6 @@
 package com.linkpets.core.respEntity;
 
-import com.linkpets.core.model.CmsAdoptGroup;
+import com.linkpets.core.model.CmsGroup;
 import lombok.Data;
 
 /**
@@ -9,7 +9,7 @@ import lombok.Data;
  * @author edie
  */
 @Data
-public class RespGroupInfo extends CmsAdoptGroup {
+public class RespGroupInfo extends CmsGroup {
 
     /**
      * 粉丝数
@@ -20,5 +20,10 @@ public class RespGroupInfo extends CmsAdoptGroup {
      * 内容数
      */
     private String contentCount;
+
+    /**
+     * 是否已关注圈子（0：否 1：是）
+     */
+    private Integer isFollowed;
 
 }

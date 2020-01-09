@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author edie
  */
-@Api(tags = "系统菜单")
+@Api(tags = "系统模块-菜单接口")
 @UserLoginToken
 @RestController
 @RequestMapping("/sys/menu")

@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.service.IOrgService;
 import com.linkpets.cms.adopt.service.IPetService;
-import com.linkpets.cms.adopt.service.IUserService;
+import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.core.model.CmsAdoptPet;
 import com.linkpets.core.model.CmsAdoptPetCollect;
 import com.linkpets.core.model.CmsAdoptPetOrgRel;
@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(value = "领养平台-宠物接口",tags = "领养平台-宠物接口")
+@Api(value = "领养模块-宠物接口",tags = "领养模块-宠物接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/pets")

@@ -19,11 +19,12 @@ public interface IGroupPostService {
      * @param groupId
      * @param isValid
      * @param nickName
+     * @oaram userId
      * @param pageNum
      * @param pageSize
      * @return
      */
-    PageInfo<RespGroupPost> getGroupPostPage(String groupId, Integer isValid, String nickName, Integer pageNum, Integer pageSize);
+    PageInfo<RespGroupPost> getGroupPostPage(String groupId, Integer isValid, String nickName, String userId, Integer pageNum, Integer pageSize);
 
 
     /**
@@ -53,6 +54,7 @@ public interface IGroupPostService {
 
     /**
      * 点赞或取消点赞帖子
+     *
      * @param postId
      * @param userId
      * @param type（0：取消点赞 1：点赞）

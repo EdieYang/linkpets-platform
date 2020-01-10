@@ -22,7 +22,10 @@ public interface CmsGroupPostMapper {
      * 分页获取圈子发帖列表
      *
      * @param groupId
+     * @param isValid
+     * @param nickName
+     * @param userId
      * @return
      */
-    List<RespGroupPost> getGroupPostPage(String groupId, Integer isValid, String nickName);
+    List<RespGroupPost> getGroupPostPage(String groupId, Integer isValid, String nickName, String userId);
 }

@@ -35,9 +35,9 @@ public class GroupPostServiceImpl implements IGroupPostService {
 
 
     @Override
-    public PageInfo<RespGroupPost> getGroupPostPage(String groupId, Integer isValid, String nickName, Integer pageNum, Integer pageSize) {
+    public PageInfo<RespGroupPost> getGroupPostPage(String groupId, Integer isValid, String nickName, String userId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<RespGroupPost> postList = groupPostMapper.getGroupPostPage(groupId, isValid, nickName);
+        List<RespGroupPost> postList = groupPostMapper.getGroupPostPage(groupId, isValid, nickName,userId);
         return new PageInfo<>(postList);
     }
 

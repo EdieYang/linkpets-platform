@@ -30,8 +30,8 @@
         <result column="sort" jdbcType="INTEGER" property="sort"/>
     </resultMap>
     <sql id="Base_Column_List">
-    post_id, group_id, user_id, post_content, memo, is_valid, create_date
-  </sql>
+        post_id, group_id, user_id, post_content, memo, is_valid, create_date
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -50,7 +50,8 @@
         u.portrait,
         u.wx_account,
         (select count(1) from cms_group_post_like pl where pl.post_id = p.post_id and pl.is_valid = 1 ) as likeAmount,
-        (select count(1) from cms_user_follow aa where aa.user_id = p.user_id and aa.is_valid = 1) as isFollowed
+        (select count(1) from cms_user_follow aa where aa.user_id = #{userId} and aa.is_valid = 1) as isFollowed,
+        (select count(1) from cms_group_post_like lk where lk.post_id = p.post_id  and lk.user_id = #{userId} and lk.is_valid = 1) as isLiked
         from cms_group_post p,
         cms_user u
         where p.user_id = u.user_id
@@ -73,17 +74,18 @@
         order by sort
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from cms_group_post
-    where post_id = #{postId,jdbcType=VARCHAR}
-  </delete>
+        delete
+        from cms_group_post
+        where post_id = #{postId,jdbcType=VARCHAR}
+    </delete>
     <insert id="insert" parameterType="com.linkpets.core.model.CmsGroupPost">
-    insert into cms_group_post (post_id, group_id, user_id,
-      post_content, memo, is_valid, 
-      create_date)
-    values (#{postId,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
-      #{postContent,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, 
-      #{createDate,jdbcType=TIMESTAMP})
-  </insert>
+        insert into cms_group_post (post_id, group_id, user_id,
+                                    post_content, memo, is_valid,
+                                    create_date)
+        values (#{postId,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+                #{postContent,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER},
+                #{createDate,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsGroupPost">
         insert into cms_group_post
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -158,15 +160,15 @@
         where post_id = #{postId,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsGroupPost">
-    update cms_group_post
-    set group_id = #{groupId,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR},
-      post_content = #{postContent,jdbcType=VARCHAR},
-      memo = #{memo,jdbcType=VARCHAR},
-      is_valid = #{isValid,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=TIMESTAMP}
-    where post_id = #{postId,jdbcType=VARCHAR}
-  </update>
+        update cms_group_post
+        set group_id     = #{groupId,jdbcType=VARCHAR},
+            user_id      = #{userId,jdbcType=VARCHAR},
+            post_content = #{postContent,jdbcType=VARCHAR},
+            memo         = #{memo,jdbcType=VARCHAR},
+            is_valid     = #{isValid,jdbcType=INTEGER},
+            create_date  = #{createDate,jdbcType=TIMESTAMP}
+        where post_id = #{postId,jdbcType=VARCHAR}
+    </update>
 
 
 </mapper>

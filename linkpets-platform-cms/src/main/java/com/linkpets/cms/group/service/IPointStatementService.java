@@ -9,7 +9,7 @@ public interface IPointStatementService {
 
     void crtPointStatement(String userId, int points, String targetId, PointsChannelEnum pointsChannelEnum);
 
-    Integer crtPointStatementByChannel(String userId, String targetId, int channel);
+    Integer crtPointStatementByChannel(String userId, String targetId, int channel,int rewardPoints);
 
     List<CmsPointStatement> getPointStatementList(String userId);
 

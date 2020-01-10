@@ -35,6 +35,8 @@ public class RespGroupPost {
 
     private Integer isFollowed;
 
+    private Integer isLiked;
+
     private Integer isValid;
 
     private List<CmsGroupPostImg> groupPostImgList;

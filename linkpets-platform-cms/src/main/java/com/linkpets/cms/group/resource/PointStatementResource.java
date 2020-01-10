@@ -29,8 +29,10 @@ public class PointStatementResource {
                                             @ApiParam(name = "channel", value = "4:领养信息转发获得积分;5:领养信息浏览获得积分;6:活动分享获得积分;7:参加活动获得积分;8:圈内发帖获得积分;10:系统奖励积分", required = true)
                                             @RequestParam("channel") int channel,
                                             @ApiParam(name = "targetId", value = "领养信息浏览及转发传petId,活动转发传activityId", required = true)
-                                            @RequestParam(value = "targetId", required = false) String targetId) {
-        Integer points = pointStatementService.crtPointStatementByChannel(userId, targetId, channel);
+                                            @RequestParam(value = "targetId", required = false) String targetId,
+                                            @ApiParam(name = "points", value = "积分", required = true)
+                                            @RequestParam(value = "points",required = false) int rewardPoints) {
+        Integer points = pointStatementService.crtPointStatementByChannel(userId, targetId, channel, rewardPoints);
         return PlatformResult.success(points);
     }
 

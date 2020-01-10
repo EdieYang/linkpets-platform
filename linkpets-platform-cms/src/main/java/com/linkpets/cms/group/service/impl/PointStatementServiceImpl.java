@@ -35,7 +35,7 @@ public class PointStatementServiceImpl implements IPointStatementService {
     }
 
     @Override
-    public Integer crtPointStatementByChannel(String userId, String targetId, int channel) {
+    public Integer crtPointStatementByChannel(String userId, String targetId, int channel,int rewardPoints) {
         Integer points = 0;
         List<CmsPointStatement> pointsStatementList = pointsStatementMapper.getPointStatementListByChannelAndDay(userId, channel, DateUtils.getCurrentDay());
         switch (channel) {
@@ -74,6 +74,12 @@ public class PointStatementServiceImpl implements IPointStatementService {
                 if (pointsStatementList != null && pointsStatementList.size() < 5) {
                     this.crtPointStatement(userId, PointsChannelEnum.GROUP_POST.getPoints(), targetId, PointsChannelEnum.GROUP_POST);
                     points = PointsChannelEnum.GROUP_POST.getPoints();
+                }
+                break;
+            case 10:
+                if(rewardPoints!=0){
+                    this.crtPointStatement(userId, rewardPoints, targetId, PointsChannelEnum.SYSTEM_POINTS);
+                    points =rewardPoints;
                 }
                 break;
             default:

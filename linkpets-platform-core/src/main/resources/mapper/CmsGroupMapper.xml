@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.linkpets.core.dao.CmsAdoptGroupMapper">
+<mapper namespace="com.linkpets.core.dao.CmsGroupMapper">
     <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsGroup">
         <id column="group_id" jdbcType="VARCHAR" property="groupId"/>
         <result column="org_id" jdbcType="VARCHAR" property="orgId"/>
@@ -176,7 +176,7 @@
       create_date = #{createDate,jdbcType=TIMESTAMP}
     where group_id = #{groupId,jdbcType=VARCHAR}
   </update>
-    <select id="getAdoptGroupList" parameterType="java.lang.String" resultMap="BaseInfoResultMap">
+    <select id="getGroupList" parameterType="java.lang.String" resultMap="BaseInfoResultMap">
         select
         group_id, group_type, group_name, group_info, group_banner, customer_support, sort,is_active,
         is_valid, create_date,
@@ -227,7 +227,7 @@
           and r.user_id = #{userId}
         order by group_type, r.create_date desc
     </select>
-    <select id="getAdoptGroup" resultMap="BaseInfoResultMap">
+    <select id="getGroup" resultMap="BaseInfoResultMap">
         select
         <include refid="Base_Column_List"/>
         ,

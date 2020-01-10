@@ -21,7 +21,7 @@ public interface IGroupService {
      * @param pageSize
      * @return
      */
-    PageInfo<RespGroupInfo> getAdoptGroupPage(String groupType, Integer isActive, Integer orderBy, Integer pageNum, Integer pageSize);
+    PageInfo<RespGroupInfo> getGroupPage(String groupType, Integer isActive, Integer orderBy, Integer pageNum, Integer pageSize);
 
     /**
      * 查询圈子列表
@@ -31,7 +31,7 @@ public interface IGroupService {
      * @param orderBy
      * @return
      */
-    List<RespGroupInfo> getAdoptGroupList(String groupType, Integer isActive, Integer orderBy);
+    List<RespGroupInfo> getGroupList(String groupType, Integer isActive, Integer orderBy);
 
     /**
      * 查询活动圈子列表
@@ -47,7 +47,7 @@ public interface IGroupService {
      * @param userId
      * @return
      */
-    RespGroupInfo getAdoptGroup(String groupId, String userId);
+    RespGroupInfo getGroup(String groupId, String userId);
 
     /**
      * 创建圈子
@@ -55,14 +55,14 @@ public interface IGroupService {
      * @param cmsGroup
      * @return
      */
-    String crtAdoptGroup(CmsGroup cmsGroup);
+    String crtGroup(CmsGroup cmsGroup);
 
     /**
      * 更新圈子
      *
      * @param cmsGroup
      */
-    void uptAdoptGroup(CmsGroup cmsGroup);
+    void uptGroup(CmsGroup cmsGroup);
 
     /**
      * 获取用户关注的圈子列表

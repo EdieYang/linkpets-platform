@@ -15,7 +15,7 @@ public interface IGroupActivityService {
      * @param isActive
      * @return
      */
-    List<CmsGroupActivity> getAdoptGroupActivityList(Integer activityType, Integer isActive);
+    List<CmsGroupActivity> getGroupActivityList(Integer activityType, Integer isActive);
 
     /**
      * 分页获取圈子活动列表
@@ -26,10 +26,11 @@ public interface IGroupActivityService {
      * @param pageSize
      * @return
      */
-    PageInfo<RespGroupActivity> getAdoptGroupActivityPage(Integer activityType, Integer isActive, Integer pageNum, Integer pageSize);
+    PageInfo<RespGroupActivity> getGroupActivityPage(Integer activityType, Integer isActive, Integer pageNum, Integer pageSize);
 
     /**
      * 查询用户关注的圈子活动列表
+     *
      * @param userId
      * @return
      */
@@ -42,7 +43,17 @@ public interface IGroupActivityService {
      * @param activityId
      * @return
      */
-    CmsGroupActivity getAdoptGroupActivityInfo(String activityId);
+    CmsGroupActivity getGroupActivityInfo(String activityId);
+
+
+    /**
+     * 获取圈子活动详情
+     *
+     * @param activityId
+     * @return
+     */
+    CmsGroupActivity getGroupActivityInfoWithUserId(String activityId, String userId);
+
 
     /**
      * 创建圈子活动
@@ -50,17 +61,18 @@ public interface IGroupActivityService {
      * @param cmsGroupActivity
      * @return
      */
-    String crtAdoptGroupActivity(CmsGroupActivity cmsGroupActivity);
+    String crtGroupActivity(CmsGroupActivity cmsGroupActivity);
 
     /**
      * 更新圈子活动
      *
      * @param cmsGroupActivity
      */
-    void uptAdoptGroupActivity(CmsGroupActivity cmsGroupActivity);
+    void uptGroupActivity(CmsGroupActivity cmsGroupActivity);
 
     /**
      * 删除圈子活动
+     *
      * @param activityId
      */
     void delGroupActivity(String activityId);

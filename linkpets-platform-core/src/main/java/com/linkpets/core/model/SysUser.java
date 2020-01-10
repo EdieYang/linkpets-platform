@@ -21,7 +21,7 @@ public class SysUser {
 
     private String email;
 
-    private String isActive;
+    private Integer isActive;
 
     private String createBy;
 

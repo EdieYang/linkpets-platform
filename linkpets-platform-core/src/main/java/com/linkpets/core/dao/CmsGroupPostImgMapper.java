@@ -2,7 +2,7 @@ package com.linkpets.core.dao;
 
 import com.linkpets.core.model.CmsGroupPostImg;
 
-public interface CmsAdoptGroupPostImgMapper {
+public interface CmsGroupPostImgMapper {
     int deleteByPrimaryKey(String id);
 
     int insert(CmsGroupPostImg record);

@@ -5,7 +5,7 @@ import com.linkpets.core.respEntity.RespGroupActivity;
 
 import java.util.List;
 
-public interface CmsAdoptGroupActivityMapper {
+public interface CmsGroupActivityMapper {
 
     int deleteByPrimaryKey(String id);
 
@@ -26,7 +26,7 @@ public interface CmsAdoptGroupActivityMapper {
      * @param isActive
      * @return
      */
-    List<CmsGroupActivity> getAdoptGroupActivityList(Integer activityType, Integer isActive);
+    List<CmsGroupActivity> getGroupActivityList(Integer activityType, Integer isActive);
 
     /**
      * 查询用户关注活动列表
@@ -42,4 +42,12 @@ public interface CmsAdoptGroupActivityMapper {
      * @param activityId
      */
     void delGroupActivity(String activityId);
+
+    /**
+     * 获取圈子活动详情
+     * @param activityId
+     * @param userId
+     * @return
+     */
+    CmsGroupActivity getGroupActivityInfoWithUserId(String activityId, String userId);
 }

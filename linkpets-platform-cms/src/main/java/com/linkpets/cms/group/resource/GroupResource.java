@@ -37,7 +37,7 @@ public class GroupResource {
                                        @RequestParam(value = "orderBy", required = false) Integer orderBy,
                                        @RequestParam("pageNum") Integer pageNum,
                                        @RequestParam("pageSize") Integer pageSize) {
-        PageInfo<RespGroupInfo> pageInfo = groupService.getAdoptGroupPage(groupType, isActive, orderBy, pageNum, pageSize);
+        PageInfo<RespGroupInfo> pageInfo = groupService.getGroupPage(groupType, isActive, orderBy, pageNum, pageSize);
         return PlatformResult.success(pageInfo);
     }
 
@@ -49,7 +49,7 @@ public class GroupResource {
                                        @RequestParam(value = "isActive", required = false) Integer isActive,
                                        @ApiParam(name = "orderBy", value = "排序: 0 默认排序 1 按创建时间排序 ")
                                        @RequestParam(value = "orderBy", required = false) Integer orderBy) {
-        List<RespGroupInfo> groupList = groupService.getAdoptGroupList(groupType, isActive, orderBy);
+        List<RespGroupInfo> groupList = groupService.getGroupList(groupType, isActive, orderBy);
         return PlatformResult.success(groupList);
     }
 
@@ -57,7 +57,7 @@ public class GroupResource {
     @GetMapping("")
     public PlatformResult getGroupInfo(@RequestParam("groupId") String groupId,
                                        @RequestParam(value = "userId", required = false) String userId) {
-        RespGroupInfo cmsGroup = groupService.getAdoptGroup(groupId, userId);
+        RespGroupInfo cmsGroup = groupService.getGroup(groupId, userId);
         return PlatformResult.success(cmsGroup);
     }
 
@@ -71,14 +71,14 @@ public class GroupResource {
                 return PlatformResult.failure(ResultCode.ACTIVITY_GROUP_DUPLICATE);
             }
         }
-        String groupId = groupService.crtAdoptGroup(cmsGroup);
+        String groupId = groupService.crtGroup(cmsGroup);
         return PlatformResult.success(groupId);
     }
 
     @ApiOperation("更新圈子")
     @PutMapping("")
     public PlatformResult uptGroup(@RequestBody CmsGroup cmsGroup) {
-        groupService.uptAdoptGroup(cmsGroup);
+        groupService.uptGroup(cmsGroup);
         return PlatformResult.success();
     }
 

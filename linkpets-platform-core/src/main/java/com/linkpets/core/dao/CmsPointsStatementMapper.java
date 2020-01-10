@@ -4,7 +4,7 @@ import com.linkpets.core.model.CmsPointStatement;
 
 import java.util.List;
 
-public interface CmsAdoptPointsStatementMapper {
+public interface CmsPointsStatementMapper {
     int deleteByPrimaryKey(String id);
 
     int insert(CmsPointStatement record);
@@ -19,11 +19,13 @@ public interface CmsAdoptPointsStatementMapper {
 
     List<CmsPointStatement> getPointStatementList(String userId);
 
-    List<CmsPointStatement> getPointStatementListByChannel(String userId, String channel);
+    List<CmsPointStatement> getPointStatementListByTargetIdAndUserId(String userId, String targetId,int channel);
 
-    List<CmsPointStatement> getPointStatementListByChannelAndDay(String userId, String channel, String date);
+    List<CmsPointStatement> getPointStatementListByChannel(String userId, int channel);
 
-    List<CmsPointStatement> getPointStatementListByTargetId(String userId, String channel, String date, String targetId);
+    List<CmsPointStatement> getPointStatementListByChannelAndDay(String userId, int channel, String date);
+
+    List<CmsPointStatement> getPointStatementListByTargetId(String userId, int channel, String date, String targetId);
 
     Integer getUserPoints(String userId);
 }

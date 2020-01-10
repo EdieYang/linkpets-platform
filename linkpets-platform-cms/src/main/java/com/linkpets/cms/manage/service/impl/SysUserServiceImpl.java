@@ -100,7 +100,7 @@ public class SysUserServiceImpl implements ISysUserService {
         newSysUser.setUserAccount(mobilePhone);
         newSysUser.setUserName(user.getNickName());
         newSysUser.setMobilePhone(mobilePhone);
-        newSysUser.setIsActive("1");
+        newSysUser.setIsActive(1);
         newSysUser.setCreateDate(new Date());
         newSysUser.setCreateBy("SYSTEM");
         sysUserMapper.insertSelective(newSysUser);

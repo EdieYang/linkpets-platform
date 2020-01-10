@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.linkpets.core.dao.CmsAdoptQuestionnaireItemMapper">
+<mapper namespace="com.linkpets.core.dao.CmsQuestionnaireItemMapper">
     <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsQuestionnaireItem">
         <id column="questionnaire_item_id" jdbcType="VARCHAR" property="questionnaireItemId"/>
         <result column="questionnaire_id" jdbcType="VARCHAR" property="questionnaireId"/>

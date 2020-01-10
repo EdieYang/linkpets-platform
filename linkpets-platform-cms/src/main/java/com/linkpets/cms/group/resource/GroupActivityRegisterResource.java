@@ -4,11 +4,11 @@ package com.linkpets.cms.group.resource;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.service.ICertificationService;
-import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.cms.group.service.IGroupActivityRegisterService;
 import com.linkpets.cms.group.service.IGroupActivityService;
 import com.linkpets.cms.group.service.IPointStatementService;
 import com.linkpets.cms.group.service.IQuestionnaireAnswerService;
+import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.core.model.*;
 import com.linkpets.core.respEntity.RespActivityRegister;
 import com.linkpets.enums.ResultCode;
@@ -83,7 +83,7 @@ public class GroupActivityRegisterResource {
         if (user == null) {
             return PlatformResult.failure(ResultCode.USER_NOT_EXIST);
         }
-        CmsGroupActivity activity = groupActivityService.getAdoptGroupActivityInfo(activityId);
+        CmsGroupActivity activity = groupActivityService.getGroupActivityInfo(activityId);
         if (activity == null) {
             return PlatformResult.failure(ResultCode.GROUP_ACTIVITY_NOT_EXIST);
         }

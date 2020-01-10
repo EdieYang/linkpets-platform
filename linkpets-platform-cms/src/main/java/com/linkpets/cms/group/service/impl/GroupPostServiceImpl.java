@@ -3,9 +3,9 @@ package com.linkpets.cms.group.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.cms.group.service.IGroupPostService;
-import com.linkpets.core.dao.CmsAdoptGroupPostImgMapper;
-import com.linkpets.core.dao.CmsAdoptGroupPostMapper;
+import com.linkpets.core.dao.CmsGroupPostImgMapper;
 import com.linkpets.core.dao.CmsGroupPostLikeMapper;
+import com.linkpets.core.dao.CmsGroupPostMapper;
 import com.linkpets.core.model.CmsGroupPost;
 import com.linkpets.core.model.CmsGroupPostImg;
 import com.linkpets.core.model.CmsGroupPostLike;
@@ -25,10 +25,10 @@ import java.util.List;
 public class GroupPostServiceImpl implements IGroupPostService {
 
     @Resource
-    private CmsAdoptGroupPostMapper groupPostMapper;
+    private CmsGroupPostMapper groupPostMapper;
 
     @Resource
-    private CmsAdoptGroupPostImgMapper groupPostImgMapper;
+    private CmsGroupPostImgMapper groupPostImgMapper;
 
     @Resource
     private CmsGroupPostLikeMapper groupPostLikeMapper;

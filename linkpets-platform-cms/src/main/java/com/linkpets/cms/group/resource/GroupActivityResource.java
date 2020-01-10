@@ -9,6 +9,7 @@ import com.linkpets.core.respEntity.RespGroupActivity;
 import com.linkpets.result.PlatformResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -32,28 +33,34 @@ public class GroupActivityResource {
                                                @RequestParam(value = "isActive", required = false) Integer isActive,
                                                @RequestParam("pageNum") Integer pageNum,
                                                @RequestParam("pageSize") Integer pageSize) {
-        PageInfo<RespGroupActivity> pageInfo = groupActivityService.getAdoptGroupActivityPage(activityType, isActive, pageNum, pageSize);
+        PageInfo<RespGroupActivity> pageInfo = groupActivityService.getGroupActivityPage(activityType, isActive, pageNum, pageSize);
         return PlatformResult.success(pageInfo);
     }
 
     @ApiOperation("查询圈子活动详情")
     @GetMapping("")
-    public PlatformResult getGroupActivityInfo(@RequestParam("activityId") String activityId) {
-        CmsGroupActivity cmsGroupActivity = groupActivityService.getAdoptGroupActivityInfo(activityId);
+    public PlatformResult getGroupActivityInfo(@RequestParam("activityId") String activityId,
+                                               @RequestParam(value = "userId", required = false) String userId) {
+        CmsGroupActivity cmsGroupActivity = new CmsGroupActivity();
+        if (StringUtils.isNotEmpty(userId)) {
+            cmsGroupActivity = groupActivityService.getGroupActivityInfoWithUserId(activityId, userId);
+        } else {
+            cmsGroupActivity = groupActivityService.getGroupActivityInfo(activityId);
+        }
         return PlatformResult.success(cmsGroupActivity);
     }
 
     @ApiOperation("创建圈子活动")
     @PostMapping("")
     public PlatformResult crtGroupActivity(@RequestBody CmsGroupActivity cmsGroupActivity) {
-        String activityId = groupActivityService.crtAdoptGroupActivity(cmsGroupActivity);
+        String activityId = groupActivityService.crtGroupActivity(cmsGroupActivity);
         return PlatformResult.success(activityId);
     }
 
     @ApiOperation("更新圈子活动")
     @PutMapping("")
     public PlatformResult uptGroupActivity(@RequestBody CmsGroupActivity cmsGroupActivity) {
-        groupActivityService.uptAdoptGroupActivity(cmsGroupActivity);
+        groupActivityService.uptGroupActivity(cmsGroupActivity);
         return PlatformResult.success();
     }
 

@@ -3,8 +3,8 @@ package com.linkpets.cms.group.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.cms.group.service.IGroupService;
-import com.linkpets.core.dao.CmsAdoptGroupMapper;
-import com.linkpets.core.dao.CmsAdoptGroupUserRelMapper;
+import com.linkpets.core.dao.CmsGroupMapper;
+import com.linkpets.core.dao.CmsGroupUserRelMapper;
 import com.linkpets.core.model.CmsGroup;
 import com.linkpets.core.model.CmsGroupUserRel;
 import com.linkpets.core.respEntity.RespGroupInfo;
@@ -23,35 +23,35 @@ import java.util.List;
 public class GroupServiceImpl implements IGroupService {
 
     @Resource
-    private CmsAdoptGroupMapper cmsAdoptGroupMapper;
+    private CmsGroupMapper CmsGroupMapper;
 
     @Resource
-    private CmsAdoptGroupUserRelMapper cmsAdoptGroupUserRelMapper;
+    private CmsGroupUserRelMapper cmsGroupUserRelMapper;
 
     @Override
-    public PageInfo<RespGroupInfo> getAdoptGroupPage(String groupType, Integer isActive, Integer orderBy, Integer pageNum, Integer pageSize) {
+    public PageInfo<RespGroupInfo> getGroupPage(String groupType, Integer isActive, Integer orderBy, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<RespGroupInfo> cmsAdoptGroupList = cmsAdoptGroupMapper.getAdoptGroupList(groupType, isActive, orderBy);
-        PageInfo<RespGroupInfo> cmsAdoptGroupPageInfo = new PageInfo<>(cmsAdoptGroupList);
-        return cmsAdoptGroupPageInfo;
+        List<RespGroupInfo> cmsGroupList = CmsGroupMapper.getGroupList(groupType, isActive, orderBy);
+        PageInfo<RespGroupInfo> cmsGroupPageInfo = new PageInfo<>(cmsGroupList);
+        return cmsGroupPageInfo;
     }
 
     @Override
-    public List<RespGroupInfo> getAdoptGroupList(String groupType, Integer isActive, Integer orderBy) {
-        List<RespGroupInfo> cmsAdoptGroupList = cmsAdoptGroupMapper.getAdoptGroupList(groupType, isActive, orderBy);
-        return cmsAdoptGroupList;
+    public List<RespGroupInfo> getGroupList(String groupType, Integer isActive, Integer orderBy) {
+        List<RespGroupInfo> cmsGroupList = CmsGroupMapper.getGroupList(groupType, isActive, orderBy);
+        return cmsGroupList;
     }
 
     @Override
     public List<CmsGroup> getActivityGroupList() {
-        return cmsAdoptGroupMapper.getActivityGroupList();
+        return CmsGroupMapper.getActivityGroupList();
     }
 
     @Override
-    public RespGroupInfo getAdoptGroup(String groupId, String userId) {
-        RespGroupInfo groupInfo = cmsAdoptGroupMapper.getAdoptGroup(groupId, null);
+    public RespGroupInfo getGroup(String groupId, String userId) {
+        RespGroupInfo groupInfo = CmsGroupMapper.getGroup(groupId, null);
         if (StringUtils.isNotEmpty(userId)) {
-            CmsGroupUserRel groupUserRel = cmsAdoptGroupUserRelMapper.selectByUserIdAndGroupId(userId, groupId);
+            CmsGroupUserRel groupUserRel = cmsGroupUserRelMapper.selectByUserIdAndGroupId(userId, groupId);
             if (groupUserRel == null) {
                 groupInfo.setIsFollowed(0);
             } else {
@@ -62,49 +62,49 @@ public class GroupServiceImpl implements IGroupService {
     }
 
     @Override
-    public String crtAdoptGroup(CmsGroup cmsGroup) {
+    public String crtGroup(CmsGroup cmsGroup) {
         String groupId = UUIDUtils.getId();
         cmsGroup.setGroupId(groupId);
         cmsGroup.setCreateDate(new Date());
         cmsGroup.setSort(999);
-        cmsAdoptGroupMapper.insertSelective(cmsGroup);
+        CmsGroupMapper.insertSelective(cmsGroup);
         return groupId;
     }
 
     @Override
-    public void uptAdoptGroup(CmsGroup cmsGroup) {
-        cmsAdoptGroupMapper.updateByPrimaryKeySelective(cmsGroup);
+    public void uptGroup(CmsGroup cmsGroup) {
+        CmsGroupMapper.updateByPrimaryKeySelective(cmsGroup);
     }
 
     @Override
     public List<CmsGroup> getFollowedGroupList(String userId) {
-        return cmsAdoptGroupMapper.getFollowedGroupList(userId);
+        return CmsGroupMapper.getFollowedGroupList(userId);
     }
 
     @Override
     public void followGroup(String userId, String groupId) {
-        CmsGroupUserRel cmsGroupUserRel = cmsAdoptGroupUserRelMapper.selectByUserIdAndGroupId(userId, groupId);
+        CmsGroupUserRel cmsGroupUserRel = cmsGroupUserRelMapper.selectByUserIdAndGroupId(userId, groupId);
         if (cmsGroupUserRel != null) {
             cmsGroupUserRel.setIsValid(1);
             cmsGroupUserRel.setCreateDate(new Date());
-            cmsAdoptGroupUserRelMapper.updateByPrimaryKeySelective(cmsGroupUserRel);
+            cmsGroupUserRelMapper.updateByPrimaryKeySelective(cmsGroupUserRel);
         } else {
             cmsGroupUserRel = new CmsGroupUserRel();
             cmsGroupUserRel.setUserId(userId);
             cmsGroupUserRel.setGroupId(groupId);
             cmsGroupUserRel.setCreateDate(new Date());
             cmsGroupUserRel.setId(UUIDUtils.getId());
-            cmsAdoptGroupUserRelMapper.insertSelective(cmsGroupUserRel);
+            cmsGroupUserRelMapper.insertSelective(cmsGroupUserRel);
         }
 
     }
 
     @Override
     public void unFollowGroup(String userId, String groupId) {
-        CmsGroupUserRel cmsGroupUserRel = cmsAdoptGroupUserRelMapper.selectByUserIdAndGroupId(userId, groupId);
+        CmsGroupUserRel cmsGroupUserRel = cmsGroupUserRelMapper.selectByUserIdAndGroupId(userId, groupId);
         if (cmsGroupUserRel != null) {
             cmsGroupUserRel.setIsValid(0);
-            cmsAdoptGroupUserRelMapper.updateByPrimaryKeySelective(cmsGroupUserRel);
+            cmsGroupUserRelMapper.updateByPrimaryKeySelective(cmsGroupUserRel);
         }
     }
 }

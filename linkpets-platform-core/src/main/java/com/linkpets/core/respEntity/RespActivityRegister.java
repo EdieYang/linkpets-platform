@@ -14,6 +14,8 @@ public class RespActivityRegister {
 
     private String userId;
 
+    private String portrait;
+
     private String nickName;
 
     private String wxAccount;
@@ -29,6 +31,8 @@ public class RespActivityRegister {
     private String memo;
 
     private Integer isValid;
+
+    private Integer points;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;

@@ -2,8 +2,8 @@ package com.linkpets.cms.user.service.impl;
 
 import com.linkpets.cms.user.model.SignInPoints;
 import com.linkpets.cms.user.service.ISignInService;
-import com.linkpets.core.dao.CmsAdoptSignMapper;
-import com.linkpets.core.model.CmsAdoptSign;
+import com.linkpets.core.dao.CmsUserSignMapper;
+import com.linkpets.core.model.CmsUserSign;
 import com.linkpets.util.DateUtils;
 import com.linkpets.util.UUIDUtils;
 import org.springframework.stereotype.Service;
@@ -25,23 +25,23 @@ public class SignInServiceImpl implements ISignInService {
     private static final Integer SIGN_IN_DAY_7 = 200 + 100;
 
     @Resource
-    private CmsAdoptSignMapper signMapper;
+    private CmsUserSignMapper signMapper;
 
     @Override
     public SignInPoints crtSignInRecord(String userId) {
         SignInPoints signInPoints = new SignInPoints();
         String today = DateUtils.getCurrentDay();
-        CmsAdoptSign adoptSign = signMapper.getSignRecordByDate(userId, today);
-        if (adoptSign != null) {
+        CmsUserSign userSign = signMapper.getSignRecordByDate(userId, today);
+        if (userSign != null) {
             return signInPoints;
         }
-        CmsAdoptSign cmsAdoptSign = new CmsAdoptSign();
-        cmsAdoptSign.setId(UUIDUtils.getId());
-        cmsAdoptSign.setSignInDate(new Date());
-        cmsAdoptSign.setUserId(userId);
-        signMapper.insertSelective(cmsAdoptSign);
-        List<CmsAdoptSign> adoptSignList = signMapper.getSignRecordList(userId);
-        if (adoptSignList != null && adoptSignList.size() == 1) {
+        CmsUserSign CmsUserSign = new CmsUserSign();
+        CmsUserSign.setId(UUIDUtils.getId());
+        CmsUserSign.setSignInDate(new Date());
+        CmsUserSign.setUserId(userId);
+        signMapper.insertSelective(CmsUserSign);
+        List<CmsUserSign> userSignList = signMapper.getSignRecordList(userId);
+        if (userSignList != null && userSignList.size() == 1) {
             signInPoints.setGroupDays(-1);
             signInPoints.setPoints(SIGN_IN_DAY_FIRST);
             return signInPoints;
@@ -50,7 +50,7 @@ public class SignInServiceImpl implements ISignInService {
         for (int i = 0; i < 365 * 5; i++) {
             String compareDate = DateUtils.rollNOfDate(DateUtils.getCurrentDay(), 1, 0 - i, "yyyy-MM-dd");
             boolean hasSigned = false;
-            for (CmsAdoptSign sign : adoptSignList) {
+            for (CmsUserSign sign : userSignList) {
                 String signDate = DateUtils.getFormatDateStr(sign.getSignInDate(), "yyyy-MM-dd");
                 if (signDate.equals(compareDate)) {
                     continueDays++;
@@ -97,14 +97,14 @@ public class SignInServiceImpl implements ISignInService {
     @Override
     public int getSignInTimes(String userId) {
         int continueDays = 0;
-        List<CmsAdoptSign> adoptSignList = signMapper.getSignRecordList(userId);
-        if (adoptSignList == null || adoptSignList.size() == 0) {
+        List<CmsUserSign> userSignList = signMapper.getSignRecordList(userId);
+        if (userSignList == null || userSignList.size() == 0) {
             return continueDays;
         }
         for (int i = 0; i < 365 * 5; i++) {
             String compareDate = DateUtils.rollNOfDate(DateUtils.getCurrentDay(), 1, 0 - i, "yyyy-MM-dd");
             boolean hasSigned = false;
-            for (CmsAdoptSign sign : adoptSignList) {
+            for (CmsUserSign sign : userSignList) {
                 String signDate = DateUtils.getFormatDateStr(sign.getSignInDate(), "yyyy-MM-dd");
                 if (signDate.equals(compareDate)) {
                     continueDays++;

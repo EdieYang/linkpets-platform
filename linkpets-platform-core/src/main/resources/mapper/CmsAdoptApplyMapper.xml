@@ -24,7 +24,7 @@
         <result column="apply_status" jdbcType="VARCHAR" property="applyStatus"/>
         <result column="apply_resp" jdbcType="VARCHAR" property="applyResp"/>
         <result column="check_time" jdbcType="TIMESTAMP" property="checkTime"/>
-        <result column="is_valid" jdbcType="VARCHAR" property="isValid"/>
+        <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--
@@ -318,7 +318,7 @@
         ON ca.pet_id = cp.pet_id
         LEFT JOIN cms_user cu
         ON ca.apply_by = cu.user_id
-        where ca.is_valid = '1'
+        where ca.is_valid = 1
         <if test="null != adopterId and ''!=adopterId">
             AND cp.create_by=#{adopterId}
         </if>
@@ -349,14 +349,14 @@
         and TIMESTAMPDIFF(HOUR,apply_time,NOW())&gt;=24*7
         or apply_status!=0
         and TIMESTAMPDIFF(HOUR,check_time,NOW())&gt;=24*7
-        and is_valid ='1'
+        and is_valid =1
     </select>
     <select id="getApply" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from cms_adopt_apply
         where apply_status!=5
-        and is_valid ='1'
+        and is_valid =1
         and apply_by = #{applyBy,jdbcType=VARCHAR}
         and pet_id =#{petId}
     </select>
@@ -417,7 +417,7 @@
         ON ca.pet_id = cp.pet_id
         LEFT JOIN cms_user cu
         ON ca.apply_by = cu.user_id
-        where ca.is_valid = '1' and cr.org_id=#{orgId} and cr.is_valid = 1
+        where ca.is_valid = 1 and cr.org_id=#{orgId} and cr.is_valid = 1
         <if test="null != adopterId and ''!=adopterId">
             AND cp.create_by=#{adopterId}
         </if>

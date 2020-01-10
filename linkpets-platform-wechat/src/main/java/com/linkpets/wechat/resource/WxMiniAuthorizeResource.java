@@ -85,8 +85,7 @@ public class WxMiniAuthorizeResource {
                 String userTempId = UUIDUtils.randomUUID();
                 newUser.setUserTempId(userTempId);
                 newUser.setOpenId(openId);
-                newUser.setCreateTime(new Date());
-                newUser.setIsValid(1);
+                newUser.setCreateDate(new Date());
                 userTempService.insertUserTemp(newUser);
                 map.put("userId", userTempId);
 

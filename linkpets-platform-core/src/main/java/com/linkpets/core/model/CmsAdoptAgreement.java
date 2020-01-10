@@ -50,7 +50,7 @@ public class CmsAdoptAgreement {
 
     private Date createDate;
 
-    private String isValid;
+    private Integer isValid;
 
     private String formId;
 

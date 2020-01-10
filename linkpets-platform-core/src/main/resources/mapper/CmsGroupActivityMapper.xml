@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.linkpets.core.dao.CmsAdoptGroupActivityMapper">
+<mapper namespace="com.linkpets.core.dao.CmsGroupActivityMapper">
     <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsGroupActivity">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
-        <result column="activity_type" jdbcType="CHAR" property="activityType"/>
+        <result column="activity_type" jdbcType="INTEGER" property="activityType"/>
         <result column="activity_title" jdbcType="VARCHAR" property="activityTitle"/>
         <result column="activity_banner" jdbcType="VARCHAR" property="activityBanner"/>
         <result column="activity_area" jdbcType="VARCHAR" property="activityArea"/>
         <result column="activity_address" jdbcType="VARCHAR" property="activityAddress"/>
         <result column="activity_content" jdbcType="VARCHAR" property="activityContent"/>
         <result column="register_limit" jdbcType="INTEGER" property="registerLimit"/>
-        <result column="activity_should_verify" jdbcType="CHAR" property="activityShouldVerify"/>
-        <result column="activity_should_questionnaire" jdbcType="VARCHAR" property="activityShouldQuestionnaire"/>
+        <result column="activity_should_verify" jdbcType="INTEGER" property="activityShouldVerify"/>
+        <result column="activity_should_questionnaire" jdbcType="INTEGER" property="activityShouldQuestionnaire"/>
         <result column="questionnaire_id" jdbcType="VARCHAR" property="questionnaireId"/>
         <result column="activity_register_start_time" jdbcType="TIMESTAMP" property="activityRegisterStartTime"/>
         <result column="activity_register_end_time" jdbcType="TIMESTAMP" property="activityRegisterEndTime"/>
@@ -340,7 +340,7 @@
          set is_valid= 0
          where  id = #{activityId}
     </update>
-    <select id="getAdoptGroupActivityList" resultMap="BaseResultMap">
+    <select id="getGroupActivityList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from cms_group_activity
@@ -365,5 +365,14 @@
         and a.is_valid = 1
         and a.is_active = 1
         order by a.activity_start_time
+    </select>
+    <select id="getGroupActivityInfoWithUserId" resultMap="BaseRespResultMap">
+        select  a.id, a.group_id, a.activity_type, a.activity_title, a.activity_banner, a.activity_area, a.activity_address,  a.activity_start_time,
+                a.activity_end_time,  a.is_active, a.is_valid, a.create_date,
+                (select count(1) from cms_group_activity_register ar where ar.user_id = #{userId} and ar.activity_id = a.id and ar.is_valid = 1 ) as hasRegistered,
+                (select count(1) from cms_group_activity_user_rel r where r.user_id = #{userId} and r.activity_id = a.id and r.is_valid = 1 ) as hasFollowed
+        from  cms_group_activity a
+        where a.id = #{activityId}
+        and a.is_valid = 1
     </select>
 </mapper>

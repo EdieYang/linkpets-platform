@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.linkpets.core.dao.CmsAdoptGroupPostMapper">
+<mapper namespace="com.linkpets.core.dao.CmsGroupPostMapper">
     <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsGroupPost">
         <id column="post_id" jdbcType="VARCHAR" property="postId"/>
         <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
@@ -50,7 +50,7 @@
         u.portrait,
         u.wx_account,
         (select count(1) from cms_group_post_like pl where pl.post_id = p.post_id and pl.is_valid = 1 ) as likeAmount,
-        (select count(1) from cms_adopt_attention aa where aa.user_id = p.user_id and aa.is_valid = 1) as isFollowed
+        (select count(1) from cms_user_follow aa where aa.user_id = p.user_id and aa.is_valid = 1) as isFollowed
         from cms_group_post p,
         cms_user u
         where p.user_id = u.user_id

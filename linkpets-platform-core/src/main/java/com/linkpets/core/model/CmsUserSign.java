@@ -2,7 +2,7 @@ package com.linkpets.core.model;
 
 import java.util.Date;
 
-public class CmsAdoptSign {
+public class CmsUserSign {
     private String id;
 
     private String userId;

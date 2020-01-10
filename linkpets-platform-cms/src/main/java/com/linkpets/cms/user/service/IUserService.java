@@ -2,9 +2,8 @@ package com.linkpets.cms.user.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
-import com.linkpets.core.model.CmsAdoptAttention;
 import com.linkpets.core.model.CmsUser;
-import com.linkpets.core.model.SysUser;
+import com.linkpets.core.model.CmsUserFollow;
 import com.linkpets.core.respEntity.RespOrgUser;
 
 import java.util.List;
@@ -80,7 +79,7 @@ public interface IUserService {
      * @param string
      * @return
      */
-    JSONObject getUserListAttentTo(Map<String, Object> param, int pageNum, int pageSize, String string);
+    JSONObject getUserListFollow(Map<String, Object> param, int pageNum, int pageSize, String string);
 
     /**
      * 分页获取用户粉丝列表
@@ -91,7 +90,7 @@ public interface IUserService {
      * @param string
      * @return
      */
-    JSONObject getUserListAttentBy(Map<String, Object> param, int pageNum, int pageSize, String string);
+    JSONObject getUserListFollowBy(Map<String, Object> param, int pageNum, int pageSize, String string);
 
     /**
      * 获取关注状态（是否关注）
@@ -100,22 +99,22 @@ public interface IUserService {
      * @param targetUserId
      * @return
      */
-    int getAttentionStatus(String userId, String targetUserId);
+    int getFollowStatus(String userId, String targetUserId);
 
     /**
      * 添加关注
      *
      * @param record
      */
-    void crtAttention(CmsAdoptAttention record);
+    void crtFollow(CmsUserFollow record);
 
     /**
      * 取消关注
      *
      * @param userId
-     * @param attentBy
+     * @param followBy
      */
-    void delAttention(String userId, String attentBy);
+    void delFollow(String userId, String followBy);
 
     /**
      * 获取用户领养统计数据

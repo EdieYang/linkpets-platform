@@ -4,12 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.cms.user.service.IUserService;
-import com.linkpets.core.dao.CmsAdoptAttentionMapper;
+import com.linkpets.core.dao.CmsUserFollowMapper;
 import com.linkpets.core.dao.CmsUserLoginMapper;
 import com.linkpets.core.dao.CmsUserMapper;
-import com.linkpets.core.dao.SysUserMapper;
-import com.linkpets.core.model.CmsAdoptAttention;
 import com.linkpets.core.model.CmsUser;
+import com.linkpets.core.model.CmsUserFollow;
 import com.linkpets.core.model.CmsUserLogin;
 import com.linkpets.core.respEntity.RespOrgUser;
 import com.linkpets.util.UserAnalyseUtil;
@@ -31,10 +30,8 @@ public class UserServiceImpl implements IUserService {
     private CmsUserLoginMapper cmsUserLoginMapper;
 
     @Resource
-    CmsAdoptAttentionMapper cmsAdoptAttentionMapper;
+    CmsUserFollowMapper cmsUserFollowMapper;
 
-    @Resource
-    SysUserMapper sysUserMapper;
 
     @Override
     public PageInfo<CmsUser> getUserPage(String wxAccount, String mobilePhone, Integer authenticated, Integer pageNum, Integer pageSize) {
@@ -78,10 +75,10 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public JSONObject getUserListAttentTo(Map<String, Object> param, int pageNum, int pageSize, String orderBy) {
+    public JSONObject getUserListFollow(Map<String, Object> param, int pageNum, int pageSize, String orderBy) {
         JSONObject result = new JSONObject();
         PageHelper.startPage(pageNum, pageSize, orderBy);
-        List<CmsUser> list = cmsUserMapper.getUserListAttentTo(param);
+        List<CmsUser> list = cmsUserMapper.getUserFollowList(param);
         PageInfo<CmsUser> page = new PageInfo<>(list);
         result.put("page", page.getPageNum());
         result.put("total", page.getTotal());
@@ -90,10 +87,10 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public JSONObject getUserListAttentBy(Map<String, Object> param, int pageNum, int pageSize, String orderBy) {
+    public JSONObject getUserListFollowBy(Map<String, Object> param, int pageNum, int pageSize, String orderBy) {
         JSONObject result = new JSONObject();
         PageHelper.startPage(pageNum, pageSize, orderBy);
-        List<CmsUser> list = cmsUserMapper.getUserListAttentBy(param);
+        List<CmsUser> list = cmsUserMapper.getUserFollowByList(param);
         PageInfo<CmsUser> page = new PageInfo<>(list);
         result.put("page", page.getPageNum());
         result.put("total", page.getTotal());
@@ -102,19 +99,19 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public int getAttentionStatus(String userId, String targetUserId) {
-        return cmsUserMapper.getAttentionStatus(userId, targetUserId);
+    public int getFollowStatus(String userId, String targetUserId) {
+        return cmsUserMapper.getFollowStatus(userId, targetUserId);
     }
 
     @Override
-    public void crtAttention(CmsAdoptAttention record) {
-        record.setAttentTime(new Date());
-        cmsAdoptAttentionMapper.insertSelective(record);
+    public void crtFollow(CmsUserFollow record) {
+        record.setCreateDate(new Date());
+        cmsUserFollowMapper.insertSelective(record);
     }
 
     @Override
-    public void delAttention(String userId, String attentUserId) {
-        cmsAdoptAttentionMapper.delAttention(userId, attentUserId);
+    public void delFollow(String userId, String followBy) {
+        cmsUserFollowMapper.delFollow(userId, followBy);
     }
 
     @Override
@@ -138,11 +135,6 @@ public class UserServiceImpl implements IUserService {
     public List<RespOrgUser> getOrgUserInfoList(String orgId) {
         return cmsUserMapper.getOrgUserInfoList(orgId);
     }
-
-//	@Override
-//	public SysUser getUserByAccountAndPassword(String userAcc, String password) {
-//		return sysUserMapper.getUserByAccountAndPassword(userAcc, password);
-//	}
 
 
 }

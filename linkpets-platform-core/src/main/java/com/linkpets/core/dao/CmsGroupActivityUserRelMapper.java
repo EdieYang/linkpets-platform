@@ -2,7 +2,7 @@ package com.linkpets.core.dao;
 
 import com.linkpets.core.model.CmsGroupActivityUserRel;
 
-public interface CmsAdoptGroupActivityUserRelMapper {
+public interface CmsGroupActivityUserRelMapper {
     int deleteByPrimaryKey(String id);
 
     int insert(CmsGroupActivityUserRel record);

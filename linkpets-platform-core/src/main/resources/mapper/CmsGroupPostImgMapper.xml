@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.linkpets.core.dao.CmsAdoptGroupPostImgMapper">
+<mapper namespace="com.linkpets.core.dao.CmsGroupPostImgMapper">
     <resultMap id="BaseResultMap" type="com.linkpets.core.model.CmsGroupPostImg">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="post_id" jdbcType="VARCHAR" property="postId"/>

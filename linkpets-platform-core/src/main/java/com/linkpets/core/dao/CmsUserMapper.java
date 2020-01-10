@@ -68,7 +68,7 @@ public interface CmsUserMapper {
      * @param targetUserId
      * @return
      */
-    int getAttentionStatus(@Param("userId") String userId, @Param("targetUserId") String targetUserId);
+    int getFollowStatus(@Param("userId") String userId, @Param("targetUserId") String targetUserId);
 
     /**
      * 获取用户关注列表
@@ -76,7 +76,7 @@ public interface CmsUserMapper {
      * @param param
      * @return
      */
-    List<CmsUser> getUserListAttentTo(Map<String, Object> param);
+    List<CmsUser> getUserFollowList(Map<String, Object> param);
 
     /**
      * 获取用户被关注列表
@@ -84,7 +84,7 @@ public interface CmsUserMapper {
      * @param param
      * @return
      */
-    List<CmsUser> getUserListAttentBy(Map<String, Object> param);
+    List<CmsUser> getUserFollowByList(Map<String, Object> param);
 
     /**
      * 获取用户领养统计数据

@@ -7,7 +7,7 @@ import com.linkpets.cms.group.service.IGroupActivityRegisterService;
 import com.linkpets.cms.group.service.IGroupActivityService;
 import com.linkpets.cms.group.service.IPointStatementService;
 import com.linkpets.cms.user.service.IUserService;
-import com.linkpets.core.dao.CmsAdoptGroupActivityRegisterMapper;
+import com.linkpets.core.dao.CmsGroupActivityRegisterMapper;
 import com.linkpets.core.model.CmsGroupActivity;
 import com.linkpets.core.model.CmsGroupActivityRegister;
 import com.linkpets.core.respEntity.RespActivityRegister;
@@ -26,7 +26,7 @@ import java.util.List;
 public class GroupActivityRegisterServiceImpl implements IGroupActivityRegisterService {
 
     @Resource
-    private CmsAdoptGroupActivityRegisterMapper activityRegisterMapper;
+    private CmsGroupActivityRegisterMapper activityRegisterMapper;
     @Resource
     private IGroupActivityService groupActivityService;
     @Resource
@@ -47,7 +47,7 @@ public class GroupActivityRegisterServiceImpl implements IGroupActivityRegisterS
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String crtGroupActivityRegister(String userId, String activityId, String involvementTime) {
-        CmsGroupActivity activity = groupActivityService.getAdoptGroupActivityInfo(activityId);
+        CmsGroupActivity activity = groupActivityService.getGroupActivityInfo(activityId);
         //扣除用户积分
         if (activity.getActivityCost() != 0) {
             pointStatementService.crtPointStatement(userId, 0 - activity.getActivityCost(), activityId, PointsChannelEnum.GROUP_ACTIVITY_REGISTER);

@@ -4,7 +4,7 @@ import com.linkpets.core.model.CmsQuestionnaire;
 
 import java.util.List;
 
-public interface CmsAdoptQuestionnaireMapper {
+public interface CmsQuestionnaireMapper {
     int deleteByPrimaryKey(String questionnaireId);
 
     int insert(CmsQuestionnaire record);

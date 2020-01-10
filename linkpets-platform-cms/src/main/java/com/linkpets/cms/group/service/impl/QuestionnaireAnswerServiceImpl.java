@@ -3,7 +3,7 @@ package com.linkpets.cms.group.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.cms.group.service.IQuestionnaireAnswerService;
-import com.linkpets.core.dao.CmsAdoptQuestionnaireAnswerMapper;
+import com.linkpets.core.dao.CmsQuestionnaireAnswerMapper;
 import com.linkpets.core.model.CmsQuestionnaireAnswer;
 import com.linkpets.core.respEntity.RespQuestionnaireAnswerInfo;
 import com.linkpets.util.UUIDUtils;
@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class QuestionnaireAnswerServiceImpl implements IQuestionnaireAnswerService {
     @Resource
-    private CmsAdoptQuestionnaireAnswerMapper questionnaireAnswerMapper;
+    private CmsQuestionnaireAnswerMapper questionnaireAnswerMapper;
 
     @Override
     public List<CmsQuestionnaireAnswer> getQuestionnaireAnswerListByUserId(String userId, String activityId, String questionnaireId) {

@@ -28,7 +28,7 @@
         <result column="memo" jdbcType="VARCHAR" property="memo"/>
         <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
-        <result column="is_valid" jdbcType="VARCHAR" property="isValid"/>
+        <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
     </resultMap>
     <resultMap id="BaseListResultMap" type="com.linkpets.core.model.CmsAdoptPet">
         <id column="pet_id" jdbcType="VARCHAR" property="petId"/>
@@ -52,7 +52,7 @@
         <result column="memo" jdbcType="VARCHAR" property="memo"/>
         <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
-        <result column="is_valid" jdbcType="VARCHAR" property="isValid"/>
+        <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
         <collection property="mediaList" column="pet_id" select="selectAdoptionImage">
 
         </collection>
@@ -389,7 +389,7 @@
         p.is_valid
         FROM
         cms_adopt_pet p
-        where p.is_valid = '1'
+        where p.is_valid = 1
         <if test="null != createBy">
             AND create_by = #{createBy,jdbcType=VARCHAR}
         </if>
@@ -454,7 +454,7 @@
         p.is_valid
         FROM
         cms_adopt_pet p , cms_adopt_pet_org_rel r
-        where p.pet_id = r.pet_id and p.is_valid = '1' and r.is_valid = 1 and r.org_id = #{orgId}
+        where p.pet_id = r.pet_id and p.is_valid = 1 and r.is_valid = 1 and r.org_id = #{orgId}
         <if test="null != createBy">
             AND create_by = #{createBy,jdbcType=VARCHAR}
         </if>
@@ -497,7 +497,7 @@
         select media_path
         from cms_adopt_pet_media
         where pet_id = #{pet_id}
-          and is_valid = '1'
+          and is_valid = 1
     </select>
 
     <select id="getAdoptPetIdsByUserId" resultType="java.lang.String">
@@ -511,8 +511,8 @@
         FROM cms_adopt_pet_collect c
                  left join cms_adopt_pet p
                            on c.pet_id = p.pet_id
-        where p.is_valid = '1'
-          and c.is_valid = '1'
+        where p.is_valid = 1
+          and c.is_valid = 1
           and p.adopt_status = '3'
           AND c.user_id = #{userId,jdbcType=VARCHAR}
     </select>
@@ -521,12 +521,12 @@
     <select id="getFollowedPetList" resultMap="BaseListResultMap">
 
         SELECT p.*
-        FROM cms_adopt_attention ct
+        FROM cms_user_follow ct
                  LEFT JOIN cms_adopt_pet p
                            ON ct.user_id = p.create_by
-        WHERE ct.is_valid = '1'
+        WHERE ct.is_valid = 1
           and p.adopt_status = '3'
-          AND ct.attent_by = #{userId}
+          AND ct.follow_by = #{userId}
 
     </select>
 

@@ -5,7 +5,7 @@ import com.linkpets.core.respEntity.RespGroupPost;
 
 import java.util.List;
 
-public interface CmsAdoptGroupPostMapper {
+public interface CmsGroupPostMapper {
     int deleteByPrimaryKey(String postId);
 
     int insert(CmsGroupPost record);

@@ -44,7 +44,7 @@ public class CmsAdoptApply {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date checkTime;
 
-    private String isValid;
+    private Integer isValid;
 
     private String formId;
 

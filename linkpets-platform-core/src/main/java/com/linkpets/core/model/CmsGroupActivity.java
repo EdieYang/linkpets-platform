@@ -15,7 +15,7 @@ public class CmsGroupActivity {
     private String groupId;
 
     @ApiModelProperty(value = "活动类型 1 -线上活动  2-线下活动")
-    private String activityType;
+    private Integer activityType;
 
     @ApiModelProperty(value = "活动标题 ")
     private String activityTitle;
@@ -36,10 +36,10 @@ public class CmsGroupActivity {
     private Integer registerLimit;
 
     @ApiModelProperty(value = "是否需要实名认证 0-否 1-是 ")
-    private String activityShouldVerify;
+    private Integer activityShouldVerify;
 
     @ApiModelProperty(value = "是否需要填写问卷 0-否 1-是 ")
-    private String activityShouldQuestionnaire;
+    private Integer activityShouldQuestionnaire;
 
     @ApiModelProperty(value = "问卷id ")
     private String questionnaireId;
@@ -86,5 +86,14 @@ public class CmsGroupActivity {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;
+
+    @ApiModelProperty(value = "是否关注 0：未关注 1：已关注")
+    private Integer hasFollowed;
+
+    @ApiModelProperty(value = "是否报名 0：未报名 1：已报名")
+    private Integer hasRegistered;
+
+    @ApiModelProperty(value = "活动状态")
+    private String activityStatus;
 
 }

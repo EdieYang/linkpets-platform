@@ -5,7 +5,7 @@ import com.linkpets.core.respEntity.RespQuestionnaireAnswerInfo;
 
 import java.util.List;
 
-public interface CmsAdoptQuestionnaireAnswerMapper {
+public interface CmsQuestionnaireAnswerMapper {
     int deleteByPrimaryKey(String answerId);
 
     int insert(CmsQuestionnaireAnswer record);

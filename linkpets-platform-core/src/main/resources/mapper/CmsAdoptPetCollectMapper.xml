@@ -11,7 +11,7 @@
         <result column="pet_id" jdbcType="VARCHAR" property="petId"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
         <result column="collect_time" jdbcType="TIMESTAMP" property="collectTime"/>
-        <result column="is_valid" jdbcType="VARCHAR" property="isValid"/>
+        <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--
@@ -134,8 +134,8 @@
 
     <update id="delCollect" parameterType="java.lang.String">
         update cms_adopt_pet_collect
-        set is_valid = '0'
-        where is_valid = '1'
+        set is_valid = 0
+        where is_valid = 1
           and pet_id = #{petId,jdbcType=VARCHAR}
           and user_id = #{userId,jdbcType=VARCHAR}
     </update>
@@ -145,7 +145,7 @@
         select
         <include refid="Base_Column_List"/>
         from cms_adopt_pet_collect
-        where is_valid = '1' and pet_id =#{petId} and user_id = #{userId}
+        where is_valid = 1 and pet_id =#{petId} and user_id = #{userId}
     </select>
 
 </mapper>

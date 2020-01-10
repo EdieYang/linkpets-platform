@@ -5,7 +5,7 @@ import com.linkpets.core.respEntity.RespActivityRegister;
 
 import java.util.List;
 
-public interface CmsAdoptGroupActivityRegisterMapper {
+public interface CmsGroupActivityRegisterMapper {
     int deleteByPrimaryKey(String registerId);
 
     int insert(CmsGroupActivityRegister record);

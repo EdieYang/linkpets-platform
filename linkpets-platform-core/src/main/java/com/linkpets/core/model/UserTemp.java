@@ -11,8 +11,8 @@ public class UserTemp {
 
     private String openId;
 
-    private Date createTime;
-
     private Integer isValid;
+
+    private Date createDate;
 
 }

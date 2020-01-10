@@ -9,7 +9,7 @@
         <result column="user_portrait" jdbcType="VARCHAR" property="userPortrait"/>
         <result column="mobile_phone" jdbcType="VARCHAR" property="mobilePhone"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
-        <result column="is_active" jdbcType="VARCHAR" property="isActive"/>
+        <result column="is_active" jdbcType="INTEGER" property="isActive"/>
         <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
@@ -113,7 +113,7 @@
                 email = #{email,jdbcType=VARCHAR},
             </if>
             <if test="isActive != null">
-                is_active = #{isActive,jdbcType=VARCHAR},
+                is_active = #{isActive,jdbcType=INTEGER},
             </if>
             <if test="createBy != null">
                 create_by = #{createBy,jdbcType=VARCHAR},

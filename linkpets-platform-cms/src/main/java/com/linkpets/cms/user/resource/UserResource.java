@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.user.service.IUserService;
-import com.linkpets.core.model.CmsAdoptAttention;
 import com.linkpets.core.model.CmsUser;
+import com.linkpets.core.model.CmsUserFollow;
 import com.linkpets.result.PlatformResult;
 import com.linkpets.util.DateUtils;
 import com.linkpets.util.UserAnalyseUtil;
@@ -110,22 +110,22 @@ public class UserResource {
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "sortCol", value = "排序字段", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "sort", value = "排序规则", required = false)})
     @GetMapping(value = "{targetUserId}/attentTo")
-    PlatformResult getUserListAttentTo(@PathVariable("targetUserId") String targetUserId,
-                                       @RequestParam("userId") String userId,
-                                       @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize,
-                                       @RequestParam(value = "sortCol", required = false, defaultValue = "attentTime") String sortCol,
-                                       @RequestParam(value = "sort", required = false, defaultValue = "desc") String sort) {
+    PlatformResult getUserListFollow(@PathVariable("targetUserId") String targetUserId,
+                                     @RequestParam("userId") String userId,
+                                     @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize,
+                                     @RequestParam(value = "sortCol", required = false, defaultValue = "attentTime") String sortCol,
+                                     @RequestParam(value = "sort", required = false, defaultValue = "desc") String sort) {
 
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("userId", userId);
         param.put("targetUserId", targetUserId);
-        JSONObject data = userService.getUserListAttentTo(param, pageNum, pageSize, sortCol + " " + sort);
+        JSONObject data = userService.getUserListFollow(param, pageNum, pageSize, sortCol + " " + sort);
         return PlatformResult.success(data);
     }
 
     @PostMapping("attention")
-    PlatformResult setAttention(@RequestBody CmsAdoptAttention record) {
-        userService.crtAttention(record);
+    PlatformResult crtFollow(@RequestBody CmsUserFollow record) {
+        userService.crtFollow(record);
         return PlatformResult.success(true);
     }
 
@@ -134,8 +134,8 @@ public class UserResource {
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "userId", value = "被+关注人的用户id", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "attentBy", value = "去+关注的人", required = true)})
     @DeleteMapping("attention")
-    PlatformResult delAttention(@RequestParam("userId") String userId, @RequestParam("attentBy") String attentBy) {
-        userService.delAttention(userId, attentBy);
+    PlatformResult delFollow(@RequestParam("userId") String userId, @RequestParam("attentBy") String attentBy) {
+        userService.delFollow(userId, attentBy);
         return PlatformResult.success(null);
     }
 
@@ -147,7 +147,7 @@ public class UserResource {
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "sortCol", value = "排序字段", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "sort", value = "排序规则", required = false)})
     @GetMapping(value = "{targetUserId}/attentBy")
-    PlatformResult getUserListAttentBy(@PathVariable("targetUserId") String targetUserId,
+    PlatformResult getUserListFollowBy(@PathVariable("targetUserId") String targetUserId,
                                        @RequestParam("userId") String userId,
                                        @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize,
                                        @RequestParam(value = "sortCol", required = false, defaultValue = "attentTime") String sortCol,
@@ -156,19 +156,18 @@ public class UserResource {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("targetUserId", targetUserId);
         param.put("userId", userId);
-        JSONObject data = userService.getUserListAttentBy(param, pageNum, pageSize, sortCol + " " + sort);
+        JSONObject data = userService.getUserListFollowBy(param, pageNum, pageSize, sortCol + " " + sort);
         return PlatformResult.success(data);
     }
 
     @GetMapping("attention")
     PlatformResult getAttention(@RequestParam("userId") String userId,
                                 @RequestParam("targetUserId") String targetUserId) {
-        int followed = userService.getAttentionStatus(userId, targetUserId);
+        int followed = userService.getFollowStatus(userId, targetUserId);
         if (followed > 0) {
             return PlatformResult.success(true);
         }
         return PlatformResult.success(false);
     }
-
 
 }

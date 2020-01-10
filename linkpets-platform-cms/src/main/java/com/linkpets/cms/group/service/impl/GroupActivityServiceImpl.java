@@ -3,8 +3,8 @@ package com.linkpets.cms.group.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.cms.group.service.IGroupActivityService;
-import com.linkpets.core.dao.CmsAdoptGroupActivityMapper;
-import com.linkpets.core.dao.CmsAdoptGroupActivityUserRelMapper;
+import com.linkpets.core.dao.CmsGroupActivityMapper;
+import com.linkpets.core.dao.CmsGroupActivityUserRelMapper;
 import com.linkpets.core.model.CmsGroupActivity;
 import com.linkpets.core.model.CmsGroupActivityUserRel;
 import com.linkpets.core.respEntity.RespGroupActivity;
@@ -24,83 +24,91 @@ import java.util.List;
 public class GroupActivityServiceImpl implements IGroupActivityService {
 
     @Resource
-    private CmsAdoptGroupActivityMapper cmsAdoptGroupActivityMapper;
+    private CmsGroupActivityMapper cmsGroupActivityMapper;
 
     @Resource
-    private CmsAdoptGroupActivityUserRelMapper cmsAdoptGroupActivityUserRelMapper;
+    private CmsGroupActivityUserRelMapper cmsGroupActivityUserRelMapper;
 
     @Override
-    public List<CmsGroupActivity> getAdoptGroupActivityList(Integer activityType, Integer isActive) {
-        return cmsAdoptGroupActivityMapper.getAdoptGroupActivityList(activityType, isActive);
+    public List<CmsGroupActivity> getGroupActivityList(Integer activityType, Integer isActive) {
+        return cmsGroupActivityMapper.getGroupActivityList(activityType, isActive);
     }
 
     @Override
-    public PageInfo<RespGroupActivity> getAdoptGroupActivityPage(Integer activityType, Integer isActive, Integer pageNum, Integer pageSize) {
+    public PageInfo<RespGroupActivity> getGroupActivityPage(Integer activityType, Integer isActive, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<RespGroupActivity> groupActivityList = new ArrayList<>();
-        List<CmsGroupActivity> cmsAdoptGroupActivityList = cmsAdoptGroupActivityMapper.getAdoptGroupActivityList(activityType, isActive);
-        cmsAdoptGroupActivityList.forEach(cmsGroupActivity -> {
+        List<CmsGroupActivity> cmsGroupActivityList = cmsGroupActivityMapper.getGroupActivityList(activityType, isActive);
+        cmsGroupActivityList.forEach(cmsGroupActivity -> {
             RespGroupActivity groupActivity = new RespGroupActivity();
             BeanUtils.copyProperties(cmsGroupActivity, groupActivity);
             groupActivity.setActivityStatus(calActivityStatus(cmsGroupActivity));
             groupActivityList.add(groupActivity);
         });
-        PageInfo<RespGroupActivity> cmsAdoptGroupActivityPageInfo = new PageInfo<>(groupActivityList);
-        return cmsAdoptGroupActivityPageInfo;
+        PageInfo<RespGroupActivity> cmsGroupActivityPageInfo = new PageInfo<>(groupActivityList);
+        return cmsGroupActivityPageInfo;
     }
 
     @Override
     public List<RespGroupActivity> getGroupActivityListByUserId(String userId) {
-        return cmsAdoptGroupActivityMapper.getGroupActivityListByUserId(userId);
+        return cmsGroupActivityMapper.getGroupActivityListByUserId(userId);
     }
 
     @Override
-    public CmsGroupActivity getAdoptGroupActivityInfo(String activityId) {
-        return cmsAdoptGroupActivityMapper.selectByPrimaryKey(activityId);
+    public CmsGroupActivity getGroupActivityInfo(String activityId) {
+        CmsGroupActivity groupActivity = cmsGroupActivityMapper.selectByPrimaryKey(activityId);
+        groupActivity.setActivityStatus(calActivityStatus(groupActivity));
+        return groupActivity;
     }
 
     @Override
-    public String crtAdoptGroupActivity(CmsGroupActivity cmsGroupActivity) {
+    public CmsGroupActivity getGroupActivityInfoWithUserId(String activityId, String userId) {
+        return cmsGroupActivityMapper.getGroupActivityInfoWithUserId(activityId, userId);
+    }
+
+    @Override
+    public String crtGroupActivity(CmsGroupActivity cmsGroupActivity) {
         String activityId = UUIDUtils.getId();
         cmsGroupActivity.setId(activityId);
         cmsGroupActivity.setCreateDate(new Date());
-        cmsAdoptGroupActivityMapper.insertSelective(cmsGroupActivity);
+        cmsGroupActivityMapper.insertSelective(cmsGroupActivity);
         return activityId;
     }
 
     @Override
-    public void uptAdoptGroupActivity(CmsGroupActivity cmsGroupActivity) {
-        cmsAdoptGroupActivityMapper.updateByPrimaryKeySelective(cmsGroupActivity);
+    public void uptGroupActivity(CmsGroupActivity cmsGroupActivity) {
+        cmsGroupActivityMapper.updateByPrimaryKeySelective(cmsGroupActivity);
     }
 
     @Override
     public void delGroupActivity(String activityId) {
-        cmsAdoptGroupActivityMapper.delGroupActivity(activityId);
+        cmsGroupActivityMapper.delGroupActivity(activityId);
     }
 
     @Override
     public String crtGroupActivityFollow(String userId, String activityId) {
-        CmsGroupActivityUserRel followUser = cmsAdoptGroupActivityUserRelMapper.getFollowUserByUserIdAndActivityId(userId, activityId);
+        CmsGroupActivityUserRel followUser = cmsGroupActivityUserRelMapper.getFollowUserByUserIdAndActivityId(userId, activityId);
         if (followUser == null) {
             String id = UUIDUtils.getId();
             followUser = new CmsGroupActivityUserRel();
             followUser.setId(id);
             followUser.setUserId(userId);
             followUser.setActivityId(activityId);
-            cmsAdoptGroupActivityUserRelMapper.insertSelective(followUser);
+            followUser.setCreateDate(new Date());
+            cmsGroupActivityUserRelMapper.insertSelective(followUser);
             return id;
         }
         followUser.setIsValid(1);
-        cmsAdoptGroupActivityUserRelMapper.updateByPrimaryKeySelective(followUser);
+        cmsGroupActivityUserRelMapper.updateByPrimaryKeySelective(followUser);
         return followUser.getId();
     }
 
     @Override
     public void delGroupActivityFollow(String userId, String activityId) {
-        CmsGroupActivityUserRel followUser = cmsAdoptGroupActivityUserRelMapper.getFollowUserByUserIdAndActivityId(userId, activityId);
+        CmsGroupActivityUserRel followUser = cmsGroupActivityUserRelMapper.getFollowUserByUserIdAndActivityId(userId, activityId);
         if (followUser != null) {
             followUser.setIsValid(0);
-            cmsAdoptGroupActivityUserRelMapper.updateByPrimaryKeySelective(followUser);
+            cmsGroupActivityUserRelMapper.updateByPrimaryKeySelective(followUser);
         }
     }
 

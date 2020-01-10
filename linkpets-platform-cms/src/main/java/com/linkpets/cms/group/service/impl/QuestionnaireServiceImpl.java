@@ -3,8 +3,8 @@ package com.linkpets.cms.group.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.linkpets.cms.group.service.IQuestionnaireService;
-import com.linkpets.core.dao.CmsAdoptQuestionnaireItemMapper;
-import com.linkpets.core.dao.CmsAdoptQuestionnaireMapper;
+import com.linkpets.core.dao.CmsQuestionnaireItemMapper;
+import com.linkpets.core.dao.CmsQuestionnaireMapper;
 import com.linkpets.core.model.CmsQuestionnaire;
 import com.linkpets.core.model.CmsQuestionnaireItem;
 import com.linkpets.core.respEntity.RespQuestionnaireInfo;
@@ -21,10 +21,10 @@ public class QuestionnaireServiceImpl implements IQuestionnaireService {
 
 
     @Resource
-    private CmsAdoptQuestionnaireMapper questionnaireMapper;
+    private CmsQuestionnaireMapper questionnaireMapper;
 
     @Resource
-    private CmsAdoptQuestionnaireItemMapper questionnaireItemMapper;
+    private CmsQuestionnaireItemMapper questionnaireItemMapper;
 
     @Override
     public PageInfo<CmsQuestionnaire> getQuestionnairePage(String questionnaireTitle, Integer pageNum, Integer pageSize) {
@@ -51,13 +51,13 @@ public class QuestionnaireServiceImpl implements IQuestionnaireService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String crtQuestionnaire(CmsQuestionnaire adoptQuestionnaire, List<CmsQuestionnaireItem> cmsAdoptQuestionnaireItemList) {
+    public String crtQuestionnaire(CmsQuestionnaire Questionnaire, List<CmsQuestionnaireItem> cmsQuestionnaireItemList) {
         String questionnaireId = UUIDUtils.getId();
-        adoptQuestionnaire.setQuestionnaireId(questionnaireId);
-        adoptQuestionnaire.setCreateDate(new Date());
-        questionnaireMapper.insertSelective(adoptQuestionnaire);
+        Questionnaire.setQuestionnaireId(questionnaireId);
+        Questionnaire.setCreateDate(new Date());
+        questionnaireMapper.insertSelective(Questionnaire);
 
-        cmsAdoptQuestionnaireItemList.forEach(cmsQuestionnaireItem -> {
+        cmsQuestionnaireItemList.forEach(cmsQuestionnaireItem -> {
             cmsQuestionnaireItem.setQuestionnaireItemId(UUIDUtils.getId());
             cmsQuestionnaireItem.setQuestionnaireId(questionnaireId);
             cmsQuestionnaireItem.setCreateDate(new Date());
@@ -68,11 +68,11 @@ public class QuestionnaireServiceImpl implements IQuestionnaireService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void uptQuestionnaire(CmsQuestionnaire adoptQuestionnaire, List<CmsQuestionnaireItem> cmsAdoptQuestionnaireItemList) {
-        String questionnaireId = adoptQuestionnaire.getQuestionnaireId();
-        questionnaireMapper.updateByPrimaryKeySelective(adoptQuestionnaire);
+    public void uptQuestionnaire(CmsQuestionnaire Questionnaire, List<CmsQuestionnaireItem> cmsQuestionnaireItemList) {
+        String questionnaireId = Questionnaire.getQuestionnaireId();
+        questionnaireMapper.updateByPrimaryKeySelective(Questionnaire);
         questionnaireItemMapper.delQuestionnaireItemByQuestionnaireId(questionnaireId);
-        cmsAdoptQuestionnaireItemList.forEach(cmsQuestionnaireItem -> {
+        cmsQuestionnaireItemList.forEach(cmsQuestionnaireItem -> {
             cmsQuestionnaireItem.setQuestionnaireItemId(UUIDUtils.getId());
             cmsQuestionnaireItem.setQuestionnaireId(questionnaireId);
             cmsQuestionnaireItem.setCreateDate(new Date());

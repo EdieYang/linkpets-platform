@@ -254,43 +254,43 @@
             and authenticated=#{authenticated}
         </if>
     </select>
-    <select id="getUserListAttentTo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="getUserFollowList" parameterType="java.lang.String" resultMap="BaseResultMap">
         select u.*,
                a.attent_time          as attentTime,
                (select count(1)
-                from cms_adopt_attention
-                where attent_by = #{userId}
+                from cms_user_follow
+                where follow_by = #{userId}
                   and user_id = a.user_id
                   and is_valid = '1') as followed
-        from cms_adopt_attention a
+        from cms_user_follow a
                  left join cms_user u
                            on a.user_id = u.user_id
         where a.is_valid = '1'
           and u.is_valid = '1'
-          and a.attent_by = #{targetUserId,jdbcType=VARCHAR}
+          and a.follow_by = #{targetUserId,jdbcType=VARCHAR}
     </select>
-    <select id="getUserListAttentBy" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="getUserFollowByList" parameterType="java.lang.String" resultMap="BaseResultMap">
         select u.*,
                a.attent_time          as attentTime,
                (select count(1)
-                from cms_adopt_attention
-                where attent_by = #{userId}
-                  and user_id = a.attent_by
+                from cms_user_follow
+                where follow_by = #{userId}
+                  and user_id = a.follow_by
                   and is_valid = '1') as followed
-        from cms_adopt_attention a
+        from cms_user_follow a
                  left join cms_user u
-                           on a.attent_by = u.user_id
+                           on a.follow_by = u.user_id
         where a.is_valid = '1'
           and u.is_valid = '1'
           and a.user_id = #{targetUserId,jdbcType=VARCHAR}
     </select>
-    <select id="getAttentionStatus" parameterType="java.lang.String" resultType="java.lang.Integer">
+    <select id="getFollowStatus" parameterType="java.lang.String" resultType="java.lang.Integer">
 
         select count(1)
-        from cms_adopt_attention
+        from cms_user_follow
         where is_valid = '1'
           and user_id = #{targetUserId,jdbcType=VARCHAR}
-          and attent_by = #{userId}
+          and follow_by = #{userId}
 
     </select>
     <select id="getUserAddition" parameterType="java.lang.String" resultType="java.util.Map">
@@ -336,9 +336,9 @@
                authenticated,
                u.memo,
                u.create_date,
-               (select count(1) from cms_adopt_attention where attent_by = #{userId} and is_valid = '1') as followNum,
-               (select count(1) from cms_adopt_attention where user_id = #{userId} and is_valid = '1')   as followByNum,
-               (select SUM(points) from cms_point_statement where user_id = #{userId} and is_valid = 1) as points,
+               (select count(1) from cms_user_follow where follow_by = #{userId} and is_valid = '1') as followNum,
+               (select count(1) from cms_user_follow where user_id = #{userId} and is_valid = '1')   as followByNum,
+               (select IFNULL(SUM(points),0) from cms_point_statement where user_id = #{userId} and is_valid = 1) as points,
                c.image_front as idCardImageFront,
                c.image_back as idCardImageBack,
                c.id_card as idCard

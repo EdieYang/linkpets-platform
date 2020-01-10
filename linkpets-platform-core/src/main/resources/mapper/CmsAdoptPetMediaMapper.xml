@@ -11,7 +11,7 @@
         <result column="pet_id" jdbcType="VARCHAR" property="petId"/>
         <result column="media_type" jdbcType="VARCHAR" property="mediaType"/>
         <result column="media_path" jdbcType="VARCHAR" property="mediaPath"/>
-        <result column="is_valid" jdbcType="VARCHAR" property="isValid"/>
+        <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--

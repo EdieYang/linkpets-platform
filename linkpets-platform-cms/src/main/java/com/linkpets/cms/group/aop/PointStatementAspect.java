@@ -2,6 +2,7 @@ package com.linkpets.cms.group.aop;
 
 import com.linkpets.cms.group.enums.PointsChannelEnum;
 import com.linkpets.cms.group.service.IPointStatementService;
+import com.linkpets.cms.user.model.SignInPoints;
 import com.linkpets.core.model.CmsAdoptCertification;
 import com.linkpets.core.model.CmsPointStatement;
 import lombok.extern.slf4j.Slf4j;
@@ -38,14 +39,14 @@ public class PointStatementAspect {
 
 
     @Around("crtSignInRecord()")
-    public Integer aroundCrtSignInRecordPointCut(ProceedingJoinPoint pjp) {
+    public SignInPoints aroundCrtSignInRecordPointCut(ProceedingJoinPoint pjp) {
         log.info("{PointStatementAspect} =>crt new SignIn start.....");
         String userId = (String) pjp.getArgs()[0];
-        Integer points = 0;
+        SignInPoints points = new SignInPoints();
         try {
-            points = (Integer) pjp.proceed();
-            if (points != 0) {
-                pointStatementService.crtPointStatement(userId, points, "", points == 100 ? PointsChannelEnum.FIRST_SIGN_IN : PointsChannelEnum.DAILY_POINTS);
+            points = (SignInPoints) pjp.proceed();
+            if (points.getPoints() != 0) {
+                pointStatementService.crtPointStatement(userId, points.getPoints(), "", points.getPoints() == 100 ? PointsChannelEnum.FIRST_SIGN_IN : PointsChannelEnum.DAILY_POINTS);
             }
         } catch (Throwable throwable) {
             throwable.printStackTrace();

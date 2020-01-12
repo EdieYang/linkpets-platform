@@ -1,4 +1,4 @@
-package com.linkpets.cms.group.resource;
+package com.linkpets.cms.user.resource;
 
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.group.service.IPointStatementService;
@@ -28,10 +28,10 @@ public class PointStatementResource {
                                             @RequestParam("userId") String userId,
                                             @ApiParam(name = "channel", value = "4:领养信息转发获得积分;5:领养信息浏览获得积分;6:活动分享获得积分;7:参加活动获得积分;8:圈内发帖获得积分;10:系统奖励积分", required = true)
                                             @RequestParam("channel") int channel,
-                                            @ApiParam(name = "targetId", value = "领养信息浏览及转发传petId,活动转发传activityId", required = true)
+                                            @ApiParam(name = "targetId", value = "领养信息浏览及转发传petId,活动转发传activityId")
                                             @RequestParam(value = "targetId", required = false) String targetId,
-                                            @ApiParam(name = "points", value = "积分", required = true)
-                                            @RequestParam(value = "points",required = false) int rewardPoints) {
+                                            @ApiParam(name = "points", value = "积分")
+                                            @RequestParam(value = "points",required = false) Integer rewardPoints) {
         Integer points = pointStatementService.crtPointStatementByChannel(userId, targetId, channel, rewardPoints);
         return PlatformResult.success(points);
     }

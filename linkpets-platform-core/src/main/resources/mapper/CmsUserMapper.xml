@@ -37,9 +37,9 @@
         <result column="mobilePhone" jdbcType="VARCHAR" property="mobilePhone"/>
     </resultMap>
     <sql id="Base_Column_List">
-    user_id, nick_name, mobile_phone, wx_account, portrait, union_id, openid, birthday, 
+        user_id, nick_name, mobile_phone, wx_account, portrait, union_id, openid, birthday,
     gender, location, intro, authenticated, memo, is_valid, create_date
-  </sql>
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -47,23 +47,22 @@
         where user_id = #{userId,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from cms_user
-    where user_id = #{userId,jdbcType=VARCHAR}
-  </delete>
+        delete
+        from cms_user
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </delete>
     <insert id="insert" parameterType="com.linkpets.core.model.CmsUser">
-    insert into cms_user (user_id, nick_name, mobile_phone, 
-      wx_account, portrait, union_id, 
-      openid, birthday, gender, 
-      location, intro, authenticated, 
-      memo, is_valid, create_date
-      )
-    values (#{userId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, 
-      #{wxAccount,jdbcType=VARCHAR}, #{portrait,jdbcType=VARCHAR}, #{unionId,jdbcType=VARCHAR}, 
-      #{openid,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{gender,jdbcType=VARCHAR}, 
-      #{location,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{authenticated,jdbcType=INTEGER}, 
-      #{memo,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}
-      )
-  </insert>
+        insert into cms_user (user_id, nick_name, mobile_phone,
+                              wx_account, portrait, union_id,
+                              openid, birthday, gender,
+                              location, intro, authenticated,
+                              memo, is_valid, create_date)
+        values (#{userId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR},
+                #{wxAccount,jdbcType=VARCHAR}, #{portrait,jdbcType=VARCHAR}, #{unionId,jdbcType=VARCHAR},
+                #{openid,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{gender,jdbcType=VARCHAR},
+                #{location,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{authenticated,jdbcType=INTEGER},
+                #{memo,jdbcType=VARCHAR}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsUser">
         insert into cms_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -210,23 +209,23 @@
         where user_id = #{userId,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsUser">
-    update cms_user
-    set nick_name = #{nickName,jdbcType=VARCHAR},
-      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
-      wx_account = #{wxAccount,jdbcType=VARCHAR},
-      portrait = #{portrait,jdbcType=VARCHAR},
-      union_id = #{unionId,jdbcType=VARCHAR},
-      openid = #{openid,jdbcType=VARCHAR},
-      birthday = #{birthday,jdbcType=DATE},
-      gender = #{gender,jdbcType=VARCHAR},
-      location = #{location,jdbcType=VARCHAR},
-      intro = #{intro,jdbcType=VARCHAR},
-      authenticated = #{authenticated,jdbcType=INTEGER},
-      memo = #{memo,jdbcType=VARCHAR},
-      is_valid = #{isValid,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=TIMESTAMP}
-    where user_id = #{userId,jdbcType=VARCHAR}
-  </update>
+        update cms_user
+        set nick_name     = #{nickName,jdbcType=VARCHAR},
+            mobile_phone  = #{mobilePhone,jdbcType=VARCHAR},
+            wx_account    = #{wxAccount,jdbcType=VARCHAR},
+            portrait      = #{portrait,jdbcType=VARCHAR},
+            union_id      = #{unionId,jdbcType=VARCHAR},
+            openid        = #{openid,jdbcType=VARCHAR},
+            birthday      = #{birthday,jdbcType=DATE},
+            gender        = #{gender,jdbcType=VARCHAR},
+            location      = #{location,jdbcType=VARCHAR},
+            intro         = #{intro,jdbcType=VARCHAR},
+            authenticated = #{authenticated,jdbcType=INTEGER},
+            memo          = #{memo,jdbcType=VARCHAR},
+            is_valid      = #{isValid,jdbcType=INTEGER},
+            create_date   = #{createDate,jdbcType=TIMESTAMP}
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </update>
     <select id="getUserList" resultMap="BaseResultMap">
         select user_id,
         nick_name,
@@ -256,7 +255,7 @@
     </select>
     <select id="getUserFollowList" parameterType="java.lang.String" resultMap="BaseResultMap">
         select u.*,
-               a.attent_time          as attentTime,
+               a.create_date          as attentTime,
                (select count(1)
                 from cms_user_follow
                 where follow_by = #{userId}
@@ -265,13 +264,13 @@
         from cms_user_follow a
                  left join cms_user u
                            on a.user_id = u.user_id
-        where a.is_valid = '1'
-          and u.is_valid = '1'
+        where a.is_valid = 1
+          and u.is_valid = 1
           and a.follow_by = #{targetUserId,jdbcType=VARCHAR}
     </select>
     <select id="getUserFollowByList" parameterType="java.lang.String" resultMap="BaseResultMap">
         select u.*,
-               a.attent_time          as attentTime,
+               a.create_date          as attentTime,
                (select count(1)
                 from cms_user_follow
                 where follow_by = #{userId}
@@ -280,15 +279,15 @@
         from cms_user_follow a
                  left join cms_user u
                            on a.follow_by = u.user_id
-        where a.is_valid = '1'
-          and u.is_valid = '1'
+        where a.is_valid = 1
+          and u.is_valid = 1
           and a.user_id = #{targetUserId,jdbcType=VARCHAR}
     </select>
     <select id="getFollowStatus" parameterType="java.lang.String" resultType="java.lang.Integer">
 
         select count(1)
         from cms_user_follow
-        where is_valid = '1'
+        where is_valid = 1
           and user_id = #{targetUserId,jdbcType=VARCHAR}
           and follow_by = #{userId}
 
@@ -297,12 +296,12 @@
         select (select count(1)
                 from cms_adopt_pet
                 where create_by = #{userId}
-                  and adopt_status = '3'
+                  and adopt_status = 3
                   and is_valid = 1)              as adoptingNum,
                (select count(1)
                 from cms_adopt_pet
                 where create_by = #{userId}
-                  and adopt_status = '4'
+                  and adopt_status = 4
                   and is_valid = 1)              as adoptedNum,
                (select count(1)
                 from cms_adopt_apply caa,
@@ -314,7 +313,7 @@
                      cms_adopt_pet cap
                 where caa.pet_id = cap.pet_id
                   and cap.create_by = #{userId}
-                  and caa.apply_status != '0')   as applyHandle
+                  and caa.apply_status != 0)     as applyHandle
     </select>
     <select id="getTotalUserCount" resultType="java.lang.Integer">
         select count(1)
@@ -337,15 +336,25 @@
                u.memo,
                u.create_date,
                (select count(1) from cms_user_follow where follow_by = #{userId} and is_valid = '1') as followNum,
-               (select count(1) from cms_user_follow where user_id = #{userId} and is_valid = '1')   as followByNum,
-               (select IFNULL(SUM(points),0) from cms_point_statement where user_id = #{userId} and is_valid = 1) as points,
-               c.image_front as idCardImageFront,
-               c.image_back as idCardImageBack,
-               c.id_card as idCard
+               (select count(1)
+                from cms_user_follow
+                where user_id = #{userId}
+                  and is_valid = 1)                                                                  as followByNum,
+               (select IFNULL(SUM(points), 0)
+                from cms_point_statement
+                where user_id = #{userId}
+                  and is_valid = 1)                                                                  as points,
+               (select count(1)
+                from cms_user_sign
+                where user_id = #{userId}
+                  and TO_DAYS(sign_in_date) = TO_DAYS(now()))                                        as hasSigned,
+               c.image_front                                                                         as idCardImageFront,
+               c.image_back                                                                          as idCardImageBack,
+               c.id_card                                                                             as idCard
         from cms_user u
-        left join cms_adopt_certification c
-        on u.user_id = c.user_id
-        and c.is_valid = 1
+                 left join cms_adopt_certification c
+                           on u.user_id = c.user_id
+                               and c.is_valid = 1
         where u.user_id = #{userId}
     </select>
     <select id="getUserByUnionId" parameterType="String" resultMap="BaseResultMap">
@@ -401,31 +410,31 @@
         ORDER BY s.create_date DESC
     </select>
     <select id="getOrgUserRoleList" resultType="com.linkpets.core.model.SysRole">
-        select r.role_id as roleId , r.role_name as roleName,r.role_code as roleCode
-        from sys_user_role_rel srr ,sys_role r
+        select r.role_id as roleId, r.role_name as roleName, r.role_code as roleCode
+        from sys_user_role_rel srr,
+             sys_role r
         where srr.role_id = r.role_id
-        and srr.is_valid = 1
-        and r.is_valid =1
-        and srr.user_id = #{userId}
+          and srr.is_valid = 1
+          and r.is_valid = 1
+          and srr.user_id = #{userId}
     </select>
     <select id="getOrgUserInfoList" resultMap="BaseOrgUserListResultMap">
-        SELECT
-        o.id AS id,
-        u.user_id as userId,
-        u.nick_name AS nickName,
-        u.wx_account AS wxAccount,
-        s.user_id AS sysUserId,
-        u.mobile_phone AS mobilePhone
-        FROM
-        cms_user u,cms_adopt_org_user o,sys_user s
-        WHERE
-        u.user_id = o.user_id
-        and o.is_valid = 1
-        and o.sys_user_id = s.user_id
-        and s.is_valid = 1
-        and u.is_valid = 1
-        and u.mobile_phone is not null
-        and o.org_id =#{orgId}
+        SELECT o.id           AS id,
+               u.user_id      as userId,
+               u.nick_name    AS nickName,
+               u.wx_account   AS wxAccount,
+               s.user_id      AS sysUserId,
+               u.mobile_phone AS mobilePhone
+        FROM cms_user u,
+             cms_adopt_org_user o,
+             sys_user s
+        WHERE u.user_id = o.user_id
+          and o.is_valid = 1
+          and o.sys_user_id = s.user_id
+          and s.is_valid = 1
+          and u.is_valid = 1
+          and u.mobile_phone is not null
+          and o.org_id = #{orgId}
         ORDER BY s.create_date DESC
     </select>
 

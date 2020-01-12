@@ -2,22 +2,16 @@ package com.linkpets.cms.adopt.model;
 
 import lombok.Data;
 
+import java.util.List;
+import java.util.Map;
+
 @Data
 public class AdoptionStatistic {
 
-    private int applyTodayCount;
-    private int petAdoptTodayCount;
+    private int applyCount;
+    private int petAdoptCount;
     private int loginTodayCount;
     private int totalUserCount;
-
-    public AdoptionStatistic(){
-
-    }
-
-    public AdoptionStatistic(int applyTodayCount, int petAdoptTodayCount, int loginTodayCount, int totalUserCount) {
-        this.applyTodayCount = applyTodayCount;
-        this.petAdoptTodayCount = petAdoptTodayCount;
-        this.loginTodayCount = loginTodayCount;
-        this.totalUserCount = totalUserCount;
-    }
+    private int adoptTotalCount;
+    private List<Map<String,Object>> nearlyWeekCount;
 }

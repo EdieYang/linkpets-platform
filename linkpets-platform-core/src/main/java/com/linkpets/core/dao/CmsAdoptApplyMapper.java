@@ -73,12 +73,12 @@ public interface CmsAdoptApplyMapper {
 
 
     /**
-     * 获取当天领养申请数
-     *
-     * @param syncDate
+     * 获取时间范围内领养申请数
+     * @param startDate
+     * @param endDate
      * @return
      */
-    int getApplyCount(String syncDate);
+    int getApplyCount(String startDate,String endDate);
 
     /**
      * 获取已过期领养申请列表

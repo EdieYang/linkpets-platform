@@ -54,12 +54,13 @@ public interface IApplyService {
 
 
     /**
-     * 获取当天领养申请数
+     * 获取时间范围领养申请数
      *
-     * @param syncDate
+     * @param startDate
+     * @param endDate
      * @return
      */
-    int getApplyCount(String syncDate);
+    int getApplyCount(String startDate, String endDate);
 
     /**
      * 获取已超期无效领养申请列表

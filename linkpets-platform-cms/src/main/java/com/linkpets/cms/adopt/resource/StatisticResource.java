@@ -9,15 +9,15 @@ import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.result.PlatformResult;
 import com.linkpets.util.DateUtils;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
-@Api(value = "领养平台统计接口",tags = "领养模块-统计接口")
+@Api(value = "领养模块-统计接口", tags = "领养模块-统计接口")
 @ResponseResult
 @RestController
 @RequestMapping("/adopt/statistic")
@@ -31,40 +31,34 @@ public class StatisticResource {
 
     @Resource
     IUserService userService;
-    
+
     @Resource
     IStatisticService statisticService;
 
+    @ApiOperation("查询总览统计")
     @GetMapping(value = "list")
     public PlatformResult getStatisticList() {
-        String syncDate = DateUtils.getFormatDateStr(new Date(), "yyyy-MM-dd");
-        int applyTodayCount = applyService.getApplyCount(syncDate);
-        int petAdoptTodayCount = petService.getPetAdoptCount(syncDate);
-        int loginTodayCount = userService.getLoginCount(syncDate);
+        String startDate = DateUtils.getCurrentDay();
+        String applyEndDate = DateUtils.rollNOfDate(DateUtils.getCurrentDay(), 1, -7, "yyyy-MM-dd");
+        int applyCount = applyService.getApplyCount(startDate, applyEndDate);
+        int loginTodayCount = userService.getLoginCount(startDate);
         int totalUserCount = userService.getTotalUserCount();
-        AdoptionStatistic adoptionStatistic = new AdoptionStatistic(applyTodayCount, petAdoptTodayCount, loginTodayCount, totalUserCount);
+        int adoptTotalCount = statisticService.getAdoptTotalCount("");
+        List<Map<String,Object>> nealyWeekCount=statisticService.getNealyWeekCount();
+        AdoptionStatistic adoptionStatistic = new AdoptionStatistic();
+        adoptionStatistic.setTotalUserCount(totalUserCount);
+        adoptionStatistic.setLoginTodayCount(loginTodayCount);
+        adoptionStatistic.setApplyCount(applyCount);
+        adoptionStatistic.setAdoptTotalCount(adoptTotalCount);
+        adoptionStatistic.setNearlyWeekCount(nealyWeekCount);
         return PlatformResult.success(adoptionStatistic);
     }
-    
-    /**
-     * 
-    * @Title: getOrgStatistic 
-    * @Description: 获取某公义机构的统计数据
-    * @param @param orgId
-    * @param @return
-    * @return PlatformResult
-    * @author wando 
-    * @throws
-    * @date 2019年9月14日 下午3:26:09 
-    * @version V1.0   
-     */
-    @GetMapping(value = "{orgId}/data")
-    public PlatformResult getOrgStatistic(@PathVariable("orgId") String orgId) {
+
+    @ApiOperation("查询机构统计数据")
+    @GetMapping(value = "org/list")
+    public PlatformResult getOrgStatistic(@RequestParam("orgId") String orgId) {
         return PlatformResult.success(statisticService.getDataByOrg(orgId));
     }
-    
-    
-    
-    
+
 
 }

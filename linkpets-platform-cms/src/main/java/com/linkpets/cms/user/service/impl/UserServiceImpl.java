@@ -11,6 +11,7 @@ import com.linkpets.core.model.CmsUser;
 import com.linkpets.core.model.CmsUserFollow;
 import com.linkpets.core.model.CmsUserLogin;
 import com.linkpets.core.respEntity.RespOrgUser;
+import com.linkpets.util.UUIDUtils;
 import com.linkpets.util.UserAnalyseUtil;
 import org.springframework.stereotype.Service;
 
@@ -105,6 +106,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void crtFollow(CmsUserFollow record) {
+        record.setId(UUIDUtils.getId());
         record.setCreateDate(new Date());
         cmsUserFollowMapper.insertSelective(record);
     }

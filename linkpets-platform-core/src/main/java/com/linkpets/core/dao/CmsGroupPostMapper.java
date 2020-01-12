@@ -28,4 +28,12 @@ public interface CmsGroupPostMapper {
      * @return
      */
     List<RespGroupPost> getGroupPostPage(String groupId, Integer isValid, String nickName, String userId);
+
+    /**
+     * 获取当天发帖数
+     *
+     * @param syncDate
+     * @return
+     */
+    int getPostCount(String syncDate);
 }

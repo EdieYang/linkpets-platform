@@ -72,8 +72,8 @@ public class ApplyServiceImpl implements IApplyService {
     }
 
     @Override
-    public int getApplyCount(String syncDate) {
-        return cmsAdoptApplyMapper.getApplyCount(syncDate);
+    public int getApplyCount(String startDate, String endDate) {
+        return cmsAdoptApplyMapper.getApplyCount(startDate, endDate);
     }
 
     @Override

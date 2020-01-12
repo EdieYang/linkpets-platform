@@ -91,6 +91,11 @@ public class CmsUser {
     private String applyHandle;
 
     /**
+     * 今日是否已经签到
+     */
+    private Integer hasSigned;
+
+    /**
      * 用户积分总数
      */
     private Integer points;

@@ -35,7 +35,7 @@ public class PointStatementServiceImpl implements IPointStatementService {
     }
 
     @Override
-    public Integer crtPointStatementByChannel(String userId, String targetId, int channel,int rewardPoints) {
+    public Integer crtPointStatementByChannel(String userId, String targetId, int channel,Integer rewardPoints) {
         Integer points = 0;
         List<CmsPointStatement> pointsStatementList = pointsStatementMapper.getPointStatementListByChannelAndDay(userId, channel, DateUtils.getCurrentDay());
         switch (channel) {

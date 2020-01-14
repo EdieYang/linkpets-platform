@@ -70,6 +70,25 @@
           and a.is_valid = 1
           and a.answer_id = #{answerId}
     </select>
+    <select id="getQuestionnaireAnswerInfoByUserIdAndActivityId" resultMap="BaseInfoResultMap">
+        select answer_id,
+               questionnaire_id,
+               activity_id,
+               a.user_id,
+               answer_detail,
+               is_pass,
+               a.is_valid,
+               a.create_date,
+               u.nick_name,
+               u.mobile_phone,
+               u.portrait
+        from cms_questionnaire_answer a,
+             cms_user u
+        where a.user_id = u.user_id
+          and a.is_valid = 1
+          and a.user_id = #{userId}
+          and a.activity_id = #{activityId}
+    </select>
     <select id="getQuestionnaireAnswerListByParams" resultMap="BaseInfoResultMap">
         select answer_id,
         questionnaire_id,

@@ -44,7 +44,9 @@ public interface IQuestionnaireAnswerService {
      * 查询问卷答案详情
      *
      * @param answerId
+     * @param userId
+     * @param activityId
      * @return
      */
-    RespQuestionnaireAnswerInfo getQuestionnaireAnswerInfo(String answerId);
+    RespQuestionnaireAnswerInfo getQuestionnaireAnswerInfo(String answerId, String userId, String activityId);
 }

@@ -100,8 +100,10 @@ public class QuestionnaireResource {
 
     @ApiOperation("查询答案详情")
     @GetMapping("answer")
-    public PlatformResult getQuestionnaireAnswer(@RequestParam(value = "answerId") String answerId) {
-        RespQuestionnaireAnswerInfo answerInfo = questionnaireAnswerService.getQuestionnaireAnswerInfo(answerId);
+    public PlatformResult getQuestionnaireAnswer(@RequestParam(value = "answerId", required = false) String answerId,
+                                                 @RequestParam(value = "userId", required = false) String userId,
+                                                 @RequestParam(value = "activityId", required = false) String activityId) {
+        RespQuestionnaireAnswerInfo answerInfo = questionnaireAnswerService.getQuestionnaireAnswerInfo(answerId, userId, activityId);
         return PlatformResult.success(answerInfo);
     }
 

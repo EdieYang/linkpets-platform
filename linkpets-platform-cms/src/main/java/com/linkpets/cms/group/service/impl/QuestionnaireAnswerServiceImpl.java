@@ -7,6 +7,7 @@ import com.linkpets.core.dao.CmsQuestionnaireAnswerMapper;
 import com.linkpets.core.model.CmsQuestionnaireAnswer;
 import com.linkpets.core.respEntity.RespQuestionnaireAnswerInfo;
 import com.linkpets.util.UUIDUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -47,8 +48,13 @@ public class QuestionnaireAnswerServiceImpl implements IQuestionnaireAnswerServi
     }
 
     @Override
-    public RespQuestionnaireAnswerInfo getQuestionnaireAnswerInfo(String answerId) {
-        return questionnaireAnswerMapper.getQuestionnaireAnswerInfo(answerId);
+    public RespQuestionnaireAnswerInfo getQuestionnaireAnswerInfo(String answerId, String userId, String activityId) {
+        if (StringUtils.isNotEmpty(answerId)) {
+            return questionnaireAnswerMapper.getQuestionnaireAnswerInfo(answerId);
+        } else if (StringUtils.isNotEmpty(userId) && StringUtils.isNotEmpty(activityId)) {
+            return questionnaireAnswerMapper.getQuestionnaireAnswerInfoByUserIdAndActivityId(userId, activityId);
+        }
+        return null;
     }
 
 }

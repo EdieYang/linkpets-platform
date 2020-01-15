@@ -221,7 +221,7 @@ public class WxTemplateMsgResource {
                     templateId = adoptionCheckTemplateId;
                     templateData.put("phrase1", new KeyWordValue("待审核").toJson());
                     templateData.put("thing5", new KeyWordValue(msgJson.getString("petName") + "的送养申请已创建，等待审核中").toJson());
-                    templateData.put("date4", new KeyWordValue("-").toJson());
+                    templateData.put("date4", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
                     templateData.put("thing8", new KeyWordValue("平台将在1个工作日内进行审核,请耐心等待").toJson());
                     break;
                 case "1":

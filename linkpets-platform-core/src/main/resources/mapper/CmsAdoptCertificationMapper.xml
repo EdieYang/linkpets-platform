@@ -209,6 +209,13 @@
         where is_valid = 1
         and status =#{status}
     </select>
+    <select id="isAuthenticated" resultType="java.lang.Integer">
+        select count(1)  from cms_adopt_certification
+        where is_valid = 1
+        and status !='2'
+        and  status !='3'
+        and user_id = #{userId}
+    </select>
 
 
 </mapper>

@@ -96,4 +96,7 @@ public class CmsGroupActivity {
     @ApiModelProperty(value = "活动状态")
     private String activityStatus;
 
+    @ApiModelProperty(value = "是否实名")
+    private Integer isAuthenticated;
+
 }

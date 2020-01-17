@@ -30,15 +30,25 @@
     <resultMap id="BaseRespResultMap" type="com.linkpets.core.respEntity.RespGroupActivity">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
-        <result column="activity_type" jdbcType="CHAR" property="activityType"/>
+        <result column="activity_type" jdbcType="INTEGER" property="activityType"/>
         <result column="activity_title" jdbcType="VARCHAR" property="activityTitle"/>
         <result column="activity_banner" jdbcType="VARCHAR" property="activityBanner"/>
         <result column="activity_area" jdbcType="VARCHAR" property="activityArea"/>
         <result column="activity_address" jdbcType="VARCHAR" property="activityAddress"/>
         <result column="activity_content" jdbcType="VARCHAR" property="activityContent"/>
         <result column="register_limit" jdbcType="INTEGER" property="registerLimit"/>
+        <result column="activity_should_verify" jdbcType="INTEGER" property="activityShouldVerify"/>
+        <result column="activity_should_questionnaire" jdbcType="INTEGER" property="activityShouldQuestionnaire"/>
+        <result column="questionnaire_id" jdbcType="VARCHAR" property="questionnaireId"/>
+        <result column="activity_register_start_time" jdbcType="TIMESTAMP" property="activityRegisterStartTime"/>
+        <result column="activity_register_end_time" jdbcType="TIMESTAMP" property="activityRegisterEndTime"/>
         <result column="activity_start_time" jdbcType="TIMESTAMP" property="activityStartTime"/>
         <result column="activity_end_time" jdbcType="TIMESTAMP" property="activityEndTime"/>
+        <result column="activity_pick_time" jdbcType="VARCHAR" property="activityPickTime"/>
+        <result column="activity_is_free" jdbcType="INTEGER" property="activityIsFree"/>
+        <result column="activity_cost" jdbcType="INTEGER" property="activityCost"/>
+        <result column="activity_point" jdbcType="INTEGER" property="activityPoint"/>
+        <result column="customer_support" jdbcType="VARCHAR" property="customerSupport"/>
         <result column="is_active" jdbcType="INTEGER" property="isActive"/>
         <result column="is_valid" jdbcType="INTEGER" property="isValid"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
@@ -368,8 +378,11 @@
         order by a.activity_start_time
     </select>
     <select id="getGroupActivityInfoWithUserId" resultMap="BaseRespResultMap">
-        select  a.id, a.group_id, a.activity_type, a.activity_title, a.activity_banner, a.activity_area, a.activity_address, a.activity_content, a.activity_start_time,
-                a.activity_end_time,  a.is_active, a.is_valid, a.create_date,
+        select  id, group_id, activity_type, activity_title, activity_banner, activity_area, activity_address,
+                activity_content, register_limit, activity_should_verify, activity_should_questionnaire,
+                questionnaire_id, activity_register_start_time, activity_register_end_time, activity_start_time,
+                activity_end_time, activity_pick_time, activity_is_free, activity_cost, activity_point,
+                customer_support, is_active, is_valid, create_date,
                 (select count(1) from cms_group_activity_register ar where ar.user_id = #{userId} and ar.activity_id = a.id and ar.is_valid = 1 ) as hasRegistered,
                 (select count(1) from cms_group_activity_user_rel r where r.user_id = #{userId} and r.activity_id = a.id and r.is_valid = 1 ) as hasFollowed
         from  cms_group_activity a

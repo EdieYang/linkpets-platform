@@ -6,7 +6,7 @@ package com.linkpets.cms.sms;
 
 public enum SmsTypeEnum {
 
-    USER_AUTHORIZE("实名认证验证码", "邻宠", "SMS_180351713");
+    USER_AUTHORIZE("实名认证验证码", "邻宠", "SMS_180352151");
 
     private String smsTemplateName;
     private String signName;

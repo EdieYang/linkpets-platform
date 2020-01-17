@@ -3,6 +3,7 @@ package com.linkpets.cms.group.resource;
 
 import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
+import com.linkpets.cms.adopt.service.ICertificationService;
 import com.linkpets.cms.group.service.IGroupActivityService;
 import com.linkpets.core.model.CmsGroupActivity;
 import com.linkpets.core.respEntity.RespGroupActivity;
@@ -26,6 +27,8 @@ public class GroupActivityResource {
 
     @Resource
     private IGroupActivityService groupActivityService;
+    @Resource
+    private ICertificationService certificationService;
 
     @ApiOperation("分页查询圈子活动列表")
     @GetMapping("page")
@@ -44,6 +47,9 @@ public class GroupActivityResource {
         CmsGroupActivity cmsGroupActivity = new CmsGroupActivity();
         if (StringUtils.isNotEmpty(userId)) {
             cmsGroupActivity = groupActivityService.getGroupActivityInfoWithUserId(activityId, userId);
+            if(cmsGroupActivity!=null){
+                cmsGroupActivity.setIsAuthenticated(certificationService.isAuthenticated(userId));
+            }
         } else {
             cmsGroupActivity = groupActivityService.getGroupActivityInfo(activityId);
         }

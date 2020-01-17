@@ -36,4 +36,11 @@ public interface ICertificationService {
      * @return
      */
     PageInfo<CmsAdoptCertification> getUserCertificationList(int pageNum, int pageSize, String status);
+
+    /**
+     * 判断用户是否实名
+     * @param userId
+     * @return
+     */
+    Integer isAuthenticated(String userId);
 }

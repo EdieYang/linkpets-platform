@@ -36,27 +36,8 @@ public class CertificationResource {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
-    @GetMapping("verifyCode")
-    public PlatformResult sendVerifyCode(@RequestParam("mobilePhone") String mobilePhone,
-                                         @RequestParam("userId") String userId) {
-        SmsTemplateBuilder templateBuilder = new SmsTemplateBuilder();
-        if (mobilePhone.length() != 11 || !SmsTemplateBuilder.checkCellphone(mobilePhone)) {
-            return PlatformResult.failure(ResultCode.MOBILE_PHONE_INVALID);
-        }
-        String code = String.valueOf((int) ((Math.random() * 9 + 1) * 100000));
-        stringRedisTemplate.opsForValue().set("verifyCode." + userId + "." + mobilePhone, code, 60 * 10, TimeUnit.SECONDS);
-        templateBuilder.setPhoneNumbers(mobilePhone);
-        templateBuilder.setSignName(SmsTypeEnum.USER_AUTHORIZE.getSignName());
-        templateBuilder.setTemplateCode(SmsTypeEnum.USER_AUTHORIZE.getTemplateCode());
-        templateBuilder.setTemplateParam(code);
-        boolean sendStatus = SmsSendHandler.sendSms(templateBuilder);
-        if (sendStatus) {
-            return PlatformResult.success(code);
-        } else {
-            return PlatformResult.failure(ResultCode.VERIFY_CODE_SEND_FAIL);
-        }
-    }
 
+    @ApiOperation("上传实名信息")
     @PostMapping("")
     public PlatformResult uploadCertification(@RequestParam("imageFront") String imageFront,
                                               @RequestParam("imageBack") String imageBack,
@@ -67,10 +48,10 @@ public class CertificationResource {
                                               @RequestParam("mobilePhone") String mobilePhone,
                                               @RequestParam("verifyCode") String verifyCode) {
         //校验验证码
-//        String verifyCodeStorage = stringRedisTemplate.opsForValue().get("verifyCode." + userId + "." + mobilePhone);
-//        if (!verifyCode.equals(verifyCodeStorage)) {
-//            return PlatformResult.failure(ResultCode.VERIFY_CODE_INVALID);
-//        }
+        String verifyCodeStorage = stringRedisTemplate.opsForValue().get("verifyCode." + userId + "." + mobilePhone);
+        if (!verifyCode.equals(verifyCodeStorage)) {
+            return PlatformResult.failure(ResultCode.VERIFY_CODE_INVALID);
+        }
         //上传认证信息
         CmsAdoptCertification certification = new CmsAdoptCertification();
         certification.setId(UUIDUtils.getId());
@@ -91,13 +72,14 @@ public class CertificationResource {
     }
 
 
+    @ApiOperation("修改实名信息")
     @PutMapping("")
     public PlatformResult modifyCertification(@RequestBody CmsAdoptCertification certification) {
         certificationService.modifyCertification(certification);
         return PlatformResult.success();
     }
 
-
+    @ApiOperation("获取用户实名信息")
     @GetMapping("")
     public PlatformResult getUserCertification(@RequestParam("userId") String userId) {
 

@@ -68,4 +68,6 @@ public interface CmsAdoptCertificationMapper {
      * @return
      */
     List<CmsAdoptCertification> getUserCertificationList(String status);
+
+    Integer isAuthenticated(String userId);
 }

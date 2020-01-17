@@ -58,5 +58,10 @@ public class CertificationServiceImpl implements ICertificationService {
         return pageInfo;
     }
 
+    @Override
+    public Integer isAuthenticated(String userId) {
+        return cmsAdoptCertificationMapper.isAuthenticated(userId);
+    }
+
 
 }

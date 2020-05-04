@@ -53,6 +53,15 @@ public class CmsAdoptMsgServiceImpl implements ICmsAdoptMsgService {
     }
 
     @Override
+    public CmsAdoptMsg getActivityLatestMsg(String userId) {
+        CmsAdoptMsg msg = msgMapper.getActivityLatestMsg(userId);
+        if (msg != null) {
+            msg.setDateBefore(DateUtils.getDateBefore(msg.getCreateTime()));
+        }
+        return msg;
+    }
+
+    @Override
     public void crtMessage(CmsAdoptMsg msg) {
         msgMapper.insertSelective(msg);
     }

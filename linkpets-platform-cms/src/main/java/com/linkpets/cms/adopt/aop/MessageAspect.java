@@ -3,6 +3,9 @@ package com.linkpets.cms.adopt.aop;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.linkpets.cms.adopt.service.*;
+import com.linkpets.cms.aprilfool.service.IActivityService;
+import com.linkpets.cms.group.service.IGroupActivityRegisterService;
+import com.linkpets.cms.group.service.IGroupActivityService;
 import com.linkpets.cms.user.service.IUserService;
 import com.linkpets.core.model.*;
 import com.linkpets.util.HttpUtil;
@@ -35,11 +38,20 @@ public class MessageAspect {
     @Resource
     private IApplyService applyService;
 
+    @Resource
+    private IGroupActivityService groupActivityService;
+
+    @Resource
+    private IGroupActivityRegisterService groupActivityRegisterService;
+
     /**
      * 更新状态
      */
     private static final String UPT = "0";
-
+    /**
+     * 已领养状态
+     */
+    private static final String ADOPTED = "0";
     /**
      * 审核未通过状态
      */
@@ -58,6 +70,9 @@ public class MessageAspect {
 
     @Value("${linkPet.lpWechat.templateMsg.adoptionUpt}")
     private String adoptionUptUrl;
+
+    @Value("${linkPet.lpWechat.templateMsg.activityNotification}")
+    private String activityNotificationUrl;
 
     /**
      * 新建领养信息切点
@@ -89,7 +104,7 @@ public class MessageAspect {
 
 
     /**
-     * 上传实名认证身份信息
+     * 上传实名认证身份信息切点
      */
     @Pointcut("execution(public * com.linkpets.cms.adopt.service.ICertificationService.uploadCertification(..))")
     public void uploadCertificationPointCut() {
@@ -97,10 +112,24 @@ public class MessageAspect {
 
 
     /**
-     * 审核实名认证身份信息
+     * 审核实名认证身份信息切点
      */
     @Pointcut("execution(public * com.linkpets.cms.adopt.service.ICertificationService.modifyCertification(..))")
     public void uptCertificationPointCut() {
+    }
+
+    /**
+     * 活动报名成功切点
+     */
+    @Pointcut("execution(public * com.linkpets.cms.group.service.IGroupActivityRegisterService.crtGroupActivityRegister(..))")
+    public void crtGroupActivityRegisterPointCut() {
+    }
+
+    /**
+     * 活动报名取消切点
+     */
+    @Pointcut("execution(public * com.linkpets.cms.group.service.IGroupActivityRegisterService.delGroupActivityRegister(..))")
+    public void delGroupActivityRegisterPointCut() {
     }
 
     /**
@@ -204,7 +233,7 @@ public class MessageAspect {
                 default:
                     break;
             }
-            if (!uptCmsAdoptPet.getAdoptStatus().equals(UPT)) {
+            if (uptCmsAdoptPet.getAdoptStatus().equals(UN_PASS) && !uptCmsAdoptPet.getAdoptStatus().equals(PASS)) {
                 log.info("发送模板消息请求参数：=======================》" + JSON.toJSONString(msg));
                 this.sendTemplateMsg(adoptionUptUrl, msg);
             }
@@ -495,6 +524,72 @@ public class MessageAspect {
             }
             //发送申请更新模板消息
             this.sendTemplateMsg(certificateUptUrl, msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Around("crtGroupActivityRegisterPointCut()")
+    public void aroundCrtGroupActivityRegisterPointCut(ProceedingJoinPoint pjp) {
+        log.info("{MessageAspect} =>crt new activityRegister start.....");
+        String userId = (String) pjp.getArgs()[0];
+        String activityId = (String) pjp.getArgs()[1];
+        String involvementTime = (String) pjp.getArgs()[2];
+        CmsGroupActivity activity = groupActivityService.getGroupActivityInfo(activityId);
+        try {
+            pjp.proceed();
+            CmsAdoptMsg msg = new CmsAdoptMsg();
+            msg.setMsgTitle(MessageTemplate.ACTIVITY_REGISTER_SUCCESS);
+            JSONObject msgContent = new JSONObject();
+            msgContent.put("activityId", activity.getId());
+            msgContent.put("activityTitle", activity.getActivityTitle());
+            msgContent.put("activityAddress", activity.getActivityArea() + " " + activity.getActivityAddress());
+            msgContent.put("involvementTime", involvementTime.substring(0, 19));
+            msgContent.put("type", "REGISTER");
+            msgContent.put("status", "0");
+            msg.setMsgContent(msgContent.toJSONString());
+            msg.setMsgType(3);
+            msg.setPetId("");
+            msg.setSender("SYS");
+            msg.setReceiver(userId);
+            msg.setCreateTime(new Date());
+            msgService.crtMessage(msg);
+            //发送申请创建模板消息
+            this.sendTemplateMsg(activityNotificationUrl, msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Around("delGroupActivityRegisterPointCut()")
+    public void aroundDelGroupActivityRegisterPointCut(ProceedingJoinPoint pjp) {
+        log.info("{MessageAspect} =>crt new cancelActivityRegister start.....");
+        String userId = (String) pjp.getArgs()[0];
+        String activityId = (String) pjp.getArgs()[1];
+        String memo = (String) pjp.getArgs()[2];
+        CmsGroupActivity activity = groupActivityService.getGroupActivityInfo(activityId);
+        CmsGroupActivityRegister activityRegister = groupActivityRegisterService.getGroupActivityRegisterListByUserId(userId, activityId);
+        try {
+            pjp.proceed();
+            CmsAdoptMsg msg = new CmsAdoptMsg();
+            msg.setMsgTitle(MessageTemplate.ACTIVITY_REGISTER_CANCEL);
+            JSONObject msgContent = new JSONObject();
+            msgContent.put("activityId", activity.getId());
+            msgContent.put("activityTitle", activity.getActivityTitle());
+            msgContent.put("activityAddress", activity.getActivityArea() + " " + activity.getActivityAddress());
+            msgContent.put("involvementTime", activityRegister.getInvolvementTime().substring(0, 19));
+            msgContent.put("memo", memo);
+            msgContent.put("type", "CANCEL");
+            msgContent.put("status", "0");
+            msg.setMsgContent(msgContent.toJSONString());
+            msg.setMsgType(3);
+            msg.setPetId("");
+            msg.setSender("SYS");
+            msg.setReceiver(userId);
+            msg.setCreateTime(new Date());
+            msgService.crtMessage(msg);
+            //发送申请创建模板消息
+            this.sendTemplateMsg(activityNotificationUrl, msg);
         } catch (Throwable e) {
             e.printStackTrace();
         }

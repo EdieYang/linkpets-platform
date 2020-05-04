@@ -30,6 +30,13 @@ public interface CmsGroupPostMapper {
     List<RespGroupPost> getGroupPostPage(String groupId, Integer isValid, String nickName, String userId);
 
     /**
+     * 分页获取圈子用户发帖列表
+     * @param userId
+     * @return
+     */
+    List<RespGroupPost> getGroupUserPostPage(String userId);
+
+    /**
      * 获取当天发帖数
      *
      * @param syncDate

@@ -63,7 +63,7 @@
         and is_valid = 1
     </select>
     <select id="getUserPoints" resultType="java.lang.Integer">
-        select SUM(points)
+        select IFNULL(SUM(points),0)
         from cms_point_statement
         where user_id = #{userId}
         and is_valid = 1

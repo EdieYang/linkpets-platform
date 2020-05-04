@@ -17,10 +17,12 @@ public interface IStatisticService {
      */
     int getAdoptTotalCount(String orgId);
 
-	/**
-	 * 获取近7天统计数据
-	 * @return
-	 */
-	List<Map<String, Object>> getNealyWeekCount();
+    /**
+     * 获取近7天统计数据
+     *
+     * @return
+     */
+    List<Map<String, Object>> getNealyWeekCount();
+
 
 }

@@ -109,7 +109,7 @@ public class UserResource {
             @ApiImplicitParam(paramType = "query", dataType = "Long", name = "pageSize", value = "页面记录条数", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "sortCol", value = "排序字段", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "sort", value = "排序规则", required = false)})
-    @GetMapping(value = "{targetUserId}/attentTo")
+    @GetMapping(value = "{targetUserId}/follow")
     PlatformResult getUserListFollow(@PathVariable("targetUserId") String targetUserId,
                                      @RequestParam("userId") String userId,
                                      @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize,
@@ -123,20 +123,24 @@ public class UserResource {
         return PlatformResult.success(data);
     }
 
-    @PostMapping("attention")
-    PlatformResult crtFollow(@RequestBody CmsUserFollow record) {
-        userService.crtFollow(record);
-        return PlatformResult.success(true);
-    }
-
-    @ApiOperation(value = "取消关注", notes = "取消关注")
+    @ApiOperation(value = "关注用户", notes = "关注用户")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "userId", value = "被+关注人的用户id", required = true),
-            @ApiImplicitParam(paramType = "query", dataType = "String", name = "attentBy", value = "去+关注的人", required = true)})
-    @DeleteMapping("attention")
-    PlatformResult delFollow(@RequestParam("userId") String userId, @RequestParam("attentBy") String attentBy) {
-        userService.delFollow(userId, attentBy);
-        return PlatformResult.success(null);
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "followBy", value = "去+关注的人", required = true)})
+    @PostMapping("follow")
+    PlatformResult crtFollow(@RequestParam("userId") String userId, @RequestParam("followBy") String followBy) {
+        userService.crtFollow(userId, followBy);
+        return PlatformResult.success();
+    }
+
+    @ApiOperation(value = "取消关注用户", notes = "取消关注用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "userId", value = "被+关注人的用户id", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "followBy", value = "去+关注的人", required = true)})
+    @DeleteMapping("follow")
+    PlatformResult delFollow(@RequestParam("userId") String userId, @RequestParam("followBy") String followBy) {
+        userService.delFollow(userId, followBy);
+        return PlatformResult.success();
     }
 
 
@@ -146,7 +150,7 @@ public class UserResource {
             @ApiImplicitParam(paramType = "query", dataType = "Long", name = "pageSize", value = "页面记录条数", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "sortCol", value = "排序字段", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "sort", value = "排序规则", required = false)})
-    @GetMapping(value = "{targetUserId}/attentBy")
+    @GetMapping(value = "{targetUserId}/followers")
     PlatformResult getUserListFollowBy(@PathVariable("targetUserId") String targetUserId,
                                        @RequestParam("userId") String userId,
                                        @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize,
@@ -160,9 +164,9 @@ public class UserResource {
         return PlatformResult.success(data);
     }
 
-    @GetMapping("attention")
-    PlatformResult getAttention(@RequestParam("userId") String userId,
-                                @RequestParam("targetUserId") String targetUserId) {
+    @GetMapping("follow")
+    PlatformResult getFollowStatus(@RequestParam("userId") String userId,
+                                   @RequestParam("targetUserId") String targetUserId) {
         int followed = userService.getFollowStatus(userId, targetUserId);
         if (followed > 0) {
             return PlatformResult.success(true);

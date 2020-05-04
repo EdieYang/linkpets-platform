@@ -7,23 +7,26 @@ import java.util.List;
 
 public interface IBannerService {
 
+
     /**
      * 分页查询banner列表
      *
-     * @param activityId
+     * @param type
+     * @param position
      * @param pageNum
      * @param pageSize
      * @return
      */
-    PageInfo<CmsBanner> getBannerPage(String activityId, Integer pageNum, Integer pageSize);
+    PageInfo<CmsBanner> getBannerPage(Integer type, Integer position, Integer pageNum, Integer pageSize);
 
     /**
      * 获取banner列表
      *
-     * @param activityId
+     * @param type
+     * @param position
      * @return
      */
-    List<CmsBanner> getBannerList(String activityId, Integer count);
+    List<CmsBanner> getBannerList(Integer type, Integer position);
 
     /**
      * 创建Banner
@@ -35,7 +38,15 @@ public interface IBannerService {
 
     /**
      * 更新Banner
+     *
      * @param cmsBanner
      */
     void uptBanner(CmsBanner cmsBanner);
+
+    /**
+     * 删除Banner
+     *
+     * @param bannerId
+     */
+    void delBanner(String bannerId);
 }

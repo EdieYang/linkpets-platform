@@ -50,7 +50,8 @@
         u.portrait,
         u.wx_account,
         (select count(1) from cms_group_post_like pl where pl.post_id = p.post_id and pl.is_valid = 1 ) as likeAmount,
-        (select count(1) from cms_user_follow aa where aa.user_id = #{userId} and aa.is_valid = 1) as isFollowed,
+        (select count(1) from cms_user_follow aa where aa.follow_by = #{userId} and aa.user_id = p.user_id and
+        aa.is_valid = 1) as isFollowed,
         (select count(1) from cms_group_post_like lk where lk.post_id = p.post_id and lk.user_id = #{userId} and
         lk.is_valid = 1) as isLiked
         from cms_group_post p,
@@ -78,6 +79,27 @@
         select count(1)
         from cms_group_post
         where left(create_date, 10) = #{syncDate}
+    </select>
+    <select id="getGroupUserPostPage" resultMap="BaseResultListMap">
+        select p.post_id,
+               p.group_id,
+               p.user_id,
+               p.post_content,
+               p.memo,
+               p.is_valid,
+               p.create_date,
+               u.nick_name,
+               u.portrait,
+               u.wx_account,
+               (select count(1)
+                from cms_group_post_like pl
+                where pl.post_id = p.post_id
+                  and pl.is_valid = 1) as likeAmount
+        from cms_group_post p,
+             cms_user u
+        where p.user_id = u.user_id
+          and p.user_id = #{userId}
+        order by p.create_date desc
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete

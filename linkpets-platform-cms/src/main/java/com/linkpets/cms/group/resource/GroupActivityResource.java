@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.linkpets.annotation.ResponseResult;
 import com.linkpets.cms.adopt.service.ICertificationService;
 import com.linkpets.cms.group.service.IGroupActivityService;
+import com.linkpets.cms.group.service.IQuestionnaireAnswerService;
 import com.linkpets.core.model.CmsGroupActivity;
 import com.linkpets.core.respEntity.RespGroupActivity;
 import com.linkpets.result.PlatformResult;
@@ -29,6 +30,8 @@ public class GroupActivityResource {
     private IGroupActivityService groupActivityService;
     @Resource
     private ICertificationService certificationService;
+    @Resource
+    private IQuestionnaireAnswerService answerService;
 
     @ApiOperation("分页查询圈子活动列表")
     @GetMapping("page")
@@ -47,8 +50,11 @@ public class GroupActivityResource {
         CmsGroupActivity cmsGroupActivity = new CmsGroupActivity();
         if (StringUtils.isNotEmpty(userId)) {
             cmsGroupActivity = groupActivityService.getGroupActivityInfoWithUserId(activityId, userId);
-            if(cmsGroupActivity!=null){
+            if (cmsGroupActivity != null) {
                 cmsGroupActivity.setIsAuthenticated(certificationService.isAuthenticated(userId));
+                if (cmsGroupActivity.getActivityShouldQuestionnaire() == 1) {
+                    cmsGroupActivity.setIsAnswered(answerService.getQuestionnaireAnswerInfo("", userId, activityId) == null ? 0 : 1);
+                }
             }
         } else {
             cmsGroupActivity = groupActivityService.getGroupActivityInfo(activityId);

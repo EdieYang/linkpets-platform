@@ -11,6 +11,7 @@ import com.linkpets.util.HttpClientUtils;
 import com.linkpets.util.UUIDUtils;
 import com.linkpets.util.wxutil.WXCore;
 import com.linkpets.wechat.service.IUserService;
+import com.vdurmont.emoji.EmojiParser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -139,8 +140,9 @@ public class WxMiniAdoptAuthorizeResource {
                 JSONObject jsonObject = JSON.parseObject(decryptData);
                 String unionId = jsonObject.getString("unionId");
                 String nickName = jsonObject.getString("nickName");
+                nickName = EmojiParser.parseToUnicode(nickName);
                 String avatarUrl = jsonObject.getString("avatarUrl");
-                String openId =userService.getOpenIdByUserId(userId);
+                String openId = userService.getOpenIdByUserId(userId);
 
                 //register authorized  user
                 CmsUser user = new CmsUser();
@@ -184,7 +186,7 @@ public class WxMiniAdoptAuthorizeResource {
 
 
     @PostMapping("lastLogin")
-    public PlatformResult recordUserLastLoginTime(@RequestParam("userId") String userId){
+    public PlatformResult recordUserLastLoginTime(@RequestParam("userId") String userId) {
         userService.recordUserLastLogin(userId);
         return PlatformResult.success();
     }

@@ -18,8 +18,8 @@ public class SignInServiceImpl implements ISignInService {
     private static final Integer SIGN_IN_DAY_FIRST = 100;
     private static final Integer SIGN_IN_DAY_1 = 20;
     private static final Integer SIGN_IN_DAY_2 = 50 + 20;
-    private static final Integer SIGN_IN_DAY_3 = 70 + 25;
-    private static final Integer SIGN_IN_DAY_4 = 80 + 30;
+    private static final Integer SIGN_IN_DAY_3 = 75 + 25;
+    private static final Integer SIGN_IN_DAY_4 = 100 + 30;
     private static final Integer SIGN_IN_DAY_5 = 120;
     private static final Integer SIGN_IN_DAY_6 = 150;
     private static final Integer SIGN_IN_DAY_7 = 200 + 100;

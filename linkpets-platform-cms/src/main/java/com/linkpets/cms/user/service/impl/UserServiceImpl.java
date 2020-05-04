@@ -105,10 +105,13 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void crtFollow(CmsUserFollow record) {
-        record.setId(UUIDUtils.getId());
-        record.setCreateDate(new Date());
-        cmsUserFollowMapper.insertSelective(record);
+    public void crtFollow(String userId, String followBy) {
+        CmsUserFollow follow = new CmsUserFollow();
+        follow.setId(UUIDUtils.getId());
+        follow.setCreateDate(new Date());
+        follow.setUserId(userId);
+        follow.setFollowBy(followBy);
+        cmsUserFollowMapper.insertSelective(follow);
     }
 
     @Override

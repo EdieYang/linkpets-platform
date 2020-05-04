@@ -21,23 +21,23 @@ public class BannerServiceImpl implements IBannerService {
     private CmsBannerMapper bannerMapper;
 
     @Override
-    public PageInfo<CmsBanner> getBannerPage(String activityId, Integer pageNum, Integer pageSize) {
+    public PageInfo<CmsBanner> getBannerPage(Integer type, Integer position, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<CmsBanner> cmsBannerList = bannerMapper.getBannerList(activityId, null);
+        List<CmsBanner> cmsBannerList = bannerMapper.getBannerList(type, position);
         PageInfo<CmsBanner> pageInfo = new PageInfo<>(cmsBannerList);
         return pageInfo;
     }
 
     @Override
-    public List<CmsBanner> getBannerList(String activityId, Integer count) {
-        return bannerMapper.getBannerList(activityId, count);
+    public List<CmsBanner> getBannerList(Integer type, Integer position) {
+        return bannerMapper.getBannerList(type, position);
     }
 
     @Override
     public String crtBanner(CmsBanner cmsBanner) {
         String id = UUIDUtils.getId();
         cmsBanner.setBannerId(id);
-        cmsBanner.setCreateTime(new Date());
+        cmsBanner.setCreateDate(new Date());
         bannerMapper.insertSelective(cmsBanner);
         return id;
     }
@@ -45,5 +45,10 @@ public class BannerServiceImpl implements IBannerService {
     @Override
     public void uptBanner(CmsBanner cmsBanner) {
         bannerMapper.updateByPrimaryKeySelective(cmsBanner);
+    }
+
+    @Override
+    public void delBanner(String bannerId) {
+        bannerMapper.deleteByPrimaryKey(bannerId);
     }
 }

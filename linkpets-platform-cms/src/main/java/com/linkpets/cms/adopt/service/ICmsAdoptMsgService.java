@@ -34,6 +34,14 @@ public interface ICmsAdoptMsgService {
     CmsAdoptMsg getAgreementLatestMsg(String userId);
 
     /**
+     * 获取活动最新推送消息
+     *
+     * @param userId
+     * @return
+     */
+    CmsAdoptMsg getActivityLatestMsg(String userId);
+
+    /**
      * 创建消息
      *
      * @param msg

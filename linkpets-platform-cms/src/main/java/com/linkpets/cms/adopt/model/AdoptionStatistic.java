@@ -9,7 +9,9 @@ import java.util.Map;
 public class AdoptionStatistic {
 
     private int applyCount;
-    private int petAdoptCount;
+    private int applyTodayCount;
+    private int certificationTodayCount;
+    private int adoptTodayCount;
     private int loginTodayCount;
     private int totalUserCount;
     private int adoptTotalCount;

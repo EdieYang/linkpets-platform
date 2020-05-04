@@ -13,6 +13,7 @@ import com.linkpets.wechat.model.KeyWordValue;
 import com.linkpets.wechat.service.IUserService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +51,15 @@ public class WxTemplateMsgResource {
 
     @Value("${templateId.adoptionCheck.templateId}")
     private String adoptionCheckTemplateId;
+
+    @Value("${templateId.activityRegister.templateId}")
+    private String activityRegisterTemplateId;
+
+    @Value("${templateId.activityRemind.templateId}")
+    private String activityRemindTemplateId;
+
+    @Value("${templateId.activityCancel.templateId}")
+    private String activityCancelTemplateId;
 
     @Value("${linkPet.appId}")
     private String appId;
@@ -129,7 +139,7 @@ public class WxTemplateMsgResource {
                     break;
             }
             templateForm.put("touser", openId);
-            templateForm.put("templateId", templateId);
+            templateForm.put("template_id", templateId);
             templateForm.put("page", "pages/mine/receiveapplydetail/receiveapplydetail?scene=" + applyId);
             templateForm.put("data", templateData);
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + accessToken, templateForm.toJSONString());
@@ -184,7 +194,7 @@ public class WxTemplateMsgResource {
             }
 
             templateForm.put("touser", openId);
-            templateForm.put("templateId", templateId);
+            templateForm.put("template_id", templateId);
             templateForm.put("page", "pages/mine/identify/identify?scene=1");
             templateForm.put("data", templateData);
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + accessToken, templateForm.toJSONString());
@@ -244,7 +254,75 @@ public class WxTemplateMsgResource {
             templateForm.put("touser", openId);
             templateForm.put("template_id", templateId);
             templateForm.put("page", "pages/adoption/detail/detail?scene=" + cmsAdoptMsg.getPetId());
-            templateForm.put("form_id", cmsAdoptMsg.getFormId());
+            templateForm.put("data", templateData);
+            log.info("发送模板消息请求报文：" + templateForm.toJSONString());
+            sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + accessToken, templateForm.toJSONString());
+            log.info(sendTemplateMsg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return PlatformResult.success(sendTemplateMsg);
+    }
+
+
+    @PostMapping("activityNotification")
+    public PlatformResult sendActivityNotificationTemplate(@RequestBody String msgData) {
+        log.info("activityNotification:" + msgData);
+        CmsAdoptMsg cmsAdoptMsg = JSONObject.parseObject(msgData, CmsAdoptMsg.class);
+        String msgContent = cmsAdoptMsg.getMsgContent();
+        JSONObject msgJson = JSONObject.parseObject(msgContent);
+        String type = msgJson.getString("type");
+        String receiver = cmsAdoptMsg.getReceiver();
+        String activityId = msgJson.getString("activityId");
+        String activityTitle = msgJson.getString("activityTitle");
+        if (StringUtils.isNotEmpty(activityTitle)) {
+            activityTitle = activityTitle.length() > 20 ? activityTitle.substring(0, 19) : activityTitle;
+        }
+        String activityAddress = msgJson.getString("activityAddress");
+        if (StringUtils.isNotEmpty(activityAddress)) {
+            activityAddress = activityAddress.length() > 20 ? activityAddress.substring(0, 19) : activityAddress;
+        }
+        String involvementTime = msgJson.getString("involvementTime");
+        String cancelMemo=msgJson.getString("memo");
+        CmsUser user = userService.getUserInfo(receiver);
+        String openId = user.getOpenid();
+        String templateId = "";
+        JSONObject templateForm = new JSONObject();
+        JSONObject templateData = new JSONObject();
+        String sendTemplateMsg = "";
+        //获取accessToken
+        try {
+            String response = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appId + "&secret=" + appSecret, "");
+            JSONObject resJsonObj = JSON.parseObject(response);
+            String accessToken = resJsonObj.getString("access_token");
+            switch (type) {
+                //申请领养通知
+                case "REGISTER":
+                    templateId = activityRegisterTemplateId;
+                    templateData.put("thing1", new KeyWordValue(activityTitle).toJson());
+                    templateData.put("thing2", new KeyWordValue(activityAddress).toJson());
+                    templateData.put("date3", new KeyWordValue(involvementTime).toJson());
+                    templateData.put("thing6", new KeyWordValue("点击查看详情联系客服").toJson());
+                    break;
+                case "CANCEL":
+                    templateId = activityCancelTemplateId;
+                    templateData.put("thing1", new KeyWordValue(activityTitle).toJson());
+                    templateData.put("date2", new KeyWordValue(DateUtils.getFormatDateStr(new Date())).toJson());
+                    templateData.put("thing4", new KeyWordValue(cancelMemo).toJson());
+                    break;
+                case "REMIND":
+                    templateId = activityRemindTemplateId;
+                    templateData.put("thing1", new KeyWordValue(activityTitle).toJson());
+                    templateData.put("date2", new KeyWordValue(involvementTime).toJson());
+                    templateData.put("thing8", new KeyWordValue(activityAddress).toJson());
+                    templateData.put("thing7", new KeyWordValue("若当天无法参加请提前联系客服").toJson());
+                    break;
+                default:
+                    break;
+            }
+            templateForm.put("touser", openId);
+            templateForm.put("template_id", templateId);
+            templateForm.put("page", "pages/circle/activityDetail/index?scene=" + activityId);
             templateForm.put("data", templateData);
             log.info("发送模板消息请求报文：" + templateForm.toJSONString());
             sendTemplateMsg = HttpUtil.doPost("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + accessToken, templateForm.toJSONString());

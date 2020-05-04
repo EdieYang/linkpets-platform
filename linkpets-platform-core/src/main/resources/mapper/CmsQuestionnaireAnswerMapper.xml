@@ -49,7 +49,7 @@
              cms_user u
         where a.user_id = u.user_id
           and a.is_valid = 1
-          and a.questionnaire_id = #{questionnireId}
+          and a.questionnaire_id = #{questionnaireId}
           and a.activity_id = #{activityId}
     </select>
     <select id="getQuestionnaireAnswerInfo" resultMap="BaseInfoResultMap">
@@ -105,8 +105,8 @@
         cms_user u
         where a.user_id = u.user_id
         and a.is_valid = 1
-        <if test="questionnireId!=null and questionnireId!=''">
-            and a.questionnaire_id = #{questionnireId}
+        <if test="questionnaireId!=null and questionnaireId!=''">
+            and a.questionnaire_id = #{questionnaireId}
         </if>
         <if test="activityId!=null and activityId!=''">
             and a.activity_id = #{activityId}

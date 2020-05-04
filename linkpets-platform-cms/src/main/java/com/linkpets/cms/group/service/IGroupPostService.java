@@ -19,12 +19,22 @@ public interface IGroupPostService {
      * @param groupId
      * @param isValid
      * @param nickName
+     * @param pageNum
+     * @param pageSize
+     * @return
      * @oaram userId
+     */
+    PageInfo<RespGroupPost> getGroupPostPage(String groupId, Integer isValid, String nickName, String userId, Integer pageNum, Integer pageSize);
+
+
+    /**
+     * 分页获取圈子用户发帖列表
+     * @param userId
      * @param pageNum
      * @param pageSize
      * @return
      */
-    PageInfo<RespGroupPost> getGroupPostPage(String groupId, Integer isValid, String nickName, String userId, Integer pageNum, Integer pageSize);
+    PageInfo<RespGroupPost> getGroupUserPostPage(String userId, Integer pageNum, Integer pageSize);
 
 
     /**

@@ -27,9 +27,9 @@ import java.io.InputStream;
 public class OssUploadResource {
 
 
-//    private static final String ENDPOINT = "oss-cn-hangzhou.aliyuncs.com";
+    private static final String ENDPOINT = "oss-cn-hangzhou.aliyuncs.com";
 
-    private static final String ENDPOINT = "oss-cn-shanghai.aliyuncs.com";
+//    private static final String ENDPOINT = "oss-cn-shanghai.aliyuncs.com";
 
     private static final String ACCESSKEY = "LTAIKclZeHcK1wEi";
 
@@ -38,12 +38,12 @@ public class OssUploadResource {
     /**
      * 生产bucket配置
      */
-//    private static final String BUCKET_NAME = "linkpet-image-bucket-1";
+    private static final String BUCKET_NAME = "linkpet-image-bucket-1";
 
     /**
      * 测试bucket配置
      */
-    private static final String BUCKET_NAME = "linkpets-adopt-platform-bucket-test";
+//    private static final String BUCKET_NAME = "linkpets-adopt-platform-bucket-test";
 
 
     private final static String OSS_STORAGE_SLICE = "adopt";
@@ -101,7 +101,7 @@ public class OssUploadResource {
     @PostMapping("/image/backend")
     @ApiOperation(value = "后台管理系统上传图片接口：图片访问格式https://linkpets-adopt-platform-bucket-test.oss-cn-shanghai.aliyuncs.com/+图片相对路径")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "ossZone", value = "存储片区(圈子图片：group；活动图片：group/activity；帖子图片：group/post；组织图片：organization；送养发布：adoption；组织活动图片：organization/article)", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "ossZone", value = "存储片区(banner图片：banner；圈子图片：group；活动图片：group/activity；帖子图片：group/post；组织图片：organization；送养发布：adoption；组织活动图片：organization/article)", required = true, dataType = "String", paramType = "query")
     })
     public PlatformResult uploadBackEndImage(@ApiParam(name = "file", value = "上传的文件", required = true) MultipartFile file,
                                              @RequestParam("ossZone") String ossZone,

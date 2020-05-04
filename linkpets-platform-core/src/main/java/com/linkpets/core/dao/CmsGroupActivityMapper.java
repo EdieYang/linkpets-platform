@@ -37,6 +37,15 @@ public interface CmsGroupActivityMapper {
     List<RespGroupActivity> getGroupActivityListByUserId(String userId);
 
     /**
+     * 查询开始时间在时间范围内的圈子活动列表
+     *
+     * @param rangeStartDate
+     * @param rangeEndDate
+     * @return
+     */
+    List<CmsGroupActivity> getGroupActivityListWithTimeRange(String rangeStartDate, String rangeEndDate);
+
+    /**
      * 删除圈子活动
      *
      * @param activityId
@@ -45,6 +54,7 @@ public interface CmsGroupActivityMapper {
 
     /**
      * 获取圈子活动详情
+     *
      * @param activityId
      * @param userId
      * @return

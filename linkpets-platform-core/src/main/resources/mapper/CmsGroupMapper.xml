@@ -30,9 +30,9 @@
         <result column="contentCount" jdbcType="VARCHAR" property="contentCount"/>
     </resultMap>
     <sql id="Base_Column_List">
-    group_id, org_id, group_type, group_name, group_info, group_banner, customer_support, 
+        group_id, org_id, group_type, group_name, group_info, group_banner, customer_support,
     sort, is_active, is_valid, create_date
-  </sql>
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -40,19 +40,20 @@
         where group_id = #{groupId,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from cms_group
-    where group_id = #{groupId,jdbcType=VARCHAR}
-  </delete>
+        delete
+        from cms_group
+        where group_id = #{groupId,jdbcType=VARCHAR}
+    </delete>
     <insert id="insert" parameterType="com.linkpets.core.model.CmsGroup">
-    insert into cms_group (group_id, org_id, group_type,
-      group_name, group_info, group_banner, 
-      customer_support, sort, is_active, 
-      is_valid, create_date)
-    values (#{groupId,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{groupType,jdbcType=CHAR}, 
-      #{groupName,jdbcType=VARCHAR}, #{groupInfo,jdbcType=VARCHAR}, #{groupBanner,jdbcType=VARCHAR}, 
-      #{customerSupport,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{isActive,jdbcType=INTEGER}, 
-      #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
-  </insert>
+        insert into cms_group (group_id, org_id, group_type,
+                               group_name, group_info, group_banner,
+                               customer_support, sort, is_active,
+                               is_valid, create_date)
+        values (#{groupId,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{groupType,jdbcType=CHAR},
+                #{groupName,jdbcType=VARCHAR}, #{groupInfo,jdbcType=VARCHAR}, #{groupBanner,jdbcType=VARCHAR},
+                #{customerSupport,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{isActive,jdbcType=INTEGER},
+                #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsGroup">
         insert into cms_group
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -163,27 +164,27 @@
         where group_id = #{groupId,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsGroup">
-    update cms_group
-    set org_id = #{orgId,jdbcType=VARCHAR},
-      group_type = #{groupType,jdbcType=CHAR},
-      group_name = #{groupName,jdbcType=VARCHAR},
-      group_info = #{groupInfo,jdbcType=VARCHAR},
-      group_banner = #{groupBanner,jdbcType=VARCHAR},
-      customer_support = #{customerSupport,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=INTEGER},
-      is_active = #{isActive,jdbcType=INTEGER},
-      is_valid = #{isValid,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=TIMESTAMP}
-    where group_id = #{groupId,jdbcType=VARCHAR}
-  </update>
+        update cms_group
+        set org_id           = #{orgId,jdbcType=VARCHAR},
+            group_type       = #{groupType,jdbcType=CHAR},
+            group_name       = #{groupName,jdbcType=VARCHAR},
+            group_info       = #{groupInfo,jdbcType=VARCHAR},
+            group_banner     = #{groupBanner,jdbcType=VARCHAR},
+            customer_support = #{customerSupport,jdbcType=VARCHAR},
+            sort             = #{sort,jdbcType=INTEGER},
+            is_active        = #{isActive,jdbcType=INTEGER},
+            is_valid         = #{isValid,jdbcType=INTEGER},
+            create_date      = #{createDate,jdbcType=TIMESTAMP}
+        where group_id = #{groupId,jdbcType=VARCHAR}
+    </update>
     <select id="getGroupList" parameterType="java.lang.String" resultMap="BaseInfoResultMap">
         select
         group_id, group_type, group_name, group_info, group_banner, customer_support, sort,is_active,
         is_valid, create_date,
         (select count(1) from cms_group_user_rel where group_id = g.group_id and is_valid = 1) as fansCount,
-        case group_type
-        when '1' then (select count(1) from cms_group_user_rel where group_id = g.group_id and is_valid = 1)
-        else (select count(1) from cms_group_activity where group_id = g.group_id and is_valid = 1)
+        case when group_type='1' then (select count(1) from cms_group_activity where group_id = g.group_id and is_valid
+        = 1)
+        else (select count(1) from cms_group_post where group_id = g.group_id and is_valid = 1)
         end as contentCount
         from cms_group g
         where is_valid = 1
@@ -209,7 +210,7 @@
     </select>
     <select id="getFollowedGroupList" resultMap="BaseResultMap">
         select g.group_id,
-                org_id,
+               org_id,
                group_type,
                group_name,
                group_info,
@@ -223,6 +224,7 @@
              cms_group_user_rel r
         where g.is_valid = 1
           and r.is_valid = 1
+          and g.is_active = 1
           and g.group_id = r.group_id
           and r.user_id = #{userId}
         order by group_type, r.create_date desc
@@ -232,9 +234,9 @@
         <include refid="Base_Column_List"/>
         ,
         (select count(1) from cms_group_user_rel where group_id = g.group_id and is_valid = 1) as fansCount,
-        case group_type
-        when '1' then (select count(1) from cms_group_user_rel where group_id = g.group_id and is_valid = 1)
-        else (select count(1) from cms_group_activity where group_id = g.group_id and is_valid = 1)
+        case when group_type='1' then (select count(1) from cms_group_activity where group_id = g.group_id and is_valid
+        = 1)
+        else (select count(1) from cms_group_post where group_id = g.group_id and is_valid = 1)
         end as contentCount
         from cms_group g
         where is_valid = 1

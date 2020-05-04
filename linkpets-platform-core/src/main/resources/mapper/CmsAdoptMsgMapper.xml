@@ -257,6 +257,25 @@
         order by create_time desc
         limit 1
     </select>
+    <select id="getActivityLatestMsg" resultMap="BaseResultMap">
+        select msg_id,
+               msg_title,
+               msg_content,
+               msg_type,
+               sender,
+               receiver,
+               is_read,
+               pet_id,
+               is_valid,
+               create_time,
+               (select count(1) cms_adopt_msg where receiver = #{userId} and is_read = 0) as unreadNumber
+        from cms_adopt_msg
+        where receiver = #{userId}
+          and msg_type = 3
+          and is_valid = 1
+        order by create_time desc
+        limit 1
+    </select>
     <select id="getDetailMsgList" resultMap="BaseResultMap" parameterType="java.util.Map">
 
         select msg_id,
@@ -292,4 +311,5 @@
           and is_valid = 1
           and is_read = '0'
     </select>
+
 </mapper>

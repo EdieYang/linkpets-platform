@@ -102,5 +102,4 @@ public class StatisticServiceImpl implements IStatisticService {
         return weekCount;
     }
 
-
 }

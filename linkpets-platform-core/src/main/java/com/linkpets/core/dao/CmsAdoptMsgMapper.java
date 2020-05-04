@@ -57,6 +57,7 @@ public interface CmsAdoptMsgMapper {
 
     /**
      * 获取系统最新推送消息
+     *
      * @param userId
      * @return
      */
@@ -64,6 +65,7 @@ public interface CmsAdoptMsgMapper {
 
     /**
      * 获取领养申请最新推送消息
+     *
      * @param userId
      * @return
      */
@@ -71,27 +73,39 @@ public interface CmsAdoptMsgMapper {
 
     /**
      * 获取领养协议最新推送消息
+     *
      * @param userId
      * @return
      */
     CmsAdoptMsg getAgreementLatestMsg(String userId);
 
     /**
+     * 获取活动最新推送消息
+     *
+     * @param userId
+     * @return
+     */
+    CmsAdoptMsg getActivityLatestMsg(String userId);
+
+    /**
      * 获取推送消息详情列表
+     *
      * @param param
      * @return
      */
-    List<CmsAdoptMsg> getDetailMsgList(Map<String,Object> param);
+    List<CmsAdoptMsg> getDetailMsgList(Map<String, Object> param);
 
     /**
      * 设置消息为已读状态
+     *
      * @param userId
      * @param type
      */
-    void uptAdoptMsg(@Param("userId")String userId, @Param("type")int type);
+    void uptAdoptMsg(@Param("userId") String userId, @Param("type") int type);
 
     /**
-     *获取未读推送消息列表
+     * 获取未读推送消息列表
+     *
      * @param userId
      * @return
      */

@@ -103,10 +103,10 @@ public interface IUserService {
 
     /**
      * 添加关注
-     *
-     * @param record
+     * @param userId
+     * @param followBy
      */
-    void crtFollow(CmsUserFollow record);
+    void crtFollow(String userId, String followBy);
 
     /**
      * 取消关注

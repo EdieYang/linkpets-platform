@@ -95,4 +95,20 @@ public class MessageTemplate {
 
     public static final String CER_REJECT_MSG_CONTENT_LOG = "原因：";
 
+    /**
+     * 成功报名
+     */
+    public static final String ACTIVITY_REGISTER_SUCCESS = "报名活动成功";
+
+    /**
+     * 取消报名
+     */
+    public static final String ACTIVITY_REGISTER_CANCEL = "活动报名取消";
+
+
+    /**
+     * 提醒活动开始
+     */
+    public static final String ACTIVITY_START_REMIND = "活动即将开始";
+
 }

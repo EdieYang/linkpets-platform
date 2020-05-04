@@ -55,12 +55,12 @@
         <result column="hasRegistered" jdbcType="VARCHAR" property="hasRegistered"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, group_id, activity_type, activity_title, activity_banner, activity_area, activity_address, 
+        id, group_id, activity_type, activity_title, activity_banner, activity_area, activity_address,
     activity_content, register_limit, activity_should_verify, activity_should_questionnaire, 
     questionnaire_id, activity_register_start_time, activity_register_end_time, activity_start_time, 
     activity_end_time, activity_pick_time, activity_is_free, activity_cost, activity_point, 
     customer_support, is_active, is_valid, create_date
-  </sql>
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -68,31 +68,33 @@
         where id = #{id,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from cms_group_activity
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
+        delete
+        from cms_group_activity
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
     <insert id="insert" parameterType="com.linkpets.core.model.CmsGroupActivity">
-    insert into cms_group_activity (id, group_id, activity_type,
-      activity_title, activity_banner, activity_area, 
-      activity_address, activity_content, register_limit, 
-      activity_should_verify, activity_should_questionnaire, 
-      questionnaire_id, activity_register_start_time, 
-      activity_register_end_time, activity_start_time, 
-      activity_end_time, activity_pick_time, activity_is_free, 
-      activity_cost, activity_point, customer_support, 
-      is_active, is_valid, create_date
-      )
-    values (#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{activityType,jdbcType=CHAR}, 
-      #{activityTitle,jdbcType=VARCHAR}, #{activityBanner,jdbcType=VARCHAR}, #{activityArea,jdbcType=VARCHAR}, 
-      #{activityAddress,jdbcType=VARCHAR}, #{activityContent,jdbcType=VARCHAR}, #{registerLimit,jdbcType=INTEGER}, 
-      #{activityShouldVerify,jdbcType=CHAR}, #{activityShouldQuestionnaire,jdbcType=VARCHAR}, 
-      #{questionnaireId,jdbcType=VARCHAR}, #{activityRegisterStartTime,jdbcType=TIMESTAMP}, 
-      #{activityRegisterEndTime,jdbcType=TIMESTAMP}, #{activityStartTime,jdbcType=TIMESTAMP}, 
-      #{activityEndTime,jdbcType=TIMESTAMP}, #{activityPickTime,jdbcType=VARCHAR}, #{activityIsFree,jdbcType=INTEGER}, 
-      #{activityCost,jdbcType=INTEGER}, #{activityPoint,jdbcType=INTEGER}, #{customerSupport,jdbcType=VARCHAR}, 
-      #{isActive,jdbcType=INTEGER}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}
-      )
-  </insert>
+        insert into cms_group_activity (id, group_id, activity_type,
+                                        activity_title, activity_banner, activity_area,
+                                        activity_address, activity_content, register_limit,
+                                        activity_should_verify, activity_should_questionnaire,
+                                        questionnaire_id, activity_register_start_time,
+                                        activity_register_end_time, activity_start_time,
+                                        activity_end_time, activity_pick_time, activity_is_free,
+                                        activity_cost, activity_point, customer_support,
+                                        is_active, is_valid, create_date)
+        values (#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{activityType,jdbcType=CHAR},
+                #{activityTitle,jdbcType=VARCHAR}, #{activityBanner,jdbcType=VARCHAR}, #{activityArea,jdbcType=VARCHAR},
+                #{activityAddress,jdbcType=VARCHAR}, #{activityContent,jdbcType=VARCHAR},
+                #{registerLimit,jdbcType=INTEGER},
+                #{activityShouldVerify,jdbcType=CHAR}, #{activityShouldQuestionnaire,jdbcType=VARCHAR},
+                #{questionnaireId,jdbcType=VARCHAR}, #{activityRegisterStartTime,jdbcType=TIMESTAMP},
+                #{activityRegisterEndTime,jdbcType=TIMESTAMP}, #{activityStartTime,jdbcType=TIMESTAMP},
+                #{activityEndTime,jdbcType=TIMESTAMP}, #{activityPickTime,jdbcType=VARCHAR},
+                #{activityIsFree,jdbcType=INTEGER},
+                #{activityCost,jdbcType=INTEGER}, #{activityPoint,jdbcType=INTEGER},
+                #{customerSupport,jdbcType=VARCHAR},
+                #{isActive,jdbcType=INTEGER}, #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" parameterType="com.linkpets.core.model.CmsGroupActivity">
         insert into cms_group_activity
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -320,36 +322,36 @@
         where id = #{id,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.linkpets.core.model.CmsGroupActivity">
-    update cms_group_activity
-    set group_id = #{groupId,jdbcType=VARCHAR},
-      activity_type = #{activityType,jdbcType=CHAR},
-      activity_title = #{activityTitle,jdbcType=VARCHAR},
-      activity_banner = #{activityBanner,jdbcType=VARCHAR},
-      activity_area = #{activityArea,jdbcType=VARCHAR},
-      activity_address = #{activityAddress,jdbcType=VARCHAR},
-      activity_content = #{activityContent,jdbcType=VARCHAR},
-      register_limit = #{registerLimit,jdbcType=INTEGER},
-      activity_should_verify = #{activityShouldVerify,jdbcType=CHAR},
-      activity_should_questionnaire = #{activityShouldQuestionnaire,jdbcType=VARCHAR},
-      questionnaire_id = #{questionnaireId,jdbcType=VARCHAR},
-      activity_register_start_time = #{activityRegisterStartTime,jdbcType=TIMESTAMP},
-      activity_register_end_time = #{activityRegisterEndTime,jdbcType=TIMESTAMP},
-      activity_start_time = #{activityStartTime,jdbcType=TIMESTAMP},
-      activity_end_time = #{activityEndTime,jdbcType=TIMESTAMP},
-      activity_pick_time = #{activityPickTime,jdbcType=VARCHAR},
-      activity_is_free = #{activityIsFree,jdbcType=INTEGER},
-      activity_cost = #{activityCost,jdbcType=INTEGER},
-      activity_point = #{activityPoint,jdbcType=INTEGER},
-      customer_support = #{customerSupport,jdbcType=VARCHAR},
-      is_active = #{isActive,jdbcType=INTEGER},
-      is_valid = #{isValid,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+        update cms_group_activity
+        set group_id                      = #{groupId,jdbcType=VARCHAR},
+            activity_type                 = #{activityType,jdbcType=CHAR},
+            activity_title                = #{activityTitle,jdbcType=VARCHAR},
+            activity_banner               = #{activityBanner,jdbcType=VARCHAR},
+            activity_area                 = #{activityArea,jdbcType=VARCHAR},
+            activity_address              = #{activityAddress,jdbcType=VARCHAR},
+            activity_content              = #{activityContent,jdbcType=VARCHAR},
+            register_limit                = #{registerLimit,jdbcType=INTEGER},
+            activity_should_verify        = #{activityShouldVerify,jdbcType=CHAR},
+            activity_should_questionnaire = #{activityShouldQuestionnaire,jdbcType=VARCHAR},
+            questionnaire_id              = #{questionnaireId,jdbcType=VARCHAR},
+            activity_register_start_time  = #{activityRegisterStartTime,jdbcType=TIMESTAMP},
+            activity_register_end_time    = #{activityRegisterEndTime,jdbcType=TIMESTAMP},
+            activity_start_time           = #{activityStartTime,jdbcType=TIMESTAMP},
+            activity_end_time             = #{activityEndTime,jdbcType=TIMESTAMP},
+            activity_pick_time            = #{activityPickTime,jdbcType=VARCHAR},
+            activity_is_free              = #{activityIsFree,jdbcType=INTEGER},
+            activity_cost                 = #{activityCost,jdbcType=INTEGER},
+            activity_point                = #{activityPoint,jdbcType=INTEGER},
+            customer_support              = #{customerSupport,jdbcType=VARCHAR},
+            is_active                     = #{isActive,jdbcType=INTEGER},
+            is_valid                      = #{isValid,jdbcType=INTEGER},
+            create_date                   = #{createDate,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
     <update id="delGroupActivity">
         update cms_group_activity
-         set is_valid= 0
-         where  id = #{activityId}
+        set is_valid= 0
+        where id = #{activityId}
     </update>
     <select id="getGroupActivityList" resultMap="BaseResultMap">
         select
@@ -366,27 +368,78 @@
         order by activity_start_time desc
     </select>
     <select id="getGroupActivityListByUserId" resultMap="BaseRespResultMap">
-        select  a.id, a.group_id, a.activity_type, a.activity_title, a.activity_banner, a.activity_area, a.activity_address,  a.activity_start_time,
-                a.activity_end_time,  a.is_active, a.is_valid, a.create_date,
-                (select count(1) from cms_group_activity_register ar where ar.user_id = r.user_id and ar.activity_id = a.id and ar.is_valid = 1 ) as hasRegistered
-        from cms_group_activity_user_rel r ,cms_group_activity a
+        select a.id,
+               a.group_id,
+               a.activity_type,
+               a.activity_title,
+               a.activity_banner,
+               a.activity_area,
+               a.activity_address,
+               a.activity_start_time,
+               a.activity_end_time,
+               a.is_active,
+               a.is_valid,
+               a.create_date,
+               (select count(1)
+                from cms_group_activity_register ar
+                where ar.user_id = r.user_id
+                  and ar.activity_id = a.id
+                  and ar.is_valid = 1) as hasRegistered
+        from cms_group_activity_user_rel r,
+             cms_group_activity a
         where r.activity_id = a.id
-        and r.is_valid = 1
-        and r.user_id = #{userId}
-        and a.is_valid = 1
-        and a.is_active = 1
+          and r.is_valid = 1
+          and r.user_id = #{userId}
+          and a.is_valid = 1
+          and a.is_active = 1
         order by a.activity_start_time
     </select>
     <select id="getGroupActivityInfoWithUserId" resultMap="BaseRespResultMap">
-        select  id, group_id, activity_type, activity_title, activity_banner, activity_area, activity_address,
-                activity_content, register_limit, activity_should_verify, activity_should_questionnaire,
-                questionnaire_id, activity_register_start_time, activity_register_end_time, activity_start_time,
-                activity_end_time, activity_pick_time, activity_is_free, activity_cost, activity_point,
-                customer_support, is_active, is_valid, create_date,
-                (select count(1) from cms_group_activity_register ar where ar.user_id = #{userId} and ar.activity_id = a.id and ar.is_valid = 1 ) as hasRegistered,
-                (select count(1) from cms_group_activity_user_rel r where r.user_id = #{userId} and r.activity_id = a.id and r.is_valid = 1 ) as hasFollowed
-        from  cms_group_activity a
+        select id,
+               group_id,
+               activity_type,
+               activity_title,
+               activity_banner,
+               activity_area,
+               activity_address,
+               activity_content,
+               register_limit,
+               activity_should_verify,
+               activity_should_questionnaire,
+               questionnaire_id,
+               activity_register_start_time,
+               activity_register_end_time,
+               activity_start_time,
+               activity_end_time,
+               activity_pick_time,
+               activity_is_free,
+               activity_cost,
+               activity_point,
+               customer_support,
+               is_active,
+               is_valid,
+               create_date,
+               (select count(1)
+                from cms_group_activity_register ar
+                where ar.user_id = #{userId}
+                  and ar.activity_id = a.id
+                  and ar.is_valid = 1) as hasRegistered,
+               (select count(1)
+                from cms_group_activity_user_rel r
+                where r.user_id = #{userId}
+                  and r.activity_id = a.id
+                  and r.is_valid = 1)  as hasFollowed
+        from cms_group_activity a
         where a.id = #{activityId}
-        and a.is_valid = 1
+          and a.is_valid = 1
+    </select>
+    <select id="getGroupActivityListWithTimeRange" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_group_activity
+        where is_active= 1
+        and is_valid = 1
+        and activity_start_time between #{rangeStartDate} and #{rangeEndDate}
+        order by activity_start_time desc
     </select>
 </mapper>

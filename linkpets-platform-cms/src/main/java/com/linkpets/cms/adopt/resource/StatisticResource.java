@@ -44,7 +44,7 @@ public class StatisticResource {
         int loginTodayCount = userService.getLoginCount(startDate);
         int totalUserCount = userService.getTotalUserCount();
         int adoptTotalCount = statisticService.getAdoptTotalCount("");
-        List<Map<String,Object>> nealyWeekCount=statisticService.getNealyWeekCount();
+        List<Map<String, Object>> nealyWeekCount = statisticService.getNealyWeekCount();
         AdoptionStatistic adoptionStatistic = new AdoptionStatistic();
         adoptionStatistic.setTotalUserCount(totalUserCount);
         adoptionStatistic.setLoginTodayCount(loginTodayCount);
@@ -58,6 +58,22 @@ public class StatisticResource {
     @GetMapping(value = "org/list")
     public PlatformResult getOrgStatistic(@RequestParam("orgId") String orgId) {
         return PlatformResult.success(statisticService.getDataByOrg(orgId));
+    }
+
+    @ApiOperation("查询今日总览统计")
+    @GetMapping(value = "today")
+    public PlatformResult getTodayStatisticList() {
+        String startDate = DateUtils.getCurrentDay();
+        int applyTodayCount = applyService.getApplyCount(startDate + "00:00:00", startDate + "23:59:59");
+        int loginTodayCount = userService.getLoginCount(startDate);
+        int totalUserCount = userService.getTotalUserCount();
+        int adoptTodayCount = petService.getPetAdoptCount(startDate);
+        AdoptionStatistic adoptionStatistic = new AdoptionStatistic();
+        adoptionStatistic.setTotalUserCount(totalUserCount);
+        adoptionStatistic.setLoginTodayCount(loginTodayCount);
+        adoptionStatistic.setApplyTodayCount(applyTodayCount);
+        adoptionStatistic.setAdoptTodayCount(adoptTodayCount);
+        return PlatformResult.success(adoptionStatistic);
     }
 
 

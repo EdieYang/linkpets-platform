@@ -29,6 +29,15 @@ public interface IGroupActivityService {
     PageInfo<RespGroupActivity> getGroupActivityPage(Integer activityType, Integer isActive, Integer pageNum, Integer pageSize);
 
     /**
+     * 查询开始时间在时间范围内的圈子活动列表
+     *
+     * @param rangeStartDate
+     * @param rangeEndDate
+     * @return
+     */
+    List<CmsGroupActivity> getGroupActivityListWithTimeRange(String rangeStartDate, String rangeEndDate);
+
+    /**
      * 查询用户关注的圈子活动列表
      *
      * @param userId
@@ -87,6 +96,8 @@ public interface IGroupActivityService {
     String crtGroupActivityFollow(String userId, String activityId);
 
     /**
+     * 取消关注圈子活动
+     *
      * @param userId
      * @param activityId
      */

@@ -39,17 +39,17 @@ public class MessageResource {
     PlatformResult getUserMessageList(@RequestParam("userId") String userId) {
         //获取系统通知
         CmsAdoptMsg systemMsg = msgService.getSystemLatestMsg(userId);
-
         //获取领养申请通知
         CmsAdoptMsg applyMsg = msgService.getApplyLatestMsg(userId);
-
         //获取领养协议通知
         CmsAdoptMsg agreementMsg = msgService.getAgreementLatestMsg(userId);
-
+        //获取活动通知
+        CmsAdoptMsg activityMsg = msgService.getActivityLatestMsg(userId);
         Map<String, CmsAdoptMsg> msgMap = new HashMap<>();
         msgMap.put("sysMsg", systemMsg);
         msgMap.put("applyMsg", applyMsg);
         msgMap.put("agreementMsg", agreementMsg);
+        msgMap.put("activityMsg", activityMsg);
         return PlatformResult.success(msgMap);
     }
 

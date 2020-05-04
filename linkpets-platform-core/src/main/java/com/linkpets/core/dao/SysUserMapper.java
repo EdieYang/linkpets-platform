@@ -63,7 +63,8 @@ public interface SysUserMapper {
             "user_id, user_account, password, user_name, user_portrait, mobile_phone, ",
             "email, is_active, create_by, create_date, is_valid",
             "from sys_user",
-            "where user_account = #{userAccount,jdbcType=VARCHAR}"
+            "where user_account = #{userAccount,jdbcType=VARCHAR}",
+            "and is_valid = 1"
     })
     @ResultMap("com.linkpets.core.dao.SysUserMapper.BaseResultMap")
     SysUser getSysUserByUserAccount(String userAccount);

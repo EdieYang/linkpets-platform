@@ -51,6 +51,10 @@ public class SysUserController {
     @ApiOperation("新增用户")
     @PostMapping()
     public PlatformResult crtSysUser(@RequestBody SysUser sysUser) {
+        SysUser user=sysUserService.getSysUserByUserAccount(sysUser.getUserAccount());
+        if(user!=null){
+            return PlatformResult.failure(ResultCode.USER_ACCOUNT_HAS_EXISTED);
+        }
         String userId = sysUserService.crtSysUser(sysUser);
         return PlatformResult.success(userId);
     }

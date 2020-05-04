@@ -99,4 +99,7 @@ public class CmsGroupActivity {
     @ApiModelProperty(value = "是否实名")
     private Integer isAuthenticated;
 
+    @ApiModelProperty(value = "问卷是否已答")
+    private Integer isAnswered;
+
 }

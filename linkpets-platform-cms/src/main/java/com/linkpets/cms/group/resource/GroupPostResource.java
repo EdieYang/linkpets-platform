@@ -35,8 +35,17 @@ public class GroupPostResource {
                                            @RequestParam(value = "nickName", required = false) String nickName,
                                            @RequestParam("pageNum") Integer pageNum,
                                            @RequestParam("pageSize") Integer pageSize) {
-        PageInfo<RespGroupPost> postId = groupPostService.getGroupPostPage(groupId, isValid, nickName, userId, pageNum, pageSize);
-        return PlatformResult.success(postId);
+        PageInfo<RespGroupPost> postPage = groupPostService.getGroupPostPage(groupId, isValid, nickName, userId, pageNum, pageSize);
+        return PlatformResult.success(postPage);
+    }
+
+    @ApiOperation("分页获取用户发出的圈子帖子")
+    @GetMapping("user/page")
+    public PlatformResult getGroupUserPostPage(@RequestParam(value = "userId", required = false) String userId,
+                                           @RequestParam("pageNum") Integer pageNum,
+                                           @RequestParam("pageSize") Integer pageSize) {
+        PageInfo<RespGroupPost> postPage = groupPostService.getGroupUserPostPage(userId, pageNum, pageSize);
+        return PlatformResult.success(postPage);
     }
 
     @ApiOperation("创建圈子帖子")

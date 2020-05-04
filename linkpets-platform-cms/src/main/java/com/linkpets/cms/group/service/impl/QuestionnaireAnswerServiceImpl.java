@@ -27,6 +27,13 @@ public class QuestionnaireAnswerServiceImpl implements IQuestionnaireAnswerServi
 
     @Override
     public String crtAnswer(CmsQuestionnaireAnswer cmsQuestionnaireAnswer) {
+        String activityId = cmsQuestionnaireAnswer.getActivityId();
+        String userId = cmsQuestionnaireAnswer.getUserId();
+        String questionnaireId = cmsQuestionnaireAnswer.getQuestionnaireId();
+        List<RespQuestionnaireAnswerInfo> answerInfoList = questionnaireAnswerMapper.getQuestionnaireAnswerListByParams(questionnaireId, activityId, userId);
+        if (answerInfoList != null && answerInfoList.size() > 0) {
+            return null;
+        }
         String answerId = UUIDUtils.getId();
         cmsQuestionnaireAnswer.setAnswerId(answerId);
         cmsQuestionnaireAnswer.setCreateDate(new Date());

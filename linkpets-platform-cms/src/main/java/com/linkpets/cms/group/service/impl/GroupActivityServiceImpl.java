@@ -50,6 +50,11 @@ public class GroupActivityServiceImpl implements IGroupActivityService {
     }
 
     @Override
+    public List<CmsGroupActivity> getGroupActivityListWithTimeRange(String rangeStartDate, String rangeEndDate) {
+        return cmsGroupActivityMapper.getGroupActivityListWithTimeRange(rangeStartDate, rangeEndDate);
+    }
+
+    @Override
     public List<RespGroupActivity> getGroupActivityListByUserId(String userId) {
         return cmsGroupActivityMapper.getGroupActivityListByUserId(userId);
     }
@@ -57,13 +62,19 @@ public class GroupActivityServiceImpl implements IGroupActivityService {
     @Override
     public CmsGroupActivity getGroupActivityInfo(String activityId) {
         CmsGroupActivity groupActivity = cmsGroupActivityMapper.selectByPrimaryKey(activityId);
-        groupActivity.setActivityStatus(calActivityStatus(groupActivity));
+        if (groupActivity != null) {
+            groupActivity.setActivityStatus(calActivityStatus(groupActivity));
+        }
         return groupActivity;
     }
 
     @Override
     public CmsGroupActivity getGroupActivityInfoWithUserId(String activityId, String userId) {
-        return cmsGroupActivityMapper.getGroupActivityInfoWithUserId(activityId, userId);
+        CmsGroupActivity groupActivity = cmsGroupActivityMapper.getGroupActivityInfoWithUserId(activityId, userId);
+        if (groupActivity != null) {
+            groupActivity.setActivityStatus(calActivityStatus(groupActivity));
+        }
+        return groupActivity;
     }
 
     @Override

@@ -27,24 +27,25 @@ public class BannerResource {
     @Resource
     private IBannerService bannerService;
 
+    @ApiOperation("分页查询Banner列表")
+    @GetMapping("/page")
+    public PlatformResult getBannerPage(@RequestParam("type") Integer type,
+                                        @RequestParam(value = "position") Integer position,
+                                        @RequestParam(value = "pageNum") Integer pageNum,
+                                        @RequestParam(value = "pageSize") Integer pageSize) {
+        PageInfo<CmsBanner> bannerPage = bannerService.getBannerPage(type, position, pageNum, pageSize);
+        return PlatformResult.success(bannerPage);
+    }
+
 
     @ApiOperation("查询Banner列表")
     @GetMapping("/list")
-    public PlatformResult getBannerList(@RequestParam("activityId") String activityId,
-                                        @RequestParam(value = "count", required = false) Integer count) {
-        List<CmsBanner> bannerList = bannerService.getBannerList(activityId, count);
+    public PlatformResult getBannerList(@RequestParam(value = "type", required = false) Integer type,
+                                        @RequestParam(value = "position") Integer position) {
+        List<CmsBanner> bannerList = bannerService.getBannerList(type, position);
         return PlatformResult.success(bannerList);
     }
 
-    @ApiOperation("分页查询Banner列表")
-    @GetMapping("/page")
-    public PlatformResult getBannerPage(@ApiParam(name = "activityId", value = "BANNER类型 -ADOPT：公益平台", required = true)
-                                        @RequestParam("activityId") String activityId,
-                                        @RequestParam(value = "pageNum") Integer pageNum,
-                                        @RequestParam(value = "pageSize") Integer pageSize) {
-        PageInfo<CmsBanner> bannerPage = bannerService.getBannerPage(activityId, pageNum, pageSize);
-        return PlatformResult.success(bannerPage);
-    }
 
     @ApiOperation("创建Banner")
     @PostMapping("")
@@ -54,9 +55,16 @@ public class BannerResource {
     }
 
     @ApiOperation("更新Banner")
-    @PutMapping("/")
+    @PutMapping("")
     public PlatformResult uptBanner(@RequestBody CmsBanner cmsBanner) {
         bannerService.uptBanner(cmsBanner);
+        return PlatformResult.success();
+    }
+
+    @ApiOperation("删除Banner")
+    @DeleteMapping("")
+    public PlatformResult delBanner(@RequestParam("bannerId") String bannerId) {
+        bannerService.delBanner(bannerId);
         return PlatformResult.success();
     }
 
